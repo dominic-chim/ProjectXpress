@@ -16,7 +16,7 @@ task :
     task_name           unsigned int    # task name
     task_required_skill char()          # required skill for each task
     task_duration       unsigned int    # duration of a task in hour
-    task_risk_level     unsigned int    # task risk level
+    task_risk_level     char()          # task risk level
     task_release_time   datetime        # release date and time of a task
     task_status         char()          # status of the task
 
@@ -64,7 +64,7 @@ staff_preference
 # table risk level shows risk level name and the percentage of that name 
 risk_level :
     task_risk_level     char()  # risk level name
-    risk_precentage     char()  # percentage of required extra time
+    risk_precentage     int     # percentage of required extra time
 
     task_risk_level is the primary key
 
