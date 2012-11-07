@@ -17,9 +17,9 @@ public abstract class DatabaseRoot {
             this.connection = DriverManager.getConnection(url,userName,password);
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {
-            //re = "errorCNF";
+            System.out.println("errorCNF");
         } catch (SQLException e) {
-            //re = "errorSQL";
+            System.out.println("errorSQL");
         }
     }
 }
