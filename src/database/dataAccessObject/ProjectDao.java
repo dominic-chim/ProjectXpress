@@ -6,6 +6,8 @@ import data.dataObject.ProjectDO;
 public class ProjectDao extends DatabaseRoot {
 
     public ProjectDO getProjectById() {
+        String sql = "SELECT project_id";
+        db.execute();
         return null;
     }
 }

@@ -9,7 +9,7 @@ public abstract class DatabaseRoot {
     
     public DatabaseRoot() {
 
-        String url = "jdbc:mysql://localhost:3306/test"; 
+        String url = "jdbc:mysql://localhost:3306/scheduling"; 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String userName = "root"; 
