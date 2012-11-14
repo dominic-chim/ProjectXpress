@@ -20,7 +20,7 @@ primary key (task_risk_level)
 CREATE TABLE task (
 project_id int unsigned ,
 task_id int unsigned ,
-task_name int unsigned ,
+task_name char(100) ,
 task_required_skill char(100),
 task_duration int unsigned ,
 task_risk_level varchar(20),
