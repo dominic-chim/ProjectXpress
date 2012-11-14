@@ -13,7 +13,7 @@ project :
 task :
     project_id          unsigned int    # project id 
     task_id             unsigned int    # task id
-    task_name           unsigned int    # task name
+    task_name           char()          # task name
     task_required_skill char()          # required skill for each task
     task_duration       unsigned int    # duration of a task in hour
     task_risk_level     char()          # task risk level
