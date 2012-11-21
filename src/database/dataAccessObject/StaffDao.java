@@ -1,5 +1,10 @@
+package database.dataAccessObject;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import data.dataObject.StaffDo;
+import database.DatabaseRoot;
 
 public class StaffDao extends DatabaseRoot {
 
