@@ -20,7 +20,8 @@ primary key (task_risk_level)
 -- must create before task since foreign key restraint
 CREATE TABLE skill (
 skill_id int unsigned,
-skill_name char(50)
+skill_name char(50),
+primary key (skill_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -62,7 +63,7 @@ CREATE TABLE staff_skill_level (
 staff_id int unsigned ,
 skill_id int unsigned,
 skill_level real,
-primary key (staff_id, skill_name),
+primary key (staff_id, skill_id),
 foreign key (staff_id) references staff (staff_id),
 foreign key (skill_id) references skill (skill_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
