@@ -3,7 +3,7 @@ package database.dataAccessObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import data.dataObject.StaffDo;
+import data.dataObject.StaffDO;
 import database.DatabaseRoot;
 
 public class StaffDao extends DatabaseRoot {
@@ -12,7 +12,7 @@ public class StaffDao extends DatabaseRoot {
 		super();
 	}
 
-	public StaffDo getStaffById(int staffId) {
+	public StaffDO getStaffById(int staffId) {
 
 		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence WHERE staff_id = "
 				+ staffId;
@@ -24,9 +24,9 @@ public class StaffDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		StaffDo staffDo = null;
+		StaffDO staffDo = null;
 		try {
-			staffDo = new StaffDo(
+			staffDo = new StaffDO(
 					result.getInt("staff_id"),
 					result.getString("staff_name"),
 					result.getInt("staff_weekly_available_time"),

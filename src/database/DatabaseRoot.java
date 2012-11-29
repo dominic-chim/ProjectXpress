@@ -24,6 +24,7 @@ public abstract class DatabaseRoot {
         }
     }
     
+    // TODO rewrite it using simple date format
     public GregorianCalendar dateTimeToCalendar(String dataTime) {
         String[] xs = dataTime.split(" ");
         String[] ymd = xs[0].split("-");

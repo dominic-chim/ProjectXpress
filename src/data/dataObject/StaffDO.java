@@ -4,7 +4,7 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StaffDo {
+public class StaffDO {
 
 	private int staffId;
 	private String staffName;
@@ -16,7 +16,7 @@ public class StaffDo {
 	// Prefence Level is based on task Id and project Id.
 	// Thought it was appropriate to put them together.
 
-	public StaffDo(int staffId, String staffName,
+	public StaffDO(int staffId, String staffName,
 			int staffWeeklyAvailableTime, String skillName, int skillLevel,
 			int projectId, int taskId, int prefenceLevel) {
 
@@ -82,6 +82,6 @@ public class StaffDo {
 
 	public void setPrefenceLevel(int projectId, int taskId, int prefenceLevel) {
 		if(this.prefenceLevel.)
-		this.prefenceLevel.put(taskId, prefenceLevel);
+            this.prefenceLevel.put(taskId, prefenceLevel);
 	}
 }

@@ -11,11 +11,11 @@ import database.dataAccessObject.ProjectDao;
 
 public class TestProjectDao extends GroupTestCase{
 
+    private ProjectDao pjdao;
+
     public TestProjectDao(String name) {
         super(name);
     }
-
-    ProjectDao pjdao;
 
     protected void setUp() {
         pjdao = new ProjectDao();

@@ -8,7 +8,7 @@ public class TaskDO {
     private int projectId;
     private int taskId;
     private String taskName;
-    private String taskRequiredSkill;
+    private int taskRequiredSkill;
     private int taskDuration;
     private String taskRistLevel;
     private GregorianCalendar taskReleaseTime;
@@ -16,7 +16,7 @@ public class TaskDO {
     private ArrayList<Integer> requiredTaskIds;
 
     public TaskDO(int projectId, int taskId, String taskName, 
-            String taskRequiredSkill, int taskDuration,
+            int taskRequiredSkill, int taskDuration,
             String taskRistLevel, GregorianCalendar taskReleaseTime,
             String taskStatus, ArrayList<Integer> requiredTaskIds) {
         
@@ -76,14 +76,14 @@ public class TaskDO {
     /**
      * @return the taskRequiredSkill
      */
-    public String getTaskRequiredSkill() {
+    public int getTaskRequiredSkill() {
         return taskRequiredSkill;
     }
 
     /**
      * @param taskRequiredSkill the taskRequiredSkill to set
      */
-    public void setTaskRequiredSkill(String taskRequiredSkill) {
+    public void setTaskRequiredSkill(int taskRequiredSkill) {
         this.taskRequiredSkill = taskRequiredSkill;
     }
 
