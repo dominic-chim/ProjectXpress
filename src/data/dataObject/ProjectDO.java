@@ -74,5 +74,4 @@ public class ProjectDO {
 	public void setTasks(ArrayList<TaskDO> tasks) {
 		this.tasks = tasks;
 	}
-
 }
