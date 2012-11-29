@@ -12,22 +12,31 @@ primary key (project_id)
 -- must create before task since foreign key restraint
 CREATE TABLE risk_level (
 task_risk_level varchar(20),
-risk_precentage int,
+risk_percentage int,
 primary key (task_risk_level)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- table skill stores skill id and 
+-- must create before task since foreign key restraint
+CREATE TABLE skill (
+skill_id int unsigned,
+skill_name char(50)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 -- table task stores task information for every table
 CREATE TABLE task (
 project_id int unsigned ,
 task_id int unsigned ,
 task_name char(100) ,
-task_required_skill char(100),
+task_required_skill int unsigned,
 task_duration int unsigned ,
 task_risk_level varchar(20),
 task_release_time datetime,
 task_status char(20),
 primary key (project_id, task_id),
 foreign key (project_id) references project (project_id),
+foreign key (task_required_skill) references skill (skill_id),
 foreign key (task_risk_level) references risk_level (task_risk_level)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -51,10 +60,11 @@ primary key (staff_id)
 -- table staff_skill_level stores levels of all skills of each staff
 CREATE TABLE staff_skill_level (
 staff_id int unsigned ,
-skill_name char(50),
+skill_id int unsigned,
 skill_level real,
 primary key (staff_id, skill_name),
-foreign key (staff_id) references staff (staff_id)
+foreign key (staff_id) references staff (staff_id),
+foreign key (skill_id) references skill (skill_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     
 -- table staff_preference shows staff's preference of each task
@@ -93,5 +103,6 @@ end_datetime datetime,
 project_id int unsigned ,
 task_id int unsigned ,
 primary key (staff_id, start_datetime),
-foreign key (project_id, task_id) references task (project_id, task_id)
+foreign key (project_id, task_id) references task (project_id, task_id),
+foreign key (staff_id) references staff (staff_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
