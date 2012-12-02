@@ -9,7 +9,7 @@ project :
     project_id is the primary key of this table
 
 
-# table task stores task information for every table
+# table task stores task information for every project
 task :
     project_id          unsigned int    # project id 
     task_id             unsigned int    # task id
