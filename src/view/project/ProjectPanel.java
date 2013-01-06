@@ -1,7 +1,9 @@
 package view.project;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class ProjectPanel extends JPanel {
-
+	
+	
+	
 }

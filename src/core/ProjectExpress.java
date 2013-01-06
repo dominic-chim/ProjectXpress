@@ -6,7 +6,7 @@ import view.MainFrame;
  * program entrance
  * TODO create controllers and model here
  * 
- * @author Chen Ke
+ * @author Bob
  *
  */
 public class ProjectExpress {
