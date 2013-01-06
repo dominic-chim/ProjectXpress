@@ -8,10 +8,25 @@ import view.project.*;
 import view.staff.*;
 import view.statistic.*;
 
+
+/**
+ * 
+ * main frame of the program
+ * contains a menu bar and a tabbedpane 
+ * 
+ * the tabbed pane is used to hold tab: project, staff, statistical report
+ * 
+ * this class also holds references to tabs project, staff and statistical report(maybe not useful)
+ * 
+ * @author Bob
+ * 
+ */
 public class MainFrame extends JFrame {
 	
+	// the main menu bar
 	private MainMenuBar menuBar = new MainMenuBar();
 	
+	// the container contains all tabs
 	private JTabbedPane mainTabbedPane = new  JTabbedPane();
 	
 	// component in mainTabbedPane
