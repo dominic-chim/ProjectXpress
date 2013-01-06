@@ -3,6 +3,9 @@ package data.dataObject.test;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import data.dataObject.ProjectDO;
 import data.dataObject.TaskDO;
 import test.GroupTestCase;
@@ -15,14 +18,17 @@ public class TestProjectDO extends GroupTestCase{
 		super(name);
 	}
 	
+	@Before
 	protected void setUp() {
 		pdo = new ProjectDO(0, null, null, 0, null, null);
 	}
 	
+	@Test
 	public void testSetGetProjectId() {
 		pdo.setProjectId(1);
 		assertEquals(1, pdo.getProjectId());
 	}
+	
 	
 	public void testSetGetProjectName() {
 		pdo.setProjectName("place");
