@@ -48,7 +48,8 @@ public class MainFrame extends JFrame {
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		
-		setSize(600, 600);
+		//setSize(600, 600);
+		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
