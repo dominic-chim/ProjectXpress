@@ -1,3 +1,4 @@
+package view.menu;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,60 +7,66 @@ import javax.swing.*;
 
 public class MainMenuBar extends JMenuBar {
 
-	private JMenuBar Menu;
+	//?
 	private String Path, savePath;
+	
+	// predefined colors 
 	private Color ColourA = new Color(0xC3BEFA);
 	private Color ColourB = new Color(0x6052FF);
 
-	private JMenu MenuFile = new JMenu("File");
-	private JButton MenuNew = new JButton("New");
-	private JButton MenuOpen = new JButton("Open");
-	private JButton MenuSave = new JButton("Save");
-	private JButton MenuClose = new JButton("Close");
-	private JMenu MenuView = new JMenu("View");
-	private JMenu MenuSettings = new JMenu("Settings");
-	private JMenu MenuContainer = new JMenu();
-
-	// TODO create menu items here
-
+	// menus
+	private JMenu menuFile = new JMenu("File");
+	private JMenu menuView = new JMenu("View");
+	private JMenu menuSettings = new JMenu("Settings");
+	
+	// menu items
+	private JMenuItem miFileNew = new JMenuItem("New");
+	private JMenuItem miFileOpen = new JMenuItem("Open");
+	private JMenuItem miFileSave = new JMenuItem("Save");
+	private JMenuItem miFileClose = new JMenuItem("Close");
+	
 	public MainMenuBar() {
-		MenuListeners action = new MenuListeners(this);
-		// TODO add menu items to corresponding menu
+		
+		
+		//MenuListeners action = new MenuListeners(this);
 
 		// settings for File Menu
-		MenuFile.setForeground(Color.white);
+		menuFile.setForeground(Color.white);
 
 		// settings for New Menu
-		MenuNew.setBackground(Color.white);
-		MenuNew.setForeground(ColourB);
-		MenuNew.addActionListener(action);
-		MenuNew.setMaximumSize(new Dimension(70, 40));
-		MenuFile.add(MenuNew);
+		miFileNew.setBackground(Color.white);
+		miFileNew.setForeground(ColourB);
+		//MenuNew.addActionListener(action);
+		miFileNew.setMaximumSize(new Dimension(70, 40));
+		menuFile.add(miFileNew);
 
 		// setting for Open Menu
-		MenuOpen = new JButton("Open");
-		MenuOpen.setBackground(Color.white);
-		MenuOpen.setForeground(ColourB);
-		MenuOpen.setMaximumSize(new Dimension(70, 40));
-		MenuOpen.addActionListener(action);
-		MenuFile.add(MenuOpen);
+		//miFileOpen = new JButton("Open");
+		miFileOpen.setBackground(Color.white);
+		miFileOpen.setForeground(ColourB);
+		miFileOpen.setMaximumSize(new Dimension(70, 40));
+		//MenuOpen.addActionListener(action);
+		menuFile.add(miFileOpen);
 
 		// settings for Save Menu
 
-		MenuSave.setBackground(Color.white);
-		MenuSave.setForeground(ColourB);
-		MenuSave.setMaximumSize(new Dimension(70, 40));
+		miFileSave.setBackground(Color.white);
+		miFileSave.setForeground(ColourB);
+		miFileSave.setMaximumSize(new Dimension(70, 40));
 		
-		MenuSave.addActionListener(action);
-		MenuFile.add(MenuSave);
+		//MenuSave.addActionListener(action);
+		menuFile.add(miFileSave);
 
-		MenuClose = new JButton("Close");
-		MenuClose.setBackground(Color.white);
-		MenuClose.setForeground(ColourB);
-		MenuClose.setMaximumSize(new Dimension(70, 40));
-		MenuFile.add(MenuClose);
-		MenuClose.addActionListener(action);
-		Menu.add(MenuFile);
+		//miFileClose = new JButton("Close");
+		miFileClose.setBackground(Color.white);
+		miFileClose.setForeground(ColourB);
+		miFileClose.setMaximumSize(new Dimension(70, 40));
+		menuFile.add(miFileClose);
+		//MenuClose.addActionListener(action);
+		
+		add(menuFile);
+		add(menuView);
+		add(menuSettings);
 
 		/*MenuView = new JMenu("View");
 		MenuView.setForeground(Color.white);
@@ -80,7 +87,7 @@ public class MainMenuBar extends JMenuBar {
 
 		Menu.add(MenuView);*/
 
-		MenuView.setForeground(Color.white);
+		menuView.setForeground(Color.white);
 
 	}
 
