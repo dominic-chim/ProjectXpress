@@ -26,8 +26,6 @@ public class ProjectPanel extends JPanel {
 	
 	public ProjectPanel() {
 		
-		
-		
 		// TODO change these tabs to customized ones
 		rightTabs.addTab("Summary of Projects", new JPanel());
 		rightTabs.addTab("Project Allocation", new JPanel());
@@ -36,6 +34,5 @@ public class ProjectPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(mainContainer, BorderLayout.CENTER);
 	}
-	
 	
 }
