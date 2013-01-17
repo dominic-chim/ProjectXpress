@@ -13,7 +13,7 @@ public class StaffPanel extends JPanel {
 	// main split pane
 	private JSplitPane mainContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, staffSummary, rightTabPane);
 	
-	public ProjectPanel() {
+	public StaffPanel() {
 		
 		rightTabs.addTab("Summary of Projects", new JPanel());
 		rightTabs.addTab("Project Allocation", new JPanel());
