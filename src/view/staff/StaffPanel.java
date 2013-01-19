@@ -15,10 +15,6 @@ public class StaffPanel extends JPanel {
 	
 	public StaffPanel() {
 		
-		rightTabs.addTab("Summary of Projects", new JPanel());
-		rightTabs.addTab("Project Allocation", new JPanel());
-		rightTabs.setPreferredSize(new Dimension(600, 600));
-		
 		setLayout(new BorderLayout());
 		add(mainContainer, BorderLayout.CENTER);
 	}
