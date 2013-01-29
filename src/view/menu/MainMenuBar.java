@@ -1,10 +1,10 @@
-package menu;
+package view.menu;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.*;
 
-public class MainMenuBar {
+public class MainMenuBar extends JMenuBar{
 
 	// ?
 	// private String Path, savePath;

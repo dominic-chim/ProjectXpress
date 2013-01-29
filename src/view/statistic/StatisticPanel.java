@@ -1,4 +1,4 @@
-package statistic;
+package view.statistic;
 
 import javax.swing.JPanel;
 
