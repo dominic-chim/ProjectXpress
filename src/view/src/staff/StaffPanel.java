@@ -1,8 +1,8 @@
-package staff;
+package view.staff;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
