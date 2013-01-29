@@ -1,3 +1,5 @@
+package staff;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -10,8 +12,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 public class StaffList extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6731026491001663226L;
 	private JPanel buttonPanel = new JPanel();
-
 	private JButton btnDelete = new JButton("Delete Staff");
 	private JButton btnModify = new JButton("Modify Staff");
 	private JButton btnAdd = new JButton("Add Staff");
@@ -35,7 +40,7 @@ public class StaffList extends JPanel {
 				"The Java Series");
 		createNodes(top);
 		tree = new JTree(top);
-		JScrollPane treeView = new JScrollPane(tree);
+		new JScrollPane(tree);
 		setVisible(true);
 		
 		add(tree, BorderLayout.CENTER);
@@ -57,7 +62,7 @@ public class StaffList extends JPanel {
 	}
 
 	// Add a staff to Staff Summary
-	public void addProject() {
+	public void addStaff() {
 
 	}
 
