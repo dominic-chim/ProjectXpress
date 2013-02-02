@@ -17,6 +17,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import data.dataObject.*;
+
 public class StaffList extends JPanel {
 
 	private JPanel buttonPanel = new JPanel();
@@ -128,7 +130,8 @@ public class StaffList extends JPanel {
 		StaffDO staffDo	 = new StaffDO(staffInput.get("ID"), staffInput.get("Name"),
 				staffInput.get("WeeklyAvail"), staffInput.get("SkillName"), staffInput.get("SkillLevel"),
 				staffInput.get("ProjectId"), staffInput.get("Task"), staffInput.get("PrefenceLevel"));
-	}
+		
+	
 	
 	public void modifyStaff() {
 		
