@@ -1,9 +1,13 @@
 package view.staff;
 
-import javax.swing.JPanel;
+import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
 
 public class StaffAllocation extends JPanel {
 
+	public void addController(ActionListener controller) {
+
+	}
 
 }
