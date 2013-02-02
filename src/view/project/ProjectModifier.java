@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import view.MainFrame;
 
-@SuppressWarnings("serial")
 public class ProjectModifier extends JPanel implements ActionListener {
 	public JButton add, clear;
 	public String ProjectStatus;
@@ -128,7 +127,6 @@ public class ProjectModifier extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JComboBox<String> cb = (JComboBox<String>)e.getSource();
         ProjectStatus = (String) cb.getSelectedItem();
-		
 	}
 
 }

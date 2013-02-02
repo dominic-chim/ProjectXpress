@@ -38,9 +38,9 @@ public class ProjectList extends JPanel {
 		
 		add(bottomPanel, BorderLayout.SOUTH);
 		setPreferredSize(new Dimension(300, 600));
-	}
+        }
 	
-	// Add a staff to Staff Summary
+        // Add a staff to Staff Summary
 		public void addProject() {
 
 		}
