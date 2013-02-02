@@ -3,7 +3,7 @@ package view.project;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.*;
-
+import data.dataObject.*;
 
 /**
  * 
