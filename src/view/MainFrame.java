@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 	
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
-	private StaffContainer staffPanel = new StaffContainer();
+	private StaffView staffPanel = new StaffView();
 	private StatisticPanel statisticPanel = new StatisticPanel();
 	
 	public MainFrame() {

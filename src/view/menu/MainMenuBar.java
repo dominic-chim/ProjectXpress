@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.*;
 import controllers.menu.*;
 
-public class MainMenuBar {
+public class MainMenuBar extends JMenuBar {
 
 	
 
@@ -14,7 +14,7 @@ public class MainMenuBar {
 	Color ColourB = new Color(0x6052FF);
 
 	// menus
-	JMenuBar Menu;
+	//JMenuBar Menu;
 	private JMenu menuFile = new JMenu("File");
 	private JMenu menuView = new JMenu("View");
 	private JMenu menuSettings = new JMenu("Settings");
@@ -26,12 +26,12 @@ public class MainMenuBar {
 	private JMenuItem miFileClose = new JMenuItem("Close");
 
 	public MainMenuBar() {
-		Menu = new JMenuBar();
-		Menu.setBackground(ColourB);
+		//Menu = new JMenuBar();
+		setBackground(ColourB);
 		
-	}
+	//}
 
-	public JMenuBar MainMenuCreate() {
+	//public JMenuBar MainMenuCreate() {
 
 
 		// settings for File Menu options
@@ -66,14 +66,14 @@ public class MainMenuBar {
 		menuFile.add(miFileClose);
 	
 
-		Menu.add(menuFile);
+		this.add(menuFile);
 		menuView.setForeground(Color.white);
-		Menu.add(menuView);
+		this.add(menuView);
 		menuSettings.setForeground(Color.white);
-		Menu.add(menuSettings);
+		this.add(menuSettings);
 
 		menuView.setForeground(Color.white);
-		return Menu;
+		//return Menu;
 	}
 
 }
