@@ -2,8 +2,7 @@ package controllers.staff;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import view.staff.MainFrameTest;
+import view.staff.*;
 
 public class StaffController implements ActionListener {
 	
