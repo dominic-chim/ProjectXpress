@@ -23,17 +23,17 @@ public class StaffList extends JPanel {
 
 	private JPanel buttonPanel = new JPanel();
 
-	//Bottom Buttons
+	// Bottom Buttons
 	private JButton btnDelete = new JButton("Delete Staff");
 	private JButton btnModify = new JButton("Modify Staff");
 	private JButton btnAdd = new JButton("Add Staff");
 
-	//JTree 
+	// JTree
 	private JTree tree;
 	DefaultMutableTreeNode staff;
 	DefaultTreeModel treeModel;
-	
-	//Text Fields for Adding Staff
+
+	// Text Fields for Adding Staff
 	JTextField tfId;
 	JTextField tfName;
 	JTextField tfWeeklyAvail;
@@ -42,7 +42,7 @@ public class StaffList extends JPanel {
 	JTextField tfTaskId;
 	JTextField tfProjectId;
 	JTextField tfPrefenceLevel;
-	
+
 	public StaffList() {
 
 		setLayout(new BorderLayout());
@@ -123,54 +123,57 @@ public class StaffList extends JPanel {
 	}
 
 	public void addStaff() {
-		
+
 		createStaffOptionPane();
 		HashMap<String, String> staffInput = getStaffInput();
-		
-		StaffDO staffDo	 = new StaffDO(staffInput.get("ID"), staffInput.get("Name"),
-				staffInput.get("WeeklyAvail"), staffInput.get("SkillName"), staffInput.get("SkillLevel"),
-				staffInput.get("ProjectId"), staffInput.get("Task"), staffInput.get("PrefenceLevel"));
-		
-	
-	
-	public void modifyStaff() {
-		
+
+		/*
+		 * StaffDO staffDo = new StaffDO(staffInput.get("ID"),
+		 * staffInput.get("Name"), staffInput.get("WeeklyAvail"),
+		 * staffInput.get("SkillName"), staffInput.get("SkillLevel"),
+		 * staffInput.get("ProjectId"), staffInput.get("Task"),
+		 * staffInput.get("PrefenceLevel"));
+		 */
 	}
-	
-	//Not sure if I should put this in addStaff, or if it will be used by modifyStaff aswell
+
+	public void modifyStaff() {
+
+	}
+
+	// Not sure if I should put this in addStaff, or if it will be used by
+	// modifyStaff aswell
 	public void createStaffOptionPane() {
-		
-		//Panel and Layout - Panel will be put in OptionPane
+
+		// Panel and Layout - Panel will be put in OptionPane
 		JPanel addStaffPanel = new JPanel();
-		addStaffPanel.setLayout(new GridLayout(7,1));
-		
-		//Labels and TextFields for input
+		addStaffPanel.setLayout(new GridLayout(7, 1));
+
+		// Labels and TextFields for input
 		JLabel lblId = new JLabel("ID");
-		tfId= new JTextField();
-		
+		tfId = new JTextField();
+
 		JLabel lblName = new JLabel("Name");
 		tfName = new JTextField();
-		
-		JLabel lblWeeklyAvail= new JLabel("Weekly Available Time:");
-		tfWeeklyAvail= new JTextField();
-		
-		JLabel lblSkillName= new JLabel("Skill Name:");
-		tfSkillName= new JTextField();
-		
+
+		JLabel lblWeeklyAvail = new JLabel("Weekly Available Time:");
+		tfWeeklyAvail = new JTextField();
+
+		JLabel lblSkillName = new JLabel("Skill Name:");
+		tfSkillName = new JTextField();
+
 		JLabel lblSkillLevel = new JLabel("Skill Level:");
 		tfSkillLevel = new JTextField();
-		
+
 		JLabel lblProjectId = new JLabel("Project Id:");
 		tfProjectId = new JTextField();
-		
+
 		JLabel lblTaskId = new JLabel("Task Id:");
 		tfTaskId = new JTextField();
 
 		JLabel lblPrefenceLevel = new JLabel("Prefence Level:");
 		tfPrefenceLevel = new JTextField();
 
-		
-		//Add Labels and TextFields to Panel
+		// Add Labels and TextFields to Panel
 		addStaffPanel.add(lblName);
 		addStaffPanel.add(tfName);
 		addStaffPanel.add(lblWeeklyAvail);
@@ -185,27 +188,25 @@ public class StaffList extends JPanel {
 		addStaffPanel.add(tfTaskId);
 		addStaffPanel.add(lblPrefenceLevel);
 		addStaffPanel.add(tfPrefenceLevel);
-		
-		JOptionPane.showConfirmDialog(null, addStaffPanel,
-				"Add Staff", JOptionPane.OK_CANCEL_OPTION);
-		
+
+		JOptionPane.showConfirmDialog(null, addStaffPanel, "Add Staff",
+				JOptionPane.OK_CANCEL_OPTION);
+
 	}
-	
+
 	public HashMap<String, String> getStaffInput() {
-		
+
 		HashMap<String, String> staffInput = new HashMap<String, String>();
-		
+
 		staffInput.put("Name", tfName.getText());
 		staffInput.put("WeeklyAvail", tfWeeklyAvail.getText());
 		staffInput.put("SkillLevel", tfSkillLevel.getText());
 		staffInput.put("PrefenceLevel", tfPrefenceLevel.getText());
-		
+
 		return staffInput;
-		
+
 	}
 
-	
-	
 	// Add ActionListener
 	public void addController(ActionListener controller) {
 
