@@ -55,7 +55,7 @@ public class StaffDO {
 		return skillLevel;
 	}
 
-	public HashMap<Integer, Integer> getPrefenceLevel(int taskId) {
+	public HashMap<Integer, HashMap<Integer, Integer>> getPrefenceLevel(int taskId) {
 		return prefenceLevel;
 	}
 
