@@ -1,3 +1,4 @@
+package view.staff;
 
 
 import java.awt.BorderLayout;
