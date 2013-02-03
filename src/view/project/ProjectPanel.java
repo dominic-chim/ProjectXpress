@@ -14,9 +14,6 @@ import data.dataObject.*;
  */
 public class ProjectPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2335250764236170843L;
 
 	// left panel
@@ -31,7 +28,6 @@ public class ProjectPanel extends JPanel {
 
 	public ProjectPanel() {
 
-
 		// TODO change these tabs to customized ones
 		rightTabs.addTab("Summary of Projects", new JPanel());
 		rightTabs.addTab("Project Allocation", new JPanel());
@@ -40,5 +36,9 @@ public class ProjectPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(mainContainer, BorderLayout.CENTER);
 	}
+
+    public ProjectList getProjectList() {
+        return projectList;
+    }
 
 }

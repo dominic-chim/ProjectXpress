@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import controllers.MainController;
+
 import view.MainFrame;
 
 /**
@@ -15,9 +17,9 @@ import view.MainFrame;
  */
 public class ProjectExpress {
 
-	public static void main(String[] args) {
-		
-		 // set look and feel
+    public static void main(String[] args) {
+        
+         // set look and feel
         try {
             // using Nimbus look and feel
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -29,10 +31,13 @@ public class ProjectExpress {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Cannot use Nimbus!");
         }
-		
+        
         // create view 
-		MainFrame view = new MainFrame();
-		
-		view.setVisible(true);
-	}
+        MainFrame view = new MainFrame();
+
+        // create controller
+        MainController controller = new MainController(view);
+        
+        view.setVisible(true);
+    }
 }

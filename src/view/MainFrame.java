@@ -53,4 +53,8 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
+
+    public ProjectPanel getProjectPanel() {
+        return projectPanel;
+    }
 }
