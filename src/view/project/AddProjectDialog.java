@@ -2,8 +2,11 @@ package view.project;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import view.MainFrame;
 
 public class AddProjectDialog extends JDialog {
 
@@ -34,7 +37,9 @@ public class AddProjectDialog extends JDialog {
     private JButton jbtnCancel = new JButton("Cancel");
     private JButton jbtnFinish = new JButton("Finish");
 
-    public AddProjectDialog() {
+    public AddProjectDialog(MainFrame view) {
+
+        super(view, true);
 
         setLayout(new BorderLayout());
 
@@ -54,6 +59,11 @@ public class AddProjectDialog extends JDialog {
 
         // add contents to bottom panel
         jpnlBottom.setLayout(new GridLayout(0, 3));
+
+        jbtnAddTask.setActionCommand("add");
+        jbtnCancel.setActionCommand("cancel");
+        jbtnFinish.setActionCommand("finish");
+
         jpnlBottom.add(jbtnAddTask);
         jpnlBottom.add(jbtnCancel);
         jpnlBottom.add(jbtnFinish);
@@ -68,5 +78,11 @@ public class AddProjectDialog extends JDialog {
         setSize(400, 600);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+
+    public void addController(ActionListener listener) {
+        jbtnAddTask.addActionListener(listener);
+        jbtnCancel.addActionListener(listener);
+        jbtnFinish.addActionListener(listener);
     }
 }

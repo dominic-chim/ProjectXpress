@@ -13,7 +13,7 @@ public class MainController {
         this.view = view;
 
         // start other controllers
-        ProjectController projectController = new ProjectController(view.getProjectPanel());
+        ProjectController projectController = new ProjectController(view);
     }
 
 
