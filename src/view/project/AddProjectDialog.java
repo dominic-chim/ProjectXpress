@@ -31,7 +31,10 @@ public class AddProjectDialog extends JDialog {
     private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
 
+    // jlist to show tasks
+    private JList<String> taskList = new JList<String>(new String[]{"Task1", "Task2"});
 
+    
     // buttons
     private JButton jbtnAddTask = new JButton("Add task");
     private JButton jbtnCancel = new JButton("Cancel");
@@ -55,7 +58,7 @@ public class AddProjectDialog extends JDialog {
         jpnlTop.add(jcbStatus);
 
         // TODO add contents to middle panel
-
+        jpnlMiddle.add(taskList);
 
         // add contents to bottom panel
         jpnlBottom.setLayout(new GridLayout(0, 3));
