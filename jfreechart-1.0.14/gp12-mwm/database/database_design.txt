@@ -1,0 +1,103 @@
+# table project stores project information
+project :
+    project_id          unsigned int   # project id
+    project_name        char()         # project name
+    project_due_date    datetime       # due date and time of the project
+    project_priority    unsigned int   # priority of the project
+    project_status      char()         # status of the project (open or closed)
+
+    project_id is the primary key of this table
+
+
+# table task stores task information for every project
+task :
+    project_id          unsigned int    # project id 
+    task_id             unsigned int    # task id
+    task_name           char()          # task name
+    task_required_skill unsigned int    # required skill for each task
+    task_duration       unsigned int    # duration of a task in hour
+    task_risk_level     char()          # task risk level
+    task_release_time   datetime        # release date and time of a task
+    task_status         char()          # status of the task
+
+    (project_id, task_id) is the primary key
+    project_id is a foreign key to table project's primary key (project_id)
+    task_risk_level is a foreign key to risk_level's primary key (task_risk_level)
+
+# table task_precedence shows preconditions of each task
+task_precedence :
+    project_id          unsigned int    # project id
+    task_id             unsigned int    # task id
+    required_task_id    unsigned int    # the id of required task of each task
+    
+    (project_id, task_id, required_task_id) is the primary key
+    (project_id, task_id) is the foreign key to table task's primary key (project_id, task_id)
+
+# table staff stores the information of each staff
+staff :
+    staff_id                    unsigned int # staff id
+    staff_name                  char()       # staff name
+    staff_weekly_available_time unsigned int # available time during each week
+
+    staff_id is the primary key
+
+# table staff_skill_level stores levels of all skills of each staff
+staff_skill_level :
+    staff_id        unsigned int    # staff id
+    skill_name      unsigned int    # skill name
+    skill_level     real            # skill level of each skill
+
+    (staff_id, skill_name) is the primary key
+    staff_id is the foreign key to table staff's primary key (staff_id)
+    
+# table staff_preference shows staff's preference of each task
+staff_preference
+    staff_id            unsigned int    # staff id
+    project_id          unsigned int    # project id
+    task_id             unsigned int    # task id
+    preference_level    unsigned int    # preference level of the specific task
+
+    (staff_id, project_id, task_id) is the primary key
+    staff_id is the foreign key to table staff's primary key (staff_id)
+    (project_id, task_id) is the foreign key to table task's primary key (project_id, task_id)
+
+# table risk level shows risk level name and the percentage of that name 
+risk_level :
+    task_risk_level     char()  # risk level name
+    risk_precentage     int     # percentage of required extra time
+
+    task_risk_level is the primary key
+
+# table historical_holiday_record shows average taken holidays based on historical record
+historical_holiday_record :
+   month            unsigned int    # january to december
+   holiday_count    unsigned int    # average taken holidays
+   
+   month is the primary key
+
+# table staff_holidays shows staff holidays allocation
+staff_holidays :
+    staff_id            unsigned int    # staff id
+    holiday_start_time  datetime        # start time of holiday
+    holiday_end_time    datetime        # end time of holiday
+    
+    (staff_id, holiday_start_time) is the primary key
+    staff_id is a foreign key to table staff's foreign key (staff_id)
+    
+# table scheduling_result stores the result
+scheduling_result :
+    staff_id        unsigned int    # staff id
+    start_datetime  datetime        # start time of the task
+    end_datetime    datetime        # end time of the task
+    project_id      unsigned int    # project id
+    task_id         unsigned int    # task id
+
+    (staff_id, start_datetime) is the primary key
+    (project_id, task_id) is a foreign key to table task's primary key (project_id, task_id)
+    staff_id is a foreign key to table staff's primary key(staff_id);
+
+# table skill stores skill id and its name
+skill :
+    skill_id        unsigned int
+    skill_name      char(50)
+
