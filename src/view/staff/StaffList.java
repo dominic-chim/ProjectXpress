@@ -68,7 +68,7 @@ public class StaffList extends JPanel {
 		ArrayList<String> test = new ArrayList<String>();
 		test.add("test");
 		test.add("id");
-		addStaff(test);
+		addStaffToList(test);
 		add(tree, BorderLayout.CENTER);
 
 		setVisible(true);
@@ -100,7 +100,7 @@ public class StaffList extends JPanel {
 	}
 
 	// Add a staff to Staff Summary
-	public void addStaff(ArrayList<String> staffInfo) {
+	public void addStaffToList(ArrayList<String> staffInfo) {
 
 		DefaultMutableTreeNode name = null;
 		DefaultMutableTreeNode info = null;
@@ -125,8 +125,8 @@ public class StaffList extends JPanel {
 	public void addStaff() {
 
 		createStaffOptionPane();
-		HashMap<String, String> staffInput = getStaffInput();
-
+		ArrayList<String> staffInput = getStaffInput();
+		addStaffToList(staffInput);
 		/*
 		 * StaffDO staffDo = new StaffDO(staffInput.get("ID"),
 		 * staffInput.get("Name"), staffInput.get("WeeklyAvail"),
@@ -194,14 +194,14 @@ public class StaffList extends JPanel {
 
 	}
 
-	public HashMap<String, String> getStaffInput() {
+	public ArrayList<String> getStaffInput() {
 
-		HashMap<String, String> staffInput = new HashMap<String, String>();
+		ArrayList<String> staffInput = new ArrayList<String>();
 
-		staffInput.put("Name", tfName.getText());
-		staffInput.put("WeeklyAvail", tfWeeklyAvail.getText());
-		staffInput.put("SkillLevel", tfSkillLevel.getText());
-		staffInput.put("PrefenceLevel", tfPrefenceLevel.getText());
+		staffInput.add(tfName.getText());
+		staffInput.add(tfWeeklyAvail.getText());
+		staffInput.add(tfSkillLevel.getText());
+		staffInput.add(tfPrefenceLevel.getText());
 
 		return staffInput;
 

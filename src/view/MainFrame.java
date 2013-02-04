@@ -54,6 +54,10 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
+	public StaffView getStaffView() {
+		return staffPanel;
+	}
+	
     public ProjectPanel getProjectPanel() {
         return projectPanel;
     }

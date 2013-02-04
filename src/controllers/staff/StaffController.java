@@ -2,16 +2,17 @@ package controllers.staff;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import view.staff.*;
+
+import view.MainFrame;
 
 public class StaffController implements ActionListener {
 	
-	StaffView view;
+	MainFrame view;
 
-	public StaffController(StaffView view) {
+	public StaffController(MainFrame view) {
 		
 		this.view = view;
-		view.addController(this);
+		view.getStaffView().addController(this);
 		
 	}
 
@@ -35,7 +36,7 @@ public class StaffController implements ActionListener {
 		case "Add Staff":
 			System.out.println("Add Button");
 
-			view.addStaff();
+			view.getStaffView().addStaff();
 			
 			break;
 
