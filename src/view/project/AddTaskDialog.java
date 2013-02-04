@@ -33,6 +33,10 @@ public class AddTaskDialog extends JDialog {
     private JComboBox jcbStatus = new JComboBox(
             new String[]{"Started", "Not Started", "Completed"});
 
+    // jlist in center
+    // TODO add real data from model
+    private JList requiredTaskList = new JList();
+
     // buttons
     private JButton jbtnAddRequirement = new JButton("Add Required Task");
     private JButton jbtnCancel = new JButton("Cancel");
@@ -60,7 +64,8 @@ public class AddTaskDialog extends JDialog {
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
 
-        // TODO add a jlist in CENTER
+        // add a jlist in CENTER
+        add(requiredTaskList, BorderLayout.CENTER);
         
         // add buttons to bottom
         jbtnAddRequirement.setActionCommand("add");
