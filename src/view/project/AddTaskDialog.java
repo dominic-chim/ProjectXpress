@@ -66,8 +66,8 @@ public class AddTaskDialog extends JDialog {
         jpnlTop.add(jcbStatus);
 
         // add a jlist in CENTER
-        requiredTaskList.setPreferredSize(new Dimension(300, 200));
-        jpnlMiddle.add(requiredTaskList);
+        jpnlMiddle.setLayout(new BorderLayout());
+        jpnlMiddle.add(requiredTaskList, BorderLayout.CENTER);
         
         // add buttons to bottom
         jbtnAddRequirement.setActionCommand("add");

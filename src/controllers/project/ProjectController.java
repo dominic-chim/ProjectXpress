@@ -42,7 +42,7 @@ public class ProjectController {
 
     class AddProjectDialogBtnListener implements ActionListener {
 
-        AddProjectDialog parentDialog;
+        private AddProjectDialog parentDialog;
 
         public AddProjectDialogBtnListener(AddProjectDialog jdlogAddProject) {
             parentDialog = jdlogAddProject;
@@ -57,6 +57,7 @@ public class ProjectController {
                     jdlogAddTask.setVisible(true);
                     break;
                 case "cancel":
+                    parentDialog.dispose();
                     break;
                 case "finish":
                     break;
@@ -65,6 +66,27 @@ public class ProjectController {
             }
 
         }
+    }
+
+    // TODO check this and finish it 
+    class AddTaskDialogBtnListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            switch (e.getActionCommand()) {
+                case "add":
+                    break;
+                case "cancel":
+                    break;
+                case "finish":
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
     }
 
 }

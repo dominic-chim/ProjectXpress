@@ -58,7 +58,8 @@ public class AddProjectDialog extends JDialog {
         jpnlTop.add(jcbStatus);
 
         // TODO add contents to middle panel
-        jpnlMiddle.add(taskList);
+        jpnlMiddle.setLayout(new BorderLayout());
+        jpnlMiddle.add(taskList, BorderLayout.CENTER);
 
         // add contents to bottom panel
         jpnlBottom.setLayout(new GridLayout(0, 3));

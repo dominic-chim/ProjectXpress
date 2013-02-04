@@ -4,7 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 
 /**
@@ -18,6 +22,8 @@ public class ProjectList extends JPanel {
     private JButton btnDelete = new JButton("Delete Project");
     private JButton btnModify = new JButton("Modify Project");
     private JButton btnAdd = new JButton("Add project");
+
+    private JTree projectTree;
     
     public ProjectList() {
         
@@ -34,6 +40,19 @@ public class ProjectList extends JPanel {
         bottomPanel.add(btnModify);
         bottomPanel.add(btnAdd);
         
+        // set up the tree
+        // TODO finish this
+        DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("project");
+        DefaultMutableTreeNode taskSample1 = new DefaultMutableTreeNode("task1");
+        DefaultMutableTreeNode taskSample2 = new DefaultMutableTreeNode("task2");
+        DefaultMutableTreeNode taskSample3 = new DefaultMutableTreeNode("task3");
+        topNode.add(taskSample1);
+        topNode.add(taskSample2);
+        topNode.add(taskSample3);
+        projectTree = new JTree(topNode);
+        add(projectTree, BorderLayout.CENTER);
+        
+        // 
         add(bottomPanel, BorderLayout.SOUTH);
         setPreferredSize(new Dimension(300, 600));
     }
