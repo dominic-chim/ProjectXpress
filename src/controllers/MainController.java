@@ -14,6 +14,7 @@ public class MainController {
 
         // start other controllers
         ProjectController projectController = new ProjectController(view);
+        StaffController staffController = new StaffController(view);
     }
 
 
