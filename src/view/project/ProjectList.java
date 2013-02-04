@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.*;
-import controllers.project.*;
+
 
 /**
  * left part of project tab in MainFrame
@@ -19,8 +18,6 @@ public class ProjectList extends JPanel {
     private JButton btnDelete = new JButton("Delete Project");
     private JButton btnModify = new JButton("Modify Project");
     private JButton btnAdd = new JButton("Add project");
-
-    public ArrayList<ProjectModifier> projectList = new ArrayList<ProjectModifier>();
     
     public ProjectList() {
         
