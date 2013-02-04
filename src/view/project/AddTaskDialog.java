@@ -1,6 +1,7 @@
 package view.project;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -28,14 +29,14 @@ public class AddTaskDialog extends JDialog {
     private JTextArea jtxtReleaseTime = new JTextArea("0000-00-00 00:00:00");
 
     // TODO change it to the ones in database
-    private JComboBox jcbRiskLevel = new JComboBox(
+    private JComboBox<String> jcbRiskLevel = new JComboBox<String>(
             new String[]{"Low", "Middle", "High"});
-    private JComboBox jcbStatus = new JComboBox(
+    private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
 
     // jlist in center
     // TODO add real data from model
-    private JList requiredTaskList = new JList();
+    private JList<String> requiredTaskList = new JList<String>(new String[]{"Test1", "Test2"});
 
     // buttons
     private JButton jbtnAddRequirement = new JButton("Add Required Task");
@@ -65,7 +66,8 @@ public class AddTaskDialog extends JDialog {
         jpnlTop.add(jcbStatus);
 
         // add a jlist in CENTER
-        add(requiredTaskList, BorderLayout.CENTER);
+        requiredTaskList.setPreferredSize(new Dimension(300, 200));
+        jpnlMiddle.add(requiredTaskList);
         
         // add buttons to bottom
         jbtnAddRequirement.setActionCommand("add");

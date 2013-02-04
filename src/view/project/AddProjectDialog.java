@@ -28,7 +28,7 @@ public class AddProjectDialog extends JDialog {
     private JTextArea jtxtPriority = new JTextArea();
 
     // combobox for status
-    private JComboBox jcbStatus = new JComboBox(
+    private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
 
 
