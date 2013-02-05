@@ -3,6 +3,7 @@ package view.project;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -90,6 +91,25 @@ public class AddTaskDialog extends JDialog {
         setSize(400, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+
+    public void addController(ActionListener listener) {
+        jbtnAddRequirement.addActionListener(listener);
+        jbtnCancel.addActionListener(listener);
+        jbtnFinish.addActionListener(listener);
+    }
+
+    public String showAddReqiredTaskDialog() {
+        Object[] tasks = {"taskX", "taskN", "TaskXS"};
+        String result = (String)JOptionPane.showInputDialog(
+                            this,
+                            "Select Task:",
+                            "Required Task",
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            tasks,
+                            "ham");
+        return result;
     }
 
 }

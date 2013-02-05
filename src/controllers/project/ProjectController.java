@@ -54,6 +54,7 @@ public class ProjectController {
             switch (e.getActionCommand()) {
                 case "add":
                     AddTaskDialog jdlogAddTask = new AddTaskDialog(parentDialog);
+                    jdlogAddTask.addController(new AddTaskDialogBtnListener(jdlogAddTask));
                     jdlogAddTask.setVisible(true);
                     break;
                 case "cancel":
@@ -71,13 +72,21 @@ public class ProjectController {
     // TODO check this and finish it 
     class AddTaskDialogBtnListener implements ActionListener {
 
+        private AddTaskDialog parentDialog;
+
+        public AddTaskDialogBtnListener(AddTaskDialog parentDialog) {
+            this.parentDialog = parentDialog;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
             switch (e.getActionCommand()) {
-                case "add":
+                case "add": // add a Required task
+                    parentDialog.showAddReqiredTaskDialog();
                     break;
                 case "cancel":
+                    parentDialog.dispose();
                     break;
                 case "finish":
                     break;
