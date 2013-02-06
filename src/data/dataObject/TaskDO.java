@@ -15,20 +15,23 @@ public class TaskDO {
     private String taskStatus;
     private ArrayList<Integer> requiredTaskIds;
 
+    public TaskDO() {
+    }
+
     public TaskDO(int projectId, int taskId, String taskName, 
             int taskRequiredSkill, int taskDuration,
             String taskRistLevel, GregorianCalendar taskReleaseTime,
             String taskStatus, ArrayList<Integer> requiredTaskIds) {
         
-    setProjectId(projectId);
-    setTaskId(taskId);
-    setTaskName(taskName);
-    setTaskRequiredSkill(taskRequiredSkill);
-    setTaskDuration(taskDuration);
-    setTaskRistLevel(taskRistLevel);
-    setTaskReleaseTime(taskReleaseTime);
-    setTaskStatus(taskStatus);
-    setRequiredTaskIds(requiredTaskIds);
+        setProjectId(projectId);
+        setTaskId(taskId);
+        setTaskName(taskName);
+        setTaskRequiredSkill(taskRequiredSkill);
+        setTaskDuration(taskDuration);
+        setTaskRistLevel(taskRistLevel);
+        setTaskReleaseTime(taskReleaseTime);
+        setTaskStatus(taskStatus);
+        setRequiredTaskIds(requiredTaskIds);
     }
 
     /**

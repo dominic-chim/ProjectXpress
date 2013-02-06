@@ -12,6 +12,15 @@ public class ProjectDO {
     private String projectStatus;
     private ArrayList<TaskDO> tasks;
 
+    public ProjectDO() {
+        setProjectId(0);
+        setProjectName("");
+        setProjectDueDate(null);
+        setProjectPriority(0);
+        setProjectStatus("");
+        setTasks(null);
+    }
+
     public ProjectDO(int projectId, String projectName, 
                     GregorianCalendar projectDueDate,
                     int projectPriority, String projectStatus,
@@ -74,4 +83,8 @@ public class ProjectDO {
 	public void setTasks(ArrayList<TaskDO> tasks) {
 		this.tasks = tasks;
 	}
+
+    public void addTask(TaskDO task) {
+        tasks.add(task);
+    }
 }

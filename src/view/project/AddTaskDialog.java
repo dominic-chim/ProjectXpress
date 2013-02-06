@@ -1,13 +1,20 @@
 package view.project;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 public class AddTaskDialog extends JDialog {
+
+    // constant represent a component
+    public static final int TASK_NAME = 0;
+    public static final int REQUIRED_SKILL = 1;
+    public static final int DURATION = 2;
+    public static final int RISK_LEVEL = 3;
+    public static final int RELEASE_TIME = 4;
+    public static final int STATUS = 5;
 
 
     // container panels
@@ -25,7 +32,7 @@ public class AddTaskDialog extends JDialog {
 
     // texts
     private JTextArea jtxtTaskName = new JTextArea();
-    private JTextArea jtxtRequiredSkill = new JTextArea();
+    //private JTextArea jtxtRequiredSkill = new JTextArea();
     private JTextArea jtxtDuration = new JTextArea();
     private JTextArea jtxtReleaseTime = new JTextArea("0000-00-00 00:00:00");
 
@@ -34,6 +41,7 @@ public class AddTaskDialog extends JDialog {
             new String[]{"Low", "Middle", "High"});
     private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
+    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>();
 
     // jlist in center
     // TODO add real data from model
@@ -56,7 +64,7 @@ public class AddTaskDialog extends JDialog {
         jpnlTop.add(jlbTaskName);
         jpnlTop.add(jtxtTaskName);
         jpnlTop.add(jlbRequiredSkill);
-        jpnlTop.add(jtxtRequiredSkill);
+        jpnlTop.add(jcbRequiredSkill);
         jpnlTop.add(jlbDuration);
         jpnlTop.add(jtxtDuration);
         jpnlTop.add(jlbRiskLevel);
@@ -110,6 +118,27 @@ public class AddTaskDialog extends JDialog {
                             tasks,
                             "ham");
         return result;
+    }
+
+
+    public String getInputValue(final int componentId) {
+        switch(componentId) {
+            case TASK_NAME:
+                return jtxtTaskName.getText();
+            case REQUIRED_SKILL:
+                return jcbRequiredSkill.getSelectedItem().toString();
+            case DURATION:
+                return jtxtDuration.getText();
+            case RISK_LEVEL:
+                return jcbRiskLevel.getSelectedItem().toString();
+            case RELEASE_TIME:
+                return jtxtReleaseTime.getText();
+            case STATUS:
+                return jcbStatus.getSelectedItem().toString();
+            default: 
+                return "";
+        }
+
     }
 
 }
