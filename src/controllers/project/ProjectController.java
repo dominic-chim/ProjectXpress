@@ -2,6 +2,7 @@ package controllers.project;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import data.dataObject.*;
 
@@ -14,6 +15,8 @@ public class ProjectController {
 
     private MainFrame view;
     private ProjectPanel projectPanel;
+    private AddProjectDialog jdlogAddProject;
+    private AddTaskDialog jdlogAddTask;
 
     // models 
     private ProjectDO projectModel = new ProjectDO();
@@ -38,9 +41,9 @@ public class ProjectController {
                     break;
                 case "add":
                     // construct view of adding a project
-                    AddProjectDialog jdlogAddProject = new AddProjectDialog(view);
+                    jdlogAddProject = new AddProjectDialog(view);
 
-                    jdlogAddProject.addController(new AddProjectDialogBtnListener(jdlogAddProject));
+                    jdlogAddProject.addController(new AddProjectDialogBtnListener());
                     jdlogAddProject.setVisible(true);
 
                     break;
@@ -55,11 +58,13 @@ public class ProjectController {
     // ActionListener for all buttons in AddProjectDialog
     class AddProjectDialogBtnListener implements ActionListener {
 
+        /*
         private AddProjectDialog parentDialog; 
 
         public AddProjectDialogBtnListener(AddProjectDialog parentDialog) {
             this.parentDialog = parentDialog;
         }
+        */
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -67,13 +72,13 @@ public class ProjectController {
             switch (e.getActionCommand()) {
                 case "add":
                     // construct the view of adding a task
-                    AddTaskDialog jdlogAddTask = new AddTaskDialog(parentDialog);
+                    jdlogAddTask = new AddTaskDialog(jdlogAddProject);
 
-                    jdlogAddTask.addController(new AddTaskDialogBtnListener(jdlogAddTask));
+                    jdlogAddTask.addController(new AddTaskDialogBtnListener());
                     jdlogAddTask.setVisible(true);
                     break;
                 case "cancel":
-                    parentDialog.dispose();
+                    jdlogAddProject.dispose();
                     break;
                 case "finish":
                     break;
@@ -88,33 +93,53 @@ public class ProjectController {
     // ActionListeners for all buttons in 
     class AddTaskDialogBtnListener implements ActionListener {
 
+        /*
         private AddTaskDialog parentDialog;
 
         public AddTaskDialogBtnListener(AddTaskDialog parentDialog) {
             this.parentDialog = parentDialog;
         }
+        */
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
             switch (e.getActionCommand()) {
                 case "add": // add a Required task
-                    parentDialog.showAddReqiredTaskDialog();
+
+                    jdlogAddTask.showAddReqiredTaskDialog(getTaskNames());
                     break;
                 case "cancel":
-                    parentDialog.dispose();
+                    jdlogAddTask.dispose();
                     break;
                 case "finish":
-                    TaskDO taskModel = new TaskDO();
-                    taskModel.setTaskName(parentDialog.getInputValue(AddTaskDialog.TASK_NAME));
+                    taskModel = new TaskDO();
+                    String taskName = jdlogAddTask.getInputValue(AddTaskDialog.TASK_NAME);
+
+                    taskModel.setTaskName(taskName);
                     //taskModel.setTaskRequiredSkill(parentDialog.getInputValue(AddTaskDialog.REQUIRED_SKILL));
                     projectModel.addTask(taskModel);
+                    jdlogAddTask.dispose();
+
+                    jdlogAddProject.reloadList(getTaskNames());
                     break;
                 default:
                     break;
             }
 
         }
+
+    }
+
+    private String[] getTaskNames() {
+
+        ArrayList<TaskDO> tasks = projectModel.getTasks();
+        String[] names = new String[tasks.size()];
+        for(int i = 0; i < tasks.size(); i++) {
+            names[i] = tasks.get(i).getTaskName();
+        }
+
+        return names;
 
     }
 

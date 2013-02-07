@@ -18,7 +18,7 @@ public class ProjectDO {
         setProjectDueDate(null);
         setProjectPriority(0);
         setProjectStatus("");
-        setTasks(null);
+        setTasks(new ArrayList<TaskDO>());
     }
 
     public ProjectDO(int projectId, String projectName, 

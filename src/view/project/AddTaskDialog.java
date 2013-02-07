@@ -41,7 +41,7 @@ public class AddTaskDialog extends JDialog {
             new String[]{"Low", "Middle", "High"});
     private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
-    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>();
+    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>(new String[]{"s1"});
 
     // jlist in center
     // TODO add real data from model
@@ -107,8 +107,7 @@ public class AddTaskDialog extends JDialog {
         jbtnFinish.addActionListener(listener);
     }
 
-    public String showAddReqiredTaskDialog() {
-        Object[] tasks = {"taskX", "taskN", "TaskXS"};
+    public String showAddReqiredTaskDialog(Object[] tasks) {
         String result = (String)JOptionPane.showInputDialog(
                             this,
                             "Select Task:",

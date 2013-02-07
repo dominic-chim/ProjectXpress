@@ -32,7 +32,8 @@ public class AddProjectDialog extends JDialog {
             new String[]{"Started", "Not Started", "Completed"});
 
     // jlist to show tasks
-    private JList<String> taskList = new JList<String>(new String[]{"Task1", "Task2"});
+    private DefaultListModel<String> taskListModel = new DefaultListModel<String>();
+    private JList<String> taskList = new JList<String>(taskListModel);
 
     
     // buttons
@@ -57,7 +58,7 @@ public class AddProjectDialog extends JDialog {
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
 
-        // TODO add contents to middle panel
+        // add task list to middle panel
         jpnlMiddle.setLayout(new BorderLayout());
         jpnlMiddle.add(taskList, BorderLayout.CENTER);
 
@@ -88,5 +89,12 @@ public class AddProjectDialog extends JDialog {
         jbtnAddTask.addActionListener(listener);
         jbtnCancel.addActionListener(listener);
         jbtnFinish.addActionListener(listener);
+    }
+
+    public void reloadList(String[] taskNames) {
+        taskListModel.removeAllElements();
+        for(String taskName : taskNames) {
+            taskListModel.addElement(taskName);
+        }
     }
 }
