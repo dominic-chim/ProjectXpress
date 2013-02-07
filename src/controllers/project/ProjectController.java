@@ -107,7 +107,7 @@ public class ProjectController {
                 case "finish":
                     TaskDO taskModel = new TaskDO();
                     taskModel.setTaskName(parentDialog.getInputValue(AddTaskDialog.TASK_NAME));
-                    taskModel.setTaskRequiredSkill(parentDialog.getInputValue(AddTaskDialog.REQUIRED_SKILL));
+                    //taskModel.setTaskRequiredSkill(parentDialog.getInputValue(AddTaskDialog.REQUIRED_SKILL));
                     projectModel.addTask(taskModel);
                     break;
                 default:
