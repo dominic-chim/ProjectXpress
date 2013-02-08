@@ -3,11 +3,15 @@ package controllers.staff;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
+
 import view.MainFrame;
 
-public class StaffController implements ActionListener {
+public class StaffController implements ActionListener, TreeModelListener {
 	
 	MainFrame view;
+	
 
 	public StaffController(MainFrame view) {
 		
@@ -24,17 +28,15 @@ public class StaffController implements ActionListener {
 
 		case "Delete Staff":
 			
-			System.out.println("Delete Button");
+			view.getStaffView().deleteStaff();
 			
 			break;
 
 		case "Modify Staff":
-			System.out.println("Modify Button");
 
 			break;
 
 		case "Add Staff":
-			System.out.println("Add Button");
 
 			view.getStaffView().addStaff();
 			
@@ -44,6 +46,30 @@ public class StaffController implements ActionListener {
 
 		}
 
+	}
+
+	@Override
+	public void treeNodesChanged(TreeModelEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void treeNodesInserted(TreeModelEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void treeNodesRemoved(TreeModelEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void treeStructureChanged(TreeModelEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

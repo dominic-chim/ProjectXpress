@@ -1,7 +1,8 @@
 package view.statistic;
-import java.awt.*;
+import java.awt.BorderLayout;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class StatisticPanel extends JPanel {
 	/**

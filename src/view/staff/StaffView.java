@@ -56,6 +56,10 @@ public class StaffView extends JPanel {
 		staffList.addStaff();
 	}
 	
+	public void deleteStaff() {
+		staffList.deleteStaff();
+	}
+	
 	public void modifyStaff() {
 		
 	}
