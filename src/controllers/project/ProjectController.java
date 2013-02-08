@@ -81,6 +81,7 @@ public class ProjectController {
                     jdlogAddProject.dispose();
                     break;
                 case "finish":
+                    jdlogAddProject.dispose();
                     break;
                 default:
                     break;
@@ -117,6 +118,7 @@ public class ProjectController {
                     String taskName = jdlogAddTask.getInputValue(AddTaskDialog.TASK_NAME);
 
                     taskModel.setTaskName(taskName);
+                    //TODO add all fields
                     //taskModel.setTaskRequiredSkill(parentDialog.getInputValue(AddTaskDialog.REQUIRED_SKILL));
                     projectModel.addTask(taskModel);
                     jdlogAddTask.dispose();
