@@ -3,18 +3,21 @@ package view.project;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 
 public class AddTaskDialog extends JDialog {
 
     // constant represent a component
+    /*
     public static final int TASK_NAME = 0;
     public static final int REQUIRED_SKILL = 1;
     public static final int DURATION = 2;
     public static final int RISK_LEVEL = 3;
     public static final int RELEASE_TIME = 4;
     public static final int STATUS = 5;
+    */
 
 
     // container panels
@@ -41,7 +44,7 @@ public class AddTaskDialog extends JDialog {
             new String[]{"Low", "Middle", "High"});
     private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
-    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>(new String[]{"s1"});
+    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>(new String[]{"skill1", "skill2", "skill3"});
 
     // jlist in center
     // TODO add real data from model
@@ -120,6 +123,7 @@ public class AddTaskDialog extends JDialog {
     }
 
 
+    /*
     public String getInputValue(final int componentId) {
         switch(componentId) {
             case TASK_NAME:
@@ -138,6 +142,18 @@ public class AddTaskDialog extends JDialog {
                 return "";
         }
 
+    }
+    */
+
+    public HashMap<String, String> getAllInputValue() {
+        HashMap<String, String> values = new HashMap<String, String>();
+        values.put("task_name", jtxtTaskName.getText());
+        values.put("required_skill", jcbRequiredSkill.getSelectedItem().toString());
+        values.put("duration", jtxtDuration.getText());
+        values.put("risk_level", jcbRiskLevel.getSelectedItem().toString());
+        values.put("release_time", jtxtReleaseTime.getText());
+        values.put("status", jcbStatus.getSelectedItem().toString());
+        return values;
     }
 
 }
