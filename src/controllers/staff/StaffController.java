@@ -36,11 +36,14 @@ public class StaffController implements ActionListener, TreeModelListener {
 
 		case "Modify Staff":
 
+			view.getStaffView().modifyStaff(this);
+			
 			break;
 
 		case "Add Staff":
 
-			view.getStaffView().addStaffDialog(this);
+			view.getStaffView().addStaff(this);
+			
 
 			break;
 
@@ -75,11 +78,17 @@ public class StaffController implements ActionListener, TreeModelListener {
 
 		case "Add":
 			
-			staffDialog = view.getStaffView().getStaffDialog();
-			view.getStaffView().getStaffList().addStaff();
-			staffDialog.dispose();
+//			staffDialog = view.getStaffView().getStaffDialog();
+//			view.getStaffView().getStaffList().addStaff();
+//			staffDialog.dispose();
 
 			break;
+			
+		case "Update":
+			
+//			staffDialog = view.getStaffView().getStaffDialog();
+//			view.getStaffView().getStaffList().modifyStaff();
+			staffDialog.dispose();
 			
 		case "Cancel":
 			

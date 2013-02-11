@@ -52,15 +52,16 @@ public class StaffView extends JPanel {
 		
 	}
 	
-	public void addStaffDialog(ActionListener controller) {
-		staffList.addStaffDialog(controller);
+	public void addStaff(ActionListener controller) {
+		staffList.addStaff(controller);
 	}
 	
 	public void deleteStaff() {
 		staffList.deleteStaff();
 	}
 	
-	public void modifyStaff() {
+	public void modifyStaff(ActionListener controller) {
+		staffList.modifyStaff(controller);
 		
 	}
 	

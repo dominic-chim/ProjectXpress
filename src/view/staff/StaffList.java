@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -82,8 +84,8 @@ public class StaffList extends JPanel {
 
 	}
 
-	public void addStaffDialog(ActionListener controller) {
-		staffDialog = new StaffDialog(view, controller);
+	public void addStaffDialog(ActionListener controller, StaffDO staff) {
+		staffDialog = new StaffDialog(view, controller, staff);
 
 		// If Ok Button was pressed
 		// if (result == 0) {
@@ -100,9 +102,12 @@ public class StaffList extends JPanel {
 		 */
 	}
 
-	public void addStaff() {
-		StaffDO staffInput = staffDialog.getStaffInput();
-		addStaffToList(staffInput);
+	public void addStaff(ActionListener controller) {
+		
+		addStaffDialog(controller, null);
+
+//		StaffDO staffInput = staffDialog.getStaffInput();
+//		addStaffToList(staffInput);
 
 		/*
 		 * StaffDO staffDo = new StaffDO(staffInput.get("ID"),
@@ -113,7 +118,29 @@ public class StaffList extends JPanel {
 		 */
 	}
 
-	public void modifyStaff() {
+	public void modifyStaff(ActionListener controller) {
+		
+		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
+				.getLastSelectedPathComponent();
+		if (selectedNode.toString() != "Staff") {
+
+			String id = treeModel.getChild(selectedNode, 0).toString();
+			
+			Pattern p = Pattern.compile("Id: (.*)");
+			Matcher m = p.matcher(id);
+			while (m.find()) {
+				id = m.group(1);
+			}
+	
+			StaffDao staffDao = new StaffDao();
+			StaffDO staff = staffDao.getStaffById(Integer.parseInt(id));
+			
+			addStaffDialog(controller, staff);
+			
+		}
+
+//		staffDao.deleteStaff(selectedNode.toString());
+		
 
 	}
 
@@ -123,15 +150,19 @@ public class StaffList extends JPanel {
 				.getLastSelectedPathComponent();
 		if (selectedNode.toString() != "Staff") {
 			treeModel.removeNodeFromParent(selectedNode);
+			StaffDao staffDao = new StaffDao();
+			staffDao.deleteStaff(selectedNode.toString());
+		
 		}
 
-		StaffDao staffDao = new StaffDao();
-		staffDao.deleteStaff(selectedNode.toString());
+		
 
 	}
 
 	// Add a staff to Staff Summary
-	public void addStaffToList(StaffDO staffInfo) {
+	public void addStaffToList() {
+
+		StaffDO staffInfo = staffDialog.getStaffInput();
 
 		DefaultMutableTreeNode name = null;
 		DefaultMutableTreeNode info = null;
@@ -159,7 +190,7 @@ public class StaffList extends JPanel {
 			name.add(info);
 			j++;
 		}
-
+				
 		// for (Map.Entry<String, String> entry : staffInfo.entrySet()) {
 		//
 		// if (entry.getKey() != "Name") {

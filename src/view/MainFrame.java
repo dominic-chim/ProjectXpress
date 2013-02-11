@@ -32,8 +32,8 @@ public class MainFrame extends JFrame {
 	
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
-	private StaffView staffPanel = new StaffView();
-	private StatisticPanel statisticPanel = new StatisticPanel();
+	private StaffView staffPanel = new StaffView(this);
+//	private StatisticPanel statisticPanel = new StatisticPanel();
 	
 	public MainFrame() {
 		
@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 		// add tabs to tabbed pane
 		mainTabbedPane.addTab("Project", projectPanel);
 		mainTabbedPane.addTab("Staff", staffPanel);
-		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		
