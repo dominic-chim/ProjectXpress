@@ -14,10 +14,10 @@ public class StaffDao extends DatabaseRoot {
 
 	public StaffDO getStaffById(int staffId) {
 
-		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, " +
-				"project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence WHERE staff_id = "
+		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
+				+ "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence WHERE staff_id = "
 				+ staffId;
-		
+
 		ResultSet result = null;
 		try {
 			result = db.executeQuery(sql);
@@ -40,7 +40,7 @@ public class StaffDao extends DatabaseRoot {
 		return staffDo;
 	}
 
-	public void createStaff(StaffDo staff) {
+	public void createStaff(StaffDO staff) {
 		
 		String staffValues = staff.getStaffId + ", '"
 				staff.getStaffName + "', '"
@@ -60,11 +60,39 @@ public class StaffDao extends DatabaseRoot {
 
 	}
 
-	public void editStaffById(String staffField, int newValue, int staffId) {
+	public void modifyStaff(StaffDO staff) {
+		
+		String staffValues = 
+				staff.getStaffName + "', '"
+				staff.getStaffWeeklyAvailableTime +  "', '";
+		
+		for(String i : staff.getSkills()) {
+			staffValues += i = "', '";
+		}
+		
+		for(String i : staff.getHolidays()) {
+			staffValues += i = "', '";
+		}
+		
+		String sql = "UPDATE INTO TABLE staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence SET " + staffValues + " WHERE staff_id = " + staff.getStaffId;
+		
+		try {
+			ResultSet result = db.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
-		// If statement to check staffField is valid?
-		String sql = "UPDATE staff, staff_prefence, staff_skill_level SET "
-				+ staffField + " = " + newValue + " WHERE staff_id= " + staffId;
+	public void deleteStaff(String staffName) {
+		
+		String sql = "DELETE FROM TABLE staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence WHERE staff_id = " + staff.getStaffId;
+		
+		try {
+			ResultSet result = db.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

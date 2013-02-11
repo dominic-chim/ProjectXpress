@@ -4,24 +4,24 @@ package view.staff;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
+
+import view.MainFrame;
 
 public class StaffView extends JPanel {
 
 	// Left panel - Staff Summary
-	StaffList staffList = new StaffList();
 	StaffSummary staffSummary;
 	StaffAllocation staffAllocation;
+	StaffList staffList;
 		
-	public StaffView() {
+	public StaffView(MainFrame view) {
+		
+		staffList = new StaffList(view);
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, staffList, staffTabPane());
 		
@@ -29,7 +29,7 @@ public class StaffView extends JPanel {
 		setPreferredSize(new Dimension(600, 600));
 
 		add(splitPane, BorderLayout.CENTER);
-		
+				
 	}
 	
 	public JPanel staffTabPane() {
@@ -52,8 +52,8 @@ public class StaffView extends JPanel {
 		
 	}
 	
-	public void addStaff() {
-		staffList.addStaff();
+	public void addStaffDialog(ActionListener controller) {
+		staffList.addStaffDialog(controller);
 	}
 	
 	public void deleteStaff() {
@@ -62,6 +62,16 @@ public class StaffView extends JPanel {
 	
 	public void modifyStaff() {
 		
+	}
+	
+	public StaffDialog getStaffDialog() {
+		
+		return staffList.getStaffDialog();
+		
+	}
+	
+	public StaffList getStaffList() {
+		return staffList;
 	}
 	
 	public void addController(ActionListener controller) {
