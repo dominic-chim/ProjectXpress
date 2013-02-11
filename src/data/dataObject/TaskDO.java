@@ -160,4 +160,9 @@ public class TaskDO {
         this.requiredTaskIds = requiredTaskIds;
     }
 
+    public void addReqiredTask(int taskId) {
+        requiredTaskIds.add(taskId);
+    }
+
+
 }

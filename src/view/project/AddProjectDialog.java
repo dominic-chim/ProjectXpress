@@ -3,6 +3,7 @@ package view.project;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -96,5 +97,14 @@ public class AddProjectDialog extends JDialog {
         for(String taskName : taskNames) {
             taskListModel.addElement(taskName);
         }
+    }
+
+    public HashMap<String, String> getAllInputValue() {
+        HashMap<String, String> values = new HashMap<String, String>();
+        values.put("project_name", jtxtProjectName.getText());
+        values.put("due_date", jtxtDueDate.getText());
+        values.put("priority", jtxtPriority.getText());
+        values.put("status", jcbStatus.getSelectedItem().toString());
+        return values;
     }
 }

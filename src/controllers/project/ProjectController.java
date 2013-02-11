@@ -22,7 +22,7 @@ public class ProjectController {
 
     // models 
     private ProjectDO projectModel = new ProjectDO();
-    private TaskDO taskModel = new TaskDO();
+    //private TaskDO taskModel = new TaskDO();
 
     public ProjectController(MainFrame view) {
         this.view = view;
@@ -83,6 +83,18 @@ public class ProjectController {
                     jdlogAddProject.dispose();
                     break;
                 case "finish":
+                    HashMap<String, String> valuesMap = jdlogAddProject.getAllInputValue();
+                    String projectName = valuesMap.get("project_name");
+                    //TODO handle date later String projectName = valuesMap.get("due_date");
+                    int priority = Integer.parseInt(valuesMap.get("priority"));
+                    String status = valuesMap.get("status");
+
+                    projectModel.setProjectName(projectName);
+                    //projectModel.setProjectDueDate();
+                    projectModel.setProjectPriority(priority);
+                    projectModel.setProjectStatus(status);
+
+                    //TODO adding projectModel to db;
                     jdlogAddProject.dispose();
                     break;
                 default:
@@ -92,7 +104,6 @@ public class ProjectController {
         }
     }
 
-    // TODO check this and finish it 
     // ActionListeners for all buttons in 
     class AddTaskDialogBtnListener implements ActionListener {
 
@@ -104,19 +115,32 @@ public class ProjectController {
         }
         */
 
+        private TaskDO taskModel = new TaskDO();
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
             switch (e.getActionCommand()) {
                 case "add": // add a Required task
-                    //TODO solve problem when adding new TaskDO
-                    jdlogAddTask.showAddReqiredTaskDialog(getTaskNames());
+                {
+                    // TODO test it
+                    String taskName = jdlogAddTask.showAddReqiredTaskDialog(getTaskNames());
+                    ArrayList<TaskDO> tasks = projectModel.getTasks();
+                    int taskId = 0;
+                    for(int i = 0; i < tasks.size(); i++) {
+                        if(tasks.get(i).getTaskName().equals(taskName)) 
+                            taskId = i + 1;
+                    }
+
+                    System.out.println(taskId);
+                    taskModel.addReqiredTask(taskId);
+                }
                     break;
                 case "cancel":
                     jdlogAddTask.dispose();
                     break;
                 case "finish":
-                    taskModel = new TaskDO();
+                    //taskModel = new TaskDO();
 
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                     String taskName = valuesMap.get("task_name");
@@ -139,6 +163,7 @@ public class ProjectController {
                     projectModel.addTask(taskModel);
                     jdlogAddTask.dispose();
 
+                    // refresh add_project panel
                     jdlogAddProject.reloadList(getTaskNames());
                     break;
                 default:
@@ -156,9 +181,6 @@ public class ProjectController {
         for(int i = 0; i < tasks.size(); i++) {
             names[i] = tasks.get(i).getTaskName();
         }
-
         return names;
-
     }
-
 }
