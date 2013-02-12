@@ -14,7 +14,7 @@ public class TestTaskDO extends GroupTestCase{
 	}
 	
 	protected void setUp() {
-		tdo = new TaskDO(0, 0, null, null, 0, null, null, null, null);
+		tdo = new TaskDO();
 	}
 
 	public void testSetGetProjectId(){
@@ -33,8 +33,8 @@ public class TestTaskDO extends GroupTestCase{
 	}
 	
 	public void testSetTaskRequiredSkill(){
-		tdo.setTaskRequiredSkill("Management");
-		assertEquals("Management", tdo.getTaskRequiredSkill());
+		tdo.setTaskRequiredSkill(1);
+		assertEquals(1, tdo.getTaskRequiredSkill());
 	}
 	
 	public void testSetTaskDuration(){

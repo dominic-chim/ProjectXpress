@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.Skills;
+import data.Context;
 import data.dataObject.*;
 
 import view.MainFrame;
@@ -144,7 +144,7 @@ public class ProjectController {
 
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                     String taskName = valuesMap.get("task_name");
-                    int requiredSkillId = Skills.SKILLS.get(valuesMap.get("required_skill"));
+                    int requiredSkillId = Context.skills.get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
                     String status = valuesMap.get("status");
