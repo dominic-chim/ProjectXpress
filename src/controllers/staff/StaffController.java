@@ -6,19 +6,25 @@ import java.awt.event.ActionListener;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 
+import database.dataAccessObject.StaffDao;
+
 import view.MainFrame;
 import view.staff.StaffDialog;
 
-public class StaffController implements ActionListener, TreeModelListener {
+public class StaffController implements ActionListener {
 
 	MainFrame view;
 	StaffDialog staffDialog;
+	StaffDao staffDao = new StaffDao();		
 
 	public StaffController(MainFrame view) {
 
 		this.view = view;
 		view.getStaffView().addController(this);
-
+		
+		//Initialise staff tree with staff currently in the database
+//		view.getStaffView().getStaffList().createDefaultStaff(staffDao.getAllStaff());
+		
 	}
 
 	public void actionPerformed(ActionEvent ae) {
@@ -30,7 +36,8 @@ public class StaffController implements ActionListener, TreeModelListener {
 
 		case "Delete Staff":
 
-			view.getStaffView().deleteStaff();
+			String staffToDelete = view.getStaffView().deleteStaff();
+			staffDao.deleteStaff(staffToDelete);
 
 			break;
 
@@ -76,18 +83,19 @@ public class StaffController implements ActionListener, TreeModelListener {
 			
 			break;
 
+		//Add Button In Staff Dialog
 		case "Add":
 			
-//			staffDialog = view.getStaffView().getStaffDialog();
-//			view.getStaffView().getStaffList().addStaff();
-//			staffDialog.dispose();
+			staffDialog = view.getStaffView().getStaffDialog();
+			view.getStaffView().getStaffList().addNewStaffToList();
+			staffDialog.dispose();
 
 			break;
 			
 		case "Update":
 			
-//			staffDialog = view.getStaffView().getStaffDialog();
-//			view.getStaffView().getStaffList().modifyStaff();
+			staffDialog = view.getStaffView().getStaffDialog();
+			view.getStaffView().getStaffList().addModifiedStaffToList();
 			staffDialog.dispose();
 			
 		case "Cancel":
@@ -99,30 +107,6 @@ public class StaffController implements ActionListener, TreeModelListener {
 		default:
 
 		}
-
-	}
-
-	@Override
-	public void treeNodesChanged(TreeModelEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void treeNodesInserted(TreeModelEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void treeNodesRemoved(TreeModelEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void treeStructureChanged(TreeModelEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
