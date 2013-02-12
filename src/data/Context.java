@@ -13,7 +13,7 @@ public class Context {
         skills.put("skill3", 3);
     }
 
-    public HashMap<String, Integer> getSkillMap() {
+    public static HashMap<String, Integer> getSkillMap() {
     	return skills;
     }
     

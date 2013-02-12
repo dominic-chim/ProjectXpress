@@ -144,7 +144,7 @@ public class ProjectController {
 
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                     String taskName = valuesMap.get("task_name");
-                    int requiredSkillId = Context.skills.get(valuesMap.get("required_skill"));
+                    int requiredSkillId = Context.getSkillMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
                     String status = valuesMap.get("status");
