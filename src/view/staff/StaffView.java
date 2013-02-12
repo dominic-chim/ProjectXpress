@@ -1,7 +1,5 @@
 package view.staff;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -18,63 +16,64 @@ public class StaffView extends JPanel {
 	StaffSummary staffSummary;
 	StaffAllocation staffAllocation;
 	StaffList staffList;
-		
+
 	public StaffView(MainFrame view) {
-		
+
 		staffList = new StaffList(view);
-		
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, staffList, staffTabPane());
-		
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				staffList, staffTabPane());
+
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(600, 600));
 
 		add(splitPane, BorderLayout.CENTER);
-				
+
 	}
-	
+
 	public JPanel staffTabPane() {
-		
-		JPanel tabPanel= new JPanel();
-		
+
+		JPanel tabPanel = new JPanel();
+
 		JTabbedPane mainTab = new JTabbedPane();
 		staffSummary = new StaffSummary();
 		staffAllocation = new StaffAllocation();
-		
+
 		tabPanel.setLayout(new BorderLayout());
-		
+
 		mainTab.addTab("Summary of Staff", staffSummary);
 		mainTab.addTab("Staff Allocation", staffAllocation);
 		mainTab.setPreferredSize(new Dimension(600, 400));
-		
+
 		tabPanel.add(mainTab, BorderLayout.CENTER);
-		
+
 		return tabPanel;
-		
+
 	}
-	
+
 	public void addStaff(ActionListener controller) {
 		staffList.addStaff(controller);
 	}
-	
+
 	public String deleteStaff() {
 		return staffList.deleteStaff();
 	}
-	
+
 	public void modifyStaff(ActionListener controller) {
 		staffList.modifyStaff(controller);
-		
+
 	}
-	
+
 	public StaffDialog getStaffDialog() {
-		
+
 		return staffList.getStaffDialog();
-		
+
 	}
-	
+
 	public StaffList getStaffList() {
 		return staffList;
 	}
-	
+
 	public void addController(ActionListener controller) {
 
 		staffList.addController(controller);
@@ -82,4 +81,5 @@ public class StaffView extends JPanel {
 		staffAllocation.addController(controller);
 
 	}
+
 }
