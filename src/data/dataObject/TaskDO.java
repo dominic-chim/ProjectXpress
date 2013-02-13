@@ -166,4 +166,21 @@ public class TaskDO {
     }
 
 
+    public String toString() {
+        String output = "Task name: " + taskName + "\n";
+        output += "Task Required Skill: " + taskRequiredSkill + "\n";
+        output += "Task Duration: " + taskDuration + "\n";
+        output += "Task risk level: " + taskRistLevel + "\n";
+        output += "Task Release time: " + taskReleaseTime.getDateTime() + "\n";
+        output += "Task Status: " + taskStatus + "\n";
+        output += "requiredTaskIds: ";
+        for(Integer requiredTaskId : requiredTaskIds) {
+            output += " " + requiredTaskId + " ";
+        }
+        output += "\n";
+
+        return output;
+    }
+
+
 }

@@ -7,13 +7,16 @@ import java.util.HashMap;
 
 import data.Context;
 import data.dataObject.*;
+import database.dataAccessObject.ProjectDao;
 
 import util.DateTime;
 import view.MainFrame;
 import view.project.*;
 
-//import static view.project.AddTaskDialog.*;
-
+/**
+ * controllers for project panel
+ *
+ */
 public class ProjectController {
 
     private MainFrame view;
@@ -32,7 +35,9 @@ public class ProjectController {
         projectPanel.getProjectList().addController(new ProjectListBtnListener());
     }
 
-    // ActionListeners for all buttons in ProjectList
+    /** 
+     * ActionListeners for all buttons in ProjectList
+     */
     class ProjectListBtnListener implements ActionListener {
 
         @Override
@@ -43,6 +48,7 @@ public class ProjectController {
                 case "modify":
                     break;
                 case "add":
+                    projectModel = new ProjectDO();
                     // construct view of adding a project
                     jdlogAddProject = new AddProjectDialog(view);
 
@@ -58,7 +64,9 @@ public class ProjectController {
     }
 
 
-    // ActionListener for all buttons in AddProjectDialog
+    /** 
+     * ActionListener for all buttons in AddProjectDialogBtnListener
+     */
     class AddProjectDialogBtnListener implements ActionListener {
 
         @Override
@@ -87,7 +95,11 @@ public class ProjectController {
                     projectModel.setProjectPriority(priority);
                     projectModel.setProjectStatus(status);
 
-                    //TODO adding projectModel to db;
+                    // adding projectModel to db;
+                    ProjectDao projectDao = new ProjectDao();
+                    projectDao.addProject(projectModel);
+
+                    // close window
                     jdlogAddProject.dispose();
                     break;
                 default:
@@ -97,7 +109,9 @@ public class ProjectController {
         }
     }
 
-    // ActionListeners for all buttons in 
+    /**
+     * ActionListeners for all buttons in 
+     */
     class AddTaskDialogBtnListener implements ActionListener {
 
         private TaskDO taskModel = new TaskDO();
@@ -160,6 +174,11 @@ public class ProjectController {
 
     }
 
+    /**
+     * get all tasknames from current project
+     *
+     * @return list of string contains all tasknames
+     */
     private String[] getTaskNames() {
 
         ArrayList<TaskDO> tasks = projectModel.getTasks();
