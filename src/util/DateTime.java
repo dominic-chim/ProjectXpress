@@ -21,5 +21,9 @@ public class DateTime {
     public DateTime(Date date) {
     }
 
+    public String getDateTime() {
+        return this.dateTime;
+    }
+
 
 }
