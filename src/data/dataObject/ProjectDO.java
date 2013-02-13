@@ -1,13 +1,14 @@
 package data.dataObject;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+
+import util.DateTime;
 
 public class ProjectDO {
 
     private int projectId;
     private String projectName;
-    private GregorianCalendar projectDueDate;
+    private DateTime projectDueDate;
     private int projectPriority;
     private String projectStatus;
     private ArrayList<TaskDO> tasks;
@@ -22,7 +23,7 @@ public class ProjectDO {
     }
 
     public ProjectDO(int projectId, String projectName, 
-                    GregorianCalendar projectDueDate,
+                    DateTime projectDueDate,
                     int projectPriority, String projectStatus,
                     ArrayList<TaskDO> tasks) {
 
@@ -35,54 +36,54 @@ public class ProjectDO {
     }
 
     //getters
-	public int getProjectId() {
-		return projectId;
-	}
+    public int getProjectId() {
+        return projectId;
+    }
 
-	public String getProjectName() {
-		return projectName;
-	}
+    public String getProjectName() {
+        return projectName;
+    }
 
-	public GregorianCalendar getProjectDueDate() {
-		return projectDueDate;
-	}
+    public DateTime getProjectDueDate() {
+        return projectDueDate;
+    }
 
-	public int getProjectPriority() {
-		return projectPriority;
-	}
+    public int getProjectPriority() {
+        return projectPriority;
+    }
 
-	public String getProjectStatus() {
-		return projectStatus;
-	}
+    public String getProjectStatus() {
+        return projectStatus;
+    }
 
-	public ArrayList<TaskDO> getTasks() {
-		return tasks;
-	}
+    public ArrayList<TaskDO> getTasks() {
+        return tasks;
+    }
 
     // setters
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
-	}
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
-	public void setProjectDueDate(GregorianCalendar projectDueDate) {
-		this.projectDueDate = projectDueDate;
-	}
+    public void setProjectDueDate(DateTime projectDueDate) {
+        this.projectDueDate = projectDueDate;
+    }
 
-	public void setProjectPriority(int projectPriority) {
-		this.projectPriority = projectPriority;
-	}
+    public void setProjectPriority(int projectPriority) {
+        this.projectPriority = projectPriority;
+    }
 
-	public void setProjectStatus(String projectStatus) {
-		this.projectStatus = projectStatus;
-	}
+    public void setProjectStatus(String projectStatus) {
+        this.projectStatus = projectStatus;
+    }
 
-	public void setTasks(ArrayList<TaskDO> tasks) {
-		this.tasks = tasks;
-	}
+    public void setTasks(ArrayList<TaskDO> tasks) {
+        this.tasks = tasks;
+    }
 
     public void addTask(TaskDO task) {
         tasks.add(task);

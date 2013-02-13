@@ -8,6 +8,7 @@ import java.util.HashMap;
 import data.Context;
 import data.dataObject.*;
 
+import util.DateTime;
 import view.MainFrame;
 import view.project.*;
 
@@ -147,6 +148,7 @@ public class ProjectController {
                     int requiredSkillId = Context.getSkillMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
+                    DateTime dateTime = new DateTime(valuesMap.get("due_date"));
                     String status = valuesMap.get("status");
 
 

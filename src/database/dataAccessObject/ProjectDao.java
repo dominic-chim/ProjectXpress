@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import util.DateTime;
+
 import database.DatabaseRoot;
 import data.dataObject.*;
 
@@ -17,16 +19,16 @@ public class ProjectDao extends DatabaseRoot {
         try {
             ResultSet result = db.executeQuery(sql);
             String projectName = null;
-            String projectDueDate = null;
+            DateTime projectDueDate = null;
             int projectPriority = 0;
             String projectStatus = null;
             GregorianCalendar projDueDate = null;
             if(result.next()) {
                 projectName = result.getString("project_name");
-                projectDueDate = result.getString("project_due_date");
+                projectDueDate = new DateTime(result.getString("project_due_date"));
                 projectPriority = result.getInt("project_priority");
                 projectStatus = result.getString("project_status");
-                projDueDate = dateTimeToCalendar(projectDueDate);
+                //projDueDate = dateTimeToCalendar(projectDueDate);
             } else {
                 return null;
             }
@@ -36,7 +38,7 @@ public class ProjectDao extends DatabaseRoot {
             tasks = taskDao.getTasksByProjectId(projectId);
 
             return new ProjectDO(projectId, projectName, 
-                    projDueDate, projectPriority, projectStatus, tasks);
+                    projectDueDate, projectPriority, projectStatus, tasks);
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
