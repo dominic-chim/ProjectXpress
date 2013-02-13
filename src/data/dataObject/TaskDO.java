@@ -14,7 +14,7 @@ public class TaskDO {
     private String taskRistLevel;
     private DateTime taskReleaseTime;
     private String taskStatus;
-    private ArrayList<Integer> requiredTaskIds;
+    private ArrayList<Integer> requiredTaskIds = new ArrayList<Integer>();
 
     public TaskDO() {
     }

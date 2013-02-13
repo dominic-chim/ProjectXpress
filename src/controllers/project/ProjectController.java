@@ -159,6 +159,9 @@ public class ProjectController {
                     // add this task to projectDO
                     projectModel.addTask(taskModel);
 
+                    //TODO remove test code
+                    System.out.println(taskModel);
+
                     // close window
                     jdlogAddTask.dispose();
 
