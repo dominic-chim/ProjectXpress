@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+import util.DateTime;
+
 import data.dataObject.TaskDO;
 import database.DatabaseRoot;
 
@@ -42,7 +44,7 @@ public class TaskDao extends DatabaseRoot {
                 int taskRequiredSkill = result.getInt("task_required_skill");
                 int taskDuration = result.getInt("task_duration");
                 String taskRistLevel = result.getString("task_risk_level");
-                String taskReleaseTime = result.getString("task_release_time");
+                DateTime taskReleaseTime = new DateTime(result.getString("task_release_time"));
                 String taskStatus = result.getString("task_status");
 
                 // get requiredTaskId of this task from table required_task_id
@@ -54,10 +56,10 @@ public class TaskDao extends DatabaseRoot {
                     int requiredTaskId = innerResult.getInt("required_task_id");
                     requiredTaskIds.add(new Integer(requiredTaskId));
                 }
-                GregorianCalendar releaseTime = dateTimeToCalendar(taskReleaseTime);
+                //DateTime releaseTime = dateTimeToCalendar(taskReleaseTime);
                 return new TaskDO(projectId, taskId, taskName, 
                             taskRequiredSkill, taskDuration, 
-                            taskRistLevel, releaseTime, 
+                            taskRistLevel, taskReleaseTime, 
                             taskStatus, requiredTaskIds);
             }
         } catch (SQLException e) {
