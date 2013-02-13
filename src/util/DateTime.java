@@ -14,8 +14,15 @@ public class DateTime {
 
     public DateTime(int year, int month, int day, int hour, int minute, int second) {
         // TODO throw some exception when these values are invalid
-        dateTime = String.format("%4d-%2d-%2d %2d:%2d:%2d", 
-                                year, month, day, hour, minute, second);
+        //
+        //long dateNum = year * 10000000000 + month * 
+        dateTime = String.format("%s-%s-%s %s:%s:%s", 
+                                year, 
+                                addZeroIfNeeded(month),
+                                addZeroIfNeeded(day),
+                                addZeroIfNeeded(hour),
+                                addZeroIfNeeded(minute),
+                                addZeroIfNeeded(second));
     }
 
     public DateTime(Date date) {
@@ -23,6 +30,10 @@ public class DateTime {
 
     public String getDateTime() {
         return this.dateTime;
+    }
+
+    private String addZeroIfNeeded(int num) {
+        return num < 10 ? "0" + num : "" + num;
     }
 
 
