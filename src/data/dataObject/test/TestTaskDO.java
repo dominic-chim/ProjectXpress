@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.ArrayList;
 import data.dataObject.TaskDO;
 import test.GroupTestCase;
+import util.DateTime;
 
 public class TestTaskDO extends GroupTestCase{
 	
@@ -48,8 +49,8 @@ public class TestTaskDO extends GroupTestCase{
 	}
 	
 	public void testSetTaskReleaseTime(){
-		tdo.setTaskReleaseTime(new GregorianCalendar(2012,12,21,00,00,00));
-		assertEquals(new GregorianCalendar(2012,12,21,00,00,00), tdo.getTaskReleaseTime());
+		tdo.setTaskReleaseTime(new DateTime(2012,12,21,00,00,00));
+		assertEquals("2012-12-21 00:00:00", tdo.getTaskReleaseTime().getDateTime());
 	}
 	
 	public void testSetTaskStatus(){

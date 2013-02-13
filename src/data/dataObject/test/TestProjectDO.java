@@ -38,7 +38,7 @@ public class TestProjectDO extends GroupTestCase{
 	
 	public void testSetGetProjectDueDate() {
 		pdo.setProjectDueDate(new DateTime(1992,5,12,12,0,0));
-		assertEquals(new DateTime(1992,5,12,12,0,0), pdo.getProjectDueDate());
+		assertEquals("1992-05-12 12:00:00", pdo.getProjectDueDate().getDateTime());
 	}
 	
 	public void testSetGetProjectPriority(){
