@@ -61,14 +61,6 @@ public class ProjectController {
     // ActionListener for all buttons in AddProjectDialog
     class AddProjectDialogBtnListener implements ActionListener {
 
-        /*
-        private AddProjectDialog parentDialog; 
-
-        public AddProjectDialogBtnListener(AddProjectDialog parentDialog) {
-            this.parentDialog = parentDialog;
-        }
-        */
-
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -86,12 +78,12 @@ public class ProjectController {
                 case "finish":
                     HashMap<String, String> valuesMap = jdlogAddProject.getAllInputValue();
                     String projectName = valuesMap.get("project_name");
-                    //TODO handle date later String projectName = valuesMap.get("due_date");
+                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
                     int priority = Integer.parseInt(valuesMap.get("priority"));
                     String status = valuesMap.get("status");
 
                     projectModel.setProjectName(projectName);
-                    //projectModel.setProjectDueDate();
+                    projectModel.setProjectDueDate(projectDueDate);
                     projectModel.setProjectPriority(priority);
                     projectModel.setProjectStatus(status);
 
@@ -107,14 +99,6 @@ public class ProjectController {
 
     // ActionListeners for all buttons in 
     class AddTaskDialogBtnListener implements ActionListener {
-
-        /*
-        private AddTaskDialog parentDialog;
-
-        public AddTaskDialogBtnListener(AddTaskDialog parentDialog) {
-            this.parentDialog = parentDialog;
-        }
-        */
 
         private TaskDO taskModel = new TaskDO();
 
@@ -141,33 +125,33 @@ public class ProjectController {
                     jdlogAddTask.dispose();
                     break;
                 case "finish":
-                    //taskModel = new TaskDO();
-
+                    // get task info from user input
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                     String taskName = valuesMap.get("task_name");
                     int requiredSkillId = Context.getSkillMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
-                    DateTime dateTime = new DateTime(valuesMap.get("due_date"));
+                    DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
                     String status = valuesMap.get("status");
 
-
-
-
+                    // add task info into a taskDO
                     taskModel.setTaskName(taskName);
                     taskModel.setTaskRequiredSkill(requiredSkillId);
                     taskModel.setTaskDuration(taskDuration);
                     taskModel.setTaskRistLevel(taskRistLevel);
-                    //TODO add time
+                    taskModel.setTaskReleaseTime(taskReleaseTime);
                     taskModel.setTaskStatus(status);
 
-
+                    // add this task to projectDO
                     projectModel.addTask(taskModel);
+
+                    // close window
                     jdlogAddTask.dispose();
 
                     // refresh add_project panel
                     jdlogAddProject.reloadList(getTaskNames());
                     break;
+
                 default:
                     break;
             }

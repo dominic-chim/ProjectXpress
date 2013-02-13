@@ -1,7 +1,8 @@
 package data.dataObject;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+
+import util.DateTime;
 
 public class TaskDO {
 
@@ -11,7 +12,7 @@ public class TaskDO {
     private int taskRequiredSkill;
     private int taskDuration;
     private String taskRistLevel;
-    private GregorianCalendar taskReleaseTime;
+    private DateTime taskReleaseTime;
     private String taskStatus;
     private ArrayList<Integer> requiredTaskIds;
 
@@ -20,7 +21,7 @@ public class TaskDO {
 
     public TaskDO(int projectId, int taskId, String taskName, 
             int taskRequiredSkill, int taskDuration,
-            String taskRistLevel, GregorianCalendar taskReleaseTime,
+            String taskRistLevel, DateTime taskReleaseTime,
             String taskStatus, ArrayList<Integer> requiredTaskIds) {
         
         setProjectId(projectId);
@@ -121,14 +122,14 @@ public class TaskDO {
     /**
      * @return the taskReleaseTime
      */
-    public GregorianCalendar getTaskReleaseTime() {
+    public DateTime getTaskReleaseTime() {
         return taskReleaseTime;
     }
 
     /**
      * @param taskReleaseTime the taskReleaseTime to set
      */
-    public void setTaskReleaseTime(GregorianCalendar taskReleaseTime) {
+    public void setTaskReleaseTime(DateTime taskReleaseTime) {
         this.taskReleaseTime = taskReleaseTime;
     }
 

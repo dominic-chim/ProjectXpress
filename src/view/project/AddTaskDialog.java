@@ -9,17 +9,6 @@ import javax.swing.*;
 
 public class AddTaskDialog extends JDialog {
 
-    // constant represent a component
-    /*
-    public static final int TASK_NAME = 0;
-    public static final int REQUIRED_SKILL = 1;
-    public static final int DURATION = 2;
-    public static final int RISK_LEVEL = 3;
-    public static final int RELEASE_TIME = 4;
-    public static final int STATUS = 5;
-    */
-
-
     // container panels
     private JPanel jpnlTop = new JPanel();
     private JPanel jpnlMiddle = new JPanel();
@@ -122,28 +111,6 @@ public class AddTaskDialog extends JDialog {
         return result;
     }
 
-
-    /*
-    public String getInputValue(final int componentId) {
-        switch(componentId) {
-            case TASK_NAME:
-                return jtxtTaskName.getText();
-            case REQUIRED_SKILL:
-                return jcbRequiredSkill.getSelectedItem().toString();
-            case DURATION:
-                return jtxtDuration.getText();
-            case RISK_LEVEL:
-                return jcbRiskLevel.getSelectedItem().toString();
-            case RELEASE_TIME:
-                return jtxtReleaseTime.getText();
-            case STATUS:
-                return jcbStatus.getSelectedItem().toString();
-            default: 
-                return "";
-        }
-
-    }
-    */
 
     public HashMap<String, String> getAllInputValue() {
         HashMap<String, String> values = new HashMap<String, String>();
