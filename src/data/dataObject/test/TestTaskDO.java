@@ -59,8 +59,8 @@ public class TestTaskDO extends GroupTestCase{
 	}
 	
 	public void testSetRequiredTaskIds(){
-		tdo.setRequiredTaskIds(new ArrayList<Integer>(1));
-		assertEquals(new ArrayList<Integer>(1),tdo.getRequiredTaskIds());
+		tdo.setRequiredTaskIds(new ArrayList<Integer>());
+		assertEquals(new ArrayList<Integer>(),tdo.getRequiredTaskIds());
 	}
 }
 
