@@ -85,7 +85,20 @@ public class ProjectDO {
         this.tasks = tasks;
     }
 
+    // add a task to tasks
     public void addTask(TaskDO task) {
         tasks.add(task);
+    }
+
+    public String toString() {
+        String output = "Project Name:" + projectName + "\n";
+        output += "Project Due Date: " + projectDueDate + "\n";
+        output += "project Priority: " + projectPriority + "\n";
+        output += "project status: " + projectStatus + "\n";
+        for(TaskDO task : tasks) {
+            output += task.toString();
+        }
+        output += "\n";
+        return output;
     }
 }
