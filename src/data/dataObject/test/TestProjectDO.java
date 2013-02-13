@@ -9,6 +9,7 @@ import org.junit.Test;
 import data.dataObject.ProjectDO;
 import data.dataObject.TaskDO;
 import test.GroupTestCase;
+import util.DateTime;
 
 public class TestProjectDO extends GroupTestCase{
 	
@@ -36,8 +37,8 @@ public class TestProjectDO extends GroupTestCase{
 	}
 	
 	public void testSetGetProjectDueDate() {
-		pdo.setProjectDueDate(new GregorianCalendar(1992,5,12,12,0,0));
-		assertEquals(new GregorianCalendar(1992,5,12,12,0,0), pdo.getProjectDueDate());
+		pdo.setProjectDueDate(new DateTime(1992,5,12,12,0,0));
+		assertEquals(new DateTime(1992,5,12,12,0,0), pdo.getProjectDueDate());
 	}
 	
 	public void testSetGetProjectPriority(){
