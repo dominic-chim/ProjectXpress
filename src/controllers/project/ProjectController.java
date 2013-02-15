@@ -9,7 +9,7 @@ import data.Context;
 import data.dataObject.*;
 import database.dataAccessObject.ProjectDao;
 
-import util.DateTime;
+//import util.DateTime;
 import view.MainFrame;
 import view.project.*;
 
@@ -86,12 +86,12 @@ public class ProjectController {
                 case "finish":
                     HashMap<String, String> valuesMap = jdlogAddProject.getAllInputValue();
                     String projectName = valuesMap.get("project_name");
-                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
+//                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
                     int priority = Integer.parseInt(valuesMap.get("priority"));
                     String status = valuesMap.get("status");
 
                     projectModel.setProjectName(projectName);
-                    projectModel.setProjectDueDate(projectDueDate);
+//                    projectModel.setProjectDueDate(projectDueDate);
                     projectModel.setProjectPriority(priority);
                     projectModel.setProjectStatus(status);
 
@@ -145,7 +145,7 @@ public class ProjectController {
                     int requiredSkillId = Context.getSkillMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
-                    DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
+//                    DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
                     String status = valuesMap.get("status");
 
                     // add task info into a taskDO
@@ -153,7 +153,7 @@ public class ProjectController {
                     taskModel.setTaskRequiredSkill(requiredSkillId);
                     taskModel.setTaskDuration(taskDuration);
                     taskModel.setTaskRistLevel(taskRistLevel);
-                    taskModel.setTaskReleaseTime(taskReleaseTime);
+//                    taskModel.setTaskReleaseTime(taskReleaseTime);
                     taskModel.setTaskStatus(status);
 
                     // add this task to projectDO

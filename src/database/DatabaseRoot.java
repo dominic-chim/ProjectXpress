@@ -10,11 +10,11 @@ public abstract class DatabaseRoot {
     
     public DatabaseRoot() {
 
-        String url = "jdbc:mysql://localhost:3306/rxj01u"; 
+        String url = "jdbc:mysql://localhost:3306/g52grp"; 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String userName = "root"; 
-            String password = ""; 
+            String password = "csgrp"; 
             this.connection = DriverManager.getConnection(url,userName,password);
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {

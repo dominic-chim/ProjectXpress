@@ -15,103 +15,121 @@ public class StaffDao extends DatabaseRoot {
 
 	public StaffDO getStaffById(int staffId) {
 
-		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
-				+ "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence WHERE staff_id = "
+		// String sql =
+		// "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
+		// +
+		// "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence WHERE staff_id = "
+		// + staffId;
+
+		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time FROM staff WHERE staff_id = "
 				+ staffId;
 
-//		ResultSet result = null;
-//		try {
-//			result = db.executeQuery(sql);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-		
-//		System.out.println(result);
+		ResultSet result = null;
+		try {
+			result = db.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-//		StaffDO staffDo = null;
-//		try {
-//			staffDo = new StaffDO(result.getInt("staff_id"),
-//					result.getString("staff_name"),
-//					result.getInt("staff_weekly_available_time"),
-//					result.getString("skill_name"),
-//					result.getInt("skill_level"), result.getInt("project_id"),
-//					result.getInt("task_id"), result.getInt("prefence_level"));
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		StaffDO staffDo = null;
 
-//		return staffDo;
-		return null;
+		String[] test = {"Test", "Test Two"};
 		
+		try {
+			while (result.next()) {
+
+				staffDo = new StaffDO(result.getInt("staff_id"),
+						result.getString("staff_name"),
+						result.getInt("staff_weekly_available_time"), test,
+						test);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return staffDo;
+
 	}
 
 	public void createStaff(StaffDO staff) {
-		
-		String staffValues = staff.getStaffId() + ", '" +
-				staff.getStaffName() + "', '" +
-				staff.getStaffWeeklyAvailableTime() +  "', '" +
-				staff.getSkills() + "', '" +
-				staff.getHolidays() + "', '";
 
-//		System.out.println(staffValues);
-		
-		String sql = 
-				"INSERT INTO TABLE staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence" +
-				"VALUES ("+ staffValues +")";
-		
-//		ResultSet result = null;
-//		try {
-//			result = db.executeQuery(sql);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
+		// String staffValues = staff.getStaffId() + ", '" +
+		// staff.getStaffName() + "', '" +
+		// staff.getStaffWeeklyAvailableTime() + "', '" +
+		// staff.getSkills() + "', '" +
+		// staff.getHolidays() + "', '";
+
+		String staffValues = staff.getStaffId() + ", '" + staff.getStaffName()
+				+ "', '" + staff.getStaffWeeklyAvailableTime() + "'";
+
+		// String sql =
+		// "INSERT INTO staff NATURAL JOIN staff_holidays NATURAL JOIN staff_preference VALUES ("
+		// + staffValues + " )";
+
+		String sql = "INSERT INTO staff VALUES (" + staffValues + " )";
+
+		int result;
+		try {
+			result = db.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	public void modifyStaff(StaffDO staff) {
+
+		String staffValues ="staff_name='"+ staff.getStaffName() + "', staff_weekly_available_time='"
+				+ staff.getStaffWeeklyAvailableTime() + "'";
+
+		System.out.println(staffValues);
 		
-		String staffValues = 
-				staff.getStaffName() + "', '" +
-				staff.getStaffWeeklyAvailableTime() +  "', '";
-		
-		for(String i : staff.getSkills()) {
-			staffValues += i = "', '";
-		}
-		
-		for(String i : staff.getHolidays()) {
-			staffValues += i = "', '";
-		}
-		
-		String sql = "UPDATE INTO TABLE staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence SET " + staffValues + " WHERE staff_id = " + staff.getStaffId();
-		
+//		for (String i : staff.getSkills()) {
+//			staffValues += i = "', '";
+//		}
+//
+//		for (String i : staff.getHolidays()) {
+//			staffValues += i = "', '";
+//		}
+
+		String sql = "UPDATE staff SET "
+				+ staffValues + " WHERE staff_id = " + staff.getStaffId();
+
 		try {
-			ResultSet result = db.executeQuery(sql);
+			int result = db.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void deleteStaff(String staffId) {
-		
-		String sql = "DELETE FROM TABLE staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence WHERE staff_id = " + staffId;
-		
-		ResultSet result = null;
-		
+
+		// String sql =
+		// "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence WHERE staff_id = "
+		// + staffId;
+
+		String sql = "DELETE FROM staff WHERE staff_id = " + staffId;
+
+		int result;
+
 		try {
-			result = db.executeQuery(sql);
+			result = db.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-	
 	}
 
 	public ArrayList<StaffDO> getAllStaff() {
-		
-		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
-				+ "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence";
+
+		// String sql =
+		// "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
+		// +
+		// "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence";
+
+		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time FROM staff";
 
 		ResultSet result = null;
 		try {
@@ -119,20 +137,20 @@ public class StaffDao extends DatabaseRoot {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		StaffDO staffDo = null;
 		ArrayList<StaffDO> listOfStaff = new ArrayList<StaffDO>();
-		
+
 		try {
-			while(result.next()) {
+			while (result.next()) {
 				try {
 					staffDo = new StaffDO(result.getInt("staff_id"),
 							result.getString("staff_name"),
-							result.getInt("staff_weekly_available_time"),
-							null,null);
-					
+							result.getInt("staff_weekly_available_time"), null,
+							null);
+
 					listOfStaff.add(staffDo);
-					
+
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -140,9 +158,9 @@ public class StaffDao extends DatabaseRoot {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-				
+
 		return listOfStaff;
-		
+
 	}
-	
+
 }

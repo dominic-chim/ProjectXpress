@@ -25,7 +25,7 @@ public class ProjectDao extends DatabaseRoot {
             GregorianCalendar projDueDate = null;
             if(result.next()) {
                 projectName = result.getString("project_name");
-                projectDueDate = new DateTime(result.getString("project_due_date"));
+//                projectDueDate = new DateTime(result.getString("project_due_date"));
                 projectPriority = result.getInt("project_priority");
                 projectStatus = result.getString("project_status");
                 //projDueDate = dateTimeToCalendar(projectDueDate);
