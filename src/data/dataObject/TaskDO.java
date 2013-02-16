@@ -2,7 +2,7 @@ package data.dataObject;
 
 import java.util.ArrayList;
 
-//import util.DateTime;
+import util.DateTime;
 
 public class TaskDO {
 
@@ -12,7 +12,7 @@ public class TaskDO {
     private int taskRequiredSkill;
     private int taskDuration;
     private String taskRistLevel;
-//    private DateTime taskReleaseTime;
+    private DateTime taskReleaseTime;
     private String taskStatus;
     private ArrayList<Integer> requiredTaskIds = new ArrayList<Integer>();
 
@@ -21,7 +21,7 @@ public class TaskDO {
 
     public TaskDO(int projectId, int taskId, String taskName, 
             int taskRequiredSkill, int taskDuration,
-//            String taskRistLevel, DateTime taskReleaseTime,
+            String taskRistLevel, DateTime taskReleaseTime,
             String taskStatus, ArrayList<Integer> requiredTaskIds) {
         
         setProjectId(projectId);
@@ -30,7 +30,7 @@ public class TaskDO {
         setTaskRequiredSkill(taskRequiredSkill);
         setTaskDuration(taskDuration);
         setTaskRistLevel(taskRistLevel);
-//        setTaskReleaseTime(taskReleaseTime);
+        setTaskReleaseTime(taskReleaseTime);
         setTaskStatus(taskStatus);
         setRequiredTaskIds(requiredTaskIds);
     }
@@ -122,16 +122,16 @@ public class TaskDO {
     /**
      * @return the taskReleaseTime
      */
-//    public DateTime getTaskReleaseTime() {
-//        return taskReleaseTime;
-//    }
+    public DateTime getTaskReleaseTime() {
+        return taskReleaseTime;
+    }
 
     /**
      * @param taskReleaseTime the taskReleaseTime to set
      */
-//    public void setTaskReleaseTime(DateTime taskReleaseTime) {
-//        this.taskReleaseTime = taskReleaseTime;
-//    }
+    public void setTaskReleaseTime(DateTime taskReleaseTime) {
+        this.taskReleaseTime = taskReleaseTime;
+    }
 
     /**
      * @return the taskStatus
@@ -171,7 +171,7 @@ public class TaskDO {
         output += "Task Required Skill: " + taskRequiredSkill + "\n";
         output += "Task Duration: " + taskDuration + "\n";
         output += "Task risk level: " + taskRistLevel + "\n";
-//        output += "Task Release time: " + taskReleaseTime.getDateTime() + "\n";
+        output += "Task Release time: " + taskReleaseTime.getDateTime() + "\n";
         output += "Task Status: " + taskStatus + "\n";
         output += "requiredTaskIds: ";
         for(Integer requiredTaskId : requiredTaskIds) {
@@ -181,6 +181,4 @@ public class TaskDO {
 
         return output;
     }
-
-
 }

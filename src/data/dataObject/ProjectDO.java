@@ -2,13 +2,15 @@ package data.dataObject;
 
 import java.util.ArrayList;
 
+import util.DateTime;
+
 //import util.DateTime;
 
 public class ProjectDO {
 
     private int projectId;
     private String projectName;
-//    private DateTime projectDueDate;
+    private DateTime projectDueDate;
     private int projectPriority;
     private String projectStatus;
     private ArrayList<TaskDO> tasks;
@@ -16,20 +18,20 @@ public class ProjectDO {
     public ProjectDO() {
         setProjectId(0);
         setProjectName("");
-//        setProjectDueDate(null);
+        setProjectDueDate(null);
         setProjectPriority(0);
         setProjectStatus("");
         setTasks(new ArrayList<TaskDO>());
     }
 
     public ProjectDO(int projectId, String projectName, 
-//                    DateTime projectDueDate,
+                    DateTime projectDueDate,
                     int projectPriority, String projectStatus,
                     ArrayList<TaskDO> tasks) {
 
         setProjectId(projectId);
         setProjectName(projectName);
-//        setProjectDueDate(projectDueDate);
+        setProjectDueDate(projectDueDate);
         setProjectPriority(projectPriority);
         setProjectStatus(projectStatus);
         setTasks(tasks);
@@ -44,9 +46,9 @@ public class ProjectDO {
         return projectName;
     }
 
-//    public DateTime getProjectDueDate() {
-//        return projectDueDate;
-//    }
+    public DateTime getProjectDueDate() {
+        return projectDueDate;
+    }
 
     public int getProjectPriority() {
         return projectPriority;
@@ -69,9 +71,9 @@ public class ProjectDO {
         this.projectName = projectName;
     }
 
-//    public void setProjectDueDate(DateTime projectDueDate) {
-//        this.projectDueDate = projectDueDate;
-//    }
+    public void setProjectDueDate(DateTime projectDueDate) {
+        this.projectDueDate = projectDueDate;
+    }
 
     public void setProjectPriority(int projectPriority) {
         this.projectPriority = projectPriority;
@@ -92,7 +94,7 @@ public class ProjectDO {
 
     public String toString() {
         String output = "Project Name:" + projectName + "\n";
-//        output += "Project Due Date: " + projectDueDate + "\n";
+        output += "Project Due Date: " + projectDueDate + "\n";
         output += "project Priority: " + projectPriority + "\n";
         output += "project status: " + projectStatus + "\n";
         for(TaskDO task : tasks) {
