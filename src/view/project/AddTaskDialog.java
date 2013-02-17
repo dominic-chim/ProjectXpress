@@ -26,18 +26,17 @@ public class AddTaskDialog extends JDialog {
     private JTextArea jtxtTaskName = new JTextArea();
     //private JTextArea jtxtRequiredSkill = new JTextArea();
     private JTextArea jtxtDuration = new JTextArea();
-    private JTextArea jtxtReleaseTime = new JTextArea("0000-00-00 00:00:00");
+    private JTextArea jtxtReleaseTime = new JTextArea("2020-10-10 10:10:10");
 
-    // TODO change it to the ones in database
-    private JComboBox<String> jcbRiskLevel = new JComboBox<String>(
-            new String[]{"Low", "Middle", "High"});
+    private JComboBox<String> jcbRiskLevel = new JComboBox<String>();
     private JComboBox<String> jcbStatus = new JComboBox<String>(
             new String[]{"Started", "Not Started", "Completed"});
-    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>(new String[]{"skill1", "skill2", "skill3"});
+    private JComboBox<String> jcbRequiredSkill = new JComboBox<String>();
 
     // jlist in center
     // TODO add real data from model
-    private JList<String> requiredTaskList = new JList<String>(new String[]{"Test1", "Test2"});
+    private DefaultListModel<String> requiredListModel = new DefaultListModel<String>();
+    private JList<String> requiredTaskList = new JList<String>(requiredListModel);
 
     // buttons
     private JButton jbtnAddRequirement = new JButton("Add Required Task");
@@ -121,6 +120,29 @@ public class AddTaskDialog extends JDialog {
         values.put("release_time", jtxtReleaseTime.getText());
         values.put("status", jcbStatus.getSelectedItem().toString());
         return values;
+    }
+
+    public void reloadList(String[] requiredTasks) {
+        requiredListModel.removeAllElements();
+        for(String taskName : requiredTasks) {
+            requiredListModel.addElement(taskName);
+        }
+    }
+
+    public void setSkillNames(String[] skillNames) {
+        jcbRequiredSkill.removeAllItems();
+        for(String skillName : skillNames) {
+            jcbRequiredSkill.addItem(skillName);
+        }
+
+    }
+
+    public void setRiskLevels(String[] riskLevels) {
+        jcbRiskLevel.removeAllItems();
+        for(String riskLevel : riskLevels) {
+            jcbRiskLevel.addItem(riskLevel);
+        }
+
     }
 
 }

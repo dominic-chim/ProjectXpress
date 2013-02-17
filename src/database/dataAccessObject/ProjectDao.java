@@ -22,7 +22,6 @@ public class ProjectDao extends DatabaseRoot {
             DateTime projectDueDate = null;
             int projectPriority = 0;
             String projectStatus = null;
-            GregorianCalendar projDueDate = null;
             if(result.next()) {
                 projectName = result.getString("project_name");
                 projectDueDate = new DateTime(result.getString("project_due_date"));
@@ -50,6 +49,44 @@ public class ProjectDao extends DatabaseRoot {
 
     public void addProject(ProjectDO project) {
 
+        // insert project info
+        String sql = String.format("INSERT INTO project (project_name, project_due_date, "
+                                    + "project_priority, project_status) VALUES ('%s', '%s', %d, '%s')", 
+                                    project.getProjectName(), 
+                                    project.getProjectDueDate().getDateTime(),
+                                    project.getProjectPriority(),
+                                    project.getProjectStatus());
+        try {
+            db.executeUpdate(sql);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+        ArrayList<TaskDO> tasks = project.getTasks();
+        TaskDao taskDao = new TaskDao();
+
+        // TODO check error
+        int projectId = getMaxProjectId();
+
+        for(int i = 1; i <= tasks.size(); i++) {
+            taskDao.addTask(projectId, i, tasks.get(i - 1));
+        }
+
+    }
+
+    public int getMaxProjectId() {
+        ResultSet result;
+        try {
+            result = db.executeQuery("SELECT max(project_id) AS max_id FROM project");
+            if(result.next())
+                return result.getInt("max_id");
+            else
+                return 0;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

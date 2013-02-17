@@ -5,12 +5,10 @@ import java.sql.SQLException;
 
 import database.DatabaseRoot;
 
-public class Holidays extends DatabaseRoot {
+public class HolidaysDao extends DatabaseRoot {
 	
 	
-	public Holidays( ) {
-		
-	}
+	
 
 	public int getDaybyMonth(int month){
 		int holidaycount = 0;

@@ -2,19 +2,23 @@ package data;
 
 import java.util.HashMap;
 
+import database.dataAccessObject.SkillDao;
+
 public class Context {
 
     private static final HashMap<String, Integer> skills = new HashMap<String, Integer>();
 
     static {
         // TODO read from database
-        skills.put("skill1", 1);
-        skills.put("skill2", 2);
-        skills.put("skill3", 3);
+        SkillDao skillDao = new SkillDao();
+        HashMap<Integer, String> skillMap = skillDao.getSkillMap();
+        for(int skillId : skillMap.keySet()) {
+            skills.put(skillMap.get(skillId), skillId);
+        }
     }
 
     public static HashMap<String, Integer> getSkillMap() {
-    	return skills;
+        return skills;
     }
     
     /**

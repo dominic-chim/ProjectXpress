@@ -8,8 +8,10 @@ import java.util.HashMap;
 import data.Context;
 import data.dataObject.*;
 import database.dataAccessObject.ProjectDao;
+import database.dataAccessObject.RiskDao;
+import database.dataAccessObject.SkillDao;
 
-//import util.DateTime;
+import util.DateTime;
 import view.MainFrame;
 import view.project.*;
 
@@ -65,7 +67,7 @@ public class ProjectController {
 
 
     /** 
-     * ActionListener for all buttons in AddProjectDialogBtnListener
+     * ActionListener for all buttons in AddProjectDialog
      */
     class AddProjectDialogBtnListener implements ActionListener {
 
@@ -78,6 +80,8 @@ public class ProjectController {
                     jdlogAddTask = new AddTaskDialog(jdlogAddProject);
 
                     jdlogAddTask.addController(new AddTaskDialogBtnListener());
+                    jdlogAddTask.setSkillNames((new SkillDao()).getSkillNames());
+                    jdlogAddTask.setRiskLevels((new RiskDao()).getRiskNames());
                     jdlogAddTask.setVisible(true);
                     break;
                 case "cancel":
@@ -86,12 +90,12 @@ public class ProjectController {
                 case "finish":
                     HashMap<String, String> valuesMap = jdlogAddProject.getAllInputValue();
                     String projectName = valuesMap.get("project_name");
-//                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
+                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
                     int priority = Integer.parseInt(valuesMap.get("priority"));
                     String status = valuesMap.get("status");
 
                     projectModel.setProjectName(projectName);
-//                    projectModel.setProjectDueDate(projectDueDate);
+                    projectModel.setProjectDueDate(projectDueDate);
                     projectModel.setProjectPriority(priority);
                     projectModel.setProjectStatus(status);
 
@@ -110,7 +114,7 @@ public class ProjectController {
     }
 
     /**
-     * ActionListeners for all buttons in 
+     * ActionListeners for all buttons in AddTaskDialog
      */
     class AddTaskDialogBtnListener implements ActionListener {
 
@@ -131,8 +135,15 @@ public class ProjectController {
                             taskId = i + 1;
                     }
 
-                    System.out.println(taskId);
-                    taskModel.addReqiredTask(taskId);
+                    if(taskId != 0)
+                        taskModel.addReqiredTask(taskId);
+
+                    ArrayList<Integer> requiredTaskIds = taskModel.getRequiredTaskIds();
+                    String[] requiredTasks = new String[requiredTaskIds.size()];
+                    for(int i = 0; i < requiredTaskIds.size(); i++ ) {
+                        requiredTasks[i] = projectModel.getTasks().get(i).getTaskName();
+                    }
+                    jdlogAddTask.reloadList(requiredTasks);
                 }
                     break;
                 case "cancel":
@@ -145,7 +156,7 @@ public class ProjectController {
                     int requiredSkillId = Context.getSkillMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
-//                    DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
+                    DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
                     String status = valuesMap.get("status");
 
                     // add task info into a taskDO
@@ -153,7 +164,7 @@ public class ProjectController {
                     taskModel.setTaskRequiredSkill(requiredSkillId);
                     taskModel.setTaskDuration(taskDuration);
                     taskModel.setTaskRistLevel(taskRistLevel);
-//                    taskModel.setTaskReleaseTime(taskReleaseTime);
+                    taskModel.setTaskReleaseTime(taskReleaseTime);
                     taskModel.setTaskStatus(status);
 
                     // add this task to projectDO

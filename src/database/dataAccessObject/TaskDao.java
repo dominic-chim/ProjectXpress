@@ -58,7 +58,6 @@ public class TaskDao extends DatabaseRoot {
                     int requiredTaskId = innerResult.getInt("required_task_id");
                     requiredTaskIds.add(new Integer(requiredTaskId));
                 }
-                //DateTime releaseTime = dateTimeToCalendar(taskReleaseTime);
                 return new TaskDO(projectId, taskId, taskName, 
                             taskRequiredSkill, taskDuration, 
                             taskRistLevel, taskReleaseTime, 
@@ -70,6 +69,44 @@ public class TaskDao extends DatabaseRoot {
         }
 
         return task;
+    }
+    
+    public void addTask(int projectId, int taskId, TaskDO task) {
+        String sql = String.format("INSERT INTO task (project_id, task_id, task_name, task_required_skill, "
+                                    + "task_duration, task_risk_level, task_release_time, task_status) "
+                                    + "VALUES (%d, %d, '%s', %d, %d, '%s', '%s', '%s')", 
+                                    projectId, taskId, task.getTaskName(),
+                                    task.getTaskRequiredSkill(),
+                                    task.getTaskDuration(),
+                                    task.getTaskRistLevel(),
+                                    task.getTaskReleaseTime().getDateTime(),
+                                    task.getTaskStatus()
+                                    );
+
+        try {
+            db.executeUpdate(sql);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        ArrayList<Integer> requiredTaskIds = task.getRequiredTaskIds();
+        for(int requiredTaskId : requiredTaskIds) {
+            addTaskDependency(projectId, taskId, requiredTaskId);
+        }
+    }
+
+    public void addTaskDependency(int projectId, int taskId, int requiredTaskId) {
+
+        String sql = String.format("INSERT INTO task_precedence (project_id, task_id, required_task_id) " +
+                                    "VALUES (%d, %d, %d)",
+                                    projectId, taskId, requiredTaskId);
+        try {
+            db.executeUpdate(sql);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
 }
