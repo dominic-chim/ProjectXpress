@@ -3,6 +3,8 @@ package database;
 import java.sql.*;
 import java.util.GregorianCalendar;
 
+import util.DatabaseConfig;
+
 public abstract class DatabaseRoot {
 
     protected Connection connection;
@@ -10,11 +12,13 @@ public abstract class DatabaseRoot {
     
     public DatabaseRoot() {
 
-        String url = "jdbc:mysql://localhost:3306/scheduling"; 
+        DatabaseConfig config = new DatabaseConfig();
+
+        String url = "jdbc:mysql://localhost:3306/" + config.getDatabaseName(); 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String userName = "root"; 
-            String password = "123"; 
+            String userName = config.getUserName();
+            String password = config.getPassword();
             this.connection = DriverManager.getConnection(url,userName,password);
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {
