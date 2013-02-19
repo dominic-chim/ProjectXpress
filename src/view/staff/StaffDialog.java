@@ -13,16 +13,22 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import data.Context;
 import data.dataObject.StaffDO;
 
+import util.DateTime;
 import view.MainFrame;
 
 public class StaffDialog extends JDialog {
 
+	Context context = new Context();
+	HashMap<Integer, String> mapSkills = context.getSkillMap();
+	
 	// Text Fields for Adding Staff
 	JTextField tfId;
 	JTextField tfName;
@@ -32,10 +38,14 @@ public class StaffDialog extends JDialog {
 	JTextField tfPrefenceLevel;
 
 	// Holiday Input, start of holiday date until the end of holiday date
-	JComboBox monthStart;
+	JComboBox cbMonthStart;
 	JComboBox dayStart;
 	JComboBox monthEnd;
 	JComboBox dayEnd;
+	JComboBox cbSkillNames;
+	JComboBox cbSkillLevels;
+	
+	
 
 	// Buttons
 	JButton btnRemoveHoliday = new JButton("Remove Holiday");
@@ -54,6 +64,9 @@ public class StaffDialog extends JDialog {
 
 	JButton addStaff;
 	JButton cancel;
+	
+	HashMap<Integer, Integer> skillLevels = new HashMap<Integer, Integer>();
+	HashMap<Integer, DateTime> holidayDates = new HashMap<Integer,DateTime>();
 
 	public StaffDialog(MainFrame view, ActionListener controller, StaffDO staff) {
 
@@ -76,11 +89,19 @@ public class StaffDialog extends JDialog {
 		JLabel lblWeeklyAvail = new JLabel("Weekly Available Time:");
 		tfWeeklyAvail = new JTextField(20);
 
-		JLabel lblSkillName = new JLabel("Skill Name:");
-		tfSkillName = new JTextField(20);
-
+		JLabel lblSkillName = new JLabel("Skill");
+		
+		cbSkillNames = new JComboBox(mapSkills.values().toArray());
+		cbSkillNames.addItem("Skill Name");
+		cbSkillNames.setSelectedItem("Skill Name");
+		
 		JLabel lblSkillLevel = new JLabel("Skill Level:");
-		tfSkillLevel = new JTextField(20);
+		
+		String[] levels = {"1","2","3","4","5"};
+		cbSkillLevels = new JComboBox(levels);
+		cbSkillLevels.addItem("Skill Level");
+		cbSkillLevels.setSelectedItem("Skill Level");
+//		tfSkillLevel = new JTextField(20);
 
 		JLabel lblHolidayStart = new JLabel("Holiday Start");
 		JLabel lblHolidayEnd = new JLabel("Holiday End");
@@ -92,7 +113,7 @@ public class StaffDialog extends JDialog {
 				"June", "July", "August", "September", "October", "November",
 				"Decemeber" };
 
-		monthStart = new JComboBox(months);
+		cbMonthStart = new JComboBox(months);
 		monthEnd = new JComboBox(months);
 
 		String days[] = new String[31];
@@ -150,17 +171,17 @@ public class StaffDialog extends JDialog {
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
 		addStaffPanel.add(lblSkillName, gbc);
-		gbc.gridwidth = 2;
 		gbc.gridx = 1;
-		addStaffPanel.add(tfSkillName, gbc);
+		addStaffPanel.add(cbSkillNames, gbc);
 
-		gbc.gridx = 0;
-		gbc.gridy = 4;
+//		gbc.gridx = 0;
+//		gbc.gridy = 3;
+//		gbc.gridwidth = 1;
+//		addStaffPanel.add(lblSkillLevel, gbc);
+		
 		gbc.gridwidth = 1;
-		addStaffPanel.add(lblSkillLevel, gbc);
-		gbc.gridwidth = 2;
-		gbc.gridx = 1;
-		addStaffPanel.add(tfSkillLevel, gbc);
+		gbc.gridx = 2;
+		addStaffPanel.add(cbSkillLevels, gbc);
 
 		gbc.gridx = 1;
 		gbc.gridy = 5;
@@ -194,7 +215,7 @@ public class StaffDialog extends JDialog {
 		gbc.gridwidth = 1;
 		addStaffPanel.add(lblHolidayStart, gbc);
 		gbc.gridx = 1;
-		addStaffPanel.add(monthStart, gbc);
+		addStaffPanel.add(cbMonthStart, gbc);
 		gbc.gridx = 2;
 		addStaffPanel.add(dayStart, gbc);
 
@@ -269,17 +290,19 @@ public class StaffDialog extends JDialog {
 		tfWeeklyAvail.setText(Integer.toString(staff
 				.getStaffWeeklyAvailableTime()));
 
-		for (String i : staff.getSkills()) {
+		HashMap<Integer, Integer> skillLevels = staff.getSkillLevels();
 
-			skillListModel.addElement(i);
+		for (int i : skillLevels.keySet()){
 
-		}
-
-		for (String i : staff.getHolidays()) {
-
-			holidayListModel.addElement(i);
+			skillListModel.addElement(mapSkills.get(i) + " - Level: " + i);
 
 		}
+
+//		for (String i : staff.getHolidays()) {
+//
+//			holidayListModel.addElement(i);
+//
+//		}
 	}
 
 	public StaffDO getStaffInput() {
@@ -292,32 +315,9 @@ public class StaffDialog extends JDialog {
 
 		StaffDO staffObj = new StaffDO(Integer.parseInt(tfId.getText()),
 				tfName.getText(), Integer.parseInt(tfWeeklyAvail.getText()),
-				skills, holidays);
+				skillLevels, holidayDates);
 
-		// HashMap<String, String> staffInput = new HashMap<String, String>();
-		//
-		// staffInput.put("Id", tfId.getText());
-		// staffInput.put("Name", tfName.getText());
-		// staffInput.put("WeeklyAvail", tfWeeklyAvail.getText());
-
-		// String[] holidays = new String[holidayListModel.size()];
-		// holidayListModel.copyInto(holidays);
-		//
-		// int j = 1;
-		// for(String i : holidays) {
-		// staffInput.put("Holiday " + j, i);
-		// j++;
-		// }
-		//
-		// String[] skills = new String[skillListModel.size()];
-		// skillListModel.copyInto(skills);
-		//
-		// j = 1;
-		// for(String i : skills) {
-		// staffInput.put("Skill " + j, i);
-		// j++;
-		// }
-		// staffInput.put("PrefenceLevel", tfPrefenceLevel.getText());
+		
 
 		return staffObj;
 
@@ -325,10 +325,31 @@ public class StaffDialog extends JDialog {
 
 	public void addSkill() {
 
+		String skillName = (String) cbSkillNames.getSelectedItem();
+		if(skillName == "Skill Name") {
+			
+			JOptionPane.showMessageDialog(this, "Please select a Skill Name", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		String skillLevel = (String) cbSkillLevels.getSelectedItem();
+		if(skillLevel == "Skill Level") {
+			
+			JOptionPane.showMessageDialog(this, "Please select a Skill Level", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		
 		String skill = "";
-		skill += tfSkillName.getText();
-		skill += " - Level: " + tfSkillLevel.getText();
+		skill += skillName;
+		skill += " - Level: " + skillLevel;
 		skillListModel.addElement(skill);
+		
+//		skillLevels.put(mapSkills.get(skillName), skillLevel);
+//		holidayDates
+		
 	}
 
 	public void removeSkill() {
@@ -339,7 +360,7 @@ public class StaffDialog extends JDialog {
 
 	public void addHoliday() {
 
-		String holiday = (String) (monthStart.getSelectedItem() + " "
+		String holiday = (String) (cbMonthStart.getSelectedItem() + " "
 				+ dayStart.getSelectedItem() + " to "
 				+ monthEnd.getSelectedItem() + " " + dayEnd.getSelectedItem());
 

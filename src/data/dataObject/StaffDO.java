@@ -1,9 +1,8 @@
 package data.dataObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import data.Holiday;
+import util.DateTime;
 
 public class StaffDO {
 
@@ -11,16 +10,17 @@ public class StaffDO {
     private String staffName;
     private int staffWeeklyAvailableTime;
     HashMap<Integer, Integer> skillLevels;
-    ArrayList<Holiday> holidays;
+    HashMap<Integer, DateTime> holidayDates;
+    
 
     public StaffDO(int staffId, String staffName, int staffWeeklyAvailableTime,
-            HashMap<Integer, Integer> skillLevels, String[] holidays) {
+            HashMap<Integer, Integer> skillLevels, HashMap<Integer, DateTime> holidayDates) {
 
         setStaffId(staffId);
         setStaffName(staffName);
         setStaffWeeklyAvailableTime(staffWeeklyAvailableTime);
         setSkillLevels(skillLevels);
-        setHolidays(holidays);
+        setHolidayDates(holidayDates);
     }
 
     // Getters
@@ -41,9 +41,9 @@ public class StaffDO {
         return this.skillLevels;
     }
 
-    public String[] getHolidays() {
+    public HashMap<Integer, DateTime> getHolidays() {
 
-        return this.holidays;
+        return this.holidayDates;
     }
 
     // public HashMap<Integer, HashMap<Integer, Integer>> getPrefenceLevel(int
@@ -68,8 +68,8 @@ public class StaffDO {
         this.skillLevels = skillLevels;
     }
 
-    public void setHolidays(String[] holidays) {
-        this.holidays = holidays;
+    public void setHolidayDates(HashMap<Integer, DateTime> holidayDates) {
+        this.holidayDates = holidayDates;
     }
 
     public boolean hasSkill(int skillId) {

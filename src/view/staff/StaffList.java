@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,8 +17,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import view.MainFrame;
+import data.Context;
 import data.dataObject.StaffDO;
-import database.dataAccessObject.StaffDao;
 
 //import data.dataObject.*;
 
@@ -38,6 +39,9 @@ public class StaffList extends JPanel {
 	// Staff Dialog
 	StaffDialog staffDialog;
 	MainFrame view;
+
+	Context context = new Context();
+	HashMap<Integer, String> skillMap = context.getSkillMap();
 
 	public StaffList(MainFrame view) {
 
@@ -85,7 +89,7 @@ public class StaffList extends JPanel {
 
 	public void addStaffDialog(ActionListener controller, StaffDO staff) {
 		staffDialog = new StaffDialog(view, controller, staff);
-		
+
 		// If Ok Button was pressed
 		// if (result == 0) {
 		// HashMap<String, String> staffInput = staffOptionPane.getStaffInput();
@@ -101,16 +105,15 @@ public class StaffList extends JPanel {
 		 */
 	}
 
-
 	public String deleteStaff() {
 
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
 				.getLastSelectedPathComponent();
-		
+
 		String id = null;
 		if (selectedNode.toString() != "Staff") {
 			treeModel.removeNodeFromParent(selectedNode);
-			
+
 			id = treeModel.getChild(selectedNode, 0).toString();
 
 			Pattern p = Pattern.compile("Id: (.*)");
@@ -118,13 +121,13 @@ public class StaffList extends JPanel {
 			while (m.find()) {
 				id = m.group(1);
 			}
-			
+
 			return id;
 		}
 
 		return id;
 	}
-	
+
 	public int getCurrentlySelectedStaffId() {
 
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
@@ -142,14 +145,14 @@ public class StaffList extends JPanel {
 				id = m.group(1);
 			}
 		}
-	
+
 		return Integer.parseInt(id);
 
 	}
 
 	// Add a staff to Staff List
 	public StaffDO addNewStaffToList(StaffDO staffInfo) {
-		
+
 		DefaultMutableTreeNode name = null;
 		DefaultMutableTreeNode info = null;
 
@@ -162,7 +165,15 @@ public class StaffList extends JPanel {
 		info = new DefaultMutableTreeNode("Weekly Availability: "
 				+ staffInfo.getStaffWeeklyAvailableTime());
 		name.add(info);
-		
+
+		if (staffInfo.getSkillLevels() != null) {
+			for (int i : staffInfo.getSkillLevels().keySet()) {
+
+				info = new DefaultMutableTreeNode(skillMap.get(i)
+						+ " - Level: " + staffInfo.getSkillLevels().get(i));
+				name.add(info);
+			}
+		}
 		return staffInfo;
 
 		// int j = 1;
@@ -199,18 +210,21 @@ public class StaffList extends JPanel {
 
 		DefaultMutableTreeNode weeklyAvailTime = (DefaultMutableTreeNode) selectedNode
 				.getChildAt(1);
-		weeklyAvailTime.setUserObject("Weekly Availability: " + staffInfo.getStaffWeeklyAvailableTime());
+		weeklyAvailTime.setUserObject("Weekly Availability: "
+				+ staffInfo.getStaffWeeklyAvailableTime());
+		
 
-//		DefaultMutableTreeNode skills = (DefaultMutableTreeNode) selectedNode
-//				.getChildAt(2);
-//		skills.setUserObject(staffInfo.getSkills()[0]);
-//
-//		DefaultMutableTreeNode holidays = (DefaultMutableTreeNode) selectedNode
-//				.getChildAt(3);
-//		holidays.setUserObject(staffInfo.getHolidays()[0]);
+		// DefaultMutableTreeNode skills = (DefaultMutableTreeNode) selectedNode
+		// .getChildAt(2);
+		// skills.setUserObject(staffInfo.getSkills()[0]);
+		//
+		// DefaultMutableTreeNode holidays = (DefaultMutableTreeNode)
+		// selectedNode
+		// .getChildAt(3);
+		// holidays.setUserObject(staffInfo.getHolidays()[0]);
 
 		tree.updateUI();
-		
+
 		return staffInfo;
 
 	}
