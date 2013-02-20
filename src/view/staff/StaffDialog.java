@@ -27,7 +27,7 @@ import view.MainFrame;
 public class StaffDialog extends JDialog {
 
 	Context context = new Context();
-	HashMap<Integer, String> mapSkills = context.getSkillMap();
+	HashMap<Integer, String> mapSkills = context.getSkillRevMap();
 	
 	// Text Fields for Adding Staff
 	JTextField tfId;
