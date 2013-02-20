@@ -153,7 +153,7 @@ public class ProjectController {
                     // get task info from user input
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                     String taskName = valuesMap.get("task_name");
-                    int requiredSkillId = Context.getSkillMap().get(valuesMap.get("required_skill"));
+                    int requiredSkillId = Context.getSkillRevMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
                     String taskRistLevel = valuesMap.get("risk_level");
                     DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
