@@ -44,8 +44,8 @@ public class StaffDao extends DatabaseRoot {
 		//Testing
 		HashMap<Integer, Integer> skillLevels = new HashMap<Integer, Integer>();
 		skillLevels.put(1, 1);
-		HashMap<Integer, DateTime> holidayDates = new HashMap<Integer, DateTime>();
-		holidayDates.put(1, null);
+		HashMap<DateTime, Integer> holidayDates = new HashMap<DateTime, Integer>();
+		holidayDates.put(null, 1);
 		
 		try {
 			while (result.next()) {

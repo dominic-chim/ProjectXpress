@@ -20,30 +20,56 @@ public class ScheduleAlgorithm {
 
     private ArrayList<StaffDO> staffList = new ArrayList<StaffDO>();
     private int currentTime = 0;
-    private HashMap<Integer, Integer> availableTime = new HashMap<Integer, Integer>();
-
+    //private HashMap<Integer, Integer> earliestAvailableTime = new HashMap<Integer, Integer>();
+    //private HashMap<Integer, HashMap<Integer, Integer>> staffUnavailableTime = new HashMap<Integer, HashMap<Integer, Integer>>();
+    
+    private HashMap<Integer, boolean[]> staffAvailablity;
+    
     // sets
     private PriorityQueue<DecisionSetObject> dicisionSet = 
         new PriorityQueue<DecisionSetObject>(5, new DecisionSetComparator());
 
     private ArrayList<TaskAllocObject> activeSet = new ArrayList<TaskAllocObject>();
     private ArrayList<TaskAllocObject> completeSet = new ArrayList<TaskAllocObject>();
+    
+    
 
     // list of projects
-    PriorityQueue<ProjectDO> projects = 
+    private PriorityQueue<ProjectDO> projects = 
         new PriorityQueue<ProjectDO>(5, new ProjectComparator());
 
-    public ScheduleAlgorithm(ArrayList<StaffDO> staffList, 
+    public ScheduleAlgorithm(DateTime projectStartingDate, ArrayList<StaffDO> staffList, 
             PriorityQueue<ProjectDO> projects) {
-
+    	
+    	this.projectStartingDate = projectStartingDate;
         this.staffList = staffList;
         this.projects = projects;
 
         for(StaffDO staff : staffList) {
 
-            availableTime.put(staff.getStaffId(), 0);
+        	// TODO init staffAvailablity here
+        	
+            
+            
         }
-
+/*
+        for(StaffDO staff : staffList) {
+        	
+        	int staffId = staff.getStaffId();
+        	int minKey = 0;
+        	for(int i : staffUnavailableTime.get(staffId).keySet()) {
+        		if(minKey > i) {
+        			minKey = i;
+        		}
+        	}
+        	
+        	if(minKey == 0){
+        		earliestAvailableTime.put(staff.getStaffId(), 0);
+        	}
+        	
+            
+        }*/
+        
     }
 
 
@@ -58,7 +84,7 @@ public class ScheduleAlgorithm {
 
                     for(StaffDO staff : staffList) {
                         if(staff.hasSkill(task.getTaskRequiredSkill())) {
-                            int score = getScore(staff.getStaffId(), task.getTaskId());
+                            int score = calcTaskScore(staff, task);
                             DecisionSetObject canStartTask = new DecisionSetObject();
                         }
                     }
@@ -92,12 +118,35 @@ public class ScheduleAlgorithm {
         return canStart;
     }
 
-    private int calcTaskScore(int staffId, int taskId) {
+    private int calcTaskScore(StaffDO staff, TaskDO task) {
 
-        max(,2);
+    	boolean[] availability = staffAvailablity.get(staff.getStaffId());
+    	int availableTime = 0;
+    	for(int i = 0; i < availability.length; i++) {
+    		
+    		if(availability[i]) {
+    			availableTime = i;
+    			break;
+    		}
+    		
+    	}
+    	
+    	double skillLevel = staff.getSkillLevels().get(task.getTaskRequiredSkill());
+    	
+    	for(int i = max(availableTime,currentTime) ; ;) {
+    		//TODO STOP HERE    availability
+    	}
+    	
+    	int holiday;
+    	
+        return (int)ceil(max(availableTime,currentTime) + task.getTaskDuration() / skillLevel + holiday) ;
 
-        return 0;
+        //return 0;
 
+    }
+    
+    private void removeIrreleventHoliday(HashMap<DateTime, Integer> holiday) {
+    	
     }
 
 

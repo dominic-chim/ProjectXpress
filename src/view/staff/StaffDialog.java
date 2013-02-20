@@ -27,7 +27,7 @@ import view.MainFrame;
 public class StaffDialog extends JDialog {
 
 	Context context = new Context();
-	HashMap<Integer, String> mapSkills = context.getSkillRevMap();
+	HashMap<Integer, String> mapSkills = context.getSkillMap();
 	
 	// Text Fields for Adding Staff
 	JTextField tfId;
@@ -66,7 +66,7 @@ public class StaffDialog extends JDialog {
 	JButton cancel;
 	
 	HashMap<Integer, Integer> skillLevels = new HashMap<Integer, Integer>();
-	HashMap<Integer, DateTime> holidayDates = new HashMap<Integer,DateTime>();
+	HashMap<DateTime, Integer> holidayDates = new HashMap<DateTime, Integer>();
 
 	public StaffDialog(MainFrame view, ActionListener controller, StaffDO staff) {
 

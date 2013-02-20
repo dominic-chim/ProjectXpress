@@ -10,11 +10,11 @@ public class StaffDO {
     private String staffName;
     private int staffWeeklyAvailableTime;
     HashMap<Integer, Integer> skillLevels;
-    HashMap<Integer, DateTime> holidayDates;
+    HashMap<DateTime, Integer> holidayDates;
     
 
     public StaffDO(int staffId, String staffName, int staffWeeklyAvailableTime,
-            HashMap<Integer, Integer> skillLevels, HashMap<Integer, DateTime> holidayDates) {
+            HashMap<Integer, Integer> skillLevels, HashMap<DateTime, Integer> holidayDates) {
 
         setStaffId(staffId);
         setStaffName(staffName);
@@ -41,7 +41,7 @@ public class StaffDO {
         return this.skillLevels;
     }
 
-    public HashMap<Integer, DateTime> getHolidays() {
+    public HashMap<DateTime, Integer> getHolidays() {
 
         return this.holidayDates;
     }
@@ -68,7 +68,7 @@ public class StaffDO {
         this.skillLevels = skillLevels;
     }
 
-    public void setHolidayDates(HashMap<Integer, DateTime> holidayDates) {
+    public void setHolidayDates(HashMap<DateTime, Integer> holidayDates) {
         this.holidayDates = holidayDates;
     }
 
