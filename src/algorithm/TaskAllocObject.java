@@ -1,16 +1,19 @@
 package algorithm;
 
+import data.dataObject.StaffDO;
+import data.dataObject.TaskDO;
+
 public class TaskAllocObject {
 
-    private int taskId; 
-    private int staffId; 
+    private TaskDO task; 
+    private StaffDO staff; 
 
     private int startTime;
     private int endTime;
 
-    public TaskAllocObject(int taskId, int staffId, int startTime, int endTime) {
-        this.taskId = taskId;
-        this.staffId = staffId;
+    public TaskAllocObject(TaskDO task, StaffDO staff, int startTime, int endTime) {
+        this.task= task;
+        this.staff= staff;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -18,15 +21,15 @@ public class TaskAllocObject {
     /**
      * @return the taskId
      */
-    public int getTaskId() {
-        return taskId;
+    public TaskDO getTask() {
+        return task;
     }
 
     /**
      * @return the staffId
      */
-    public int getStaffId() {
-        return staffId;
+    public StaffDO getStaff() {
+        return staff;
     }
 
     /**

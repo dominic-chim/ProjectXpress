@@ -10,17 +10,17 @@ public class StaffDO {
     private String staffName;
     private int staffWeeklyAvailableTime;
     HashMap<Integer, Integer> skillLevels;
-    HashMap<DateTime, Integer> holidayDates;
+    HashMap<DateTime, DateTime> holidayHour;
     
 
     public StaffDO(int staffId, String staffName, int staffWeeklyAvailableTime,
-            HashMap<Integer, Integer> skillLevels, HashMap<DateTime, Integer> holidayDates) {
+            HashMap<Integer, Integer> skillLevels, HashMap<DateTime, DateTime> holidayDates) {
 
         setStaffId(staffId);
         setStaffName(staffName);
         setStaffWeeklyAvailableTime(staffWeeklyAvailableTime);
         setSkillLevels(skillLevels);
-        setHolidayDates(holidayDates);
+        setHolidayHour(holidayDates);
     }
 
     // Getters
@@ -41,9 +41,9 @@ public class StaffDO {
         return this.skillLevels;
     }
 
-    public HashMap<DateTime, Integer> getHolidays() {
+    public HashMap<DateTime, DateTime> getHolidays() {
 
-        return this.holidayDates;
+        return this.holidayHour;
     }
 
     // public HashMap<Integer, HashMap<Integer, Integer>> getPrefenceLevel(int
@@ -68,8 +68,8 @@ public class StaffDO {
         this.skillLevels = skillLevels;
     }
 
-    public void setHolidayDates(HashMap<DateTime, Integer> holidayDates) {
-        this.holidayDates = holidayDates;
+    public void setHolidayHour(HashMap<DateTime, DateTime> holidayDates) {
+        this.holidayHour = holidayDates;
     }
 
     public boolean hasSkill(int skillId) {

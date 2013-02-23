@@ -42,7 +42,7 @@ public class ProjectList extends JPanel {
         
         // set up the tree
         // TODO finish this
-        DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("project");
+        DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("projects");
         DefaultMutableTreeNode taskSample1 = new DefaultMutableTreeNode("task1");
         DefaultMutableTreeNode taskSample2 = new DefaultMutableTreeNode("task2");
         DefaultMutableTreeNode taskSample3 = new DefaultMutableTreeNode("task3");
