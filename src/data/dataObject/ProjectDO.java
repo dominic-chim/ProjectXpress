@@ -94,7 +94,7 @@ public class ProjectDO {
 
     public String toString() {
         String output = "Project Name:" + projectName + "\n";
-        output += "Project Due Date: " + projectDueDate + "\n";
+        output += "Project Due Date: " + projectDueDate.getDateTime() + "\n";
         output += "project Priority: " + projectPriority + "\n";
         output += "project status: " + projectStatus + "\n";
         for(TaskDO task : tasks) {

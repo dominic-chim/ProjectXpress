@@ -28,13 +28,22 @@ public class ProjectController {
 
     // models 
     private ProjectDO projectModel = new ProjectDO();
-    //private TaskDO taskModel = new TaskDO();
 
     public ProjectController(MainFrame view) {
         this.view = view;
         this.projectPanel = view.getProjectPanel();
+        ProjectList jpnlprojectList = projectPanel.getProjectList();
 
-        projectPanel.getProjectList().addController(new ProjectListBtnListener());
+        // add controller to buttons in project list
+        jpnlprojectList.addController(new ProjectListBtnListener());
+
+        // getAllProject from database and list them in the projectList
+        ProjectDao projectDao = new ProjectDao();
+
+        ArrayList<ProjectDO> projects = projectDao.getAllProject();
+        for(ProjectDO project : projects) {
+            jpnlprojectList.addProjectNode(project);
+        }
     }
 
     /** 

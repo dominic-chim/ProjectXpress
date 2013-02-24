@@ -17,7 +17,7 @@ public class ProjectDao extends DatabaseRoot {
                 "project_status FROM project WHERE project_id=" + projectId;
         ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
         try {
-            ResultSet result = db.executeQuery(sql);
+            ResultSet result = connection.createStatement().executeQuery(sql);
             String projectName = null;
             DateTime projectDueDate = null;
             int projectPriority = 0;
@@ -45,6 +45,25 @@ public class ProjectDao extends DatabaseRoot {
         }
         //TODO change return value
         return null;
+    }
+
+    public ArrayList<ProjectDO> getAllProject() {
+        ArrayList<ProjectDO> projects = new ArrayList<ProjectDO>();
+
+        String sql = "SELECT DISTINCT project_id FROM project";
+
+        try {
+            ResultSet result = connection.createStatement().executeQuery(sql);
+            while(result.next()) {
+                int projectId = result.getInt("project_id");
+                projects.add(getProjectById(projectId));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return projects;
     }
 
     public void addProject(ProjectDO project) {
@@ -78,7 +97,7 @@ public class ProjectDao extends DatabaseRoot {
     public int getMaxProjectId() {
         ResultSet result;
         try {
-            result = db.executeQuery("SELECT max(project_id) AS max_id FROM project");
+            result = connection.createStatement().executeQuery("SELECT max(project_id) AS max_id FROM project");
             if(result.next())
                 return result.getInt("max_id");
             else

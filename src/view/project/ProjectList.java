@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import data.dataObject.ProjectDO;
+import data.dataObject.TaskDO;
 
 /**
  * left part of project tab in MainFrame
@@ -23,7 +25,8 @@ public class ProjectList extends JPanel {
     private JButton btnModify = new JButton("Modify Project");
     private JButton btnAdd = new JButton("Add project");
 
-    private JTree projectTree;
+    private DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("projects");
+    private JTree projectTree = new JTree(topNode);
     
     public ProjectList() {
         
@@ -42,7 +45,7 @@ public class ProjectList extends JPanel {
         
         // set up the tree
         // TODO finish this
-        DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("projects");
+        /*
         DefaultMutableTreeNode taskSample1 = new DefaultMutableTreeNode("task1");
         DefaultMutableTreeNode taskSample2 = new DefaultMutableTreeNode("task2");
         DefaultMutableTreeNode taskSample3 = new DefaultMutableTreeNode("task3");
@@ -50,6 +53,7 @@ public class ProjectList extends JPanel {
         topNode.add(taskSample2);
         topNode.add(taskSample3);
         projectTree = new JTree(topNode);
+        */
         add(projectTree, BorderLayout.CENTER);
         
         // 
@@ -62,4 +66,18 @@ public class ProjectList extends JPanel {
         btnModify.addActionListener(listener);
         btnAdd.addActionListener(listener);
     }
+
+    public void addProjectNode(ProjectDO project) {
+
+        DefaultMutableTreeNode projectNode = new DefaultMutableTreeNode(project.getProjectName());
+
+        ArrayList<TaskDO> tasks = project.getTasks();
+        for(TaskDO task : tasks) {
+            DefaultMutableTreeNode taskNode = new DefaultMutableTreeNode(task.getTaskName());
+            projectNode.add(taskNode);
+        }
+
+        topNode.add(projectNode);
+    }
+
 }
