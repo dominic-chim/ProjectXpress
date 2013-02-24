@@ -44,16 +44,6 @@ public class ProjectList extends JPanel {
         bottomPanel.add(btnAdd);
         
         // set up the tree
-        // TODO finish this
-        /*
-        DefaultMutableTreeNode taskSample1 = new DefaultMutableTreeNode("task1");
-        DefaultMutableTreeNode taskSample2 = new DefaultMutableTreeNode("task2");
-        DefaultMutableTreeNode taskSample3 = new DefaultMutableTreeNode("task3");
-        topNode.add(taskSample1);
-        topNode.add(taskSample2);
-        topNode.add(taskSample3);
-        projectTree = new JTree(topNode);
-        */
         add(projectTree, BorderLayout.CENTER);
         
         // 

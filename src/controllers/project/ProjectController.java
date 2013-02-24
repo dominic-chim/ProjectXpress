@@ -135,7 +135,6 @@ public class ProjectController {
             switch (e.getActionCommand()) {
                 case "add": // add a Required task
                 {
-                    // TODO test it
                     String taskName = jdlogAddTask.showAddReqiredTaskDialog(getTaskNames());
                     ArrayList<TaskDO> tasks = projectModel.getTasks();
                     int taskId = 0;

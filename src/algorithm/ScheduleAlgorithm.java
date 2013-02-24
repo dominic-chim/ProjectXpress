@@ -74,6 +74,7 @@ public class ScheduleAlgorithm {
 
             // TODO calculate the length of boolean array 
             // TODO convert holiday to working days
+            // TODO store and empty complete set !
             // STOP HERE
 
 

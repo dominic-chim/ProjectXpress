@@ -14,7 +14,6 @@ import database.DatabaseRoot;
 
 public class TaskDao extends DatabaseRoot {
 
-    //TODO test getTasksByProjectId
     public ArrayList<TaskDO> getTasksByProjectId(int projectId) {
         ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
         String sql = "SELECT task_id FROM task WHERE project_id=" + projectId;
@@ -32,7 +31,6 @@ public class TaskDao extends DatabaseRoot {
         return tasks;
     }
 
-    //TODO test getTaskById
     public TaskDO getTaskById(int projectId, int taskId) {
         TaskDO task = null;
 
