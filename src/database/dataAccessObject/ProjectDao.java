@@ -108,4 +108,22 @@ public class ProjectDao extends DatabaseRoot {
         }
         return 0;
     }
+
+
+    public DateTime getLastDueDate() {
+
+        String sql = "SELECT max(project_due_date) AS max_due_date FROM project";
+        try {
+            ResultSet result = connection.createStatement().executeQuery(sql);
+            if(result.next()) {
+                return new DateTime(result.getString("max_due_date"));
+            }
+            return null;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

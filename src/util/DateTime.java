@@ -30,11 +30,6 @@ public class DateTime {
         return this.dateTime;
     }
 
-    /*
-    private String addZeroIfNeeded(int num) {
-        return num < 10 ? "0" + num : "" + num;
-    }
-     */
 
     public boolean before(DateTime toCompare) {
         try {
@@ -45,9 +40,7 @@ public class DateTime {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return false;
-
     }
 
 

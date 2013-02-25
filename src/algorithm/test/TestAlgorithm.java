@@ -12,8 +12,8 @@ public class TestAlgorithm {
     
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testDuration() {
+		DateTime start = new DateTime("2000-");
 	}
 
 }

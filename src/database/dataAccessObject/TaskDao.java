@@ -18,8 +18,7 @@ public class TaskDao extends DatabaseRoot {
         ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
         String sql = "SELECT task_id FROM task WHERE project_id=" + projectId;
         try {
-            Statement stmt = connection.createStatement();
-            ResultSet result = stmt.executeQuery(sql);
+            ResultSet result = connection.createStatement().executeQuery(sql);
             while(result.next()) {
                 tasks.add(getTaskById(projectId, result.getInt("task_id")));
             }
@@ -39,8 +38,7 @@ public class TaskDao extends DatabaseRoot {
             + projectId + " AND task_id=" + taskId;
 
         try {
-            Statement stmt = connection.createStatement();
-            ResultSet result = stmt.executeQuery(sql);
+            ResultSet result = connection.createStatement().executeQuery(sql);
             if(result.next()) {
                 // get task info
                 String taskName = result.getString("task_name");

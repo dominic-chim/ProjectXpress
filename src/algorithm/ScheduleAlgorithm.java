@@ -39,7 +39,7 @@ public class ScheduleAlgorithm {
     private PriorityQueue<ProjectDO> projects = 
         new PriorityQueue<ProjectDO>(5, new ProjectComparator());
 
-    public ScheduleAlgorithm(DateTime projectStartingDate, ArrayList<StaffDO> staffList, 
+    public ScheduleAlgorithm(DateTime projectStartingDate, DateTime projectsDueDate, ArrayList<StaffDO> staffList, 
             PriorityQueue<ProjectDO> projects) {
     	
     	this.projectStartingDate = projectStartingDate;
@@ -75,7 +75,20 @@ public class ScheduleAlgorithm {
             // TODO calculate the length of boolean array 
             // TODO convert holiday to working days
             // TODO store and empty complete set !
-            // STOP HERE
+
+            boolean[] availability = new boolean[duration(projectStartingDate, projectsDueDate)];
+            for(DateTime holidayStartTime : holidays.keySet()) {
+                // TODO check it
+                DateTime holidayEndTime = holidays.get(holidayStartTime);
+                int holidayDuration = duration(holidayStartTime, holidayEndTime);
+                int holidayStartTimeInAlg = duration(projectStartingDate, holidayStartTime);
+                for(int i = holidayStartTimeInAlg; i < holidayStartTimeInAlg + holidayDuration; i++) {
+                    availability[i] = false;
+                }
+            }
+            staffAvailablity.put(staff.getStaffId(), availability);
+
+
 
 
         }
@@ -259,8 +272,26 @@ public class ScheduleAlgorithm {
     }
 
     
+    /*
     private void removeIrreleventHoliday(HashMap<DateTime, Integer> holiday) {
     	
+    }
+    */
+
+
+    // TODO fix it !!!
+    private int duration(DateTime start, DateTime end) {
+
+        String strStart = start.getDateTime();
+        String strEnd = end.getDateTime();
+
+        int startDay = Integer.parseInt(strStart.substring(8, 10));
+        int endDay = Integer.parseInt(strEnd.substring(8, 10));
+
+        int startHour = Integer.parseInt(strStart.substring(11, 13));
+        int endHour = Integer.parseInt(strEnd.substring(11, 13));
+
+        return (17 - startHour) + (endHour - 9) + (endDay - startDay - 1) * 8;
     }
 
 
