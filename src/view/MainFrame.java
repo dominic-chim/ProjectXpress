@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
+import algorithm.test.TestAlgorithm;
+
+import controllers.menu.SkillController;
+
 import view.project.*;
 import view.staff.*;
 import view.statistic.*;
@@ -35,23 +39,39 @@ public class MainFrame extends JFrame {
 	private StaffView staffPanel = new StaffView(this);
 //	private StatisticPanel statisticPanel = new StatisticPanel();
 	
+	SkillDialog skillDialog;
+	
 	public MainFrame() {
 		
 		setLayout(new BorderLayout());
 		
-		add(menuBar, BorderLayout.NORTH);
+//		add(menuBar, BorderLayout.NORTH);
+//		
+//		// add tabs to tabbed pane
+//		mainTabbedPane.addTab("Project", projectPanel);
+//		mainTabbedPane.addTab("Staff", staffPanel);
+////		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+//		
+//		add(mainTabbedPane, BorderLayout.CENTER);
+//		
+//		//setSize(600, 600);
+//		pack();
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);
+//		setLocationRelativeTo(null);
 		
-		// add tabs to tabbed pane
-		mainTabbedPane.addTab("Project", projectPanel);
-		mainTabbedPane.addTab("Staff", staffPanel);
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+		TestAlgorithm test = new TestAlgorithm();
+		test.testDuration();
+	}
+	
+	public void addSkillDialog(SkillController skillController) {
 		
-		add(mainTabbedPane, BorderLayout.CENTER);
+		this.skillDialog = new SkillDialog(this, skillController);
 		
-		//setSize(600, 600);
-		pack();
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	}
+	
+	public SkillDialog getSkillDialog() {
+		
+		return this.skillDialog;
 	}
 
 	public StaffView getStaffView() {
@@ -60,5 +80,9 @@ public class MainFrame extends JFrame {
 	
     public ProjectPanel getProjectPanel() {
         return projectPanel;
+    }
+    
+    public MainMenuBar getMainMenuBar() {
+    	return menuBar;
     }
 }

@@ -2,8 +2,13 @@ package view.menu;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.*;
-import controllers.menu.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import controllers.menu.MenuController;
 
 public class MainMenuBar extends JMenuBar {
 
@@ -19,6 +24,9 @@ public class MainMenuBar extends JMenuBar {
 	private JMenu menuView = new JMenu("View");
 	private JMenu menuSettings = new JMenu("Settings");
 
+	
+	private JMenuItem miViewSkill = new JMenuItem("Skills");
+	
 	// menu items
 	private JMenuItem miFileNew = new JMenuItem("New");
 	private JMenuItem miFileOpen = new JMenuItem("Open");
@@ -40,7 +48,6 @@ public class MainMenuBar extends JMenuBar {
 		// settings for New Menu
 		miFileNew.setBackground(Color.white);
 		miFileNew.setForeground(ColourB);
-		 miFileNew.addActionListener(new MenuListeners(this));
 		miFileNew.setMaximumSize(new Dimension(70, 40));
 		menuFile.add(miFileNew);
 
@@ -48,23 +55,21 @@ public class MainMenuBar extends JMenuBar {
 		miFileOpen.setBackground(Color.white);
 		miFileOpen.setForeground(ColourB);
 		miFileOpen.setMaximumSize(new Dimension(70, 40));
-		miFileOpen.addActionListener(new MenuListeners(this));
 		menuFile.add(miFileOpen);
 
 		// settings for Save Menu
 		miFileSave.setBackground(Color.white);
 		miFileSave.setForeground(ColourB);
 		miFileSave.setMaximumSize(new Dimension(70, 40));
-		miFileSave.addActionListener(new MenuListeners(this));
 		menuFile.add(miFileSave);
 
 		//settings for Close Menu
 		miFileClose.setBackground(Color.white);
 		miFileClose.setForeground(ColourB);
 		miFileClose.setMaximumSize(new Dimension(70, 40));
-		miFileClose.addActionListener(new MenuListeners(this));
 		menuFile.add(miFileClose);
 	
+		menuView.add(miViewSkill);
 
 		this.add(menuFile);
 		menuView.setForeground(Color.white);
@@ -74,6 +79,14 @@ public class MainMenuBar extends JMenuBar {
 
 		menuView.setForeground(Color.white);
 		//return Menu;
+	}
+	
+	
+	public void addControllers(ActionListener controller) {
+		
+		miViewSkill.addActionListener(controller);
+		
+	
 	}
 
 }

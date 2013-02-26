@@ -1,17 +1,20 @@
 package algorithm;
 
+import static java.lang.Math.ceil;
+import static java.lang.Math.max;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-import util.DateTime;
+import org.joda.time.Days;
+import org.joda.time.ReadableInstant;
 
+import util.DateTime;
 import data.dataObject.ProjectComparator;
 import data.dataObject.ProjectDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
-
-import static java.lang.Math.*;
 
 public class ScheduleAlgorithm {
 
@@ -278,21 +281,18 @@ public class ScheduleAlgorithm {
     }
     */
 
-
-    // TODO fix it !!!
     private int duration(DateTime start, DateTime end) {
+        
+        ReadableInstant startRI = (ReadableInstant) start;
+        ReadableInstant endRI = (ReadableInstant) end;
+        
+        Days d = Days.daysBetween(startRI, endRI);
+        int days = d.getDays();
 
-        String strStart = start.getDateTime();
-        String strEnd = end.getDateTime();
+        return days;        
 
-        int startDay = Integer.parseInt(strStart.substring(8, 10));
-        int endDay = Integer.parseInt(strEnd.substring(8, 10));
-
-        int startHour = Integer.parseInt(strStart.substring(11, 13));
-        int endHour = Integer.parseInt(strEnd.substring(11, 13));
-
-        return (17 - startHour) + (endHour - 9) + (endDay - startDay - 1) * 8;
-    }
+        
+    }  
 
 
 }

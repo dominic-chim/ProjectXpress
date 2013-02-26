@@ -41,7 +41,7 @@ public class StaffList extends JPanel {
 	MainFrame view;
 
 	Context context = new Context();
-	HashMap<Integer, String> skillMap = context.getSkillMap();
+//	HashMap<Integer, String> skillMap = context.getSkillMap();
 
 	public StaffList(MainFrame view) {
 

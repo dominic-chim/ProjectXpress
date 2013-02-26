@@ -1,8 +1,10 @@
 package controllers;
 
-import controllers.staff.StaffController;
-import controllers.project.ProjectController;
 import view.MainFrame;
+import controllers.menu.MenuController;
+import controllers.menu.SkillController;
+import controllers.project.ProjectController;
+import controllers.staff.StaffController;
 
 public class MainController {
 
@@ -15,6 +17,9 @@ public class MainController {
         // start other controllers
         ProjectController projectController = new ProjectController(view);
         StaffController staffController = new StaffController(view);
+        SkillController skillController = new SkillController(view);
+        MenuController menuController = new MenuController(view, skillController);
+        
     }
 
 
