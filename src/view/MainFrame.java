@@ -1,4 +1,4 @@
-package view;
+ package view;
 
 import java.awt.BorderLayout;
 
@@ -67,6 +67,7 @@ public class MainFrame extends JFrame {
 		
 		this.skillDialog = new SkillDialog(this, skillController);
 		
+
 	}
 	
 	public SkillDialog getSkillDialog() {
