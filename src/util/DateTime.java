@@ -18,8 +18,7 @@ public class DateTime {
             int second) {
         // TODO throw some exception when these values are invalid
         //
-        //long dateNum = year * 10000000000 + month *
-        dateTime = String.format("%04s-%02s-%02s %02s:%02s:%02s", year, month,
+        dateTime = String.format("%04d-%02d-%02d %02d:%02d:%02d", year, month,
                 day, hour, minute, second);
     }
 

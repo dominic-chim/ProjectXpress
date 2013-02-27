@@ -18,32 +18,27 @@ public class TaskAllocObject {
         this.endTime = endTime;
     }
 
-    /**
-     * @return the taskId
-     */
+    // getters
     public TaskDO getTask() {
         return task;
     }
 
-    /**
-     * @return the staffId
-     */
     public StaffDO getStaff() {
         return staff;
     }
 
-    /**
-     * @return the startTime
-     */
     public int getStartTime() {
         return startTime;
     }
 
-    /**
-     * @return the endTime
-     */
     public int getEndTime() {
         return endTime;
     }
+
+    public String toString() {
+        return String.format("task: %d, staff: %d, from: %d, to: %d", 
+                task.getTaskId(), staff.getStaffId(), startTime, endTime);
+    }
+         
 
 }

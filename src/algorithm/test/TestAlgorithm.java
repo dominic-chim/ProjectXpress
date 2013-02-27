@@ -1,30 +1,120 @@
 package algorithm.test;
 
-import org.joda.time.DateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+
 import org.joda.time.Days;
 import org.joda.time.ReadableInstant;
+import org.junit.Test;
+
+import algorithm.ScheduleAlgorithm;
+
+import data.dataObject.ProjectDO;
+import data.dataObject.StaffDO;
+import data.dataObject.TaskDO;
+import static org.junit.Assert.*;
+import util.DateTime;
 
 public class TestAlgorithm {
 
-    //public ScheduleAlgorithm(DateTime projectStartingDate, ArrayList<StaffDO> staffList, 
+    //public ScheduleAlgorithm(DateTime projectStartingDate, DateTime projectsDuedate, ArrayList<StaffDO> staffList, 
     //        PriorityQueue<ProjectDO> projects) {
 
+    @Test
+    public void testDuration() {
+        DateTime start = new DateTime(2013, 4, 1, 16,0,0);
+        DateTime end = new DateTime(2013, 4, 2, 10,0,0);
+        
+        assertEquals(2, ScheduleAlgorithm.duration(start, end));
+        
+    }
+    
+    
+    @Test
+    public void testAlgorithm(){
+        /*
+         * projects
+         */
 
-	public void testDuration() {
-		DateTime start = new DateTime(2013, 03, 01, 5,0,0);
-		DateTime end = new DateTime(2013, 04, 01, 5,0,0);
+        // a random date
+        util.DateTime td = new util.DateTime("1800-10-10 10:00:00");
 
-		
-		
-		 ReadableInstant startRI = (ReadableInstant) start;
-	     ReadableInstant endRI = (ReadableInstant) end;
-	     
-	     Days d = Days.daysBetween(startRI, endRI);
-	     int days = d.getDays();
-	     
-	     System.out.println(days);
-	    
-		
-	}
+        // tasks for project 1
+        ArrayList<Integer> taskreq1 = new ArrayList<Integer>();
+        TaskDO a1 = new TaskDO(1, 1, "A1", 1, 3, "", td, "", taskreq1);
+
+        ArrayList<Integer> taskreq2 = new ArrayList<Integer>();
+        taskreq2.add(1);
+        TaskDO a2 = new TaskDO(1, 2, "A2", 3, 1, "", td, "", taskreq2);
+
+        ArrayList<Integer> taskreq3 = new ArrayList<Integer>();
+        TaskDO a3 = new TaskDO(1, 3, "A3", 3, 1, "", td, "", taskreq3);
+
+        ArrayList<Integer> taskreq4 = new ArrayList<Integer>();
+        taskreq4.add(2);
+        taskreq4.add(3);
+        TaskDO a4 = new TaskDO(1, 4, "A4", 2, 4, "", td, "", taskreq4);
+        
+        ArrayList<Integer> taskreq5 = new ArrayList<Integer>();
+        taskreq5.add(2);
+        taskreq5.add(3);
+        TaskDO a5 = new TaskDO(1, 5, "A5", 2, 2, "", td, "", taskreq5);
+
+        ArrayList<Integer> taskreq6 = new ArrayList<Integer>();
+        taskreq6.add(5);
+        TaskDO a6 = new TaskDO(1, 6, "A6", 1, 3, "", td, "", taskreq6);
+
+        //add tasks to a ArrayList
+        ArrayList<TaskDO> tasksForP1 = new ArrayList<TaskDO>();
+        tasksForP1.add(a1);
+        tasksForP1.add(a2);
+        tasksForP1.add(a3);
+        tasksForP1.add(a4);
+        tasksForP1.add(a5);
+        tasksForP1.add(a6);
+
+
+        // create ProjectDO for project 1
+        ProjectDO project1 = new ProjectDO(1, "A", td, 1, "", tasksForP1);
+
+        PriorityQueue<ProjectDO> pqProj = new PriorityQueue<ProjectDO>();
+        pqProj.add(project1);
+
+
+        /*
+         * staffs
+         */
+        HashMap<Integer, Double> skillLevels1 = new HashMap<Integer, Double>();
+        skillLevels1.put(1, 1.0);
+        skillLevels1.put(2, 0.5);
+        //skillLevels1.put(3, 0.0);
+        HashMap<util.DateTime, util.DateTime> holidays1 = new HashMap<util.DateTime, util.DateTime>();
+        holidays1.put(new util.DateTime("2013-02-03 10:00:00"), new util.DateTime("2013-02-03 11:00:00"));
+        StaffDO r1 = new StaffDO(1, "Resource1", 0, skillLevels1, holidays1);
+
+
+        HashMap<Integer, Double> skillLevels2 = new HashMap<Integer, Double>();
+        //skillLevels1.put(1, 0.0);
+        skillLevels2.put(2, 1.0);
+        skillLevels2.put(3, 1.0);
+        HashMap<util.DateTime, util.DateTime> holidays2 = new HashMap<util.DateTime, util.DateTime>();
+        holidays2.put(new util.DateTime("2013-02-01 16:00:00"), new util.DateTime("2013-02-02 10:00:00"));
+        StaffDO r2 = new StaffDO(2, "Resource2", 0, skillLevels2, holidays2);
+
+
+
+        /////
+
+        ArrayList<StaffDO> staffs = new ArrayList<StaffDO>();
+        staffs.add(r1);
+        staffs.add(r2);
+
+
+        ScheduleAlgorithm algorithm = new ScheduleAlgorithm(new DateTime("2013-02-01 09:00:00"), 
+                                                            new DateTime("2013-02-06 09:00:00"),
+                                                            staffs, pqProj);
+        algorithm.runAlgoritm();
+    }
 
 }
