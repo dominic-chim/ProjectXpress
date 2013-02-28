@@ -41,7 +41,7 @@ public class StaffList extends JPanel {
 	MainFrame view;
 
 	Context context = new Context();
-//	HashMap<Integer, String> skillMap = context.getSkillMap();
+	HashMap<Integer, String> skillMap = context.getSkillMap();
 
 	public StaffList(MainFrame view) {
 
@@ -166,14 +166,14 @@ public class StaffList extends JPanel {
 				+ staffInfo.getStaffWeeklyAvailableTime());
 		name.add(info);
 
-		if (staffInfo.getSkillLevels() != null) {
-			for (int i : staffInfo.getSkillLevels().keySet()) {
-
-				info = new DefaultMutableTreeNode(skillMap.get(i)
-						+ " - Level: " + staffInfo.getSkillLevels().get(i));
-				name.add(info);
-			}
-		}
+//		if (staffInfo.getSkillLevels() != null) {
+//			for (int i : staffInfo.getSkillLevels().keySet()) {
+//
+//				info = new DefaultMutableTreeNode(skillMap.get(i)
+//						+ " - Level: " + staffInfo.getSkillLevels().get(i));
+//				name.add(info);
+//			}
+//		}
 		return staffInfo;
 
 		// int j = 1;

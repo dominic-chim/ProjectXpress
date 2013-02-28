@@ -28,7 +28,7 @@ public class StaffController implements ActionListener {
 		staffList = staffView.getStaffList();
 			
 		//Initialise staff tree with staff currently in the database
-//		staffList.createDefaultStaff(staffDao.getAllStaff());
+		staffList.createDefaultStaff(staffDao.getAllStaff());
 		
 	}
 
