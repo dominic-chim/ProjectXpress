@@ -1,0 +1,235 @@
+package view.menu;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import controllers.menu.SkillController;
+
+import view.MainFrame;
+
+import data.Context;
+
+public class SkillDialog extends JDialog {
+
+	// Context context;
+	// HashMap<Integer, String> skills = context.getSkillMap();
+	HashMap<Integer, String> skills = new HashMap<Integer, String>();
+
+	// SkillDialog
+	JButton btnAddSkill = new JButton("Add Skill");
+	JButton btnModifySkill = new JButton("Modify Skill");
+	JButton btnRemoveSkill = new JButton("Remove Skill");
+	DefaultListModel skillListModel;
+	JList skillList;
+
+	// Add Dialog
+	JDialog addSkillDialog;
+	JButton btnAdd = new JButton("Save Skill");
+	JButton btnCancel = new JButton("Cancel Add");
+	JLabel lblSkillInput = new JLabel("Enter New Skill", JLabel.HORIZONTAL);
+	JTextField tfSkillInput = new JTextField();
+
+	// Modify Dialog
+	JDialog modifySkillDialog;
+	JButton btnModify = new JButton("Save changes");
+	JButton btnModifyCancel = new JButton("Cancel Modify");
+	JLabel lblModifySkillInput = new JLabel("Enter Modified Skill",
+			JLabel.HORIZONTAL);
+	JTextField tfModifySkillInput = new JTextField();
+
+	MainFrame view;
+
+	GridBagConstraints gbc = new GridBagConstraints();
+
+	public SkillDialog(MainFrame view, SkillController controller) {
+
+		super(view, true);
+
+		this.view = view;
+		setLayout(new BorderLayout());
+
+		// Test
+		skills.put(0, "Test");
+		skills.put(1, "Test 2");
+
+		// Define Skill List
+		skillListModel = new DefaultListModel();
+		skillList = new JList(skillListModel);
+
+		for (String i : skills.values()) {
+			skillListModel.addElement(i);
+		}
+
+		// Button Panel
+		JPanel skillPanel = new JPanel(new GridBagLayout());
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.ipadx = 20;
+		gbc.ipady = 20;
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 3;
+
+		skillPanel.add(skillList, gbc);
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.weightx = 0.1;
+		gbc.weighty = 0.1;
+		skillPanel.add(btnRemoveSkill, gbc);
+		gbc.gridx = 1;
+		skillPanel.add(btnModifySkill, gbc);
+		gbc.gridx = 2;
+		skillPanel.add(btnAddSkill, gbc);
+		skillList.setSelectedIndex(0);
+
+		addController(controller);
+
+		// Add Panels to Dialog
+		add(skillPanel, BorderLayout.CENTER);
+		// Set Dialog Settings
+
+	}
+
+	public void createSkillDialog() {
+		setTitle("Add Skill");
+		setSize(300, 200);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setVisible(true);
+
+	}
+
+	public void addSkillDialog() {
+
+		addSkillDialog = new JDialog(view, "Add Skill", true);
+
+		tfSkillInput.setHorizontalAlignment(JTextField.CENTER);
+
+		addSkillDialog.setLayout(new GridBagLayout());
+		gbc.fill = GridBagConstraints.BOTH;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weightx = 1;
+		gbc.weighty = 1;
+		gbc.ipadx = 20;
+		gbc.ipady = 20;
+		gbc.gridwidth = 2;
+
+		addSkillDialog.add(lblSkillInput, gbc);
+		gbc.gridy = 1;
+		addSkillDialog.add(tfSkillInput, gbc);
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		addSkillDialog.add(btnCancel, gbc);
+		gbc.gridx = 1;
+		addSkillDialog.add(btnAdd, gbc);
+
+		addSkillDialog.setSize(300, 125);
+		addSkillDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		addSkillDialog.setLocationRelativeTo(null);
+		addSkillDialog.setVisible(true);
+
+	}
+
+	public void modifySkillDialog() {
+
+		if (skillList.getSelectedValue() != null) {
+
+			modifySkillDialog = new JDialog(view, "Modify Skill", true);
+
+			tfModifySkillInput.setHorizontalAlignment(JTextField.CENTER);
+			tfModifySkillInput.setText((String) skillList.getSelectedValue());
+			
+			modifySkillDialog.setLayout(new GridBagLayout());
+			gbc.fill = GridBagConstraints.BOTH;
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weightx = 1;
+			gbc.weighty = 1;
+			gbc.ipadx = 20;
+			gbc.ipady = 20;
+			gbc.gridwidth = 2;
+
+			modifySkillDialog.add(lblModifySkillInput, gbc);
+			gbc.gridy = 1;
+			modifySkillDialog.add(tfModifySkillInput, gbc);
+			gbc.gridy = 2;
+			gbc.gridwidth = 1;
+			modifySkillDialog.add(btnModifyCancel, gbc);
+			gbc.gridx = 1;
+			modifySkillDialog.add(btnModify, gbc);
+
+			modifySkillDialog.setSize(300, 125);
+			modifySkillDialog.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			modifySkillDialog.setLocationRelativeTo(null);
+			modifySkillDialog.setVisible(true);
+
+		} else {
+			
+			JOptionPane.showMessageDialog(view, "No Skill Selected");
+			
+		}
+
+	}
+
+	public void removeSkillDialog() {
+
+		String selected = (String) skillList.getSelectedValue();
+
+		if (selected != null) {
+			skillListModel.removeElement(selected);
+			JOptionPane.showMessageDialog(view, "Skill '" + selected
+					+ "' Was Succesfully Removed");
+
+		} else {
+			JOptionPane.showMessageDialog(view, "No Skill Selected");
+		}
+
+	}
+
+	public void addModifiedSkillToList() {
+		
+		skillListModel.setElementAt(tfModifySkillInput.getText(), skillList.getSelectedIndex());
+		
+	}
+	
+	public void addNewSkillToList() {
+
+		skillListModel.addElement(tfSkillInput.getText());
+	}
+
+	public JDialog getAddSkillDialog() {
+		return this.addSkillDialog;
+	}
+
+	public JDialog getModifySkillDialog() {
+		return this.modifySkillDialog;
+	}
+
+	public void addController(ActionListener listener) {
+
+		btnAddSkill.addActionListener(listener);
+		btnModifySkill.addActionListener(listener);
+		btnRemoveSkill.addActionListener(listener);
+		btnAdd.addActionListener(listener);
+		btnCancel.addActionListener(listener);
+		btnModify.addActionListener(listener);
+		btnModifyCancel.addActionListener(listener);
+
+	}
+
+}
