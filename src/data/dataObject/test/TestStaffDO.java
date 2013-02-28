@@ -1,5 +1,7 @@
 package data.dataObject.test;
 
+import java.util.HashMap;
+import util.*;
 import data.dataObject.*;
 import test.GroupTestCase;
 
@@ -21,21 +23,25 @@ public class TestStaffDO extends GroupTestCase{
     }
     
     public void testSetStaffName(){
-    	sdo.setStaffName(null);
-    	assertEquals(null,sdo.getStaffName());
+    	sdo.setStaffName("bob");
+    	assertEquals("bob",sdo.getStaffName());
     }
     public void testStaffWeeklyAvailableTime(){
-    	sdo.setStaffWeeklyAvailableTime(0);
-    	assertEquals(0,sdo.getStaffWeeklyAvailableTime());
+    	sdo.setStaffWeeklyAvailableTime(45);
+    	assertEquals(45,sdo.getStaffWeeklyAvailableTime());
     }
     
-    public void testSetStaffSkills(){
-    	sdo.setSkills(null);
-    	assertEquals(null,sdo.getSkills());
+    public void testSetStaffSkillLevels(){
+    	HashMap<Integer, Double> tempSkill = new HashMap<Integer, Double>();
+    	tempSkill.put(1, 0.8);
+    	sdo.setSkillLevels(tempSkill);
+    	assertEquals(0.8,sdo.getSkillLevels().get(1), 2e-10);
     }
     
     public void testSetStaffHolidays(){
-    	sdo.setHolidays(null);
+    	HashMap<DateTime, DateTime> tempHoliday = new HashMap<DateTime, DateTime>();
+    	tempHoliday.put(new DateTime(2010,03,02,9,00,00), new DateTime(2010,03,03,9,00,00));
+    	sdo.setHolidayHour(tempHoliday);
     	assertEquals(null,sdo.getHolidays());
     }
 }
