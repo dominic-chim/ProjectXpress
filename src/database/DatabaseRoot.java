@@ -1,7 +1,6 @@
 package database;
 
 import java.sql.*;
-import java.util.GregorianCalendar;
 
 import util.DatabaseConfig;
 
@@ -12,20 +11,24 @@ public abstract class DatabaseRoot {
     
     public DatabaseRoot() {
 
+    	// read configuration from config/config.csv
         DatabaseConfig config = new DatabaseConfig();
 
-        String url = "jdbc:mysql://localhost:3306/" + config.getDatabaseName(); 
+        
+        String url = String.format("jdbc:mysql://%s/%s", config.getHost(), config.getDatabaseName()); 
+                
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String userName = config.getUserName();
             String password = config.getPassword();
-            this.connection = DriverManager.getConnection(url,userName,password);
+            this.connection = DriverManager.getConnection(url, userName, password);
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {
             System.out.println("errorCNF");
         } catch (SQLException e) {
             System.out.println("errorSQL");
         }
+        
     }
     
     // TODO rewrite it using simple date format
