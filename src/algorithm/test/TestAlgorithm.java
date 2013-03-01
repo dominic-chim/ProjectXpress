@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-import org.joda.time.Days;
-import org.joda.time.ReadableInstant;
+import org.junit.Before;
 import org.junit.Test;
 
 import algorithm.ScheduleAlgorithm;
@@ -21,18 +20,12 @@ public class TestAlgorithm {
     //public ScheduleAlgorithm(DateTime projectStartingDate, DateTime projectsDuedate, ArrayList<StaffDO> staffList, 
     //        PriorityQueue<ProjectDO> projects) {
 
-    @Test
-    public void testDuration() {
-        DateTime start = new DateTime(2013, 4, 1, 16,0,0);
-        DateTime end = new DateTime(2013, 4, 2, 10,0,0);
-        
-        assertEquals(2, ScheduleAlgorithm.duration(start, end));
-        
-    }
-    
-    
-    @Test
-    public void testAlgorithm(){
+	private PriorityQueue<ProjectDO> pqProj;
+	private ArrayList<StaffDO> staffs;
+	
+	
+	@Before
+	public void init() {
         /*
          * projects
          */
@@ -78,7 +71,7 @@ public class TestAlgorithm {
         // create ProjectDO for project 1
         ProjectDO project1 = new ProjectDO(1, "A", td, 1, "", tasksForP1);
 
-        PriorityQueue<ProjectDO> pqProj = new PriorityQueue<ProjectDO>();
+        pqProj = new PriorityQueue<ProjectDO>();
         pqProj.add(project1);
 
 
@@ -106,15 +99,43 @@ public class TestAlgorithm {
 
         /////
 
-        ArrayList<StaffDO> staffs = new ArrayList<StaffDO>();
+        staffs = new ArrayList<StaffDO>();
         staffs.add(r1);
         staffs.add(r2);
+	}
+	
+	
+    @Test
+    public void testDuration() {
+        DateTime start = new DateTime(2013, 4, 1, 16,0,0);
+        DateTime end = new DateTime(2013, 4, 2, 10,0,0);
+        
+        assertEquals(2, ScheduleAlgorithm.duration(start, end));
+        
+    }
+    
+    
+    @Test
+    public void testAlgorithmWithHoliday(){
 
 
         ScheduleAlgorithm algorithm = new ScheduleAlgorithm(new DateTime("2013-02-01 09:00:00"), 
-                                                            new DateTime("2013-02-06 09:00:00"),
-                                                            staffs, pqProj);
+											                new DateTime("2013-02-06 09:00:00"),
+											                staffs, pqProj);
         algorithm.runAlgoritm();
+        System.out.println("--------------");
+        
+    }
+    
+    @Test
+    public void testAlgorithmWithoutHoliday(){
+
+
+        ScheduleAlgorithm algorithm = new ScheduleAlgorithm(new DateTime("2013-03-01 09:00:00"), 
+											                new DateTime("2013-03-06 09:00:00"),
+											                staffs, pqProj);
+        algorithm.runAlgoritm();
+        System.out.println("--------------");
     }
 
 }
