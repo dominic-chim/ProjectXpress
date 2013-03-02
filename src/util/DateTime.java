@@ -21,7 +21,7 @@ public class DateTime {
         day = Integer.parseInt(dateTime.substring(8, 10));
         hour = Integer.parseInt(dateTime.substring(11, 13));
         minute = Integer.parseInt(dateTime.substring(14, 16));
-        second = Integer.parseInt(dateTime.substring(0, 4));
+        second = Integer.parseInt(dateTime.substring(17, 19));
     }
 
     public DateTime(int year, int month, int day, 
@@ -35,7 +35,7 @@ public class DateTime {
         this.day = day;
         this.hour = hour;
         this.minute = minute;
-        this.second = minute;
+        this.second = second;
     }
 
     public DateTime(Date date) {

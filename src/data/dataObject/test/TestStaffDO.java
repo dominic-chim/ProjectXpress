@@ -50,5 +50,10 @@ public class TestStaffDO extends GroupTestCase{
     		
     	}*/
     	assertEquals(new DateTime("2010-03-03 09:00:00").getYear(),sdo.getHolidays().get(start).getYear());
+    	assertEquals(new DateTime("2010-03-03 09:00:00").getMonth(),sdo.getHolidays().get(start).getMonth());
+    	assertEquals(new DateTime("2010-03-03 09:00:00").getDay(),sdo.getHolidays().get(start).getDay());
+    	assertEquals(new DateTime("2010-03-03 09:00:00").getHour(),sdo.getHolidays().get(start).getHour());
+    	assertEquals(new DateTime("2010-03-03 09:00:00").getMinute(),sdo.getHolidays().get(start).getMinute());
+    	assertEquals(new DateTime("2010-03-03 09:00:00").getSecond(),sdo.getHolidays().get(start).getSecond());
     }
 }

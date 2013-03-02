@@ -18,5 +18,11 @@ public class TestDataTime extends GroupTestCase{
     
     public void testOutPrintDateTime(){
     	assertEquals("1000-00-00 00:00:00",time.getDateTime());
+    	assertEquals(new DateTime("1000-00-00 00:00:00").getYear(),time.getYear());
+    	assertEquals(new DateTime("1000-00-00 00:00:00").getMonth(),time.getMonth());
+    	assertEquals(new DateTime("1000-00-00 00:00:00").getDay(),time.getDay());
+    	assertEquals(new DateTime("1000-00-00 00:00:00").getHour(),time.getHour());
+    	assertEquals(new DateTime("1000-00-00 00:00:00").getMinute(),time.getMinute());
+    	assertEquals(new DateTime("1000-00-00 00:00:00").getSecond(),time.getSecond());
     }
 }
