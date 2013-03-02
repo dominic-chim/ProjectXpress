@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.joda.time.DateMidnight;
+import org.joda.time.Days;
+
 public class DateTime {
 
 	private int year;
@@ -43,6 +46,31 @@ public class DateTime {
         return false;
     }
 
+    public static int duration(DateTime start, DateTime end) {
+
+        /*
+        ReadableInstant startRI = (ReadableInstant) start;
+        ReadableInstant endRI = (ReadableInstant) end;
+
+        Days d = Days.daysBetween(startRI, endRI);
+        int days = d.getDays();
+         */
+
+        String strStart = start.getDateTime();
+        String strEnd = end.getDateTime();
+
+        //int startDay = Integer.parseInt(strStart.substring(8,10));
+        //int endDay = Integer.parseInt(strEnd.substring(8,10));
+        DateMidnight sd = new DateMidnight(strStart.substring(0, 10));
+        DateMidnight ed = new DateMidnight(strEnd.substring(0, 10));
+
+        int days = Days.daysBetween(sd, ed).getDays();
+        
+        int startHour = Integer.parseInt(strStart.substring(11,13));
+        int endHour = Integer.parseInt(strEnd.substring(11,13));
+
+        return (endHour - startHour) + 8 * days;
+    }  
 
 
 }
