@@ -40,8 +40,15 @@ public class TestStaffDO extends GroupTestCase{
     
     public void testSetStaffHolidays(){
     	HashMap<DateTime, DateTime> tempHoliday = new HashMap<DateTime, DateTime>();
-    	tempHoliday.put(new DateTime(2010,03,02,9,00,00), new DateTime(2010,03,03,9,00,00));
+    	DateTime start = new DateTime(2010,3,2,9,00,00);
+    	DateTime end = new DateTime(2010,3,3,9,00,00);
+    	tempHoliday.put(start, end);
     	sdo.setHolidayHour(tempHoliday);
-    	assertEquals(null,sdo.getHolidays());
+    	/*
+    	for(DateTime startDate : tempHoliday.keySet()) {
+    		DateTime endDate = tempHoliday.get(startDate);
+    		
+    	}*/
+    	assertEquals(new DateTime("2010-03-03 09:00:00").getYear(),sdo.getHolidays().get(start).getYear());
     }
 }
