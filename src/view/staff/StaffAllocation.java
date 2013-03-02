@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import data.dataObject.ProjectDO;
+import util.DateTime;
+import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
+import data.dataObject.TaskDO;
 
 public class StaffAllocation extends JPanel {
 
@@ -24,7 +27,7 @@ public class StaffAllocation extends JPanel {
 
 		ListSelectionModel listSelectionModel;
 
-		String[] columnNames = { "Staff", "Allocated Project" };
+		String[] columnNames = {"Staff", "Allocated Tasks"};
 
 		Object[][] data = {};
 
@@ -45,21 +48,80 @@ public class StaffAllocation extends JPanel {
 
 		listSelectionModel = allocationTable.getSelectionModel();
 		allocationTable.setSelectionModel(listSelectionModel);
-
-	
 		
+		JScrollPane scrollPane = new JScrollPane(allocationTable);
+		add(scrollPane, BorderLayout.CENTER);
 		
-		add(allocationTable, BorderLayout.CENTER);
+		testData();
+		
 		setVisible(true);
 		
 
 	}
 	
-	public void addStaffAllocatedProjects(HashMap<StaffDO , ArrayList<ProjectDO>> staffAllocProjects)	{
+	public void testData() {
+		//// Testing \\\\
+	    //Create StaffDO obj to Test
+        HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
+        skillLevels.put(1, 5.0);
+        HashMap<DateTime, DateTime> holidayDates= new HashMap<DateTime, DateTime>();
+
+		StaffDO staffOne = new StaffDO(1, "Ross", 40, skillLevels, holidayDates);
+		StaffDO staffTwo = new StaffDO(2, "Bob", 40, skillLevels, holidayDates);
+
+		//Create ArrayList of ResultDO to test
+		
+	
+		DateTime dateTime = new DateTime(2013, 04, 05, 10, 30, 0);
+		
+		ArrayList<Integer> requiredTskIds = new ArrayList<Integer>();
+		requiredTskIds.add(5);
+		
+		DateTime dateStart1= new DateTime(2013, 04, 05, 10, 30, 0);
+		DateTime dateEnd1 = new DateTime(2013, 04, 05, 13, 30, 0);
+		
+		DateTime dateStart2= new DateTime(2013, 04, 06, 14, 30, 0);
+		DateTime dateEnd2 = new DateTime(2013, 04, 06, 17, 30, 0);
+		
+		TaskDO taskOne = new TaskDO(1, 1, "Task One",  1, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
+		ResultDO resultOne = new ResultDO(5, taskOne, staffOne, dateStart1, dateEnd1);
+
+		TaskDO taskTwo = new TaskDO(1, 2, "Task Two",  1, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
+		ResultDO resultTwo = new ResultDO(5, taskTwo, staffOne, dateStart2, dateEnd2);
+
+		
+		ArrayList<ResultDO> listOfResultsTest1 = new ArrayList<ResultDO>();
+		listOfResultsTest1.add(resultOne);
+		listOfResultsTest1.add(resultTwo);
+		
+		ArrayList<ResultDO> listOfResultsTest2 = new ArrayList<ResultDO>();
+		listOfResultsTest2.add(resultOne);
+		listOfResultsTest2.add(resultTwo);
+		
+		HashMap<StaffDO , ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
+		test.put(staffOne, listOfResultsTest1);
+		test.put(staffTwo, listOfResultsTest2);
+		
+		
+		addStaffAllocatedProjects(test);	
+	}
+	
+	public void addStaffAllocatedProjects(HashMap<StaffDO , ArrayList<ResultDO>> staffAllocProjects)	{
+		
+		String currentStaff = "";
 		
 		for(StaffDO staff : staffAllocProjects.keySet()) {
-			for(ProjectDO projects: staffAllocProjects.get(staff)) {				
-				allocationModel.addRow(new Object[] {staff, projects.getProjectName()});
+			for(ResultDO tasks: staffAllocProjects.get(staff)) {
+				
+				if(currentStaff == staff.getStaffName()) {
+					allocationModel.addRow(new Object[] {"", tasks.getTaskDO().getTaskName()});
+
+				} else {
+					allocationModel.addRow(new Object[] {staff.getStaffName(), tasks.getTaskDO().getTaskName()});
+
+				}
+				
+				currentStaff = staff.getStaffName();
 			}
 		}
 		

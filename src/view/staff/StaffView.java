@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
@@ -39,9 +40,12 @@ public class StaffView extends JPanel {
 		staffSummary = new StaffSummary();
 		staffAllocation = new StaffAllocation();
 
+		JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
+
+		
 		tabPanel.setLayout(new BorderLayout());
 
-		mainTab.addTab("Summary of Staff", staffSummary);
+		mainTab.addTab("Summary of Staff", staffSummaryScrollPane);
 		mainTab.addTab("Staff Allocation", staffAllocation);
 		mainTab.setPreferredSize(new Dimension(600, 400));
 

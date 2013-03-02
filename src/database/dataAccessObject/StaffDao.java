@@ -17,8 +17,8 @@ public class StaffDao extends DatabaseRoot {
 		super();
 	}
 
-	//Context context = new Context();
 	HashMap<Integer, String> skills = Context.getSkillMap();
+
 	
 	public StaffDO getStaffById(int staffId) {
 
