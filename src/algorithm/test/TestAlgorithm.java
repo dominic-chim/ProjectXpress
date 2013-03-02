@@ -110,7 +110,7 @@ public class TestAlgorithm {
         DateTime start = new DateTime(2013, 4, 1, 16,0,0);
         DateTime end = new DateTime(2013, 4, 2, 10,0,0);
         
-        assertEquals(2, ScheduleAlgorithm.duration(start, end));
+        assertEquals(2, DateTime.duration(start, end));
         
     }
     

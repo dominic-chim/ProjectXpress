@@ -8,13 +8,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-import org.joda.time.DateMidnight;
-import org.joda.time.Days;
-import org.joda.time.ReadableInstant;
+//import org.joda.time.DateMidnight;
+//import org.joda.time.Days;
 
 import util.DateTime;
 import data.dataObject.ProjectComparator;
 import data.dataObject.ProjectDO;
+import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
 
@@ -39,6 +39,8 @@ public class ScheduleAlgorithm {
     private PriorityQueue<ProjectDO> projects = new PriorityQueue<ProjectDO>(5,
             new ProjectComparator());
 
+    private ArrayList<ResultDO> scheduleResult = new ArrayList<ResultDO>();
+
     public ScheduleAlgorithm(DateTime projectStartingDate,
             DateTime projectsDueDate, ArrayList<StaffDO> staffList,
             PriorityQueue<ProjectDO> projects) {
@@ -59,7 +61,7 @@ public class ScheduleAlgorithm {
             }
         }
 
-        // convert DateTime to ...
+        // convert DateTime to 123..
         for (StaffDO staff : staffList) {
 
             HashMap<DateTime, DateTime> holidays = staff.getHolidays();
@@ -75,7 +77,6 @@ public class ScheduleAlgorithm {
             // TODO calculate the length of boolean array
             // TODO convert holiday to working days
             // TODO store and empty complete set !
-
             boolean[] availability = new boolean[DateTime.duration(projectStartingDate, projectsDueDate)];
             Arrays.fill(availability, Boolean.TRUE);
             for (DateTime holidayStartTime : holidays.keySet()) {
@@ -93,15 +94,6 @@ public class ScheduleAlgorithm {
 
         }
 
-        /*TODO remove test code 
-        for(StaffDO staff : staffList) {
-            for(boolean a : staffAvailablity.get(staff.getStaffId())) {
-                System.out.print(a + "\t");
-            }
-            System.out.println();
-        }
-        */
-
     }
 
     public void runAlgoritm() {
@@ -114,7 +106,7 @@ public class ScheduleAlgorithm {
 
             while (!(tasks.size() == 0 && activeSet.size() == 0)) {
 
-            	
+                
 
                 ArrayList<TaskDO> toDeleteTasks = new ArrayList<TaskDO>();
                 for (TaskDO task : tasks) {
@@ -170,12 +162,12 @@ public class ScheduleAlgorithm {
                     ArrayList<DecisionSetObject> toRemoveDecisionSetObjs = new ArrayList<DecisionSetObject>();
                     for (DecisionSetObject toRemove : decisionSet) {
                         if (toRemove.getTask().getTaskId() == task.getTaskId()) {
-                        	toRemoveDecisionSetObjs.add(toRemove);
+                            toRemoveDecisionSetObjs.add(toRemove);
                             //decisionSet.remove(toRemove);
                         }
                     }
                     for (DecisionSetObject remove : toRemoveDecisionSetObjs) {
-                    	decisionSet.remove(remove);
+                        decisionSet.remove(remove);
                     }
 
                     // update availableTime
@@ -211,11 +203,24 @@ public class ScheduleAlgorithm {
                 
 
             }
+
+            // add result to result set
+            for(TaskAllocObject taskAlloc : completeSet) {
+                scheduleResult.add(
+                        new ResultDO(currentProject.getProjectId(),
+                                    taskAlloc.getTask(),
+                                    taskAlloc.getStaff(),
+                                    DateTime.hourLater(projectStartingDate, taskAlloc.getStartTime()),
+                                    DateTime.hourLater(projectStartingDate, taskAlloc.getEndTime())
+                                    ));
+            }
+
+            // empty completeSet
+            completeSet.clear();
         }
         //TODO del
-        //System.out.println("endAll");
         for(TaskAllocObject to : completeSet) {
-        	System.out.println(to);
+            System.out.println(to);
         }
         
 
@@ -300,21 +305,14 @@ public class ScheduleAlgorithm {
     }
      */
 
+
+
+    /*
     public static int duration(DateTime start, DateTime end) {
-
-        /*
-        ReadableInstant startRI = (ReadableInstant) start;
-        ReadableInstant endRI = (ReadableInstant) end;
-
-        Days d = Days.daysBetween(startRI, endRI);
-        int days = d.getDays();
-         */
 
         String strStart = start.getDateTime();
         String strEnd = end.getDateTime();
 
-        //int startDay = Integer.parseInt(strStart.substring(8,10));
-        //int endDay = Integer.parseInt(strEnd.substring(8,10));
         DateMidnight sd = new DateMidnight(strStart.substring(0, 10));
         DateMidnight ed = new DateMidnight(strEnd.substring(0, 10));
 
@@ -327,6 +325,7 @@ public class ScheduleAlgorithm {
 
         
     }  
+    */
 
 
 }

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.Days;
+import org.joda.time.Period;
 
 public class DateTime {
 
@@ -42,7 +43,7 @@ public class DateTime {
     }
     
     public DateTime() {
-    	
+        
     }
 
     public String getDateTime() {
@@ -80,6 +81,25 @@ public class DateTime {
         int endHour = Integer.parseInt(strEnd.substring(11,13));
 
         return (endHour - startHour) + 8 * days;
+    }
+
+    // TODO finish it
+    public static DateTime hourLater(DateTime date, int hour) {
+
+        /*
+        org.joda.time.DateTime dt = new org.joda.time.DateTime(
+                date.getYear(),
+                date.getMonth(),
+                date.getDay(),
+                date.getHour(),
+                date.getMinute(),
+                date.getSecond(),
+                0);
+
+        int daysBetween = hour / 8;
+        dt.plus(Period.days(1));
+        */
+        return null;
     }
 
     // getters
