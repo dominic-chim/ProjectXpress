@@ -63,7 +63,6 @@ public class StaffList extends JPanel {
 		treeModel = new DefaultTreeModel(staff);
 		tree = new JTree(treeModel);
 		JScrollPane treeView = new JScrollPane(tree);
-		setVisible(true);
 
 		add(tree, BorderLayout.CENTER);
 

@@ -1,5 +1,6 @@
 package view.staff;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,20 +9,18 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumnModel;
 
 import data.dataObject.ProjectDO;
+import data.dataObject.StaffDO;
 
 public class StaffAllocation extends JPanel {
 
+	JTable allocationTable;
+	DefaultTableModel allocationModel;
+	
 	public StaffAllocation() {
-
-		createTable();
-
-	}
-
-	public void createTable() {
+		
+		setLayout(new BorderLayout());
 
 		ListSelectionModel listSelectionModel;
 
@@ -29,8 +28,6 @@ public class StaffAllocation extends JPanel {
 
 		Object[][] data = {};
 
-		JTable allocationTable;
-		DefaultTableModel allocationModel;
 		allocationModel = new DefaultTableModel(data, columnNames) {
 
 			private static final long serialVersionUID = 1L;
@@ -49,18 +46,23 @@ public class StaffAllocation extends JPanel {
 		listSelectionModel = allocationTable.getSelectionModel();
 		allocationTable.setSelectionModel(listSelectionModel);
 
-		HashMap<String, ArrayList<ProjectDO>> staffAllocProjects = new HashMap<String, ArrayList<ProjectDO>>();
+	
 		
-		for(String staff : staffAllocProjects.keySet()) {
+		
+		add(allocationTable, BorderLayout.CENTER);
+		setVisible(true);
+		
+
+	}
+	
+	public void addStaffAllocatedProjects(HashMap<StaffDO , ArrayList<ProjectDO>> staffAllocProjects)	{
+		
+		for(StaffDO staff : staffAllocProjects.keySet()) {
 			for(ProjectDO projects: staffAllocProjects.get(staff)) {				
 				allocationModel.addRow(new Object[] {staff, projects.getProjectName()});
 			}
 		}
 		
-		this.add(allocationTable);
-		
-		
-
 	}
 	
 	
