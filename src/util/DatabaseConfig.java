@@ -16,6 +16,7 @@ public class DatabaseConfig {
         File dbConfigFile = new File("config/config.csv");
 
         try {
+
             Scanner in = new Scanner(dbConfigFile);
             String line = in.nextLine();
             String[] settings = line.split(",");

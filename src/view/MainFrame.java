@@ -64,7 +64,7 @@ public class MainFrame extends JFrame {
 	public void addSkillDialog(SkillController skillController) {
 		
 		this.skillDialog = new SkillDialog(this, skillController);
-		
+		skillDialog.createSkillDialog();
 
 	}
 	

@@ -65,8 +65,8 @@ public class StaffDialog extends JDialog {
 	JButton addStaff;
 	JButton cancel;
 	
-	HashMap<Integer, Integer> skillLevels = new HashMap<Integer, Integer>();
-	HashMap<DateTime, Integer> holidayDates = new HashMap<DateTime, Integer>();
+	HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
+	HashMap<DateTime, DateTime> holidayDates = new HashMap<DateTime, DateTime>();
 
 	public StaffDialog(MainFrame view, ActionListener controller, StaffDO staff) {
 
@@ -290,7 +290,7 @@ public class StaffDialog extends JDialog {
 		tfWeeklyAvail.setText(Integer.toString(staff
 				.getStaffWeeklyAvailableTime()));
 
-		HashMap<Integer, Integer> skillLevels = staff.getSkillLevels();
+		HashMap<Integer, Double> skillLevels = staff.getSkillLevels();
 
 		for (int i : skillLevels.keySet()){
 

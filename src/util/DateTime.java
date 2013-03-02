@@ -28,6 +28,10 @@ public class DateTime {
 
     public DateTime(Date date) {
     }
+    
+    public DateTime() {
+    	
+    }
 
     public String getDateTime() {
         return this.dateTime;

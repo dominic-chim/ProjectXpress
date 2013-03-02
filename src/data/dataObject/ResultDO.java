@@ -5,17 +5,17 @@ import util.DateTime;
 public class ResultDO {
 
     private int projectId;
-    private int taskId;
-    private int staffId;
+    private TaskDO taskDO;
+    private StaffDO staffDO;
     private DateTime startDateTime;
     private DateTime endDateTime;
 
-    public ResultDO(int projectId, int taskId, int staffId, 
+    public ResultDO(int projectId, TaskDO taskDO, StaffDO staffDO, 
             DateTime startDateTime, DateTime endDateTime) {
 
         this.projectId = projectId;
-        this.taskId = taskId;
-        this.staffId = staffId;
+        this.taskDO = taskDO;
+        this.staffDO = staffDO;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }

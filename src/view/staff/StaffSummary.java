@@ -5,12 +5,12 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import data.dataObject.ProjectDO;
+import util.DateTime;
+import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
 
 public class StaffSummary extends JPanel {
@@ -82,16 +82,15 @@ public class StaffSummary extends JPanel {
 	
 	//HashMap arg = HashMap< Staff Objects for the staffName(or just pass staffName), HashMap< Project Name, Duration>>
 	//Could change this to some sort of Result object which contains all this info
-	public void addData(HashMap<StaffDO , HashMap<String, Integer>> staffAllocProjects) {
+	public void addData(HashMap<StaffDO , ArrayList<ResultDO>> staffAllocProjects) {
 		
 		int xPos = 0;
-		
+			
 		for(StaffDO staff : staffAllocProjects.keySet()) {
 		
 			JLabel staffName = new JLabel(staff.getStaffName());
 			
-			//HashMap or ArrayList of Result objects
-			HashMap<String, Integer> listOfProjects = staffAllocProjects.get(staff);
+			 ArrayList<ResultDO> listOfTasks = staffAllocProjects.get(staff);
 			
 			gbc.gridy = ++yPos;
 			gbc.gridx = xPos;
@@ -99,7 +98,9 @@ public class StaffSummary extends JPanel {
 			
 			add(staffName, gbc);
 			
-//			if(project.StartDate > xPos) {
+			xPos += 5;
+			
+//			if(project.StartDate > xPos-5) {
 //				int blankLength = projectStartDate - xPos;
 //				gbc.gridwidth = blankLength;
 //				add(new JLabel(""), gbc);
@@ -107,12 +108,12 @@ public class StaffSummary extends JPanel {
 //				gbc.gridx = xPos;
 //			}
 			
-			for(String project : listOfProjects.keySet()) {
+			for(ResultDO task : listOfTasks) {
 			
-				int duration = listOfProjects.get(project);
+				int duration = DateTime.duration(task.getStartDateTime(), task.getEndDateTime());
 				
 				gbc.gridwidth = duration;
-				add(new JLabel(project), gbc);
+				add(new JLabel(task.get), gbc);
 				xPos += duration;
 				
 				gbc.gridx = xPos;
