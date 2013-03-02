@@ -25,12 +25,12 @@ public class ResultDO {
         return projectId;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public TaskDO getTaskDO() {
+        return taskDO;
     }
 
-    public int getStaffId() {
-        return staffId;
+    public StaffDO getStaffDO() {
+        return staffDO;
     }
 
     public DateTime getStartDateTime() {
