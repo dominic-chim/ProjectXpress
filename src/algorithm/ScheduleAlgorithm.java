@@ -24,8 +24,6 @@ public class ScheduleAlgorithm {
 
     private ArrayList<StaffDO> staffList = new ArrayList<StaffDO>();
     private int currentTime = 0;
-    //private HashMap<Integer, Integer> earliestAvailableTime = new HashMap<Integer, Integer>();
-    //private HashMap<Integer, HashMap<Integer, Integer>> staffUnavailableTime = new HashMap<Integer, HashMap<Integer, Integer>>();
 
     // result chart
     private HashMap<Integer, boolean[]> staffAvailablity = new HashMap<Integer, boolean[]>();
@@ -78,13 +76,13 @@ public class ScheduleAlgorithm {
             // TODO convert holiday to working days
             // TODO store and empty complete set !
 
-            boolean[] availability = new boolean[duration(projectStartingDate, projectsDueDate)];
+            boolean[] availability = new boolean[DateTime.duration(projectStartingDate, projectsDueDate)];
             Arrays.fill(availability, Boolean.TRUE);
             for (DateTime holidayStartTime : holidays.keySet()) {
                 
                 DateTime holidayEndTime = holidays.get(holidayStartTime);
-                int holidayDuration = duration(holidayStartTime, holidayEndTime);
-                int holidayStartTimeInAlg = duration(projectStartingDate,
+                int holidayDuration = DateTime.duration(holidayStartTime, holidayEndTime);
+                int holidayStartTimeInAlg = DateTime.duration(projectStartingDate,
                         holidayStartTime);
                 for (int i = holidayStartTimeInAlg; i < holidayStartTimeInAlg
                         + holidayDuration; i++) {

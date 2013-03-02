@@ -16,7 +16,7 @@ public class ResultDao extends DatabaseRoot {
         ArrayList<ResultDO> results = new ArrayList<ResultDO>();
 
         String sql = "SELECT staff_id, start_datetime, end_datetime, project_id, task_id FROM scheduling_result WHERE project_id="
-                + projectId;
+                + projectId + "ORDER BY start_datetime";
         try {
             ResultSet result = connection.createStatement().executeQuery(sql);
             while(result.next()) {

@@ -17,8 +17,8 @@ public class StaffDao extends DatabaseRoot {
 		super();
 	}
 
-	Context context = new Context();
-//	HashMap<Integer, String> skills = context.getSkillMap();
+	//Context context = new Context();
+	HashMap<Integer, String> skills = Context.getSkillMap();
 	
 	public StaffDO getStaffById(int staffId) {
 
@@ -42,10 +42,10 @@ public class StaffDao extends DatabaseRoot {
 
 		
 		//Testing
-		HashMap<Integer, Integer> skillLevels = new HashMap<Integer, Integer>();
-		skillLevels.put(1, 1);
-		HashMap<DateTime, Integer> holidayDates = new HashMap<DateTime, Integer>();
-		holidayDates.put(null, 1);
+		HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
+		skillLevels.put(1, 1.0);
+		HashMap<DateTime, DateTime> holidayDates = new HashMap<DateTime, DateTime>();
+		holidayDates.put(null, null);
 		
 		try {
 			while (result.next()) {
@@ -92,7 +92,7 @@ public class StaffDao extends DatabaseRoot {
 		}
 		
 		//Add Skills to staff skill level table
-		HashMap<Integer, Integer> skillLevels = staff.getSkillLevels();
+		HashMap<Integer, Double> skillLevels = staff.getSkillLevels();
 
 		staffValues = "";
 
