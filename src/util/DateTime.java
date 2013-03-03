@@ -83,10 +83,8 @@ public class DateTime {
         return (endHour - startHour) + 8 * days;
     }
 
-    // TODO finish it
     public static DateTime hourLater(DateTime date, int hour) {
 
-        /*
         org.joda.time.DateTime dt = new org.joda.time.DateTime(
                 date.getYear(),
                 date.getMonth(),
@@ -97,9 +95,21 @@ public class DateTime {
                 0);
 
         int daysBetween = hour / 8;
-        dt.plus(Period.days(1));
-        */
-        return null;
+        int hoursRemain = hour % 8;
+        dt = dt.plusDays(daysBetween);
+
+        if (dt.getHourOfDay() + hoursRemain > 17) {
+            dt = dt.plusDays(1);
+            return new DateTime(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth(), 
+                                dt.getHourOfDay() - 8 + hoursRemain, 0, 0);
+        } else {
+            return new DateTime(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth(), 
+                                dt.getHourOfDay() + hoursRemain, 0, 0);
+        }
+        
+
+        
+
     }
 
     // getters

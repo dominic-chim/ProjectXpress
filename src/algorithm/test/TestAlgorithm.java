@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import algorithm.ScheduleAlgorithm;
 
+import data.dataObject.ProjectComparator;
 import data.dataObject.ProjectDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
@@ -20,18 +22,23 @@ public class TestAlgorithm {
     //public ScheduleAlgorithm(DateTime projectStartingDate, DateTime projectsDuedate, ArrayList<StaffDO> staffList, 
     //        PriorityQueue<ProjectDO> projects) {
 
-	private PriorityQueue<ProjectDO> pqProj;
-	private ArrayList<StaffDO> staffs;
-	
-	
-	@Before
-	public void init() {
+    private PriorityQueue<ProjectDO> pqProj;
+    private ArrayList<StaffDO> staffs;
+    
+    
+    @Before
+    public void init() {
         /*
          * projects
          */
 
+        pqProj = new PriorityQueue<ProjectDO>(5, new ProjectComparator());
+
         // a random date
         util.DateTime td = new util.DateTime("1800-10-10 10:00:00");
+
+        //------------project 1-----------
+
 
         // tasks for project 1
         ArrayList<Integer> taskreq1 = new ArrayList<Integer>();
@@ -71,8 +78,41 @@ public class TestAlgorithm {
         // create ProjectDO for project 1
         ProjectDO project1 = new ProjectDO(1, "A", td, 1, "", tasksForP1);
 
-        pqProj = new PriorityQueue<ProjectDO>();
         pqProj.add(project1);
+
+        //------------project 2-----------
+
+        ArrayList<Integer> taskreqb1 = new ArrayList<Integer>();
+        TaskDO b1 = new TaskDO(2, 1, "B1", 2, 4, "", td, "", taskreqb1);
+
+        ArrayList<Integer> taskreqb2 = new ArrayList<Integer>();
+        taskreqb2.add(1);
+        TaskDO b2 = new TaskDO(2, 2, "B2", 3, 2, "", td, "", taskreqb2);
+
+        ArrayList<Integer> taskreqb3 = new ArrayList<Integer>();
+        TaskDO b3 = new TaskDO(2, 3, "B3", 1, 5, "", td, "", taskreqb3);
+
+        ArrayList<Integer> taskreqb4 = new ArrayList<Integer>();
+        TaskDO b4 = new TaskDO(2, 4, "B4", 3, 1, "", td, "", taskreqb4);
+        
+        ArrayList<Integer> taskreqb5 = new ArrayList<Integer>();
+        taskreqb5.add(2);
+        taskreqb5.add(3);
+        TaskDO b5 = new TaskDO(2, 5, "B5", 1, 2, "", td, "", taskreqb5);
+
+        //add tasks to a ArrayList
+        ArrayList<TaskDO> tasksForP2 = new ArrayList<TaskDO>();
+        tasksForP2.add(b1);
+        tasksForP2.add(b2);
+        tasksForP2.add(b3);
+        tasksForP2.add(b4);
+        tasksForP2.add(b5);
+
+
+        // create ProjectDO for project 2
+        ProjectDO project2 = new ProjectDO(2, "B", td, 2, "", tasksForP2);
+
+        pqProj.add(project2);
 
 
         /*
@@ -81,14 +121,12 @@ public class TestAlgorithm {
         HashMap<Integer, Double> skillLevels1 = new HashMap<Integer, Double>();
         skillLevels1.put(1, 1.0);
         skillLevels1.put(2, 0.5);
-        //skillLevels1.put(3, 0.0);
         HashMap<util.DateTime, util.DateTime> holidays1 = new HashMap<util.DateTime, util.DateTime>();
         holidays1.put(new util.DateTime("2013-02-03 10:00:00"), new util.DateTime("2013-02-03 11:00:00"));
         StaffDO r1 = new StaffDO(1, "Resource1", 0, skillLevels1, holidays1);
 
 
         HashMap<Integer, Double> skillLevels2 = new HashMap<Integer, Double>();
-        //skillLevels1.put(1, 0.0);
         skillLevels2.put(2, 1.0);
         skillLevels2.put(3, 1.0);
         HashMap<util.DateTime, util.DateTime> holidays2 = new HashMap<util.DateTime, util.DateTime>();
@@ -102,9 +140,9 @@ public class TestAlgorithm {
         staffs = new ArrayList<StaffDO>();
         staffs.add(r1);
         staffs.add(r2);
-	}
-	
-	
+    }
+    
+    
     @Test
     public void testDuration() {
         DateTime start = new DateTime(2013, 4, 1, 16,0,0);
@@ -120,20 +158,20 @@ public class TestAlgorithm {
 
 
         ScheduleAlgorithm algorithm = new ScheduleAlgorithm(new DateTime("2013-02-01 09:00:00"), 
-											                new DateTime("2013-02-06 09:00:00"),
-											                staffs, pqProj);
+                                                            new DateTime("2013-02-06 09:00:00"),
+                                                            staffs, pqProj);
         algorithm.runAlgoritm();
         System.out.println("--------------");
         
     }
     
-    @Test
+    @Ignore
     public void testAlgorithmWithoutHoliday(){
 
 
         ScheduleAlgorithm algorithm = new ScheduleAlgorithm(new DateTime("2013-03-01 09:00:00"), 
-											                new DateTime("2013-03-06 09:00:00"),
-											                staffs, pqProj);
+                                                            new DateTime("2013-03-06 09:00:00"),
+                                                            staffs, pqProj);
         algorithm.runAlgoritm();
         System.out.println("--------------");
     }

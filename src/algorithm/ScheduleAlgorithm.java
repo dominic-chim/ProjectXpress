@@ -135,11 +135,10 @@ public class ScheduleAlgorithm {
                 }
 
                 
-                
+                // move from decision set to active set
                 while (decisionSet.size() != 0) {
 
                     // get the one in decisionSet which have the lowest score
-                    // TODO check if poll() get the right score
                     DecisionSetObject toActive = decisionSet.poll();
 
                     // get info from toActive to construct a TaskAllocObject
@@ -150,9 +149,11 @@ public class ScheduleAlgorithm {
                     // get availability of the staff to get holiday information
                     boolean[] availability = staffAvailablity.get(staff.getStaffId());
                     // calculate the endTime according to holiday and duration
-                    int endTime = task.getTaskDuration()
+                    
+                    double skillLevel = staff.getSkillLevels().get(task.getTaskRequiredSkill());
+                    int endTime = (int)ceil(task.getTaskDuration() / skillLevel)
                             + startTime
-                            + getHoliday(startTime, task.getTaskDuration(), availability);
+                            + getHoliday(startTime, (int)ceil(task.getTaskDuration() / skillLevel), availability);
 
                     TaskAllocObject activatedTask = new TaskAllocObject(task,
                             staff, startTime, endTime);
@@ -179,6 +180,16 @@ public class ScheduleAlgorithm {
                     for (DecisionSetObject toUpdate : decisionSet) {
                         double score = calcTaskScore(toUpdate.getStaff(), toUpdate.getTask());
                         toUpdate.setScore(score);
+                    }
+                    
+                    // reconstruct decisionSet to get the right priority queue
+                    ArrayList<DecisionSetObject> dcos = new ArrayList<DecisionSetObject>();
+                    for (DecisionSetObject toUpdate : decisionSet) {
+                    	dcos.add(toUpdate);
+                    }
+                    decisionSet.clear();
+                    for (DecisionSetObject dco : dcos) {
+                    	decisionSet.add(dco);
                     }
 
                 }
@@ -215,12 +226,15 @@ public class ScheduleAlgorithm {
                                     ));
             }
 
-            // empty completeSet
+            //TODO del
+            for(TaskAllocObject to : completeSet) {
+                System.out.println(to);
+            }
+
+            // empty completeSet for next project
             completeSet.clear();
-        }
-        //TODO del
-        for(TaskAllocObject to : completeSet) {
-            System.out.println(to);
+            // reset current time
+            currentTime = 0;
         }
         
 
