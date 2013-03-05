@@ -15,7 +15,7 @@ public class HolidaysDao extends DatabaseRoot {
 
         HashMap<DateTime, DateTime> holidays = new HashMap<DateTime, DateTime>();
 
-        String sql = "SELECT holiday_start_time, holiday_end_time FROM staff_holidays WHERE staffId=" + staffId;
+        String sql = "SELECT holiday_start_time, holiday_end_time FROM staff_holidays WHERE staff_id=" + staffId;
 
         try {
             ResultSet result =  connection.createStatement().executeQuery(sql);
