@@ -125,8 +125,8 @@ public class ProjectAllocation extends JPanel {
 		test.put(staffOne, listOfResultsTest1);
 		test.put(staffTwo, listOfResultsTest2);
 		
-		
-		addProjectsAllocatedStaff(test);	
+		//TODO what's this?
+		//addProjectsAllocatedStaff(test);	
 	}
 	
 	

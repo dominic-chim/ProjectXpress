@@ -7,10 +7,12 @@ import javax.swing.JFileChooser;
 
 import view.MainFrame;
 import view.menu.MainMenuBar;
+import view.menu.SchedulingDialog;
 
 public class MenuController implements ActionListener {
-	MainFrame view;
-	SkillController skillController;
+	
+	private MainFrame view;
+	private SkillController skillController;
 
 	public MenuController(MainFrame view, SkillController skillController) {
 
@@ -22,6 +24,7 @@ public class MenuController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		String cmd = e.getActionCommand();
 		final JFileChooser jfc = new JFileChooser();
 
@@ -45,11 +48,45 @@ public class MenuController implements ActionListener {
 			view.addSkillDialog(skillController);
 			
 			break;
+		case "Scheduling":
+			SchedulingDialog sdialog = view.addSchedulingDialog();
+			sdialog.addControllers(new SchedulingController(sdialog));
+            sdialog.setVisible(true);
+			break;
 
 		default:
 			System.out.println("Invalid Option");
 		}
+		
 
+	}
+	
+	
+	class SchedulingController implements ActionListener {
+
+        private SchedulingDialog sdialog;
+
+        public SchedulingController(SchedulingDialog sdialog) {
+            this.sdialog = sdialog;
+        }
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+            String cmd = e.getActionCommand();
+
+            switch(cmd) {
+                case "schedule":
+                    sdialog.tt();
+                    break;
+                case "cancel":
+                    sdialog.dispose();
+                    break;
+                default:
+                    break;
+            }
+			
+		}
+		
 	}
 
 }

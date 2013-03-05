@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import algorithm.test.TestAlgorithm;
 
+import controllers.menu.SchedulingController;
 import controllers.menu.SkillController;
 
 import view.project.*;
@@ -66,6 +67,10 @@ public class MainFrame extends JFrame {
 		this.skillDialog = new SkillDialog(this, skillController);
 		skillDialog.createSkillDialog();
 
+	}
+	
+	public SchedulingDialog addSchedulingDialog() {
+		return  new SchedulingDialog(this); 
 	}
 	
 	public SkillDialog getSkillDialog() {
