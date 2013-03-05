@@ -36,8 +36,7 @@ public class ScheduleAlgorithm {
     private ArrayList<TaskAllocObject> completeSet = new ArrayList<TaskAllocObject>();
 
     // list of projects
-    private PriorityQueue<ProjectDO> projects = new PriorityQueue<ProjectDO>(5,
-            new ProjectComparator());
+    private PriorityQueue<ProjectDO> projects = new PriorityQueue<ProjectDO>(5, new ProjectComparator());
 
     private ArrayList<ResultDO> scheduleResult = new ArrayList<ResultDO>();
 
@@ -96,7 +95,7 @@ public class ScheduleAlgorithm {
 
     }
 
-    public void runAlgoritm() {
+    public ArrayList<ResultDO> runAlgoritm() {
 
         while (projects.size() != 0) {
             // get one project according priority
@@ -238,6 +237,7 @@ public class ScheduleAlgorithm {
         }
         
 
+        return scheduleResult;
     }
 
     private boolean canStart(TaskDO task) {

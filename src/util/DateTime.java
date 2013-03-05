@@ -13,7 +13,7 @@ public class DateTime {
     private int year, month, day, hour, minute, second;
 
     //private String dateTime = "0000-00-00 00:00:00";
-    private final SimpleDateFormat dataBaseDateFormat = new SimpleDateFormat(
+    public static final SimpleDateFormat dataBaseDateFormat = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss");
 
     public DateTime(String dateTime) {

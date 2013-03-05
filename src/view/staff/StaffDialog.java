@@ -97,7 +97,7 @@ public class StaffDialog extends JDialog {
 		
 		JLabel lblSkillLevel = new JLabel("Skill Level:");
 		
-		String[] levels = {"1","2","3","4","5"};
+		String[] levels = {"1", "0.5"};
 		cbSkillLevels = new JComboBox(levels);
 		cbSkillLevels.addItem("Skill Level");
 		cbSkillLevels.setSelectedItem("Skill Level");

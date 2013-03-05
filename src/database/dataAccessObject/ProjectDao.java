@@ -3,7 +3,6 @@ package database.dataAccessObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import util.DateTime;
 
@@ -51,6 +50,25 @@ public class ProjectDao extends DatabaseRoot {
         ArrayList<ProjectDO> projects = new ArrayList<ProjectDO>();
 
         String sql = "SELECT DISTINCT project_id FROM project";
+
+        try {
+            ResultSet result = connection.createStatement().executeQuery(sql);
+            while(result.next()) {
+                int projectId = result.getInt("project_id");
+                projects.add(getProjectById(projectId));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return projects;
+    }
+
+    public ArrayList<ProjectDO> getAllStartedProject() {
+        ArrayList<ProjectDO> projects = new ArrayList<ProjectDO>();
+
+        String sql = "SELECT DISTINCT project_id FROM project WHERE project_status='Started'";
 
         try {
             ResultSet result = connection.createStatement().executeQuery(sql);

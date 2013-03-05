@@ -2,7 +2,6 @@ package controllers;
 
 import view.MainFrame;
 import controllers.menu.MenuController;
-import controllers.menu.SchedulingController;
 import controllers.menu.SkillController;
 import controllers.project.ProjectController;
 import controllers.staff.StaffController;
