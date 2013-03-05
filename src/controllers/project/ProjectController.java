@@ -179,7 +179,7 @@ public class ProjectController {
                     projectModel.addTask(taskModel);
 
                     //TODO remove test code
-                    System.out.println(taskModel);
+                    //System.out.println(taskModel);
 
                     // close window
                     jdlogAddTask.dispose();
