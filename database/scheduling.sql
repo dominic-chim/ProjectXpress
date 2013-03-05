@@ -103,6 +103,7 @@ start_datetime datetime,
 end_datetime datetime,
 project_id int unsigned ,
 task_id int unsigned ,
+version int unsigned,
 primary key (staff_id, start_datetime),
 foreign key (project_id, task_id) references task (project_id, task_id),
 foreign key (staff_id) references staff (staff_id)
