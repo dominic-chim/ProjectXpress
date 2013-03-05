@@ -6,7 +6,7 @@ import util.DatabaseConfig;
 
 public abstract class DatabaseRoot {
 
-    protected Connection connection;
+    protected static Connection connection;
     protected Statement db;
     
     public DatabaseRoot() {
@@ -21,7 +21,8 @@ public abstract class DatabaseRoot {
             Class.forName("com.mysql.jdbc.Driver");
             String userName = config.getUserName();
             String password = config.getPassword();
-            this.connection = DriverManager.getConnection(url, userName, password);
+            if (connection == null) 
+            	connection = DriverManager.getConnection(url, userName, password);
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {
             System.out.println("errorCNF");

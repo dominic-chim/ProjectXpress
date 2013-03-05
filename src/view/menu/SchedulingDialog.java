@@ -68,7 +68,8 @@ public class SchedulingDialog extends JDialog {
         int projectNum = projects.size();
         int width = 300;
         int height = projectNum * 20;
-        jpnlCenterContainer.setLayout(new GridLayout(projectNum, 0));
+        if(projectNum != 0)
+        	jpnlCenterContainer.setLayout(new GridLayout(projectNum, 0));
         this.setSize(width, height + 50);
 
         for(ProjectDO project : projects) {

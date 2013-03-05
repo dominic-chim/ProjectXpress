@@ -149,7 +149,7 @@ public class ProjectController {
                     ArrayList<Integer> requiredTaskIds = taskModel.getRequiredTaskIds();
                     String[] requiredTasks = new String[requiredTaskIds.size()];
                     for(int i = 0; i < requiredTaskIds.size(); i++ ) {
-                        requiredTasks[i] = projectModel.getTasks().get(i).getTaskName();
+                        requiredTasks[i] = projectModel.getTasks().get(requiredTaskIds.get(i) - 1).getTaskName();
                     }
                     jdlogAddTask.reloadList(requiredTasks);
                 }
