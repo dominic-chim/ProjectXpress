@@ -6,7 +6,6 @@ import javax.swing.*;
 
 import algorithm.test.TestAlgorithm;
 
-import controllers.menu.SchedulingController;
 import controllers.menu.SkillController;
 
 import view.project.*;
