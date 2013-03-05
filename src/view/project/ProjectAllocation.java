@@ -12,7 +12,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import util.DateTime;
-
 import data.dataObject.ProjectDO;
 import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
@@ -54,6 +53,8 @@ public class ProjectAllocation extends JPanel {
 
 		JScrollPane scrollPane = new JScrollPane(allocationTable);
 		add(scrollPane, BorderLayout.CENTER);	
+		
+		testData();
 		
 		setVisible(true);
 		
@@ -110,7 +111,7 @@ public class ProjectAllocation extends JPanel {
 		ResultDO resultOne = new ResultDO(5, taskOne, staffOne, dateStart1, dateEnd1);
 
 		TaskDO taskTwo = new TaskDO(1, 2, "Task Two",  1, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
-		ResultDO resultTwo = new ResultDO(5, taskTwo, staffOne, dateStart2, dateEnd2);
+		ResultDO resultTwo = new ResultDO(5, taskTwo, staffTwo, dateStart2, dateEnd2);
 
 		
 		ArrayList<ResultDO> listOfResultsTest1 = new ArrayList<ResultDO>();
@@ -124,9 +125,30 @@ public class ProjectAllocation extends JPanel {
 		HashMap<StaffDO , ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
 		test.put(staffOne, listOfResultsTest1);
 		test.put(staffTwo, listOfResultsTest2);
+
+//		nt projectId, String projectName, 
+//        DateTime projectDueDate,
+//        int projectPriority, String projectStatus,
+//        ArrayList<TaskDO> tasks
 		
-		//TODO what's this?
-		//addProjectsAllocatedStaff(test);	
+
+		ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
+		tasks.add(taskOne);
+		tasks.add(taskTwo);
+		
+		
+		
+		ProjectDO projectOne = new ProjectDO(1, "Project One", dateEnd2, 1, "Status", tasks);
+		ProjectDO projectTwo = new ProjectDO(2, "Project Two", dateEnd2, 1, "Status", tasks);
+
+		
+		HashMap<ProjectDO, ArrayList<ResultDO>>	projectTest = new HashMap<ProjectDO, ArrayList<ResultDO>>();
+		projectTest.put(projectOne, listOfResultsTest1);
+		projectTest.put(projectTwo, listOfResultsTest2);
+		
+				
+		addProjectsAllocatedStaff(projectTest);	
+
 	}
 	
 	
