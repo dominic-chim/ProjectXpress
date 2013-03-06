@@ -72,36 +72,16 @@ public class StaffList extends JPanel {
 
 	public void createDefaultStaff(ArrayList<StaffDO> staff) {
 
-		DefaultMutableTreeNode name = null;
-		DefaultMutableTreeNode info = null;
-
 		for (StaffDO staffObj : staff) {
 			addNewStaffToList(staffObj);
 		}
-		// name = new DefaultMutableTreeNode("Dominic Chim");
-		// staff.add(name);
-		//
-		// info = new DefaultMutableTreeNode("ID: 000001");
-		// name.add(info);
-
+		
 	}
 
 	public void addStaffDialog(ActionListener controller, StaffDO staff) {
+	
 		staffDialog = new StaffDialog(view, controller, staff);
-
-		// If Ok Button was pressed
-		// if (result == 0) {
-		// HashMap<String, String> staffInput = staffOptionPane.getStaffInput();
-		// addStaffToList(staffInput);
-		// }
-
-		/*
-		 * StaffDO staffDo = new StaffDO(staffInput.get("ID"),
-		 * staffInput.get("Name"), staffInput.get("WeeklyAvail"),
-		 * staffInput.get("SkillName"), staffInput.get("SkillLevel"),
-		 * staffInput.get("ProjectId"), staffInput.get("Task"),
-		 * staffInput.get("PrefenceLevel"));
-		 */
+	
 	}
 
 	public String deleteStaff() {

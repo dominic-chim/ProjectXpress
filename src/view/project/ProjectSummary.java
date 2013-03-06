@@ -211,12 +211,12 @@ public class ProjectSummary extends JPanel {
 		DateTime dateStart2 = new DateTime(2013, 04, 06, 14, 30, 0);
 		DateTime dateEnd2 = new DateTime(2013, 04, 06, 17, 30, 0);
 
-		TaskDO taskOne = new TaskDO(1, 1, "Task One", 1, 3, 3, "RiskLevel",
+		TaskDO taskOne = new TaskDO(1, 1, "Task One", 1, 3, "RiskLevel",
 				dateTime, "Task Status", requiredTskIds);
 		ResultDO resultOne = new ResultDO(1, taskOne, staffOne, dateStart1,
 				dateEnd1);
 
-		TaskDO taskTwo = new TaskDO(1, 2, "Task Two", 1, 3, 3, "RiskLevel",
+		TaskDO taskTwo = new TaskDO(1, 2, "Task Two", 1, 3, "RiskLevel",
 				dateTime, "Task Status", requiredTskIds);
 		ResultDO resultTwo = new ResultDO(2, taskTwo, staffOne, dateStart2,
 				dateEnd2);
@@ -248,6 +248,9 @@ public class ProjectSummary extends JPanel {
 
 	}
 
+	
+		
+		
 	// HashMap arg = HashMap< Staff Objects for the staffName(or just pass
 	// staffName), HashMap< Project Name, Duration>>
 	// Could change this to some sort of Result object which contains all this
@@ -279,10 +282,10 @@ public class ProjectSummary extends JPanel {
 		// Change to Real Project Starting Date
 		DateTime projectStartDate = new DateTime(2013, 04, 05, 10, 30, 0);
 
-
 	}
 
 	public void addController(ActionListener controller) {
 
 	}
 }
+

@@ -101,11 +101,18 @@ public class StaffDao extends DatabaseRoot {
                 
         
         String staffValues = staff.getStaffId() + ", '" + staff.getStaffName()
-                + "', '" + staff.getStaffWeeklyAvailableTime() + "'";
+                + "', '" + staff.getStaffWeeklyAvailableTime() + "', '";
         
+        
+        //HashMap<DateTime, DateTime> 
+        for(DateTime date : staff.getHolidays().keySet()) {
+        	
+        	staffValues += date + "', '" + staff.getHolidays().get(date);
+        	
+        }
         
         // String sql =
-        // "INSERT INTO staff NATURAL JOIN staff_holidays NATURAL JOIN staff_preference VALUES ("
+        // "INSERT INTO staff NATURAL JOIN staff_holidays NATURAL JOIN staff_skill_level VALUES ("
         // + staffValues + " )";
 
         //Insert Staff Info into staff table
