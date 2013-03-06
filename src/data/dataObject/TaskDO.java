@@ -11,6 +11,7 @@ public class TaskDO {
     private String taskName;
     private int taskRequiredSkill;
     private int taskDuration;
+    private int taskRemainingTime;
     private String taskRistLevel;
     private DateTime taskReleaseTime;
     private String taskStatus;
@@ -20,7 +21,7 @@ public class TaskDO {
     }
 
     public TaskDO(int projectId, int taskId, String taskName, 
-            int taskRequiredSkill, int taskDuration,
+            int taskRequiredSkill, int taskDuration, int taskRemainingTime,
             String taskRistLevel, DateTime taskReleaseTime,
             String taskStatus, ArrayList<Integer> requiredTaskIds) {
         
@@ -29,6 +30,7 @@ public class TaskDO {
         setTaskName(taskName);
         setTaskRequiredSkill(taskRequiredSkill);
         setTaskDuration(taskDuration);
+        setTaskRemainingTime(taskRemainingTime);
         setTaskRistLevel(taskRistLevel);
         setTaskReleaseTime(taskReleaseTime);
         setTaskStatus(taskStatus);
@@ -92,10 +94,18 @@ public class TaskDO {
     }
 
     /**
-     * @return the taskDuration
+     * this method return the original task duration
+     */
+    public int getTaskOriginalDuration() {
+        return taskDuration;
+    }
+
+    /**
+     * this method return the real time needed for the task
      */
     public int getTaskDuration() {
-        return taskDuration;
+        // TODO add risk here
+        return taskRemainingTime;
     }
 
     /**
@@ -145,6 +155,10 @@ public class TaskDO {
      */
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public void setTaskRemainingTime(int taskRemainingTime) {
+        this.taskRemainingTime = taskRemainingTime;
     }
 
     /**

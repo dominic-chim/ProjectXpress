@@ -20,7 +20,8 @@ public class SchedulingDialog extends JDialog {
     private JPanel jpnlBottomContainer = new JPanel();
 
     private JLabel jlblStaringDate = new JLabel("Starting Date");
-    private JTextArea jtxtStartingDate = new JTextArea(DateTime.dataBaseDateFormat.format(new Date()));
+    //private JTextArea jtxtStartingDate = new JTextArea(DateTime.dataBaseDateFormat.format(new Date()));
+    private JTextArea jtxtStartingDate = new JTextArea("2013-02-01 09:00:00");
 
     private JButton jbtnSchedule = new JButton("Schedule");
     private JButton jbtnCancel = new JButton("Cancel");

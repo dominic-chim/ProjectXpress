@@ -171,6 +171,7 @@ public class ProjectController {
                     taskModel.setTaskName(taskName);
                     taskModel.setTaskRequiredSkill(requiredSkillId);
                     taskModel.setTaskDuration(taskDuration);
+                    taskModel.setTaskRemainingTime(taskDuration);
                     taskModel.setTaskRistLevel(taskRistLevel);
                     taskModel.setTaskReleaseTime(taskReleaseTime);
                     taskModel.setTaskStatus(status);

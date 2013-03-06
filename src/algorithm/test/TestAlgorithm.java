@@ -42,28 +42,28 @@ public class TestAlgorithm {
 
         // tasks for project 1
         ArrayList<Integer> taskreq1 = new ArrayList<Integer>();
-        TaskDO a1 = new TaskDO(1, 1, "A1", 1, 3, "", td, "", taskreq1);
+        TaskDO a1 = new TaskDO(1, 1, "A1", 1, 3, 3, "", td, "", taskreq1);
 
         ArrayList<Integer> taskreq2 = new ArrayList<Integer>();
         taskreq2.add(1);
-        TaskDO a2 = new TaskDO(1, 2, "A2", 3, 1, "", td, "", taskreq2);
+        TaskDO a2 = new TaskDO(1, 2, "A2", 3, 1, 1, "", td, "", taskreq2);
 
         ArrayList<Integer> taskreq3 = new ArrayList<Integer>();
-        TaskDO a3 = new TaskDO(1, 3, "A3", 3, 1, "", td, "", taskreq3);
+        TaskDO a3 = new TaskDO(1, 3, "A3", 3, 1, 1, "", td, "", taskreq3);
 
         ArrayList<Integer> taskreq4 = new ArrayList<Integer>();
         taskreq4.add(2);
         taskreq4.add(3);
-        TaskDO a4 = new TaskDO(1, 4, "A4", 2, 4, "", td, "", taskreq4);
+        TaskDO a4 = new TaskDO(1, 4, "A4", 2, 4, 4, "", td, "", taskreq4);
         
         ArrayList<Integer> taskreq5 = new ArrayList<Integer>();
         taskreq5.add(2);
         taskreq5.add(3);
-        TaskDO a5 = new TaskDO(1, 5, "A5", 2, 2, "", td, "", taskreq5);
+        TaskDO a5 = new TaskDO(1, 5, "A5", 2, 2, 2, "", td, "", taskreq5);
 
         ArrayList<Integer> taskreq6 = new ArrayList<Integer>();
         taskreq6.add(5);
-        TaskDO a6 = new TaskDO(1, 6, "A6", 1, 3, "", td, "", taskreq6);
+        TaskDO a6 = new TaskDO(1, 6, "A6", 1, 3, 3, "", td, "", taskreq6);
 
         //add tasks to a ArrayList
         ArrayList<TaskDO> tasksForP1 = new ArrayList<TaskDO>();
@@ -83,22 +83,22 @@ public class TestAlgorithm {
         //------------project 2-----------
 
         ArrayList<Integer> taskreqb1 = new ArrayList<Integer>();
-        TaskDO b1 = new TaskDO(2, 1, "B1", 2, 4, "", td, "", taskreqb1);
+        TaskDO b1 = new TaskDO(2, 1, "B1", 2, 4, 4, "", td, "", taskreqb1);
 
         ArrayList<Integer> taskreqb2 = new ArrayList<Integer>();
         taskreqb2.add(1);
-        TaskDO b2 = new TaskDO(2, 2, "B2", 3, 2, "", td, "", taskreqb2);
+        TaskDO b2 = new TaskDO(2, 2, "B2", 3, 2, 2, "", td, "", taskreqb2);
 
         ArrayList<Integer> taskreqb3 = new ArrayList<Integer>();
-        TaskDO b3 = new TaskDO(2, 3, "B3", 1, 5, "", td, "", taskreqb3);
+        TaskDO b3 = new TaskDO(2, 3, "B3", 1, 5, 5, "", td, "", taskreqb3);
 
         ArrayList<Integer> taskreqb4 = new ArrayList<Integer>();
-        TaskDO b4 = new TaskDO(2, 4, "B4", 3, 1, "", td, "", taskreqb4);
+        TaskDO b4 = new TaskDO(2, 4, "B4", 3, 1, 1, "", td, "", taskreqb4);
         
         ArrayList<Integer> taskreqb5 = new ArrayList<Integer>();
         taskreqb5.add(2);
         taskreqb5.add(3);
-        TaskDO b5 = new TaskDO(2, 5, "B5", 1, 2, "", td, "", taskreqb5);
+        TaskDO b5 = new TaskDO(2, 5, "B5", 1, 2, 2, "", td, "", taskreqb5);
 
         //add tasks to a ArrayList
         ArrayList<TaskDO> tasksForP2 = new ArrayList<TaskDO>();

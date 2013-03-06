@@ -69,9 +69,9 @@ public class ResultDao extends DatabaseRoot {
         try {
             ResultSet rset = connection.createStatement().executeQuery(sql);
             if(rset.next()) {
-                return rset.getInt("current_version");
+                return rset.getInt("current_version") + 1;
             } else {
-                return 1;
+                return 0;
             }
 
         } catch (SQLException e) {

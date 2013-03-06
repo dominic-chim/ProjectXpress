@@ -33,7 +33,7 @@ public class TaskDao extends DatabaseRoot {
     public TaskDO getTaskById(int projectId, int taskId) {
         TaskDO task = null;
 
-        String sql = "SELECT task_name, task_required_skill, task_duration, task_risk_level, "
+        String sql = "SELECT task_name, task_required_skill, task_duration, task_risk_level, task_remaining_time, "
             + "task_release_time, task_status FROM task WHERE project_id="
             + projectId + " AND task_id=" + taskId;
 
@@ -44,6 +44,7 @@ public class TaskDao extends DatabaseRoot {
                 String taskName = result.getString("task_name");
                 int taskRequiredSkill = result.getInt("task_required_skill");
                 int taskDuration = result.getInt("task_duration");
+                int taskRemainingTime = result.getInt("task_required_skill");
                 String taskRistLevel = result.getString("task_risk_level");
                 DateTime taskReleaseTime = new DateTime(result.getString("task_release_time"));
                 String taskStatus = result.getString("task_status");
@@ -58,7 +59,7 @@ public class TaskDao extends DatabaseRoot {
                     requiredTaskIds.add(new Integer(requiredTaskId));
                 }
                 return new TaskDO(projectId, taskId, taskName, 
-                            taskRequiredSkill, taskDuration, 
+                            taskRequiredSkill, taskDuration, taskRemainingTime,
                             taskRistLevel, taskReleaseTime, 
                             taskStatus, requiredTaskIds);
             }
@@ -72,14 +73,15 @@ public class TaskDao extends DatabaseRoot {
     
     public void addTask(int projectId, int taskId, TaskDO task) {
         String sql = String.format("INSERT INTO task (project_id, task_id, task_name, task_required_skill, "
-                                    + "task_duration, task_risk_level, task_release_time, task_status) "
-                                    + "VALUES (%d, %d, '%s', %d, %d, '%s', '%s', '%s')", 
+                                    + "task_duration, task_risk_level, task_release_time, task_status, task_remaining_time) "
+                                    + "VALUES (%d, %d, '%s', %d, %d, '%s', '%s', '%s', %d)", 
                                     projectId, taskId, task.getTaskName(),
                                     task.getTaskRequiredSkill(),
-                                    task.getTaskDuration(),
+                                    task.getTaskOriginalDuration(),
                                     task.getTaskRistLevel(),
                                     task.getTaskReleaseTime().getDateTime(),
-                                    task.getTaskStatus()
+                                    task.getTaskStatus(),
+                                    task.getTaskDuration()
                                     );
 
         try {

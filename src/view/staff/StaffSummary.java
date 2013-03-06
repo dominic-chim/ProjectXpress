@@ -159,10 +159,10 @@ public class StaffSummary extends JPanel {
 			DateTime dateStart2= new DateTime(2013, 04, 06, 14, 30, 0);
 			DateTime dateEnd2 = new DateTime(2013, 04, 06, 17, 30, 0);
 			
-			TaskDO taskOne = new TaskDO(1, 1, "Task One",  1, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
+			TaskDO taskOne = new TaskDO(1, 1, "Task One",  1, 3, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
 			ResultDO resultOne = new ResultDO(5, taskOne, staffOne, dateStart1, dateEnd1);
 	
-			TaskDO taskTwo = new TaskDO(1, 2, "Task Two",  1, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
+			TaskDO taskTwo = new TaskDO(1, 2, "Task Two",  1, 3, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
 			ResultDO resultTwo = new ResultDO(5, taskTwo, staffOne, dateStart2, dateEnd2);
 	
 			
@@ -233,7 +233,7 @@ public class StaffSummary extends JPanel {
 					gbc.gridx = xPos;
 				}
 								
-				int duration = taskDo.getTaskDuration();
+				int duration = taskDo.getTaskOriginalDuration();
 				
 				gbc.gridwidth = duration;
 				add(lblTaskName = new JLabel(Integer.toString(taskDo.getTaskId()), JLabel.HORIZONTAL), gbc);

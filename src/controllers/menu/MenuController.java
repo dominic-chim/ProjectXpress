@@ -108,7 +108,7 @@ public class MenuController implements ActionListener {
                     ResultDao resultDB = new ResultDao();
                     resultDB.addResults(algorithm.runAlgoritm());
 
-
+                    sdialog.dispose();
 
                     break;
                 case "cancel":
