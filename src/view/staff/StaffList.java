@@ -125,6 +125,8 @@ public class StaffList extends JPanel {
 			}
 		}
 
+		System.out.println(id.toString());
+		
 		return Integer.parseInt(id);
 
 	}

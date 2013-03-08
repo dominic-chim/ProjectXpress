@@ -106,7 +106,7 @@ public class StaffController implements ActionListener {
 			staff = staffDialog.getStaffInput();
 			staff = staffList.addModifiedStaffToList(staff);
 			staffDialog.dispose();
-			staffDao.modifyStaff(staff);
+			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(), staff);
 			
 		case "Cancel":
 			

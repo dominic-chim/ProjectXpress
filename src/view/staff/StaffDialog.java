@@ -28,6 +28,7 @@ public class StaffDialog extends JDialog {
 
 	Context context = new Context();
 	HashMap<Integer, String> mapSkills = context.getSkillMap();
+	HashMap<String, Integer> revMapSkills = context.getSkillRevMap();
 	
 	// Text Fields for Adding Staff
 	JTextField tfId;
@@ -38,10 +39,12 @@ public class StaffDialog extends JDialog {
 	JTextField tfPrefenceLevel;
 
 	// Holiday Input, start of holiday date until the end of holiday date
-	JComboBox cbMonthStart;
-	JComboBox dayStart;
-	JComboBox monthEnd;
-	JComboBox dayEnd;
+//	JComboBox cbMonthStart;
+//	JComboBox dayStart;
+//	JComboBox monthEnd;
+//	JComboBox dayEnd;
+	JTextField tfStartDate;
+	JTextField tfEndDate;
 	JComboBox cbSkillNames;
 	JComboBox cbSkillLevels;
 	
@@ -109,20 +112,23 @@ public class StaffDialog extends JDialog {
 		JLabel lblPrefenceLevel = new JLabel("Prefence Level:");
 		tfPrefenceLevel = new JTextField(20);
 
-		String months[] = { "January", "February", "March", "April", "May",
-				"June", "July", "August", "September", "October", "November",
-				"Decemeber" };
-
-		cbMonthStart = new JComboBox(months);
-		monthEnd = new JComboBox(months);
-
-		String days[] = new String[31];
-		for (int i = 1; i <= 31; i++) {
-			days[i - 1] = Integer.toString(i);
-		}
-
-		dayStart = new JComboBox(days);
-		dayEnd = new JComboBox(days);
+//		String months[] = { "January", "February", "March", "April", "May",
+//				"June", "July", "August", "September", "October", "November",
+//				"Decemeber" };
+//
+//		cbMonthStart = new JComboBox(months);
+//		monthEnd = new JComboBox(months);
+//
+//		String days[] = new String[31];
+//		for (int i = 1; i <= 31; i++) {
+//			days[i - 1] = Integer.toString(i);
+//		}
+//
+//		dayStart = new JComboBox(days);
+//		dayEnd = new JComboBox(days);
+		
+		tfStartDate = new JTextField("2013-02-02 00:00:00");
+		tfEndDate = new JTextField("2013-02-02 00:00:00");
 
 		// Holiday list and Buttons
 		holidayListModel = new DefaultListModel();
@@ -214,18 +220,24 @@ public class StaffDialog extends JDialog {
 		gbc.gridy = 8;
 		gbc.gridwidth = 1;
 		addStaffPanel.add(lblHolidayStart, gbc);
-		gbc.gridx = 1;
-		addStaffPanel.add(cbMonthStart, gbc);
-		gbc.gridx = 2;
-		addStaffPanel.add(dayStart, gbc);
+		gbc.gridwidth = 2;
 
+		gbc.gridx = 1;
+		addStaffPanel.add(tfStartDate, gbc);
+//		gbc.gridx = 2;
+//		addStaffPanel.add(dayStart, gbc);
+
+		gbc.gridwidth = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 9;
 		addStaffPanel.add(lblHolidayEnd, gbc);
+		gbc.gridwidth = 2;
+
 		gbc.gridx = 1;
-		addStaffPanel.add(monthEnd, gbc);
-		gbc.gridx = 2;
-		addStaffPanel.add(dayEnd, gbc);
+		addStaffPanel.add(tfEndDate, gbc);
+//		gbc.gridx = 2;
+//		addStaffPanel.add(dayEnd, gbc);
+		gbc.gridwidth = 1;
 
 		gbc.gridx = 1;
 		gbc.gridy = 10;
@@ -298,27 +310,25 @@ public class StaffDialog extends JDialog {
 
 		}
 
-//		for (String i : staff.getHolidays()) {
-//
-//			holidayListModel.addElement(i);
-//
-//		}
+		for (DateTime date: staff.getHolidays().keySet()) {
+
+			holidayListModel.addElement(date.getDateTime() + " to " + staff.getHolidays().get(date).getDateTime());
+
+		}
 	}
 
 	public StaffDO getStaffInput() {
-
+		
 		String[] holidays = new String[holidayListModel.size()];
 		holidayListModel.copyInto(holidays);
 
 		String[] skills = new String[skillListModel.size()];
 		skillListModel.copyInto(skills);
-
+		
 		StaffDO staffObj = new StaffDO(Integer.parseInt(tfId.getText()),
 				tfName.getText(), Integer.parseInt(tfWeeklyAvail.getText()),
 				skillLevels, holidayDates);
-
 		
-
 		return staffObj;
 
 	}
@@ -334,6 +344,7 @@ public class StaffDialog extends JDialog {
 		}
 		
 		String skillLevel = (String) cbSkillLevels.getSelectedItem();
+		
 		if(skillLevel == "Skill Level") {
 			
 			JOptionPane.showMessageDialog(this, "Please select a Skill Level", "Error",
@@ -347,8 +358,8 @@ public class StaffDialog extends JDialog {
 		skill += " - Level: " + skillLevel;
 		skillListModel.addElement(skill);
 		
-//		skillLevels.put(mapSkills.get(skillName), skillLevel);
-//		holidayDates
+		skillLevels.put(revMapSkills.get(skillName), Double.parseDouble(skillLevel));
+
 		
 	}
 
@@ -360,11 +371,12 @@ public class StaffDialog extends JDialog {
 
 	public void addHoliday() {
 
-		String holiday = (String) (cbMonthStart.getSelectedItem() + " "
-				+ dayStart.getSelectedItem() + " to "
-				+ monthEnd.getSelectedItem() + " " + dayEnd.getSelectedItem());
+		String holiday = (String) (tfStartDate.getText() + " to "
+				+ tfEndDate.getText());
 
 		holidayListModel.addElement(holiday);
+		
+		holidayDates.put(new DateTime(tfStartDate.getText()), new DateTime(tfEndDate.getText()));
 
 	}
 
