@@ -18,15 +18,31 @@ import data.dataObject.TaskDO;
  */
 public class ProjectList extends JPanel {
     
-    private static final long serialVersionUID = -7858214750393514974L;
-
     private JPanel bottomPanel = new JPanel();
     private JButton btnDelete = new JButton("Delete Project");
     private JButton btnModify = new JButton("Modify Project");
     private JButton btnAdd = new JButton("Add project");
 
     private DefaultMutableTreeNode topNode = new DefaultMutableTreeNode("projects");
-    private JTree projectTree = new JTree(topNode);
+    
+    // override convertValueToText() method in jtree
+    private JTree projectTree = new JTree(topNode){
+
+        @Override
+        public String convertValueToText(Object value, boolean selected, boolean expanded, 
+                boolean leaf, int row, boolean hasFocus) {
+            
+            if(value instanceof DefaultMutableTreeNode) {
+                Object obj = ((DefaultMutableTreeNode)value).getUserObject();
+                if(obj instanceof ProjectDO) {
+                    return ((ProjectDO)obj).getProjectName();
+                } else if(obj instanceof TaskDO) {
+                    return ((TaskDO)obj).getTaskName();
+                }
+            }
+            return value.toString();
+        }
+    };
     
     public ProjectList() {
         
@@ -59,15 +75,23 @@ public class ProjectList extends JPanel {
 
     public void addProjectNode(ProjectDO project) {
 
-        DefaultMutableTreeNode projectNode = new DefaultMutableTreeNode(project.getProjectName());
+        DefaultMutableTreeNode projectNode = new DefaultMutableTreeNode();
+        projectNode.setUserObject(project);
 
         ArrayList<TaskDO> tasks = project.getTasks();
         for(TaskDO task : tasks) {
-            DefaultMutableTreeNode taskNode = new DefaultMutableTreeNode(task.getTaskName());
+            DefaultMutableTreeNode taskNode = new DefaultMutableTreeNode();
+            taskNode.setUserObject(task);
             projectNode.add(taskNode);
         }
 
         topNode.add(projectNode);
+    }
+
+    // get selected project/task in project list
+    public Object getSelectedObjectInTree() {
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)projectTree.getLastSelectedPathComponent();
+        return selectedNode.getUserObject();
     }
 
 }

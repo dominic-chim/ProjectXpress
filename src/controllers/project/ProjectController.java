@@ -26,13 +26,15 @@ public class ProjectController {
     private AddProjectDialog jdlogAddProject;
     private AddTaskDialog jdlogAddTask;
 
+    private ProjectList jpnlprojectList;
+
     // models 
     private ProjectDO projectModel = new ProjectDO();
 
     public ProjectController(MainFrame view) {
         this.view = view;
         this.projectPanel = view.getProjectPanel();
-        ProjectList jpnlprojectList = projectPanel.getProjectList();
+        jpnlprojectList = projectPanel.getProjectList();
 
         // add controller to buttons in project list
         jpnlprojectList.addController(new ProjectListBtnListener());
@@ -46,9 +48,6 @@ public class ProjectController {
         }
     }
 
-    /** 
-     * ActionListeners for all buttons in ProjectList
-     */
     class ProjectListBtnListener implements ActionListener {
 
         @Override
@@ -57,6 +56,12 @@ public class ProjectController {
                 case "delete":
                     break;
                 case "modify":
+                    Object obj = jpnlprojectList.getSelectedObjectInTree();
+                    if(obj instanceof ProjectDO) {
+                        System.out.println("project!");
+                    } else if(obj instanceof TaskDO) {
+                        System.out.println("task!");
+                    }
                     break;
                 case "add":
                     projectModel = new ProjectDO();
