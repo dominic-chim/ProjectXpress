@@ -65,7 +65,7 @@ public class StatisticsDao extends DatabaseRoot {
 
 	}
 
-	public Object[][] allFromTest() {
+	/*public Object[][] allFromTest() {
 
 		String sql = "SELECT * FROM test";
 
@@ -99,6 +99,6 @@ public class StatisticsDao extends DatabaseRoot {
 			}
 		}
 		return rows;
-	}
+	}*/
 
 }

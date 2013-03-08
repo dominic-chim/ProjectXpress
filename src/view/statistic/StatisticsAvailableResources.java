@@ -60,7 +60,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 
 	public StatisticsAvailableResources(final String title) {
 		super(title);
-		Object rows[][] = stats.allFromTest();
+		Object rows[][] = null;//stats.allFromTest();
 		Object columns[] = { "Employee Name", "Specialization",
 				"Project Allocation", "Task Allocations",
 				"Remaining Working Hours" };
