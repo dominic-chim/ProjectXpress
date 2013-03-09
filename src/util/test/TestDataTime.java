@@ -37,4 +37,11 @@ public class TestDataTime {
     public void testDuration() {
         assertEquals(88, DateTime.duration(dt1, new DateTime("2013-11-05 10:00:00")));
     }
+
+    @Test
+    public void testNextDay() {
+        DateTime dt2 = new DateTime(2013, 10, 31, 10, 00, 00);
+        assertEquals("2013-11-01 09:00:00",DateTime.nextDay(dt2).getDateTime());
+    }
+
 }

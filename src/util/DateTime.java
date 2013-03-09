@@ -38,12 +38,6 @@ public class DateTime {
         this.second = 0;
     }
 
-    public DateTime(Date date) {
-    }
-    
-    public DateTime() {
-        
-    }
 
     public String getDateTime() {
         String dateTime = String.format("%04d-%02d-%02d %02d:%02d:%02d", 
@@ -111,8 +105,20 @@ public class DateTime {
 
     }
     
-    public static DateTime nextDay(DateTime now) {
-    	return new DateTime(2013,2,5,10,0,0);
+    /**
+     * returns nextDay at 9:00 am
+     */
+    public static DateTime nextDay(DateTime date) {
+        org.joda.time.DateTime dt = new org.joda.time.DateTime(
+                date.getYear(),
+                date.getMonth(),
+                date.getDay(),
+                date.getHour(),
+                date.getMinute(),
+                date.getSecond(),
+                0);
+        dt = dt.plusDays(1);
+        return new DateTime(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth(), 9, 0, 0);
     }
 
     // getters
