@@ -149,7 +149,7 @@ public class StaffList extends JPanel {
 		info = new DefaultMutableTreeNode("Weekly Availability: "
 				+ staffInfo.getStaffWeeklyAvailableTime());
 		name.add(info);
-		
+
 		name.add(skills);
 
 		for (int i : staffInfo.getSkillLevels().keySet()) {
@@ -158,9 +158,8 @@ public class StaffList extends JPanel {
 					+ staffInfo.getSkillLevels().get(i));
 			skills.add(info);
 		}
-		
-		name.add(holidays);
 
+		name.add(holidays);
 
 		for (DateTime date : staffInfo.getHolidays().keySet()) {
 
@@ -168,17 +167,11 @@ public class StaffList extends JPanel {
 					+ staffInfo.getHolidays().get(date).getDateTime());
 			holidays.add(info);
 		}
-		
+
 		return staffInfo;
 	}
 
 	public StaffDO addModifiedStaffToList(StaffDO staffInfo) {
-
-		// staffDao.modifyStaff(staffInfo);
-
-		System.out.println("iD" + staffInfo.getStaffId() + "Name "
-				+ staffInfo.getStaffName() + "Avail "
-				+ staffInfo.getStaffWeeklyAvailableTime());
 
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
 				.getLastSelectedPathComponent();
@@ -193,14 +186,31 @@ public class StaffList extends JPanel {
 		weeklyAvailTime.setUserObject("Weekly Availability: "
 				+ staffInfo.getStaffWeeklyAvailableTime());
 
-		// DefaultMutableTreeNode skills = (DefaultMutableTreeNode) selectedNode
-		// .getChildAt(2);
-		// skills.setUserObject(staffInfo.getSkills()[0]);
-		//
-		// DefaultMutableTreeNode holidays = (DefaultMutableTreeNode)
-		// selectedNode
-		// .getChildAt(3);
-		// holidays.setUserObject(staffInfo.getHolidays()[0]);
+		DefaultMutableTreeNode skills = (DefaultMutableTreeNode) selectedNode
+				.getChildAt(2);
+
+		skills.removeAllChildren();
+
+		for (int i : staffInfo.getSkillLevels().keySet()) {
+
+			System.out.println("I ||| : " + i);
+			skills.add(new DefaultMutableTreeNode(skillMap.get(i)
+					+ " - Level: " + staffInfo.getSkillLevels().get(i)));
+
+		}
+
+		DefaultMutableTreeNode holidays = (DefaultMutableTreeNode) selectedNode
+				.getChildAt(3);
+
+		holidays.removeAllChildren();
+
+		for (DateTime date : staffInfo.getHolidays().keySet()) {
+			
+			System.out.println("DateTime ||| : " + date);
+
+			holidays.add(new DefaultMutableTreeNode(date.getDateTime() + " to "
+					+ staffInfo.getHolidays().get(date).getDateTime()));
+		}
 
 		tree.updateUI();
 
