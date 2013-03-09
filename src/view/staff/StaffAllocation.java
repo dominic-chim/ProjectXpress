@@ -112,6 +112,7 @@ public class StaffAllocation extends JPanel {
         StaffDao staffDB = new StaffDao();
         test.put(staffDB.getStaffById(1), resultDB.getResultByStaff(1));
         test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
+        test.put(staffDB.getStaffById(3), resultDB.getResultByStaff(3));
         addStaffAllocatedProjects(test);    
 
     }

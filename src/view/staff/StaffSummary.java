@@ -191,9 +191,9 @@ public class StaffSummary extends JPanel {
         HashMap<StaffDO , ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
         ResultDao resultDB = new ResultDao();
         StaffDao staffDB = new StaffDao();
-        test.put(staffDB.getStaffById(1), resultDB.getResultByStaff(1));
+        test.put(staffDB.getStaffById(3), resultDB.getResultByStaff(3));
         //System.out.println(resultDB.getResultByStaff(1));
-        test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
+        //test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
         addData(test, new DateTime(2013, 2, 1, 9, 0, 0));
             
         setVisible(true);
