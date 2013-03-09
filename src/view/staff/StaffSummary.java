@@ -21,18 +21,18 @@ import database.dataAccessObject.StaffDao;
 public class StaffSummary extends JPanel {
 
 	private GridBagConstraints gbc = new GridBagConstraints();
-	private int yPos = 0;
+	private int yPos = 1;
 
 	// TODO add error checks if task start date is greater than time scale set
 	// on table
 
-	int dayXPos = 0;
+	int dayXPos = 8;
 	DateTime currentDateTime;
 	JLabel lblDay;
 
 	public StaffSummary() {
 
-		DateTime projectStartDate = new DateTime("2013-02-02 00:00:00");
+		DateTime projectStartDate = new DateTime("2013-02-01 09:00:00");
 		this.currentDateTime = projectStartDate;
 
 		setLayout(new GridBagLayout());
@@ -42,6 +42,8 @@ public class StaffSummary extends JPanel {
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.ipadx = 10;
+		gbc.ipady = 10;
 		gbc.gridwidth = 8;
 		gbc.fill = GridBagConstraints.BOTH;
 		add(blankLabel = new JLabel(""), gbc);
@@ -65,16 +67,17 @@ public class StaffSummary extends JPanel {
 		// Add Day
 		gbc.gridy = 0;
 		gbc.gridwidth = 8;
-		dayXPos += 5;
 		gbc.gridx = dayXPos;
+		
 		lblDay = new JLabel(currentDateTime.getDateTime(), JLabel.HORIZONTAL);
 		lblDay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(lblDay, gbc);
 
 		// Add Hours of Day
-		
+	
 		int hourPos = dayXPos;
 		gbc.gridx = hourPos;
+		gbc.gridy =  1;
 		gbc.gridwidth = 1;
 		JLabel lblHours;
 
@@ -87,6 +90,9 @@ public class StaffSummary extends JPanel {
 			add(lblHours, gbc);
 			
 		}	
+
+		dayXPos += 8;
+		currentDateTime = DateTime.nextDay(currentDateTime);
 
 	}
 
@@ -113,7 +119,7 @@ public class StaffSummary extends JPanel {
 
 			gbc.gridy = ++yPos;
 			gbc.gridx = xPos;
-			gbc.gridwidth = 5;
+			gbc.gridwidth = 8;
 
 			add(staffName, gbc);
 
@@ -131,6 +137,15 @@ public class StaffSummary extends JPanel {
 
 				TaskDO taskDo = task.getTaskDO();
 
+				if(currentDateTime.before(task.getEndDateTime())) {
+					for(int i = DateTime.duration(currentDateTime, task.getEndDateTime()); i >= 0; i--) {
+						addDay();	
+					}
+					
+					gbc.gridy = yPos;
+
+				}
+								
 				if (currentTime.before(task.getStartDateTime())) {
 					int blankLength = DateTime.duration(currentTime,
 							task.getStartDateTime());
@@ -156,13 +171,6 @@ public class StaffSummary extends JPanel {
 
 				currentTime = task.getEndDateTime();
 
-			}
-
-			if (xPos < 160) {
-
-				gbc.gridwidth = 165 - xPos;
-				add(lblBlank = new JLabel(""), gbc);
-				lblBlank.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			}
 
 			xPos = 0;
