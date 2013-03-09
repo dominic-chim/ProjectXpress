@@ -29,7 +29,7 @@ public class ProjectPanel extends JPanel {
 	public ProjectPanel() {
 
 		// TODO change these tabs to customized ones
-		rightTabs.addTab("Summary of Projects", new JPanel());
+		rightTabs.addTab("Summary of Projects", new ProjectSummary());
 		rightTabs.addTab("Project Allocation", new ProjectAllocation());
 		rightTabs.setPreferredSize(new Dimension(600, 600));
 

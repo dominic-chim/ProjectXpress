@@ -50,10 +50,10 @@ public class SchedulingDialog extends JDialog {
         jpnlBottomContainer.add(jbtnCancel);
 
         // container settings
-        //jpnlCenterContainer.setPreferredSize(new Dimension(300, 300));
+        //jpnlCenterContainer.setPreferredSize(new Dimension(300, 50));
 
         add(jpnlTopContainer, BorderLayout.NORTH);
-        add(jpnlCenterContainer, BorderLayout.CENTER);
+        add(new JScrollPane(jpnlCenterContainer), BorderLayout.CENTER);
         add(jpnlBottomContainer, BorderLayout.SOUTH);
 
         // dialog settings
@@ -65,13 +65,15 @@ public class SchedulingDialog extends JDialog {
 
     public void initJcbxProjects(ArrayList<ProjectDO> projects) {
 
-        // set size and layout 
-        int projectNum = projects.size();
+        /*
         int width = 300;
         int height = projectNum * 20;
+        //this.setSize(width, height + 50);
+        // set size and layout 
+        */
+        int projectNum = projects.size();
         if(projectNum != 0)
         	jpnlCenterContainer.setLayout(new GridLayout(projectNum, 0));
-        this.setSize(width, height + 50);
 
         for(ProjectDO project : projects) {
             JCheckBox jcbxProject = new JCheckBox(project.getProjectName());
@@ -80,6 +82,7 @@ public class SchedulingDialog extends JDialog {
             jpnlCenterContainer.add(jcbxProject);
             jcbxProjects.add(jcbxProject);
         }
+        this.pack();
         jpnlCenterContainer.updateUI();
     }
 

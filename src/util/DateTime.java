@@ -21,22 +21,21 @@ public class DateTime {
         month = Integer.parseInt(dateTime.substring(5, 7));
         day = Integer.parseInt(dateTime.substring(8, 10));
         hour = Integer.parseInt(dateTime.substring(11, 13));
-        minute = Integer.parseInt(dateTime.substring(14, 16));
-        second = Integer.parseInt(dateTime.substring(17, 19));
+        // we don't care them
+        minute = 0;
+        second = 0;
     }
 
     public DateTime(int year, int month, int day, 
             int hour, int minute, int second) {
         // TODO throw some exception when these values are invalid
-        //
-        //dateTime = String.format("%04d-%02d-%02d %02d:%02d:%02d", year, month,
-        //        day, hour, minute, second);
         this.year = year;
         this.month = month;
         this.day = day;
         this.hour = hour;
-        this.minute = minute;
-        this.second = second;
+        // we don't care them
+        this.minute = 0;
+        this.second = 0;
     }
 
     public DateTime(Date date) {
