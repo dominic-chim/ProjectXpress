@@ -137,14 +137,11 @@ public class StaffSummary extends JPanel {
 
 				TaskDO taskDo = task.getTaskDO();
 
-				if(currentDateTime.before(task.getEndDateTime())) {
-					for(int i = DateTime.duration(currentDateTime, task.getEndDateTime()); i >= 0; i--) {
-						addDay();	
-					}
-					
-					gbc.gridy = yPos;
-
+				while(currentDateTime.before(task.getEndDateTime())) {
+					addDay();
 				}
+				
+				gbc.gridy = yPos;
 								
 				if (currentTime.before(task.getStartDateTime())) {
 					int blankLength = DateTime.duration(currentTime,
