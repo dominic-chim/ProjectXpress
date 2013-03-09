@@ -41,4 +41,12 @@ public class ResultDO {
         return endDateTime;
     }
 
+    public String toString() {
+        return String.format("project:%d, staff:%d, start:%s, end%s\n", 
+                taskDO.getTaskId(),
+                staffDO.getStaffId(),
+                startDateTime.getDateTime(),
+                endDateTime.getDateTime());
+    }
+
 }

@@ -18,8 +18,7 @@ public class ResultDao extends DatabaseRoot {
 
         ArrayList<ResultDO> results = new ArrayList<ResultDO>();
 
-        String sql = "SELECT staff_id, start_datetime, end_datetime, project_id, task_id FROM scheduling_result WHERE project_id="
-                + projectId + "ORDER BY start_datetime";
+        String sql = String.format("SELECT staff_id, start_datetime, end_datetime, project_id, task_id FROM scheduling_result WHERE project_id=%d AND version=%d ORDER BY start_datetime", projectId, getCurrentResultVersion());
         try {
             ResultSet result = connection.createStatement().executeQuery(sql);
             while(result.next()) {
@@ -41,10 +40,34 @@ public class ResultDao extends DatabaseRoot {
         return results;
     }
 
+    public ArrayList<ResultDO> getResultByStaff(int staffId) {
+
+        ArrayList<ResultDO> results = new ArrayList<ResultDO>();
+
+        String sql = String.format("SELECT staff_id, start_datetime, end_datetime, project_id, task_id FROM scheduling_result WHERE staff_id=%d AND version=%d ORDER BY start_datetime", staffId, getCurrentResultVersion());
+        try {
+            ResultSet result = connection.createStatement().executeQuery(sql);
+            while(result.next()) {
+                int projectId = result.getInt("project_id");
+                DateTime startDateTime = new DateTime(result.getString("start_datetime"));
+                DateTime endDateTime = new DateTime(result.getString("end_datetime"));
+                int taskId = result.getInt("task_id");
+
+                TaskDO task = (new TaskDao()).getTaskById(projectId, taskId);
+                StaffDO staff = (new StaffDao()).getStaffById(staffId);
+
+                results.add(new ResultDO(projectId, task, staff, startDateTime, endDateTime));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return results;
+    }
 
     public void addResults(ArrayList<ResultDO> results) {
 
-        int version = getCurrentResultVersion();
+        int version = getCurrentResultVersion() + 1;
         for(ResultDO result : results) {
             String sql = String.format("INSERT INTO scheduling_result (staff_id, start_datetime, "
                 + "end_datetime, project_id, task_id, version) VALUES (%d, '%s', '%s', %d, %d, %d)", 
@@ -64,12 +87,13 @@ public class ResultDao extends DatabaseRoot {
     }
 
 
+
     private int getCurrentResultVersion() {
         String sql = "SELECT max(version) AS current_version FROM scheduling_result";
         try {
             ResultSet rset = connection.createStatement().executeQuery(sql);
             if(rset.next()) {
-                return rset.getInt("current_version") + 1;
+                return rset.getInt("current_version");
             } else {
                 return 0;
             }
@@ -81,6 +105,8 @@ public class ResultDao extends DatabaseRoot {
         return 0;
     }
     
+
+
     
 
 }
