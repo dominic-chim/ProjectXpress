@@ -136,6 +136,9 @@ public class StaffList extends JPanel {
 
 		DefaultMutableTreeNode name = null;
 		DefaultMutableTreeNode info = null;
+		DefaultMutableTreeNode info = null;
+		DefaultMutableTreeNode info = null;
+
 
 		name = new DefaultMutableTreeNode(staffInfo.getStaffName());
 		treeModel.insertNodeInto(name, staff, 0);

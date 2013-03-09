@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import util.DateTime;
 import data.Context;
@@ -132,38 +131,43 @@ public class StaffDao extends DatabaseRoot {
 	}
 
 	public void modifyStaff(int staffId, StaffDO staff) {
-
-		String staffValues = "staff_id= " + staff.getStaffId() + ", staff_name='" + staff.getStaffName()
-				+ "', staff_weekly_available_time='"
-				+ staff.getStaffWeeklyAvailableTime() + "'";
-
-		String sql = "UPDATE staff SET "  + staffValues + " WHERE staff_id = "
-				+ staff.getStaffId();
-
-		System.out.println(sql);
 		
-		try {
-			int result = db.executeUpdate(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		String staffValues = "";
+		String sql = "";
+		
+		System.out.println(staff.getSkillLevels().size());
+				
+		for (int skillId : staff.getSkillLevels().keySet()) {
+
+			staffValues = "staff_id = " + staff.getStaffId() + ", skill_id = " + skillId + ", skill_level = "
+					+ staff.getSkillLevels().get(skillId);
+
+			sql = "UPDATE staff_skill_level SET " + staffValues
+					+ " WHERE staff_id = " + staffId;
+
+			System.out.println(sql);
+			
+			try {
+				db.executeUpdate(sql);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 		
-//		for (int skillId : staff.getSkillLevels().keySet()) {
+//		staffValues = "staff_id= " + staff.getStaffId() + ", staff_name='" + staff.getStaffName()
+//				+ "', staff_weekly_available_time='"
+//				+ staff.getStaffWeeklyAvailableTime() + "'";
 //
-//			staffValues = "staff_id= " + staff.getStaffId() + ", skill_id= " + skillId + ", skill_level= "
-//					+ staff.getSkillLevels().get(skillId);
+//		sql = "UPDATE staff SET "  + staffValues + " WHERE staff_id = "
+//				+ staffId;
 //
-//			sql = "UPDATE staff_skill_level SET " + staffValues
-//					+ " WHERE staff_id = " + staff.getStaffId();
-//
-//			System.out.println(sql);
-//			
-//			try {
-//				db.executeUpdate(sql);
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//
+//		System.out.println(sql);
+//		
+//		try {
+//			int result = db.executeUpdate(sql);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
 //		}
 
 	}
@@ -199,9 +203,13 @@ public class StaffDao extends DatabaseRoot {
 				staffs.add(getStaffById(result.getInt("staff_id")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
 		return staffs;
 
 		// String sql =
