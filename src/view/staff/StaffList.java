@@ -16,6 +16,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import util.DateTime;
 import view.MainFrame;
 import data.Context;
 import data.dataObject.StaffDO;
@@ -75,13 +76,13 @@ public class StaffList extends JPanel {
 		for (StaffDO staffObj : staff) {
 			addNewStaffToList(staffObj);
 		}
-		
+
 	}
 
 	public void addStaffDialog(ActionListener controller, StaffDO staff) {
-	
+
 		staffDialog = new StaffDialog(view, controller, staff);
-	
+
 	}
 
 	public String deleteStaff() {
@@ -126,7 +127,7 @@ public class StaffList extends JPanel {
 		}
 
 		System.out.println(id.toString());
-		
+
 		return Integer.parseInt(id);
 
 	}
@@ -136,9 +137,8 @@ public class StaffList extends JPanel {
 
 		DefaultMutableTreeNode name = null;
 		DefaultMutableTreeNode info = null;
-		DefaultMutableTreeNode info = null;
-		DefaultMutableTreeNode info = null;
-
+		DefaultMutableTreeNode skills = new DefaultMutableTreeNode("Skills");
+		DefaultMutableTreeNode holidays = new DefaultMutableTreeNode("Holidays");
 
 		name = new DefaultMutableTreeNode(staffInfo.getStaffName());
 		treeModel.insertNodeInto(name, staff, 0);
@@ -149,31 +149,27 @@ public class StaffList extends JPanel {
 		info = new DefaultMutableTreeNode("Weekly Availability: "
 				+ staffInfo.getStaffWeeklyAvailableTime());
 		name.add(info);
+		
+		name.add(skills);
 
-//		if (staffInfo.getSkillLevels() != null) {
-//			for (int i : staffInfo.getSkillLevels().keySet()) {
-//
-//				info = new DefaultMutableTreeNode(skillMap.get(i)
-//						+ " - Level: " + staffInfo.getSkillLevels().get(i));
-//				name.add(info);
-//			}
-//		}
+		for (int i : staffInfo.getSkillLevels().keySet()) {
+
+			info = new DefaultMutableTreeNode(skillMap.get(i) + " - Level: "
+					+ staffInfo.getSkillLevels().get(i));
+			skills.add(info);
+		}
+		
+		name.add(holidays);
+
+
+		for (DateTime date : staffInfo.getHolidays().keySet()) {
+
+			info = new DefaultMutableTreeNode(date.getDateTime() + " to "
+					+ staffInfo.getHolidays().get(date).getDateTime());
+			holidays.add(info);
+		}
+		
 		return staffInfo;
-
-		// int j = 1;
-		// for (String i : staffInfo.getSkills()) {
-		// info = new DefaultMutableTreeNode("Skill " + j + ": " + i);
-		// name.add(info);
-		// j++;
-		// }
-		//
-		// j = 1;
-		// for (String i : staffInfo.getHolidays()) {
-		// info = new DefaultMutableTreeNode("Holiday " + j + ": " + i);
-		// name.add(info);
-		// j++;
-		// }
-
 	}
 
 	public StaffDO addModifiedStaffToList(StaffDO staffInfo) {
@@ -196,7 +192,6 @@ public class StaffList extends JPanel {
 				.getChildAt(1);
 		weeklyAvailTime.setUserObject("Weekly Availability: "
 				+ staffInfo.getStaffWeeklyAvailableTime());
-		
 
 		// DefaultMutableTreeNode skills = (DefaultMutableTreeNode) selectedNode
 		// .getChildAt(2);
