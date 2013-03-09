@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -68,6 +70,10 @@ public class StaffDialog extends JDialog {
 
 	HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
 	HashMap<DateTime, DateTime> holidayDates = new HashMap<DateTime, DateTime>();
+
+	boolean checkIfAddStaff = true;
+
+	ArrayList<String> queries = new ArrayList<String>();
 
 	public StaffDialog(MainFrame view, ActionListener controller, StaffDO staff) {
 
@@ -267,11 +273,12 @@ public class StaffDialog extends JDialog {
 		// If Modify or Add Staff
 		if (staff != null) {
 
+			checkIfAddStaff = false;
 			addStaffInfo(staff);
 			addStaff = new JButton("Update");
 
 		} else {
-
+			checkIfAddStaff = true;
 			addStaff = new JButton("Add");
 		}
 
@@ -295,6 +302,7 @@ public class StaffDialog extends JDialog {
 	public void addStaffInfo(StaffDO staff) {
 
 		tfId.setText(Integer.toString(staff.getStaffId()));
+		tfId.setEditable(false);
 		tfName.setText(staff.getStaffName());
 		tfWeeklyAvail.setText(Integer.toString(staff
 				.getStaffWeeklyAvailableTime()));
@@ -364,9 +372,43 @@ public class StaffDialog extends JDialog {
 		skillLevels.put(revMapSkills.get(skillName),
 				Double.parseDouble(skillLevel));
 
+		if (!checkIfAddStaff) {
+
+			String addSkillQuery = "INSERT INTO staff_skill_level VALUES ( "
+					+ tfId.getText() + ", " + revMapSkills.get(skillName)
+					+ ", " + Double.parseDouble(skillLevel) + " )";
+
+			queries.add(addSkillQuery);
+
+		}
+
 	}
 
 	public void removeSkill() {
+
+		if (!checkIfAddStaff) {
+
+			String skill = skillList.getSelectedValue().toString();
+			String skillName = "";
+
+			Pattern p = Pattern.compile("(.*) - Level: (.*)");
+			Matcher m = p.matcher(skill);
+
+			while (m.find()) {
+				skillName = m.group(1);
+			}
+
+			String removeSkillQuery = "DELETE FROM staff_skill_level WHERE staff_id = "
+					+ tfId.getText()
+					+ " AND skill_id = "
+					+ revMapSkills.get(skillName);
+
+			queries.add(removeSkillQuery);
+
+			for (String i : queries) {
+				System.out.println(i);
+			}
+		}
 
 		skillListModel.removeElement(skillList.getSelectedValue());
 
@@ -381,15 +423,53 @@ public class StaffDialog extends JDialog {
 
 		holidayDates.put(new DateTime(tfStartDate.getText()), new DateTime(
 				tfEndDate.getText()));
+		
+		if (!checkIfAddStaff) {
+
+			String addHolidayQuery = "INSERT INTO staff_holidays VALUES ( "
+					+ tfId.getText() + ", '" + tfStartDate.getText() +  "', '" + tfEndDate.getText() + "' )";
+
+			queries.add(addHolidayQuery);
+
+		}
 
 	}
 
 	public void removeHoliday() {
 
+		if (!checkIfAddStaff) {
+
+			String holiday = holidayList.getSelectedValue().toString();
+			String startDate = "";
+
+			Pattern p = Pattern.compile("(.*) to (.*)");
+			Matcher m = p.matcher(holiday);
+
+			while (m.find()) {
+				startDate = m.group(1);
+			}
+
+			String removeHolidayQuery = "DELETE FROM staff_holidays WHERE staff_id = "
+					+ tfId.getText()
+					+ " AND holiday_start_time = '"
+					+ startDate + "'";
+
+			queries.add(removeHolidayQuery);
+
+			for (String i : queries) {
+				System.out.println(i);
+			}
+
+		}
+
 		holidayListModel.removeElement(holidayList.getSelectedValue());
 
 	}
 
+	public ArrayList<String> getQueries() {
+		return this.queries;
+	}
+	
 	public void addController(ActionListener controller) {
 
 		btnAddHoliday.addActionListener(controller);

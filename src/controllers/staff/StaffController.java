@@ -2,6 +2,7 @@ package controllers.staff;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import view.MainFrame;
 import view.staff.StaffDialog;
@@ -104,8 +105,10 @@ public class StaffController implements ActionListener {
 
 			staffDialog = staffList.getStaffDialog();
 			staff = staffDialog.getStaffInput();
+			ArrayList<String> queries = staffDialog.getQueries();
 			staffDialog.dispose();
-			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(), staff);
+			
+			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(), staff, queries);
 			staff = staffList.addModifiedStaffToList(staff);
 			
 		case "Cancel":

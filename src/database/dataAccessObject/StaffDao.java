@@ -130,45 +130,31 @@ public class StaffDao extends DatabaseRoot {
 		}
 	}
 
-	public void modifyStaff(int staffId, StaffDO staff) {
-		
+	public void modifyStaff(int staffId, StaffDO staff, ArrayList<String> queries) {
+
 		String staffValues = "";
 		String sql = "";
+
+		staffValues = "staff_id= " + staff.getStaffId() + ", staff_name='"
+				+ staff.getStaffName() + "', staff_weekly_available_time='"
+				+ staff.getStaffWeeklyAvailableTime() + "'";
+
+		sql = "UPDATE staff SET " + staffValues + " WHERE staff_id = "
+				+ staffId;
+
+		try {
+			int result = db.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
-		System.out.println(staff.getSkillLevels().size());
-				
-		for (int skillId : staff.getSkillLevels().keySet()) {
-
-			staffValues = "staff_id = " + staff.getStaffId() + ", skill_id = " + skillId + ", skill_level = "
-					+ staff.getSkillLevels().get(skillId);
-
-			sql = "UPDATE staff_skill_level SET " + staffValues
-					+ " WHERE staff_id = " + staffId;
-
-			System.out.println(sql);
-			
+		for(String i : queries) {
 			try {
-				db.executeUpdate(sql);
+				int result = db.executeUpdate(i);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		}
-		
-//		staffValues = "staff_id= " + staff.getStaffId() + ", staff_name='" + staff.getStaffName()
-//				+ "', staff_weekly_available_time='"
-//				+ staff.getStaffWeeklyAvailableTime() + "'";
-//
-//		sql = "UPDATE staff SET "  + staffValues + " WHERE staff_id = "
-//				+ staffId;
-//
-//		System.out.println(sql);
-//		
-//		try {
-//			int result = db.executeUpdate(sql);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
 
 	}
 
@@ -205,11 +191,7 @@ public class StaffDao extends DatabaseRoot {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
+
 		return staffs;
 
 		// String sql =
