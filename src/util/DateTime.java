@@ -111,7 +111,7 @@ public class DateTime {
 
     }
     
-    public DateTime nextDay(DateTime now) {
+    public static DateTime nextDay(DateTime now) {
     	return new DateTime(2013,2,5,10,0,0);
     }
 

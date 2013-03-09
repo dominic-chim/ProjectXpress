@@ -180,7 +180,8 @@ public class StaffDao extends DatabaseRoot {
 	public ArrayList<StaffDO> getAllStaff() {
 
 		ArrayList<StaffDO> staffs = new ArrayList<StaffDO>();
-
+		
+		
 		String sql = "SELECT DISTINCT staff_id FROM staff";
 
 		try {

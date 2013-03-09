@@ -86,8 +86,6 @@ public class ResultDao extends DatabaseRoot {
         }
     }
 
-
-
     private int getCurrentResultVersion() {
         String sql = "SELECT max(version) AS current_version FROM scheduling_result";
         try {
