@@ -8,7 +8,7 @@ import controllers.menu.SkillController;
 
 import view.project.*;
 import view.staff.*;
-import view.statistic.*;
+//import view.statistic.*;
 import view.menu.*;
 
 
@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel = new StaffView(this);
-	private StatisticPanel statisticPanel = new StatisticPanel();
+	//private StatisticPanel statisticPanel = new StatisticPanel();
 	
 	SkillDialog skillDialog;
 	
@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
 		// add tabs to tabbed pane
 		mainTabbedPane.addTab("Project", projectPanel);
 		mainTabbedPane.addTab("Staff", staffPanel);
-		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+		//mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		

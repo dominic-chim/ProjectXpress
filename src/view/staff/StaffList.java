@@ -188,32 +188,30 @@ public class StaffList extends JPanel {
 
 		DefaultMutableTreeNode skills = (DefaultMutableTreeNode) selectedNode
 				.getChildAt(2);
-
+		DefaultMutableTreeNode holidays = (DefaultMutableTreeNode) selectedNode
+				.getChildAt(3);
+					
 		skills.removeAllChildren();
-
+		
+				
 		for (int i : staffInfo.getSkillLevels().keySet()) {
 
-			System.out.println("I ||| : " + i);
 			skills.add(new DefaultMutableTreeNode(skillMap.get(i)
 					+ " - Level: " + staffInfo.getSkillLevels().get(i)));
 
 		}
 
-		DefaultMutableTreeNode holidays = (DefaultMutableTreeNode) selectedNode
-				.getChildAt(3);
-
 		holidays.removeAllChildren();
-
+		
 		for (DateTime date : staffInfo.getHolidays().keySet()) {
-			
-			System.out.println("DateTime ||| : " + date);
-
+			System.out.println(date);
 			holidays.add(new DefaultMutableTreeNode(date.getDateTime() + " to "
 					+ staffInfo.getHolidays().get(date).getDateTime()));
 		}
 
+//		treeM
 		tree.updateUI();
-
+		
 		return staffInfo;
 
 	}

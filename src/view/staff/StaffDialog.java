@@ -408,10 +408,12 @@ public class StaffDialog extends JDialog {
 			for (String i : queries) {
 				System.out.println(i);
 			}
+			
+			skillLevels.remove(revMapSkills.get(skillName));
+
 		}
 
 		skillListModel.removeElement(skillList.getSelectedValue());
-
 	}
 
 	public void addHoliday() {
@@ -459,6 +461,19 @@ public class StaffDialog extends JDialog {
 			for (String i : queries) {
 				System.out.println(i);
 			}
+			
+			DateTime foundDate = null;
+			
+			for(DateTime date : holidayDates.keySet()) {
+				if(date.getDateTime().equals(startDate)) {
+					foundDate = date;
+					break;
+				}
+			}
+			
+			holidayDates.remove(foundDate);
+			
+			//holidayDates.remove(new DateTime(startDate));
 
 		}
 

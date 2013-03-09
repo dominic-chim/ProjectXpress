@@ -108,6 +108,8 @@ public class StaffController implements ActionListener {
 			ArrayList<String> queries = staffDialog.getQueries();
 			staffDialog.dispose();
 			
+			System.out.println("In Update : Skill Size : " + staff.getSkillLevels().size());
+			
 			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(), staff, queries);
 			staff = staffList.addModifiedStaffToList(staff);
 			
