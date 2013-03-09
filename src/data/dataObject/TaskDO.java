@@ -187,6 +187,7 @@ public class TaskDO {
         output += "Task risk level: " + taskRistLevel + "\n";
         output += "Task Release time: " + taskReleaseTime.getDateTime() + "\n";
         output += "Task Status: " + taskStatus + "\n";
+        output += "Task Remaining time: " + taskRemainingTime + "\n";
         output += "requiredTaskIds: ";
         for(Integer requiredTaskId : requiredTaskIds) {
             output += " " + requiredTaskId + " ";

@@ -44,7 +44,7 @@ public class TaskDao extends DatabaseRoot {
                 String taskName = result.getString("task_name");
                 int taskRequiredSkill = result.getInt("task_required_skill");
                 int taskDuration = result.getInt("task_duration");
-                int taskRemainingTime = result.getInt("task_required_skill");
+                int taskRemainingTime = result.getInt("task_remaining_time");
                 String taskRistLevel = result.getString("task_risk_level");
                 DateTime taskReleaseTime = new DateTime(result.getString("task_release_time"));
                 String taskStatus = result.getString("task_status");

@@ -73,6 +73,10 @@ public class ProjectList extends JPanel {
         btnAdd.addActionListener(listener);
     }
 
+    public void clearTree() {
+        topNode.removeAllChildren();
+    }
+
     public void addProjectNode(ProjectDO project) {
 
         DefaultMutableTreeNode projectNode = new DefaultMutableTreeNode();
@@ -86,6 +90,7 @@ public class ProjectList extends JPanel {
         }
 
         topNode.add(projectNode);
+        projectTree.updateUI();
     }
 
     // get selected project/task in project list

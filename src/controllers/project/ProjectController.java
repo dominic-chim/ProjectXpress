@@ -42,7 +42,7 @@ public class ProjectController {
         // getAllProject from database and list them in the projectList
         ProjectDao projectDao = new ProjectDao();
 
-        ArrayList<ProjectDO> projects = projectDao.getAllProject();
+        ArrayList<ProjectDO> projects = projectDao.getAllStartedProject();
         for(ProjectDO project : projects) {
             jpnlprojectList.addProjectNode(project);
         }
@@ -58,9 +58,13 @@ public class ProjectController {
                 case "modify":
                     Object obj = jpnlprojectList.getSelectedObjectInTree();
                     if(obj instanceof ProjectDO) {
-                        System.out.println("project!");
+                        ProjectManageDialog jdlogProjectManage = new ProjectManageDialog(view, (ProjectDO)obj);
+                        jdlogProjectManage.setVisible(true);
                     } else if(obj instanceof TaskDO) {
-                        System.out.println("task!");
+                        TaskManageDialog jdlogTaskManage = new TaskManageDialog(view, (TaskDO)obj);
+                        jdlogTaskManage.setSkillNames((new SkillDao()).getSkillNames());
+                        jdlogTaskManage.setRiskLevels((new RiskDao()).getRiskNames());
+                        jdlogTaskManage.setVisible(true);
                     }
                     break;
                 case "add":
@@ -116,6 +120,13 @@ public class ProjectController {
                     // adding projectModel to db;
                     ProjectDao projectDao = new ProjectDao();
                     projectDao.addProject(projectModel);
+
+                    // update projectList
+                    jpnlprojectList.clearTree();
+                    ArrayList<ProjectDO> projectsUpdate = projectDao.getAllStartedProject();
+                    for(ProjectDO project : projectsUpdate) {
+                        jpnlprojectList.addProjectNode(project);
+                    }
 
                     // close window
                     jdlogAddProject.dispose();
