@@ -170,13 +170,9 @@ public class StaffSummary extends JPanel {
 				gbc.gridx = xPos;
 
 				currentTime = task.getEndDateTime();
-
-			}
-
-			xPos = 0;
-
+			}			
+			xPos = 0;			
 		}
-
 	}
 
 	public void addController(ActionListener controller) {
