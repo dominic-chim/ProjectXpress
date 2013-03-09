@@ -55,6 +55,12 @@ public class ProjectController {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
                 case "delete":
+                    Object delObj = jpnlprojectList.getSelectedObjectInTree();
+                    if(delObj instanceof ProjectDO) {
+                        ProjectDO project = (ProjectDO)delObj;
+                        (new ProjectDao()).deleteProject(project);
+                        updateProjectList();
+                    }
                     break;
                 case "modify":
                     Object obj = jpnlprojectList.getSelectedObjectInTree();
@@ -208,14 +214,6 @@ public class ProjectController {
                     ProjectDao projectDao = new ProjectDao();
                     projectDao.addProject(projectModel);
 
-                    // update projectList
-                    /*
-                    jpnlprojectList.clearTree();
-                    ArrayList<ProjectDO> projectsUpdate = projectDao.getAllStartedProject();
-                    for(ProjectDO project : projectsUpdate) {
-                        jpnlprojectList.addProjectNode(project);
-                    }
-                    */
                     updateProjectList();
 
                     // close window
@@ -266,24 +264,6 @@ public class ProjectController {
                 case "finish":
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                     setTaskInfo(valuesMap, taskModel);
-                    /*
-                    // get task info from user input
-                    String taskName = valuesMap.get("task_name");
-                    int requiredSkillId = Context.getSkillRevMap().get(valuesMap.get("required_skill"));
-                    int taskDuration = Integer.parseInt(valuesMap.get("duration"));
-                    String taskRistLevel = valuesMap.get("risk_level");
-                    DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
-                    String status = valuesMap.get("status");
-
-                    // add task info into a taskDO
-                    taskModel.setTaskName(taskName);
-                    taskModel.setTaskRequiredSkill(requiredSkillId);
-                    taskModel.setTaskDuration(taskDuration);
-                    taskModel.setTaskRemainingTime(taskDuration);
-                    taskModel.setTaskRistLevel(taskRistLevel);
-                    taskModel.setTaskReleaseTime(taskReleaseTime);
-                    taskModel.setTaskStatus(status);
-                    */
 
                     // add this task to projectDO
                     projectModel.addTask(taskModel);

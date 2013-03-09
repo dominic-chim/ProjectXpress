@@ -161,4 +161,14 @@ public class ProjectDao extends DatabaseRoot {
             e.printStackTrace();
         }
     }
+
+    public void deleteProject(ProjectDO project) {
+        String sql = "UPDATE project SET project_status='deleted' WHERE project_id=" + project.getProjectId();
+        try {
+            db.executeUpdate(sql);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }
