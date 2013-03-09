@@ -2,6 +2,8 @@ package view.project;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -71,9 +73,23 @@ public class ProjectManageDialog extends JDialog{
 
         // dialog settings
         setTitle("Manage project");
-        //setSize(400, 600);
         pack();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+
+    public void addController(ActionListener listener) {
+
+        jbtnUpdate.addActionListener(listener);
+        jbtnCancel.addActionListener(listener);
+    }
+
+    public HashMap<String, String> getAllInputValue() {
+        HashMap<String, String> values = new HashMap<String, String>();
+        values.put("project_name", jtxtProjectName.getText());
+        values.put("due_date", jtxtDueDate.getText());
+        values.put("priority", jtxtPriority.getText());
+        values.put("status", jcbStatus.getSelectedItem().toString());
+        return values;
     }
 }

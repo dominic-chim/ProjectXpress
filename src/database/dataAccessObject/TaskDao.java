@@ -109,5 +109,27 @@ public class TaskDao extends DatabaseRoot {
             e.printStackTrace();
         }
     }
+
+    public void updateTaskInfo(TaskDO task) {
+        String sql = String.format("UPDATE task SET task_name='%s', task_required_skill=%d, " +
+                "task_duration=%d, task_risk_level='%s', task_release_time='%s', task_status='%s', "+
+                "task_remaining_time=%d WHERE task_id=%d AND project_id=%d",
+                task.getTaskName(),
+                task.getTaskRequiredSkill(),
+                task.getTaskDuration(),
+                task.getTaskRistLevel(),
+                task.getTaskReleaseTime().getDateTime(),
+                task.getTaskStatus(),
+                task.getTaskDuration(),
+                task.getTaskId(),
+                task.getProjectId());
+        try {
+            db.executeUpdate(sql);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
     
 }

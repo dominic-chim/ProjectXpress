@@ -96,7 +96,10 @@ public class ProjectList extends JPanel {
     // get selected project/task in project list
     public Object getSelectedObjectInTree() {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)projectTree.getLastSelectedPathComponent();
-        return selectedNode.getUserObject();
+        if(selectedNode != null)
+            return selectedNode.getUserObject();
+        else
+            return null;
     }
 
 }

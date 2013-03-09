@@ -10,6 +10,7 @@ import data.dataObject.*;
 import database.dataAccessObject.ProjectDao;
 import database.dataAccessObject.RiskDao;
 import database.dataAccessObject.SkillDao;
+import database.dataAccessObject.TaskDao;
 
 import util.DateTime;
 import view.MainFrame;
@@ -59,11 +60,13 @@ public class ProjectController {
                     Object obj = jpnlprojectList.getSelectedObjectInTree();
                     if(obj instanceof ProjectDO) {
                         ProjectManageDialog jdlogProjectManage = new ProjectManageDialog(view, (ProjectDO)obj);
+                        jdlogProjectManage.addController(new ManageProjectDialogBtnListener((ProjectDO)obj, jdlogProjectManage));
                         jdlogProjectManage.setVisible(true);
                     } else if(obj instanceof TaskDO) {
                         TaskManageDialog jdlogTaskManage = new TaskManageDialog(view, (TaskDO)obj);
                         jdlogTaskManage.setSkillNames((new SkillDao()).getSkillNames());
                         jdlogTaskManage.setRiskLevels((new RiskDao()).getRiskNames());
+                        jdlogTaskManage.addController(new ManageTaskDialogBtnListener((TaskDO)obj, jdlogTaskManage));
                         jdlogTaskManage.setVisible(true);
                     }
                     break;
@@ -82,6 +85,90 @@ public class ProjectController {
         }
         
     }
+
+    /* listeners for manage dialogs */
+
+    class ManageProjectDialogBtnListener implements ActionListener {
+
+        private ProjectDO project;
+        private ProjectManageDialog dialog; 
+
+        public ManageProjectDialogBtnListener(ProjectDO project, ProjectManageDialog dialog) {
+            this.project = project;
+            this.dialog = dialog;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            switch (e.getActionCommand()) {
+                case "update":
+
+                    HashMap<String, String> valuesMap = dialog.getAllInputValue();
+                    String projectName = valuesMap.get("project_name");
+                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
+                    int priority = Integer.parseInt(valuesMap.get("priority"));
+                    String status = valuesMap.get("status");
+
+                    project.setProjectName(projectName);
+                    project.setProjectDueDate(projectDueDate);
+                    project.setProjectPriority(priority);
+                    project.setProjectStatus(status);
+
+                    (new ProjectDao()).updateProjectInfo(project);
+
+                    updateProjectList();
+                    dialog.dispose();
+                    break;
+                case "cancel":
+                    dialog.dispose();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
+
+    class ManageTaskDialogBtnListener implements ActionListener {
+
+        private TaskDO task;
+        private TaskManageDialog dialog; 
+
+        public ManageTaskDialogBtnListener(TaskDO task, TaskManageDialog dialog) {
+            this.task = task;
+            this.dialog = dialog;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            switch (e.getActionCommand()) {
+                case "update":
+
+                    HashMap<String, String> valuesMap = dialog.getAllInputValue();
+                    setTaskInfo(valuesMap, task);
+
+                    int remainingTime = Integer.parseInt(valuesMap.get("remaining_time"));
+
+                    task.setTaskRemainingTime(remainingTime);
+
+                    (new TaskDao()).updateTaskInfo(task);
+
+                    updateProjectList();
+                    dialog.dispose();
+                    break;
+                case "cancel":
+                    dialog.dispose();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
 
 
     /** 
@@ -122,11 +209,14 @@ public class ProjectController {
                     projectDao.addProject(projectModel);
 
                     // update projectList
+                    /*
                     jpnlprojectList.clearTree();
                     ArrayList<ProjectDO> projectsUpdate = projectDao.getAllStartedProject();
                     for(ProjectDO project : projectsUpdate) {
                         jpnlprojectList.addProjectNode(project);
                     }
+                    */
+                    updateProjectList();
 
                     // close window
                     jdlogAddProject.dispose();
@@ -174,8 +264,10 @@ public class ProjectController {
                     jdlogAddTask.dispose();
                     break;
                 case "finish":
-                    // get task info from user input
                     HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
+                    setTaskInfo(valuesMap, taskModel);
+                    /*
+                    // get task info from user input
                     String taskName = valuesMap.get("task_name");
                     int requiredSkillId = Context.getSkillRevMap().get(valuesMap.get("required_skill"));
                     int taskDuration = Integer.parseInt(valuesMap.get("duration"));
@@ -191,6 +283,7 @@ public class ProjectController {
                     taskModel.setTaskRistLevel(taskRistLevel);
                     taskModel.setTaskReleaseTime(taskReleaseTime);
                     taskModel.setTaskStatus(status);
+                    */
 
                     // add this task to projectDO
                     projectModel.addTask(taskModel);
@@ -226,5 +319,38 @@ public class ProjectController {
             names[i] = tasks.get(i).getTaskName();
         }
         return names;
+    }
+
+
+    private void updateProjectList() {
+
+        ProjectDao projectDao = new ProjectDao();
+        jpnlprojectList.clearTree();
+        ArrayList<ProjectDO> projectsUpdate = projectDao.getAllStartedProject();
+        for(ProjectDO project : projectsUpdate) {
+            jpnlprojectList.addProjectNode(project);
+        }
+    }
+
+    private void setProjectInfo(HashMap<String, String> valuesMap, ProjectDO project) {
+    }
+
+    private void setTaskInfo(HashMap<String, String> valuesMap, TaskDO task) {
+        // get input
+        String taskName = valuesMap.get("task_name");
+        int requiredSkillId = Context.getSkillRevMap().get(valuesMap.get("required_skill"));
+        int taskDuration = Integer.parseInt(valuesMap.get("duration"));
+        String taskRistLevel = valuesMap.get("risk_level");
+        DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
+        String status = valuesMap.get("status");
+
+        // add task info into a taskDO
+        task.setTaskName(taskName);
+        task.setTaskRequiredSkill(requiredSkillId);
+        task.setTaskDuration(taskDuration);
+        task.setTaskRemainingTime(taskDuration);
+        task.setTaskRistLevel(taskRistLevel);
+        task.setTaskReleaseTime(taskReleaseTime);
+        task.setTaskStatus(status);
     }
 }

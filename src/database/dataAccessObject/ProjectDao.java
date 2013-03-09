@@ -144,4 +144,21 @@ public class ProjectDao extends DatabaseRoot {
 
         return null;
     }
+
+    public void updateProjectInfo(ProjectDO project) {
+        String sql = String.format("UPDATE project SET project_name='%s', project_due_date='%s', " +
+                                    "project_priority=%d, project_status='%s' WHERE project_id=%d", 
+                                    project.getProjectName(),
+                                    project.getProjectDueDate().getDateTime(),
+                                    project.getProjectPriority(),
+                                    project.getProjectStatus(),
+                                    project.getProjectId());
+        
+        try {
+            connection.createStatement().executeUpdate(sql);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

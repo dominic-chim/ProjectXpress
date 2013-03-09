@@ -2,6 +2,8 @@ package view.project;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -38,7 +40,7 @@ public class TaskManageDialog extends JDialog {
 
 
     // buttons
-    private JButton jbtnAddRequirement = new JButton("Update");
+    private JButton jbtnUpdate = new JButton("Update");
     private JButton jbtnCancel = new JButton("Cancel");
 
 
@@ -82,10 +84,10 @@ public class TaskManageDialog extends JDialog {
 
         
         // add buttons to bottom
-        jbtnAddRequirement.setActionCommand("update");
+        jbtnUpdate.setActionCommand("update");
         jbtnCancel.setActionCommand("cancel");
 
-        jpnlBottom.add(jbtnAddRequirement);
+        jpnlBottom.add(jbtnUpdate);
         jpnlBottom.add(jbtnCancel);
 
 
@@ -117,4 +119,24 @@ public class TaskManageDialog extends JDialog {
         jcbRiskLevel.setSelectedItem(task.getTaskRistLevel());
 
     }
+
+    public void addController(ActionListener listener) {
+
+        jbtnUpdate.addActionListener(listener);
+        jbtnCancel.addActionListener(listener);
+    }
+
+    public HashMap<String, String> getAllInputValue() {
+        HashMap<String, String> values = new HashMap<String, String>();
+        values.put("task_name", jtxtTaskName.getText());
+        values.put("required_skill", jcbRequiredSkill.getSelectedItem().toString());
+        values.put("duration", jtxtDuration.getText());
+        values.put("risk_level", jcbRiskLevel.getSelectedItem().toString());
+        values.put("release_time", jtxtReleaseTime.getText());
+        values.put("status", jcbStatus.getSelectedItem().toString());
+        values.put("remaining_time", jtxtRemainingTime.getText());
+        return values;
+    }
+
+         
 }

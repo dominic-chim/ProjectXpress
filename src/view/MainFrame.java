@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.*;
 
-import algorithm.test.TestAlgorithm;
-
 import controllers.menu.SkillController;
 
 import view.project.*;
@@ -23,7 +21,6 @@ import view.menu.*;
  * 
  * this class also holds references to tabs project, staff and statistical report(maybe not useful)
  * 
- * @author Bob
  * 
  */
 public class MainFrame extends JFrame {
@@ -37,7 +34,7 @@ public class MainFrame extends JFrame {
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel = new StaffView(this);
-//	private StatisticPanel statisticPanel = new StatisticPanel();
+	private StatisticPanel statisticPanel = new StatisticPanel();
 	
 	SkillDialog skillDialog;
 	
@@ -50,11 +47,12 @@ public class MainFrame extends JFrame {
 		// add tabs to tabbed pane
 		mainTabbedPane.addTab("Project", projectPanel);
 		mainTabbedPane.addTab("Staff", staffPanel);
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		
 		setSize(600, 600);
+        setTitle("Project Express");
 		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
