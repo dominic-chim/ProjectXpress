@@ -3,7 +3,6 @@ package database.dataAccessObject;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
 import database.DatabaseRoot;
 
 public class StatisticsDao extends DatabaseRoot {
@@ -65,9 +64,45 @@ public class StatisticsDao extends DatabaseRoot {
 
 	}
 
-	/*public Object[][] allFromTest() {
+	public ArrayList<Object> skillStaffCount() {
+		ArrayList<Object> output = new ArrayList<Object>();
+		String sql = "SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL JOIN skill GROUP BY skill_name;";
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<Object>();
+				row.add(result.getString("skill_name"));
+				row.add(result.getInt("Total"));
+				output.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return output;
 
-		String sql = "SELECT * FROM test";
+	}
+
+	public ArrayList<Object> taskCountStaff() {
+		ArrayList<Object> output = new ArrayList<Object>();
+		String sql = "SELECT b.staff_name, COUNT(*) AS Total FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b GROUP BY b.staff_name;";
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<Object>();
+				row.add(result.getString("b.staff_name"));
+				row.add(result.getInt("Total"));
+				output.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return output;
+
+	}
+
+	public Object[][] allStats() {
+
+		String sql = "SELECT staff_id, b.staff_name, COUNT(DISTINCT(a.project_id)) AS projectTotal, COUNT(DISTINCT(c.skill_id)) AS skillTotal, staff_weekly_available_time FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN staff_skill_level as c GROUP BY b.staff_name;";
 
 		ArrayList<Object> data = new ArrayList<>();
 
@@ -75,11 +110,11 @@ public class StatisticsDao extends DatabaseRoot {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
 				ArrayList<Object> row = new ArrayList<>();
-				row.add(result.getString("name"));
-				row.add(result.getString("skill"));
-				row.add(result.getString("projectalo"));
-				row.add(result.getString("taskalo"));
-				row.add(result.getInt("hours"));
+				row.add(result.getString("staff_id"));
+				row.add(result.getString("b.staff_name"));
+				row.add(result.getString("projectTotal"));
+				row.add(result.getString("skillTotal"));
+				row.add(result.getInt("staff_weekly_available_time"));
 
 				data.add(row);
 			}
@@ -92,6 +127,7 @@ public class StatisticsDao extends DatabaseRoot {
 				.get(0)).size()];
 
 		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
 			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
 			for (int j = 0; j < s.size(); j++) {
@@ -99,6 +135,6 @@ public class StatisticsDao extends DatabaseRoot {
 			}
 		}
 		return rows;
-	}*/
+	}
 
 }
