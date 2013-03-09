@@ -1,4 +1,5 @@
 package view.statistic;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -12,9 +13,12 @@ public class StatisticPanel extends JPanel {
 	private JTabbedPane tabbedPane = new JTabbedPane();
 	private JPanel topPanel = new JPanel();
 
-	private StatisticsAvailableResources statAvailableR = new StatisticsAvailableResources("");
-	private StatisticsProductivity statProductivity = new StatisticsProductivity("");
-	private StatisticsResourceUsage statReseourceU = new StatisticsResourceUsage("");
+	private StatisticsAvailableResources statAvailableR = new StatisticsAvailableResources(
+			"");
+	private StatisticsProductivity statProductivity = new StatisticsProductivity(
+			"");
+	private StatisticsResourceUsage statReseourceU = new StatisticsResourceUsage(
+			"");
 
 	public StatisticPanel() {
 
@@ -26,7 +30,7 @@ public class StatisticPanel extends JPanel {
 		tabbedPane.addTab("Resource Usage", statReseourceU.panel);
 
 		topPanel.add(tabbedPane, BorderLayout.WEST);
-		//topPanel.setPreferredSize(new Dimension(900, 700));
+		// topPanel.setPreferredSize(new Dimension(900, 700));
 		add(topPanel);
 	}
 

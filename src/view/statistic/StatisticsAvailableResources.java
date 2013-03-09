@@ -19,6 +19,8 @@ import org.jfree.ui.ApplicationFrame;
 import database.dataAccessObject.StatisticsDao;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -30,7 +32,9 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -46,24 +50,22 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 	public JPanel panel = new JPanel(new GridLayout(2, 1));
 	public JPanel panel2 = new JPanel(new GridLayout(1, 2));
 	public JPanel panel3 = new JPanel();
-	final JTable table;
+	JTable table;
 	TitledBorder topBorder;
-	StatisticsDao stats = new StatisticsDao();
+	final StatisticsDao stats = new StatisticsDao();
 
-	CategoryDataset dataset = createDataset();
-	JFreeChart chart = createChart(dataset);
-	ChartPanel chartPanel = new ChartPanel(chart);
+	final CategoryDataset dataset = createDataset();
+	final JFreeChart chart = createChart(dataset);
+	final ChartPanel chartPanel = new ChartPanel(chart);
 
-	PieDataset piedata = pieDataset();
-	JFreeChart piechart = createChart(piedata);
-	ChartPanel piePanel = new ChartPanel(piechart);
+	final PieDataset piedata = pieDataset();
+	final JFreeChart piechart = createChart(piedata);
+	final ChartPanel piePanel = new ChartPanel(piechart);
 
 	public StatisticsAvailableResources(final String title) {
 		super(title);
-		Object rows[][] = null;//stats.allFromTest();
-		Object columns[] = { "Employee Name", "Specialization",
-				"Project Allocation", "Task Allocations",
-				"Remaining Working Hours" };
+		Object rows[][] = stats.allStats();
+		Object columns[] = { "Staff ID","Staff Name", "No. of Skill", "No. of Project Allocations", "Weekly Available Time" };
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
 
@@ -133,22 +135,33 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 
 	};
 
-	private static CategoryDataset createDataset() {
+	private CategoryDataset createDataset() {
 
 		String staffName = "Staff Name";
-
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		ArrayList<Object> statsData = stats.taskCountStaff();
+		for (int i = 0; i < statsData.size(); i++) {
+			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
+			dataset.addValue((Number) row.get(1), staffName, row.get(0)
+					.toString());
+		}
 
-//		dataset.addValue(1, staffName, "Samy Driss");
-//		dataset.addValue(4, staffName, "Ross Jarvis");
-//		dataset.addValue(3, staffName, "Bob Che");
-//		dataset.addValue(6, staffName, "David Lin");
-//		dataset.addValue(5, staffName, "Dominic Chim");
-//		dataset.addValue(8, staffName, "Jorge Rodrigo");
-//		dataset.addValue(2, staffName, "Mohammad Mesgarpour");
-
+		// SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL
+		// JOIN skill GROUP BY skill_name;
 		return dataset;
+	}
 
+	private PieDataset pieDataset() {
+		DefaultPieDataset dataset = new DefaultPieDataset();
+		ArrayList<Object> statsData = stats.skillStaffCount();
+		for (int i = 0; i < statsData.size(); i++) {
+			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
+			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
+		}
+
+		// SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL
+		// JOIN skill GROUP BY skill_name;
+		return dataset;
 	}
 
 	private static JFreeChart createChart(CategoryDataset dataset) {
@@ -168,45 +181,31 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 		CategoryAxis domainAxis = ((CategoryPlot) plot).getDomainAxis();
 		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
 
-		BarRenderer renderer = (BarRenderer) plot.getRenderer();
+		StackedBarRenderer renderer = new StackedBarRenderer(false);
 		renderer.setDrawBarOutline(false);
 		renderer.setBarPainter(new StandardBarPainter());
 		renderer.setSeriesPaint(0, new Color(78, 130, 190));
 		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 		renderer.setBaseItemLabelsVisible(true);
+		renderer.setShadowVisible(false);
 		chart.getCategoryPlot().setRenderer(renderer);
 
 		return chart;
 
 	}
 
-	private static PieDataset pieDataset() {
-		DefaultPieDataset defaultpiedataset = new DefaultPieDataset();
-//		defaultpiedataset.setValue("Developer", 43);
-//		defaultpiedataset.setValue("Tester", 50);
-//		defaultpiedataset.setValue("Editor", 27);
-//		defaultpiedataset.setValue("Analyst", 17);
-//		defaultpiedataset.setValue("Manager", 11);
-//		defaultpiedataset.setValue("Accountant", 19);
-		return defaultpiedataset;
-	}
-
 	private static JFreeChart createChart(PieDataset piedataset) {
 		JFreeChart jfreechart = ChartFactory.createPieChart(null, piedataset,
 				true, true, false);
 		PiePlot pieplot = (PiePlot) jfreechart.getPlot();
-		pieplot.setSectionPaint("Developer", new Color(244, 100, 76));
-		pieplot.setSectionPaint("Tester", new Color(152, 204, 0));
-		pieplot.setSectionPaint("Editor", new Color(204, 237, 146));
-		pieplot.setSectionPaint("Analyst", new Color(108, 164, 177));
-		pieplot.setSectionPaint("Manager", new Color(129, 0, 127));
-		pieplot.setSectionPaint("Accountant", new Color(4, 66, 107));
 		pieplot.setNoDataMessage("No Data Available");
 		pieplot.setLabelGenerator(new StandardPieSectionLabelGenerator(
 				"{0} {2}"));
 		pieplot.setLabelBackgroundPaint(new Color(220, 220, 220));
 		pieplot.setSimpleLabels(true);
 		pieplot.setInteriorGap(0.0D);
+		pieplot.setShadowXOffset(0);
+		pieplot.setShadowYOffset(0);
 		return jfreechart;
 	}
 
