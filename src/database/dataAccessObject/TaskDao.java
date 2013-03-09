@@ -116,7 +116,7 @@ public class TaskDao extends DatabaseRoot {
                 "task_remaining_time=%d WHERE task_id=%d AND project_id=%d",
                 task.getTaskName(),
                 task.getTaskRequiredSkill(),
-                task.getTaskDuration(),
+                task.getTaskOriginalDuration(),
                 task.getTaskRistLevel(),
                 task.getTaskReleaseTime().getDateTime(),
                 task.getTaskStatus(),
