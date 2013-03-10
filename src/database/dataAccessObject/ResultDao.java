@@ -86,6 +86,41 @@ public class ResultDao extends DatabaseRoot {
         }
     }
 
+    public ArrayList<Integer> getAllStaffInCurrentVersion() {
+        ArrayList<Integer> staffIds = new ArrayList<Integer>();
+
+        String sql = "SELECT DISTINCT staff_id FROM scheduling_result WHERE version=" + getCurrentResultVersion();
+        try {
+            ResultSet rset = connection.createStatement().executeQuery(sql);
+            while(rset.next()) {
+                staffIds.add(rset.getInt("staff_id"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return staffIds;
+    }
+
+
+    public ArrayList<Integer> getAllProjectInCurrentVersion() {
+        ArrayList<Integer> projectIds = new ArrayList<Integer>();
+
+        String sql = "SELECT DISTINCT project_id FROM scheduling_result WHERE version=" + getCurrentResultVersion();
+        try {
+            ResultSet rset = connection.createStatement().executeQuery(sql);
+            while(rset.next()) {
+                projectIds.add(rset.getInt("project_id"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return projectIds;
+    }
+
     private int getCurrentResultVersion() {
         String sql = "SELECT max(version) AS current_version FROM scheduling_result";
         try {
@@ -103,7 +138,6 @@ public class ResultDao extends DatabaseRoot {
         return 0;
     }
     
-
 
     
 

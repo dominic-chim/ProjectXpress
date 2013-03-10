@@ -7,10 +7,7 @@ import java.util.HashMap;
 
 import data.Context;
 import data.dataObject.*;
-import database.dataAccessObject.ProjectDao;
-import database.dataAccessObject.RiskDao;
-import database.dataAccessObject.SkillDao;
-import database.dataAccessObject.TaskDao;
+import database.dataAccessObject.*;
 
 import util.DateTime;
 import view.MainFrame;

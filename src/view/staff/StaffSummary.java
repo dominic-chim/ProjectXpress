@@ -32,6 +32,7 @@ public class StaffSummary extends JPanel {
 
 	public StaffSummary() {
 
+        // TODO get projectStartDate
 		DateTime projectStartDate = new DateTime("2013-02-01 09:00:00");
 		this.currentDateTime = projectStartDate;
 
@@ -51,13 +52,17 @@ public class StaffSummary extends JPanel {
 		add(blankLabel = new JLabel(""), gbc);
 
 
-		HashMap<StaffDO, ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
+        // reading data from database and add them to show
+		HashMap<StaffDO, ArrayList<ResultDO>> dataToShow = new HashMap<StaffDO, ArrayList<ResultDO>>();
 		ResultDao resultDB = new ResultDao();
 		StaffDao staffDB = new StaffDao();
-		test.put(staffDB.getStaffById(1), resultDB.getResultByStaff(1));
-		// System.out.println(resultDB.getResultByStaff(1));
-		 test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
-		addData(test, new DateTime(2013, 2, 1, 9, 0, 0));
+
+        ArrayList<Integer> staffIds = resultDB.getAllStaffInCurrentVersion();
+        for(int staffId : staffIds) {
+            dataToShow.put(staffDB.getStaffById(staffId), resultDB.getResultByStaff(staffId));
+        }
+
+		addData(dataToShow, new DateTime(2013, 2, 1, 9, 0, 0));
 
 		setVisible(true);
 
@@ -180,8 +185,7 @@ public class StaffSummary extends JPanel {
 				System.out.println("Duration: " + duration);
 
 				
-				add(lblTaskName = new JLabel(Integer.toString(taskDo
-						.getTaskId()), JLabel.HORIZONTAL), gbc);
+				add(lblTaskName = new JLabel(taskDo.getTaskName(), JLabel.HORIZONTAL), gbc);
 				lblTaskName.setBorder(BorderFactory
 						.createLineBorder(Color.BLACK));
 
