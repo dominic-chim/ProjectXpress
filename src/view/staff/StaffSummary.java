@@ -50,7 +50,7 @@ public class StaffSummary extends JPanel {
 		gbc.gridy = 1;
 		add(blankLabel = new JLabel(""), gbc);
 
-<<<<<<< .mine
+
 		HashMap<StaffDO, ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
 		ResultDao resultDB = new ResultDao();
 		StaffDao staffDB = new StaffDao();
@@ -97,14 +97,13 @@ public class StaffSummary extends JPanel {
 
 	}
 
-<<<<<<< .mine
+
 	public void addData(HashMap<StaffDO, ArrayList<ResultDO>> staffAllocProjects,
 			DateTime projectStartDate) {
 
 		int xPos = 0;
 		JLabel lblBlank;
 		JLabel lblTaskName;
-<<<<<<< .mine
 				
 		for (StaffDO staff : staffAllocProjects.keySet()) {
 
@@ -121,7 +120,6 @@ public class StaffSummary extends JPanel {
 			gbc.gridwidth = 8;
 
 			add(staffName, gbc);
-<<<<<<< .mine
 
 			xPos += 8;
 
@@ -132,7 +130,6 @@ public class StaffSummary extends JPanel {
 			// 0);
 
 			DateTime currentTime = projectStartDate;
-<<<<<<< .mine
 			// DateTime currentTime = listOfTasks.get(0).getStartDateTime();
 
 			System.out.println("Task Size: " + listOfTasks.size());
@@ -141,7 +138,6 @@ public class StaffSummary extends JPanel {
 
 
 				TaskDO taskDo = task.getTaskDO();
-<<<<<<< .mine
 
 				while(currentDateTime.before(task.getEndDateTime())) {
 					System.out.println(currentDateTime.getDateTime());
@@ -151,7 +147,6 @@ public class StaffSummary extends JPanel {
 				}
 
 				
-<<<<<<< .mine
 				System.out.println(currentDateTime.getDateTime());
 
 				System.out.println(yPos);
@@ -174,14 +169,12 @@ public class StaffSummary extends JPanel {
 					xPos += blankLength;
 					gbc.gridx = xPos;
 				}
-<<<<<<< .mine
 
 				int duration = DateTime.duration(task.getStartDateTime(),
 						task.getEndDateTime());
 
 				gbc.gridwidth = duration;
 
-<<<<<<< .mine
 				
 				System.out.println("Gridx: " + gbc.gridx);
 				System.out.println("Duration: " + duration);
@@ -197,7 +190,6 @@ public class StaffSummary extends JPanel {
 				gbc.gridx = xPos;
 
 				currentTime = task.getEndDateTime();
-<<<<<<< .mine
 			}		
 			
 			if(currentTime.before(currentDateTime)) {
