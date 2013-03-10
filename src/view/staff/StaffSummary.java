@@ -50,12 +50,13 @@ public class StaffSummary extends JPanel {
 		gbc.gridy = 1;
 		add(blankLabel = new JLabel(""), gbc);
 
+<<<<<<< .mine
 		HashMap<StaffDO, ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
 		ResultDao resultDB = new ResultDao();
 		StaffDao staffDB = new StaffDao();
-		test.put(staffDB.getStaffById(3), resultDB.getResultByStaff(3));
+		test.put(staffDB.getStaffById(1), resultDB.getResultByStaff(1));
 		// System.out.println(resultDB.getResultByStaff(1));
-		// test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
+		 test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
 		addData(test, new DateTime(2013, 2, 1, 9, 0, 0));
 
 		setVisible(true);
@@ -96,22 +97,20 @@ public class StaffSummary extends JPanel {
 
 	}
 
-	// HashMap arg = HashMap< Staff Objects for the staffName(or just pass
-	// staffName), HashMap< Project Name, Duration>>
-	// Could change this to some sort of Result object which contains all this
-	// info
-	public void addData(
-			HashMap<StaffDO, ArrayList<ResultDO>> staffAllocProjects,
+<<<<<<< .mine
+	public void addData(HashMap<StaffDO, ArrayList<ResultDO>> staffAllocProjects,
 			DateTime projectStartDate) {
 
 		int xPos = 0;
 		JLabel lblBlank;
 		JLabel lblTaskName;
-
+<<<<<<< .mine
+				
 		for (StaffDO staff : staffAllocProjects.keySet()) {
 
 			JLabel staffName = new JLabel(staff.getStaffName(),
 					JLabel.HORIZONTAL);
+
 			staffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 			// In Order
@@ -122,8 +121,10 @@ public class StaffSummary extends JPanel {
 			gbc.gridwidth = 8;
 
 			add(staffName, gbc);
+<<<<<<< .mine
 
-			xPos += 5;
+			xPos += 8;
+
 			gbc.gridx = xPos;
 
 			// Change to Real Project Starting Date
@@ -131,21 +132,41 @@ public class StaffSummary extends JPanel {
 			// 0);
 
 			DateTime currentTime = projectStartDate;
+<<<<<<< .mine
 			// DateTime currentTime = listOfTasks.get(0).getStartDateTime();
 
+			System.out.println("Task Size: " + listOfTasks.size());
+			
 			for (ResultDO task : listOfTasks) {
 
+
 				TaskDO taskDo = task.getTaskDO();
+<<<<<<< .mine
 
 				while(currentDateTime.before(task.getEndDateTime())) {
+					System.out.println(currentDateTime.getDateTime());
+					System.out.println(task.getEndDateTime().getDateTime());
+					
 					addDay();
 				}
+
 				
+<<<<<<< .mine
+				System.out.println(currentDateTime.getDateTime());
+
+				System.out.println(yPos);
 				gbc.gridy = yPos;
+				gbc.gridx = xPos;
 								
+				System.out.println(currentTime.getDateTime());
+				System.out.println(task.getStartDateTime().getDateTime());
+
+				
 				if (currentTime.before(task.getStartDateTime())) {
+					System.out.println("CREATING BLANK");
 					int blankLength = DateTime.duration(currentTime,
 							task.getStartDateTime());
+
 					gbc.gridwidth = blankLength;
 					add(lblBlank = new JLabel(""), gbc);
 					lblBlank.setBorder(BorderFactory
@@ -153,22 +174,44 @@ public class StaffSummary extends JPanel {
 					xPos += blankLength;
 					gbc.gridx = xPos;
 				}
+<<<<<<< .mine
 
 				int duration = DateTime.duration(task.getStartDateTime(),
 						task.getEndDateTime());
 
 				gbc.gridwidth = duration;
+
+<<<<<<< .mine
+				
+				System.out.println("Gridx: " + gbc.gridx);
+				System.out.println("Duration: " + duration);
+
+				
 				add(lblTaskName = new JLabel(Integer.toString(taskDo
 						.getTaskId()), JLabel.HORIZONTAL), gbc);
 				lblTaskName.setBorder(BorderFactory
 						.createLineBorder(Color.BLACK));
+
 				xPos += duration;
 
 				gbc.gridx = xPos;
 
 				currentTime = task.getEndDateTime();
-			}			
+<<<<<<< .mine
+			}		
+			
+			if(currentTime.before(currentDateTime)) {
+				
+				int blankLength =  DateTime.duration(currentTime, currentDateTime);
+				gbc.gridwidth = blankLength;
+				add(lblBlank = new JLabel(""), gbc);
+				lblBlank.setBorder(BorderFactory
+						.createLineBorder(Color.BLACK));
+				
+				
+			}
 			xPos = 0;			
+
 		}
 	}
 
