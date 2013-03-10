@@ -14,295 +14,255 @@ import javax.swing.JPanel;
 import util.DateTime;
 import data.dataObject.ProjectDO;
 import data.dataObject.ResultDO;
-import data.dataObject.StaffDO;
-import data.dataObject.TaskDO;
 import database.dataAccessObject.ProjectDao;
 import database.dataAccessObject.ResultDao;
 
 public class ProjectSummary extends JPanel {
 
-    private GridBagConstraints gbc = new GridBagConstraints();
-    private int yPos = 0;
-
-    // TODO add error checks if task start date is greater than time scale set
-    // on table
-
-    public ProjectSummary() {
-
-        setLayout(new GridBagLayout());
-
-        new JLabel("");
-        JLabel[][] days;
-
-        JLabel lblWeekOne = new JLabel("Week One", JLabel.HORIZONTAL);
-        lblWeekOne.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        JLabel lblWeekTwo = new JLabel("Week Two", JLabel.HORIZONTAL);
-        lblWeekTwo.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        JLabel lblWeekThree = new JLabel("Week Three", JLabel.HORIZONTAL);
-        lblWeekThree.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        JLabel lblWeekFour = new JLabel("Week Four", JLabel.HORIZONTAL);
-        lblWeekFour.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-        JLabel lblD1 = new JLabel();
-        JLabel lblD2 = new JLabel();
-        JLabel lblD3 = new JLabel();
-        JLabel lblD4 = new JLabel();
-        JLabel lblD5 = new JLabel();
-
-        // Add to panel
-
-        gbc.gridx = 0;
-        gbc.gridy = yPos;
-        gbc.gridwidth = 40;
-        gbc.ipadx = 10;
-        gbc.ipady = 10;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        add(new JLabel(""), gbc);
-        gbc.gridx = 5;
-        lblWeekOne.setBackground(Color.white);
-        add(lblWeekOne, gbc);
-        gbc.gridx = 45;
-        add(lblWeekTwo, gbc);
-        lblWeekTwo.setBackground(Color.white);
-        gbc.gridx = 85;
-        lblWeekThree.setBackground(Color.white);
-        add(lblWeekThree, gbc);
-        gbc.gridx = 125;
-        lblWeekFour.setBackground(Color.white);
-        add(lblWeekFour, gbc);
-
-        gbc.gridy = ++yPos;
-        gbc.gridx = 0;
-        add(new JLabel(""), gbc);
-        gbc.gridwidth = 8;
-
-        // constraints
-        int col = 160 + 12; // (5*8)*4 = 4 weeks + 12 offset
-        int row = 2; // initial project
-
-        // some function to get amount of projects by id this wioudl be used for
-        // rows
-
-        JLabel DayLbl[] = new JLabel[5];
-
-        for (int i = 0; i < 4; i++) {
-            gbc.gridx = 5 + (40 * i);
-            add(lblD1 = new JLabel("D1", JLabel.HORIZONTAL), gbc);
-            gbc.gridx = 13 + (40 * i);
-            add(lblD2 = new JLabel("D2", JLabel.HORIZONTAL), gbc);
-            gbc.gridx = 21 + (40 * i);
-            add(lblD3 = new JLabel("D3", JLabel.HORIZONTAL), gbc);
-            gbc.gridx = 29 + (40 * i);
-            add(lblD4 = new JLabel("D4", JLabel.HORIZONTAL), gbc);
-            gbc.gridx = 37 + (40 * i);
-            add(lblD5 = new JLabel("D5", JLabel.HORIZONTAL), gbc);
-
-            DayLbl[0] = lblD1;
-            DayLbl[1] = lblD2;
-            DayLbl[2] = lblD3;
-            DayLbl[3] = lblD4;
-            DayLbl[4] = lblD5;
-
-            for (int x = 0; x < 5; x++) {
-                DayLbl[x]
-                        .setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                DayLbl[x].setOpaque(true);
-                DayLbl[x].setBackground(Color.white);
-            }
-        }
-
-        gbc.gridy = ++yPos;
-        gbc.gridx = 0;
-        add(new JLabel(""), gbc);
-        gbc.gridwidth = 1;
-
-        JLabel hours[] = new JLabel[8];
-
-        JLabel lblH1, lblH2, lblH3, lblH4, lblH5, lblH6, lblH7, lblH8 = new JLabel();
-        days = new JLabel[row][col];
+	private GridBagConstraints gbc = new GridBagConstraints();
+	private int yPos = 1;
 
-        for (int j = 0; j < days.length; j++) {
-            for (int i = 0; i < 20; i++) {
+	// TODO add error checks if task start date is greater than time scale set
+	// on table
 
-                gbc.gridx = 5 + (8 * i);
-                gbc.gridy = j + 2;
-                add(lblH1 = new JLabel("9", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH1;
+	int dayXPos = 8;
+	DateTime currentDateTime;
+	JLabel lblDay;
 
-                gbc.gridx = 6 + (8 * i);
-                add(lblH2 = new JLabel("10", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH2;
+	public ProjectSummary() {
 
-                gbc.gridx = 7 + (8 * i);
-                add(lblH3 = new JLabel("11", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH3;
+		DateTime projectStartDate = new DateTime("2013-02-01 09:00:00");
+		this.currentDateTime = projectStartDate;
 
-                gbc.gridx = 8 + (8 * i);
-                add(lblH4 = new JLabel("12", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH4;
+		setLayout(new GridBagLayout());
 
-                gbc.gridx = 9 + (8 * i);
-                add(lblH5 = new JLabel("13", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH5;
+		// Labels
+		JLabel blankLabel;
 
-                gbc.gridx = 10 + (8 * i);
-                add(lblH6 = new JLabel("14", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH6;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.ipadx = 10;
+		gbc.ipady = 10;
+		gbc.gridwidth = 8;
+		gbc.fill = GridBagConstraints.BOTH;
+		add(blankLabel = new JLabel(""), gbc);
+		gbc.gridy = 1;
+		add(blankLabel = new JLabel(""), gbc);
 
-                gbc.gridx = 11 + (8 * i);
-                add(lblH7 = new JLabel("15", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH7;
+		HashMap<ProjectDO, ArrayList<ResultDO>> dataToShow = new HashMap<ProjectDO, ArrayList<ResultDO>>();
+		ResultDao resultDB = new ResultDao();
+		ProjectDao projectDB = new ProjectDao();
 
-                gbc.gridx = 12 + (8 * i);
-                add(lblH8 = new JLabel("16", JLabel.HORIZONTAL), gbc);
-                days[j][gbc.gridx] = lblH8;
+		ArrayList<Integer> projectIds = resultDB
+				.getAllProjectInCurrentVersion();
 
-                hours[0] = lblH1;
-                hours[1] = lblH2;
-                hours[2] = lblH3;
-                hours[3] = lblH4;
-                hours[4] = lblH5;
-                hours[5] = lblH6;
-                hours[6] = lblH7;
-                hours[7] = lblH8;
+		for (int projectId : projectIds) {
+			dataToShow.put(projectDB.getProjectById(projectId),
+					resultDB.getResultByProject(projectId));
+		}
 
-                for (int x = 0; x < 8; x++) {
-                    hours[x].setBorder(BorderFactory
-                            .createLineBorder(Color.BLACK));
-                    hours[x].setOpaque(true);
-                    hours[x].setBackground(Color.white);
-                }
+		addData(dataToShow, new DateTime(2013, 2, 1, 9, 0, 0));
 
-            }
-        }
+		setVisible(true);
 
-        testData();
+	}
 
-        setVisible(true);
+	public void addDay() {
 
-    }
+		// Add Day
+		gbc.gridy = 0;
+		gbc.gridwidth = 8;
+		gbc.gridx = dayXPos;
 
-    // Remove when finished Testing
-    public void testData() {
+		lblDay = new JLabel(currentDateTime.getDateTime(), JLabel.HORIZONTAL);
+		lblDay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		add(lblDay, gbc);
 
-        // / ||||||||||||||| Testing ||||||||||| \\\
+		// Add Hours of Day
 
-        /*
-        // Create StaffDO obj to Test
-        HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
-        skillLevels.put(1, 5.0);
-        HashMap<DateTime, DateTime> holidayDates = new HashMap<DateTime, DateTime>();
+		int hourPos = dayXPos;
+		gbc.gridx = hourPos;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		JLabel lblHours;
 
-        StaffDO staffOne = new StaffDO(1, "Ross", 40, skillLevels, holidayDates);
-        new StaffDO(2, "Bob", 40, skillLevels, holidayDates);
+		for (int i = 9; i < 17; i++) {
 
-        // Create ArrayList of ResultDO to test
+			lblHours = new JLabel(Integer.toString(i), JLabel.HORIZONTAL);
+			lblHours.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			gbc.gridx = hourPos++;
 
-        DateTime dateTime = new DateTime(2013, 04, 05, 10, 30, 0);
+			add(lblHours, gbc);
 
-        ArrayList<Integer> requiredTskIds = new ArrayList<Integer>();
-        requiredTskIds.add(1);
-        requiredTskIds.add(2);
+		}
 
-        DateTime dateStart1 = new DateTime(2013, 04, 05, 10, 30, 0);
-        DateTime dateEnd1 = new DateTime(2013, 04, 05, 13, 30, 0);
+		dayXPos += 8;
+		currentDateTime = DateTime.nextDay(currentDateTime);
 
-        DateTime dateStart2 = new DateTime(2013, 04, 06, 14, 30, 0);
-        DateTime dateEnd2 = new DateTime(2013, 04, 06, 17, 30, 0);
+	}
 
-        TaskDO taskOne = new TaskDO(1, 1, "Task One", 1, 3, 3, "RiskLevel",
-                dateTime, "Task Status", requiredTskIds);
-        ResultDO resultOne = new ResultDO(1, taskOne, staffOne, dateStart1,
-                dateEnd1);
+	public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults,
+			DateTime projectStartDate) {
 
-        TaskDO taskTwo = new TaskDO(1, 2, "Task Two", 1, 3, 3, "RiskLevel",
-                dateTime, "Task Status", requiredTskIds);
-        ResultDO resultTwo = new ResultDO(2, taskTwo, staffOne, dateStart2,
-                dateEnd2);
+		HashMap<DateTime, Integer> resources;
+		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
 
-        ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
-        tasks.add(taskOne);
-        tasks.add(taskTwo);
+		for (ProjectDO project : projectResults.keySet()) {
 
-        ArrayList<ResultDO> listOfResultsTest1 = new ArrayList<ResultDO>();
-        listOfResultsTest1.add(resultOne);
-        listOfResultsTest1.add(resultTwo);
+			resources = new HashMap<DateTime, Integer>();
 
-        ArrayList<ResultDO> listOfResultsTest2 = new ArrayList<ResultDO>();
-        listOfResultsTest2.add(resultOne);
-        listOfResultsTest2.add(resultTwo);
+			for (ResultDO result : projectResults.get(project)) {
 
-        ProjectDO Project1 = new ProjectDO(1, "A", dateEnd1, 0, "Started",
-                tasks);
-        ProjectDO Project2 = new ProjectDO(2, "B", dateEnd2, 0, "Not Started",
-                tasks);
+				DateTime time = result.getStartDateTime();
 
-        HashMap<ProjectDO, ArrayList<ResultDO>> test = new HashMap<ProjectDO, ArrayList<ResultDO>>();
-        test.put(Project1, listOfResultsTest1);
-        test.put(Project2, listOfResultsTest2);
+				for (int i = DateTime.duration(result.getStartDateTime(),
+						result.getEndDateTime()); i > 0; i--) {
 
-        */
-        HashMap<ProjectDO, ArrayList<ResultDO>> dataToShow = new HashMap<ProjectDO, ArrayList<ResultDO>>();
-        ResultDao resultDB = new ResultDao();
-        ProjectDao projectDB = new ProjectDao();
+					boolean exists = false;
+					for (DateTime dt : resources.keySet()) {
 
-        ArrayList<Integer> projectIds = resultDB.getAllProjectInCurrentVersion();
+						if (time.getDateTime().equals(dt.getDateTime())) {
+							exists = true;
+							resources.put(dt, resources.get(dt) + 1);
 
-        for(int projectId : projectIds) {
-            dataToShow.put(projectDB.getProjectById(projectId), resultDB.getResultByProject(projectId));
-        }
+							break;
+						}
+					}
 
+					if (!exists) {
+						resources.put(time, 1);
+					}
 
-        addData(dataToShow, new DateTime(2013, 2, 1, 9, 0, 0));
+					time = DateTime.nextDay(time);
 
+				}
 
+			}
+			projectResources.put(project, resources);
+		}
 
-        // / |||||||||| End of Testing ||||||||||| \\\\
 
-    }
+		int xPos = 0;
+		JLabel lblBlank;
+		JLabel lblStaffNo;
+		
 
-    
-        
-        
-    // HashMap arg = HashMap< Staff Objects for the staffName(or just pass
-    // staffName), HashMap< Project Name, Duration>>
-    // Could change this to some sort of Result object which contains all this
-    // info
-    public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> ProjectResults, DateTime projectStartDate) {
+		for (ProjectDO projects : projectResources.keySet()) {
 
-        int xPos = 0;
-        for (ProjectDO project : ProjectResults.keySet()) {
+			JLabel projectName = new JLabel(projects.getProjectName(),
+					JLabel.HORIZONTAL);
 
-            JLabel projectName = new JLabel(project.getProjectName(),
-                    JLabel.HORIZONTAL);
-            projectName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			projectName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-            ProjectResults.get(project);
+			// In Order
+			HashMap<DateTime, Integer> listOfResources = projectResources
+					.get(projects);
 
-            gbc.gridy = yPos++;
-            gbc.gridx = xPos;
-            gbc.gridwidth = 5;
+			gbc.gridy = ++yPos;
+			gbc.gridx = xPos;
+			gbc.gridwidth = 8;
 
-            add(projectName, gbc);
+			add(projectName, gbc);
 
-            xPos = 0;
+			xPos += 8;
 
-        }
+			gbc.gridx = xPos;
 
-        xPos += 5;
-        gbc.gridx = xPos;
+			DateTime currentTime = projectStartDate;
 
-        // Change to Real Project Starting Date
-        //DateTime projectStartDate = new DateTime(2013, 04, 05, 10, 30, 0);
+			ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
+			HashMap<DateTime, Integer> minDate;
 
-    }
+			for (int i = listOfResources.size(); i > 0; i--) {
+				DateTime min = null;
+				for (DateTime t : listOfResources.keySet()) {
+					min = t;
+					break;
+				}
 
-    public void addController(ActionListener controller) {
+				int noResources = 0;
+				for (DateTime time : listOfResources.keySet()) {
+					if (time.before(min)) {
+						min = time;
+					}
+				}
 
-    }
+				for (DateTime time : listOfResources.keySet()) {
+
+					if (min.getDateTime().equals(time.getDateTime())) {
+
+						noResources = listOfResources.get(time);
+						listOfResources.remove(time);
+						break;
+					}
+				}
+
+				System.out.println("Min " + min.getDateTime() + " "
+						+ noResources);
+
+				minDate = new HashMap<DateTime, Integer>();
+				minDate.put(min, noResources);
+				orderedDateTime.add(minDate);
+
+			}
+
+			for (HashMap<DateTime, Integer> dateAndResource : orderedDateTime) {
+
+				for (DateTime time : dateAndResource.keySet()) {
+
+					System.out.println("CurrentDate " + currentDateTime.getDateTime() + " Time : " + time.getDateTime());
+					while (currentDateTime.before(DateTime.hourLater(time, 1))) {	
+						System.out.println("Inside");
+						addDay();
+					}
+					gbc.gridy = yPos;
+					gbc.gridx = xPos;
+
+					if (currentTime.before(time)) {
+						int blankLength = DateTime.duration(currentTime, time);
+
+						gbc.gridwidth = blankLength;
+						add(lblBlank = new JLabel(""), gbc);
+						lblBlank.setBorder(BorderFactory
+								.createLineBorder(Color.BLACK));
+						xPos += blankLength;
+						gbc.gridx = xPos;
+					}
+
+					gbc.gridwidth = 1;
+
+					add(lblStaffNo = new JLabel(
+							Integer.toString(dateAndResource.get(time)),
+							JLabel.HORIZONTAL), gbc);
+					lblStaffNo.setBorder(BorderFactory
+							.createLineBorder(Color.BLACK));
+
+					xPos += 1;
+
+					gbc.gridx = xPos;
+
+					currentTime = DateTime.hourLater(time, 1);
+				}
+
+				if (currentTime.before(currentDateTime)) {
+
+					int blankLength = DateTime.duration(currentTime,
+							currentDateTime);
+					gbc.gridwidth = blankLength;
+					add(lblBlank = new JLabel(""), gbc);
+					lblBlank.setBorder(BorderFactory
+							.createLineBorder(Color.BLACK));
+
+				}
+			}
+			
+			xPos = 0;
+
+		}
+
+	}
+
+	public void addController(ActionListener controller) {
+
+	}
 }
-
