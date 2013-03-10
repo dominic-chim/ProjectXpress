@@ -1,17 +1,10 @@
 package view.statistic;
-
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.RowSorterEvent;
-import javax.swing.event.RowSorterListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -20,7 +13,6 @@ import database.dataAccessObject.StatisticsDao;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -31,10 +23,8 @@ import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -42,14 +32,15 @@ import org.jfree.data.general.PieDataset;
 
 public class StatisticsAvailableResources extends ApplicationFrame {
 
-	/**
+	/** 
 	 * 
 	 */
 
 	private static final long serialVersionUID = 1L;
-	public JPanel panel = new JPanel(new GridLayout(2, 1));
-	public JPanel panel2 = new JPanel(new GridLayout(1, 2));
+	public JPanel panel = new JPanel(new GridLayout(1, 2));
+	public JPanel panel2 = new JPanel(new GridLayout(2, 1));
 	public JPanel panel3 = new JPanel();
+	public JPanel panel4 = new JPanel();
 	JTable table;
 	TitledBorder topBorder;
 	final StatisticsDao stats = new StatisticsDao();
@@ -64,7 +55,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 
 	public StatisticsAvailableResources(final String title) {
 		super(title);
-		Object rows[][] = stats.allStats();
+		Object rows[][] = stats.availableStats();
 		Object columns[] = { "Staff ID","Staff Name", "No. of Skill", "No. of Project Allocations", "Weekly Available Time" };
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
@@ -83,55 +74,24 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 				.createTitledBorder("Staff Statistics and Availability");
 		topBorder.setTitlePosition(TitledBorder.TOP);
 		spTable.setBorder(topBorder);
-		topBorder = BorderFactory.createTitledBorder("Task Count By Staff");
+		topBorder = BorderFactory.createTitledBorder("Weekly Available Time By Staff");
 		chartPanel.setBorder(topBorder);
-		topBorder = BorderFactory.createTitledBorder("Staff Count by Skill");
+		topBorder = BorderFactory.createTitledBorder("Staff Distribution By Skill");
 		piePanel.setBorder(topBorder);
 
-		spTable.setPreferredSize(new Dimension(850, 300));
-		chartPanel.setPreferredSize(new Dimension(200, 300));
-		piePanel.setPreferredSize(new Dimension(200, 300));
+		spTable.setPreferredSize(new Dimension(10, 10));
+		piePanel.setPreferredSize(new Dimension(250, 250));
+		chartPanel.setPreferredSize(new Dimension(400, 560));
 
-		panel3.add(spTable, BorderLayout.WEST);
-		panel2.add(chartPanel);
+		panel3.add(chartPanel);
+		panel2.add(spTable);
 		panel2.add(piePanel);
-		panel.add(panel3);
 		panel.add(panel2);
+		panel.add(panel3);
 
 		table.getColumnModel().getColumn(0).setMinWidth(90);
 		table.getColumnModel().getColumn(4).setMinWidth(90);
 		table.setRowSorter(sorter);
-
-		final AbstractTableModel model2 = new AbstractTableModel() {
-
-			private static final long serialVersionUID = 1L;
-
-			public int getColumnCount() {
-				return 1;
-			}
-
-			public Object getValueAt(int row, int column) {
-				return table.convertRowIndexToModel(row);
-			}
-
-			public int getRowCount() {
-				return table.getRowCount();
-			}
-		};
-
-		table.getRowSorter().addRowSorterListener(new RowSorterListener() {
-
-			public void sorterChanged(RowSorterEvent e) {
-				model2.fireTableDataChanged();
-			}
-		});
-		table.getSelectionModel().addListSelectionListener(
-				new ListSelectionListener() {
-
-					public void valueChanged(ListSelectionEvent e) {
-						model2.fireTableRowsUpdated(0, model2.getRowCount() - 1);
-					}
-				});
 
 	};
 
@@ -139,7 +99,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 
 		String staffName = "Staff Name";
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		ArrayList<Object> statsData = stats.taskCountStaff();
+		ArrayList<Object> statsData = stats.timeAvailablitlyStaff();
 		for (int i = 0; i < statsData.size(); i++) {
 			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
 			dataset.addValue((Number) row.get(1), staffName, row.get(0)
