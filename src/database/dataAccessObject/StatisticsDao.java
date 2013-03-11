@@ -99,19 +99,16 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
-	
-	
+
 	public ArrayList<Object> timeAvailablitlyStaff() {
 		ArrayList<Object> output = new ArrayList<Object>();
-		String sql = " SELECT staff_name, SUM(z.staff_weekly_available_time - m.SUM) AS timeLeft FROM (SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task AS d GROUP BY b.staff_name) AS m NATURAL JOIN staff AS z GROUP BY staff_name;";
-		//String sql = "SELECT staff_name, staff_weekly_available_time FROM staff;";
+		String sql = "SELECT staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, SUM(z.staff_weekly_available_time - m.SUM) AS staff_weekly_available_time FROM (SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task AS d GROUP BY b.staff_name) AS m NATURAL JOIN staff AS z GROUP BY staff_name) AS one UNION SELECT staff_id, staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time, count(staff_name) AS total FROM ((SELECT * FROM staff UNION (SELECT staff_id, staff_name, SUM(z.staff_weekly_available_time - m.SUM) AS staff_weekly_available_time FROM (SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task AS d GROUP BY b.staff_name) AS m NATURAL JOIN staff AS z GROUP BY staff_name)) AS b) GROUP BY staff_id HAVING total = 1) AS b) AS one;";
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
 				ArrayList<Object> row = new ArrayList<Object>();
 				row.add(result.getString("staff_name"));
-				//row.add(result.getInt("staff_weekly_available_time"));
-				row.add(result.getInt("timeLeft"));
+				row.add(result.getInt("staff_weekly_available_time"));
 				output.add(row);
 			}
 		} catch (Exception e) {
@@ -120,8 +117,7 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
-	
-	
+
 	public ArrayList<Object> staffCountProject() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		String sql = "SELECT project_name, COUNT(DISTINCT(staff_id)) AS Total FROM project NATURAL JOIN scheduling_result GROUP BY project_name;";
@@ -139,11 +135,10 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
-	
-	
+
 	public Object[][] availableStats() {
 
-		String sql = "SELECT staff_id, staff_name, skill_level, skill_name, staff_weekly_available_time FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN skill;";
+		String sql = "SELECT staff_id, staff_name, skill_level, skill_name FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN skill;";
 
 		ArrayList<Object> data = new ArrayList<>();
 
@@ -155,7 +150,6 @@ public class StatisticsDao extends DatabaseRoot {
 				row.add(result.getString("staff_name"));
 				row.add(result.getString("skill_level"));
 				row.add(result.getString("skill_name"));
-				row.add(result.getInt("staff_weekly_available_time"));
 
 				data.add(row);
 			}
@@ -177,9 +171,6 @@ public class StatisticsDao extends DatabaseRoot {
 		}
 		return rows;
 	}
-
-
-
 
 	public Object[][] allStats() {
 
