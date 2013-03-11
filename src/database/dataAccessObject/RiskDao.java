@@ -34,7 +34,7 @@ public class RiskDao extends DatabaseRoot{
     }
 
     public String[] getRiskNames() {
-        String sql = "SELECT task_risk_level FROM risk_level";
+        String sql = "SELECT task_risk_level FROM risk_level ORDER BY risk_percentage";
         ArrayList<String> riskNames = new ArrayList<String>();
         try {
             ResultSet result = db.executeQuery(sql);

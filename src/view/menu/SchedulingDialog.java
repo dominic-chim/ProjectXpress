@@ -12,14 +12,20 @@ import javax.swing.*;
 import util.DateTime;
 
 import data.dataObject.ProjectDO;
+import data.dataObject.StaffDO;
 
 public class SchedulingDialog extends JDialog {
 
     private JPanel jpnlTopContainer = new JPanel();
-    private JPanel jpnlCenterContainer = new JPanel();
     private JPanel jpnlBottomContainer = new JPanel();
 
+
+    private JPanel jpnlCenterLeft = new JPanel();
+    private JPanel jpnlCenterRight = new JPanel();
+    private JSplitPane jspCenterContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jpnlCenterLeft, jpnlCenterRight);
+
     private JLabel jlblStaringDate = new JLabel("Starting Date");
+    // TODO change it back
     //private JTextArea jtxtStartingDate = new JTextArea(DateTime.dataBaseDateFormat.format(new Date()));
     private JTextArea jtxtStartingDate = new JTextArea("2013-02-01 09:00:00");
 
@@ -27,6 +33,7 @@ public class SchedulingDialog extends JDialog {
     private JButton jbtnCancel = new JButton("Cancel");
 
     private ArrayList<JCheckBox> jcbxProjects = new ArrayList<JCheckBox>();
+    private ArrayList<JCheckBox> jcbxStaffs = new ArrayList<JCheckBox>();
 
 
     public SchedulingDialog(JFrame parent) {
@@ -53,7 +60,7 @@ public class SchedulingDialog extends JDialog {
         //jpnlCenterContainer.setPreferredSize(new Dimension(300, 50));
 
         add(jpnlTopContainer, BorderLayout.NORTH);
-        add(new JScrollPane(jpnlCenterContainer), BorderLayout.CENTER);
+        add(new JScrollPane(jspCenterContainer), BorderLayout.CENTER);
         add(jpnlBottomContainer, BorderLayout.SOUTH);
 
         // dialog settings
@@ -63,27 +70,38 @@ public class SchedulingDialog extends JDialog {
     }
 
 
-    public void initJcbxProjects(ArrayList<ProjectDO> projects) {
+    public void initJcbxProjectsAndStaffs(ArrayList<ProjectDO> projects, ArrayList<StaffDO> staffs) {
 
-        /*
-        int width = 300;
-        int height = projectNum * 20;
-        //this.setSize(width, height + 50);
-        // set size and layout 
-        */
+        // init projects
         int projectNum = projects.size();
         if(projectNum != 0)
-        	jpnlCenterContainer.setLayout(new GridLayout(projectNum, 0));
+            jpnlCenterLeft.setLayout(new GridLayout(projectNum, 0));
 
         for(ProjectDO project : projects) {
             JCheckBox jcbxProject = new JCheckBox(project.getProjectName());
             jcbxProject.setActionCommand("" + project.getProjectId());
             jcbxProject.setSelected(true);
-            jpnlCenterContainer.add(jcbxProject);
+            jpnlCenterLeft.add(jcbxProject);
             jcbxProjects.add(jcbxProject);
         }
+
+        // init staffs
+        int staffNum = staffs.size();
+        if(staffNum != 0) {
+            jpnlCenterRight.setLayout(new GridLayout(staffNum, 0));
+        }
+        for(StaffDO staff : staffs) {
+            JCheckBox jcbxStaff = new JCheckBox(staff.getStaffName());
+            jcbxStaff.setActionCommand("" + staff.getStaffId());
+            jcbxStaff.setSelected(true);
+            jpnlCenterRight.add(jcbxStaff);
+            jcbxStaffs.add(jcbxStaff);
+        }
+
+
         this.pack();
-        jpnlCenterContainer.updateUI();
+        jpnlCenterLeft.updateUI();
+        jpnlCenterRight.updateUI();
     }
 
     public void addControllers(ActionListener listener) {
@@ -91,12 +109,29 @@ public class SchedulingDialog extends JDialog {
         jbtnCancel.addActionListener(listener);
     }
 
+    /**
+     * get selected projects
+     */
     public ArrayList<Integer> getSelectedProjectIds() {
         ArrayList<Integer> ids = new ArrayList<Integer>();
 
         for(JCheckBox jcbxProject : jcbxProjects) {
             if(jcbxProject.isSelected())
                 ids.add(Integer.parseInt(jcbxProject.getActionCommand()));
+        }
+
+        return ids;
+    }
+    
+    /**
+     * get selected staffs
+     */
+    public ArrayList<Integer> getSelectedStaffIds() {
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+
+        for(JCheckBox jcbxStaff : jcbxStaffs) {
+            if(jcbxStaff.isSelected())
+                ids.add(Integer.parseInt(jcbxStaff.getActionCommand()));
         }
 
         return ids;

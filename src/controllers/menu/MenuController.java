@@ -39,21 +39,8 @@ public class MenuController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         String cmd = e.getActionCommand();
-        final JFileChooser jfc = new JFileChooser();
 
         switch (cmd) {
-        case "New":
-            // reset everything -- does meant current data is deleted
-            break;
-        case "Open":
-            // open file in w/e format we choose
-            break;
-        case "Save":
-            // save current data to a format
-            break;
-        case "Close":
-            System.exit(0);
-            break;
 
         case "Skills":
 
@@ -64,12 +51,13 @@ public class MenuController implements ActionListener {
             SchedulingDialog sdialog = view.addSchedulingDialog();
             sdialog.addControllers(new SchedulingController(sdialog));
             ProjectDao projectDB = new ProjectDao();
-            sdialog.initJcbxProjects(projectDB.getAllStartedProject());
+            StaffDao staffDB = new StaffDao();
+            sdialog.initJcbxProjectsAndStaffs(projectDB.getAllStartedProject(), staffDB.getAllStaff());
             sdialog.setVisible(true);
             break;
 
         default:
-            System.out.println("Invalid Option");
+            break;
         }
 
     }
@@ -123,7 +111,6 @@ public class MenuController implements ActionListener {
                         totalHour *= 2;
                     }
                 }
-
 
                 sdialog.dispose();
 
