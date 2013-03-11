@@ -25,8 +25,8 @@ public class MainMenuBar extends JMenuBar {
 		menuView.add(miViewSkill);
 
 		this.add(menuProject);
-		this.add(menuView);
-		this.add(menuSettings);
+		//this.add(menuView);
+		//this.add(menuSettings);
 	}
 	
 	public void addControllers(ActionListener controller) {

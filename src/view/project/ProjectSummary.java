@@ -61,6 +61,7 @@ public class ProjectSummary extends JPanel {
 					resultDB.getResultByProject(projectId));
 		}
 
+        // TODO read it from database
 		addData(dataToShow, new DateTime(2013, 2, 1, 9, 0, 0));
 
 		setVisible(true);
@@ -103,7 +104,7 @@ public class ProjectSummary extends JPanel {
 
 	public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults,
 			DateTime projectStartDate) {
-
+		
 		HashMap<DateTime, Integer> resources;
 		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
 
@@ -114,6 +115,7 @@ public class ProjectSummary extends JPanel {
 			for (ResultDO result : projectResults.get(project)) {
 
 				DateTime time = result.getStartDateTime();
+				
 
 				for (int i = DateTime.duration(result.getStartDateTime(),
 						result.getEndDateTime()); i > 0; i--) {
@@ -123,6 +125,7 @@ public class ProjectSummary extends JPanel {
 
 						if (time.getDateTime().equals(dt.getDateTime())) {
 							exists = true;
+							
 							resources.put(dt, resources.get(dt) + 1);
 
 							break;
@@ -130,10 +133,12 @@ public class ProjectSummary extends JPanel {
 					}
 
 					if (!exists) {
+						System.out.println("Time " + time.getDateTime());
+
 						resources.put(time, 1);
 					}
 
-					time = DateTime.nextDay(time);
+					time = DateTime.hourLater(time, 1);
 
 				}
 
@@ -158,6 +163,12 @@ public class ProjectSummary extends JPanel {
 			HashMap<DateTime, Integer> listOfResources = projectResources
 					.get(projects);
 
+			
+			for(DateTime dt :listOfResources.keySet()) {
+				
+				System.out.println("Test2: " + dt.getDateTime() + " " + listOfResources.get(dt));
+			}
+			
 			gbc.gridy = ++yPos;
 			gbc.gridx = xPos;
 			gbc.gridwidth = 8;
