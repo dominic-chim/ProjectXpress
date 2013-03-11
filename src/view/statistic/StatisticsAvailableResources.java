@@ -1,4 +1,5 @@
 package view.statistic;
+
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -56,7 +57,8 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 	public StatisticsAvailableResources(final String title) {
 		super(title);
 		Object rows[][] = stats.availableStats();
-		Object columns[] = { "Staff ID","Staff Name", "No. of Skill", "No. of Project Allocations", "Weekly Available Time" };
+		Object columns[] = { "Staff ID", "Staff Name", "Skill Lvl",
+				"Skill Name"};
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
 
@@ -71,12 +73,14 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 				table.getModel());
 		JScrollPane spTable = new JScrollPane(table);
 		topBorder = BorderFactory
-				.createTitledBorder("Staff Statistics and Availability");
+				.createTitledBorder("Staff Skills");
 		topBorder.setTitlePosition(TitledBorder.TOP);
 		spTable.setBorder(topBorder);
-		topBorder = BorderFactory.createTitledBorder("Weekly Available Time By Staff");
+		topBorder = BorderFactory
+				.createTitledBorder("Weekly Available Time By Staff");
 		chartPanel.setBorder(topBorder);
-		topBorder = BorderFactory.createTitledBorder("Staff Distribution By Skill");
+		topBorder = BorderFactory
+				.createTitledBorder("Staff Distribution By Skill");
 		piePanel.setBorder(topBorder);
 
 		spTable.setPreferredSize(new Dimension(10, 10));
@@ -89,8 +93,8 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 		panel.add(panel2);
 		panel.add(panel3);
 
-		table.getColumnModel().getColumn(0).setMinWidth(90);
-		table.getColumnModel().getColumn(4).setMinWidth(90);
+		table.getColumnModel().getColumn(0).setMaxWidth(50);
+		table.getColumnModel().getColumn(2).setMaxWidth(60);
 		table.setRowSorter(sorter);
 
 	};
