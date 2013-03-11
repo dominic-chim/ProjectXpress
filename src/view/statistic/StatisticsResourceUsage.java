@@ -73,8 +73,8 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		super(title);
 
 		Object rows[][] = stats.allStats();
-		Object columns[] = { "Staff ID", "Staff Name", "No. of Task Allocations",
-				"No. of Project Allocations", "Weekly Available Time" };
+		Object columns[] = { "Staff ID", "Staff Name", "No. of Project Allocations",
+				"No. of Skills" };
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
 
