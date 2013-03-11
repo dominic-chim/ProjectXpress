@@ -174,7 +174,7 @@ public class StatisticsDao extends DatabaseRoot {
 
 	public Object[][] allStats() {
 
-		String sql = "SELECT staff_id, b.staff_name, COUNT(DISTINCT(a.project_id)) AS projectTotal, COUNT(DISTINCT(c.skill_id)) AS skillTotal, staff_weekly_available_time FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN staff_skill_level as c GROUP BY b.staff_name;";
+		String sql = "SELECT staff_id, b.staff_name, COUNT(DISTINCT(a.project_id)) AS projectTotal, COUNT(DISTINCT(c.skill_id)) AS skillTotal FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN staff_skill_level as c GROUP BY b.staff_name;";
 
 		ArrayList<Object> data = new ArrayList<>();
 
@@ -186,8 +186,6 @@ public class StatisticsDao extends DatabaseRoot {
 				row.add(result.getString("b.staff_name"));
 				row.add(result.getString("projectTotal"));
 				row.add(result.getString("skillTotal"));
-				row.add(result.getInt("staff_weekly_available_time"));
-
 				data.add(row);
 			}
 		} catch (Exception e) {
