@@ -135,6 +135,25 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
+	
+	
+	public ArrayList<Object> usedData() {
+		ArrayList<Object> output = new ArrayList<Object>();
+		String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<Object>();
+				row.add(result.getString("staff_name"));
+				row.add(result.getInt("SUM"));
+				output.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return output;
+
+	}
 
 	public Object[][] availableStats() {
 
