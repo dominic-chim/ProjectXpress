@@ -85,10 +85,14 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		JScrollPane spTable = new JScrollPane(table);
 		final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(
 				table.getModel());
+		table.getColumnModel().getColumn(0).setMaxWidth(50);
+		table.getColumnModel().getColumn(0).setMaxWidth(80);
+		table.getColumnModel().getColumn(1).setMaxWidth(160);
+		table.getColumnModel().getColumn(3).setMaxWidth(120);
 		table.setRowSorter(sorter);
 
 		topBorder = BorderFactory
-				.createTitledBorder("Total Resource Usage Per Day");
+				.createTitledBorder("Staff Usage");
 		topBorder.setTitlePosition(TitledBorder.TOP);
 
 		spTable.setBorder(topBorder);
@@ -99,7 +103,8 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		piePanel.setBorder(topBorder);
 
 
-		usage.addTab("Staff Usage", taskPanel);
+		usage.addTab("Tasks Allocated By" +
+				" Staff", taskPanel);
 		usage.addTab("Time Usage For Tasks By Staff", usedPanel);
 
 
@@ -224,7 +229,7 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 
 		JFreeChart chart = ChartFactory.createBarChart(null,
 
-		"Staff Name", "Number of Tasks", dataset, PlotOrientation.VERTICAL,
+		"Staff Name", "Number of Hours Used", dataset, PlotOrientation.VERTICAL,
 				true, true, false);
 
 		CategoryPlot plot = chart.getCategoryPlot();

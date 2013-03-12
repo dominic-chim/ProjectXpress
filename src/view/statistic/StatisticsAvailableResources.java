@@ -132,7 +132,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 
 		JFreeChart chart = ChartFactory.createBarChart(null,
 
-		"Staff Name", "Number of Tasks", dataset, PlotOrientation.VERTICAL,
+		"Staff Name", "Number of Hours", dataset, PlotOrientation.VERTICAL,
 				true, true, false);
 
 		CategoryPlot plot = chart.getCategoryPlot();
