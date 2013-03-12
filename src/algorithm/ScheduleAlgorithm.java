@@ -65,17 +65,12 @@ public class ScheduleAlgorithm {
 
             HashMap<DateTime, DateTime> holidays = staff.getHolidays();
             for (DateTime holidayStartTime : holidays.keySet()) {
-                //int duration = holidays.get(holidayStartTime);
-                //DateTime holidayEndTime = holidayStartTime.addWorkingHour(duration);
                 DateTime holidayEndTime = holidays.get(holidayStartTime);
                 if (holidayEndTime.before(projectStartingDate)) {
                     holidays.remove(holidayStartTime);
                 }
             }
 
-            // TODO calculate the length of boolean array
-            // TODO convert holiday to working days
-            // TODO store and empty complete set !
             boolean[] availability = new boolean[DateTime.duration(projectStartingDate, projectsDueDate)];
             Arrays.fill(availability, Boolean.TRUE);
             for (DateTime holidayStartTime : holidays.keySet()) {
@@ -216,13 +211,15 @@ public class ScheduleAlgorithm {
 
             // add result to result set
             for(TaskAllocObject taskAlloc : completeSet) {
-                scheduleResult.add(
-                        new ResultDO(currentProject.getProjectId(),
-                                    taskAlloc.getTask(),
-                                    taskAlloc.getStaff(),
-                                    DateTime.hourLater(projectStartingDate, taskAlloc.getStartTime()),
-                                    DateTime.hourLater(projectStartingDate, taskAlloc.getEndTime())
-                                    ));
+                if(taskAlloc.getStartTime() != taskAlloc.getEndTime()) {
+                    scheduleResult.add(
+                            new ResultDO(currentProject.getProjectId(),
+                                        taskAlloc.getTask(),
+                                        taskAlloc.getStaff(),
+                                        DateTime.hourLater(projectStartingDate, taskAlloc.getStartTime()),
+                                        DateTime.hourLater(projectStartingDate, taskAlloc.getEndTime())
+                                        ));
+                }
             }
 
             //TODO del
@@ -236,7 +233,7 @@ public class ScheduleAlgorithm {
             currentTime = 0;
         }
         
-
+        
         return scheduleResult;
     }
 
@@ -313,33 +310,7 @@ public class ScheduleAlgorithm {
         return earliestStartTime;
     }
 
-    /*
-    private void removeIrreleventHoliday(HashMap<DateTime, Integer> holiday) {
 
-    }
-     */
-
-
-
-    /*
-    public static int duration(DateTime start, DateTime end) {
-
-        String strStart = start.getDateTime();
-        String strEnd = end.getDateTime();
-
-        DateMidnight sd = new DateMidnight(strStart.substring(0, 10));
-        DateMidnight ed = new DateMidnight(strEnd.substring(0, 10));
-
-        int days = Days.daysBetween(sd, ed).getDays();
-        
-        int startHour = Integer.parseInt(strStart.substring(11,13));
-        int endHour = Integer.parseInt(strEnd.substring(11,13));
-
-        return (endHour - startHour) + 8 * days;
-
-        
-    }  
-    */
 
 
 }
