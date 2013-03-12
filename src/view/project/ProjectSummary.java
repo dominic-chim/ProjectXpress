@@ -59,7 +59,6 @@ public class ProjectSummary extends JPanel {
 					resultDB.getResultByProject(projectId));
 		}
 
-        // TODO read it from database
 		DateTime projectStartDate = resultDB.getStartingDateTime();
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);
