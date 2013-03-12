@@ -33,8 +33,6 @@ public class StaffSummary extends JPanel {
 	public StaffSummary() {
 
         // TODO get projectStartDate
-		DateTime projectStartDate = new DateTime("2013-02-01 09:00:00");
-		this.currentDateTime = projectStartDate;
 
 		setLayout(new GridBagLayout());
 
@@ -62,7 +60,9 @@ public class StaffSummary extends JPanel {
             dataToShow.put(staffDB.getStaffById(staffId), resultDB.getResultByStaff(staffId));
         }
 
-		addData(dataToShow, new DateTime(2013, 2, 1, 9, 0, 0));
+		DateTime projectStartDate = resultDB.getStartingDateTime();
+		this.currentDateTime = projectStartDate;
+		addData(dataToShow, projectStartDate);
 
 		setVisible(true);
 

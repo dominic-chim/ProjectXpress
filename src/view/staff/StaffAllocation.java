@@ -64,6 +64,7 @@ public class StaffAllocation extends JPanel {
     public void testData() {
         //// Testing \\\\
         //Create StaffDO obj to Test
+        /*
         HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
         skillLevels.put(1, 5.0);
         HashMap<DateTime, DateTime> holidayDates= new HashMap<DateTime, DateTime>();
@@ -100,20 +101,21 @@ public class StaffAllocation extends JPanel {
         listOfResultsTest2.add(resultOne);
         listOfResultsTest2.add(resultTwo);
         
-        /*
         HashMap<StaffDO , ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
         test.put(staffOne, listOfResultsTest1);
         test.put(staffTwo, listOfResultsTest2);
         */
         
         
-        HashMap<StaffDO , ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
-        ResultDao resultDB = new ResultDao();
-        StaffDao staffDB = new StaffDao();
-        test.put(staffDB.getStaffById(1), resultDB.getResultByStaff(1));
-        test.put(staffDB.getStaffById(2), resultDB.getResultByStaff(2));
-        test.put(staffDB.getStaffById(3), resultDB.getResultByStaff(3));
-        addStaffAllocatedProjects(test);    
+        HashMap<StaffDO , ArrayList<ResultDO>> dataToShow = new HashMap<StaffDO, ArrayList<ResultDO>>();
+		ResultDao resultDB = new ResultDao();
+		StaffDao staffDB = new StaffDao();
+
+        ArrayList<Integer> staffIds = resultDB.getAllStaffInCurrentVersion();
+        for(int staffId : staffIds) {
+            dataToShow.put(staffDB.getStaffById(staffId), resultDB.getResultByStaff(staffId));
+        }
+        addStaffAllocatedProjects(dataToShow);    
 
     }
     

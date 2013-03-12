@@ -86,4 +86,8 @@ public class MainFrame extends JFrame {
     public MainMenuBar getMainMenuBar() {
     	return menuBar;
     }
+
+    public JTabbedPane getTabbedPane() {
+        return mainTabbedPane;
+    }
 }

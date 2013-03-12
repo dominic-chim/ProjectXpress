@@ -121,6 +121,23 @@ public class ResultDao extends DatabaseRoot {
         return projectIds;
     }
 
+    public DateTime getStartingDateTime() {
+        String sql = "SELECT min(start_datetime) AS start_time FROM scheduling_result WHERE version=" + getCurrentResultVersion();
+        DateTime startDateTime = null;
+        try {
+            ResultSet rset = connection.createStatement().executeQuery(sql);
+            if(rset.next()) {
+                startDateTime = new DateTime(rset.getString("start_time"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return startDateTime;
+    }
+
+
+
     private int getCurrentResultVersion() {
         String sql = "SELECT max(version) AS current_version FROM scheduling_result";
         try {
@@ -138,6 +155,7 @@ public class ResultDao extends DatabaseRoot {
         return 0;
     }
     
+
 
     
 

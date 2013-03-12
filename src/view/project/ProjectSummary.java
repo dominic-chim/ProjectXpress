@@ -25,14 +25,12 @@ public class ProjectSummary extends JPanel {
 	// TODO add error checks if task start date is greater than time scale set
 	// on table
 
-	int dayXPos = 8;
-	DateTime currentDateTime;
-	JLabel lblDay;
+	private int dayXPos = 8;
+	private DateTime currentDateTime;
+	private JLabel lblDay;
 
 	public ProjectSummary() {
 
-		DateTime projectStartDate = new DateTime("2013-02-01 09:00:00");
-		this.currentDateTime = projectStartDate;
 
 		setLayout(new GridBagLayout());
 
@@ -62,7 +60,9 @@ public class ProjectSummary extends JPanel {
 		}
 
         // TODO read it from database
-		addData(dataToShow, new DateTime(2013, 2, 1, 9, 0, 0));
+		DateTime projectStartDate = resultDB.getStartingDateTime();
+		this.currentDateTime = projectStartDate;
+		addData(dataToShow, projectStartDate);
 
 		setVisible(true);
 
