@@ -14,31 +14,35 @@ import data.dataObject.*;
  */
 public class ProjectPanel extends JPanel {
 
-	private static final long serialVersionUID = -2335250764236170843L;
+    private static final long serialVersionUID = -2335250764236170843L;
 
-	// left panel
-	ProjectList projectList = new ProjectList();
+    // left panel
+    ProjectList projectList = new ProjectList();
 
-	// right tabbed pane
-	private JTabbedPane rightTabs = new JTabbedPane();
+    // right tabbed pane
+    private JTabbedPane rightTabs = new JTabbedPane();
 
-	// main split pane
-	private JSplitPane mainContainer = new JSplitPane(
-			JSplitPane.HORIZONTAL_SPLIT, projectList, rightTabs);
+    // main split pane
+    private JSplitPane mainContainer = new JSplitPane(
+            JSplitPane.HORIZONTAL_SPLIT, projectList, rightTabs);
 
-	public ProjectPanel() {
+    public ProjectPanel() {
 
-		// TODO change these tabs to customized ones
-		rightTabs.addTab("Summary of Projects", new ProjectSummary());
-		rightTabs.addTab("Project Allocation", new ProjectAllocation());
-		rightTabs.setPreferredSize(new Dimension(600, 600));
+        // TODO change these tabs to customized ones
+        rightTabs.addTab("Summary of Projects", new ProjectSummary());
+        rightTabs.addTab("Project Allocation", new ProjectAllocation());
+        rightTabs.setPreferredSize(new Dimension(600, 600));
 
-		setLayout(new BorderLayout());
-		add(mainContainer, BorderLayout.CENTER);
-	}
+        setLayout(new BorderLayout());
+        add(mainContainer, BorderLayout.CENTER);
+    }
 
     public ProjectList getProjectList() {
         return projectList;
+    }
+
+    public JTabbedPane getRightTabs() {
+        return rightTabs;
     }
 
 }

@@ -13,63 +13,71 @@ import view.MainFrame;
 
 public class StaffView extends JPanel {
 
-	// Left panel - Staff Summary
-	StaffSummary staffSummary;
-	StaffAllocation staffAllocation;
-	StaffList staffList;
+    // Left panel - Staff Summary
+    //private StaffSummary staffSummary;
+    //private StaffAllocation staffAllocation;
+    private StaffList staffList;
 
-	public StaffView(MainFrame view) {
+    private JTabbedPane mainTab = new JTabbedPane();
 
-		staffList = new StaffList(view);
+    public StaffView(MainFrame view) {
 
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				staffList, staffTabPane());
+        staffList = new StaffList(view);
 
-		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(600, 600));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                staffList, staffTabPane());
 
-		add(splitPane, BorderLayout.CENTER);
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(600, 600));
 
-	}
+        add(splitPane, BorderLayout.CENTER);
 
-	public JPanel staffTabPane() {
+    }
 
-		JPanel tabPanel = new JPanel();
+    public JPanel staffTabPane() {
 
-		JTabbedPane mainTab = new JTabbedPane();
-		staffSummary = new StaffSummary();
-		staffAllocation = new StaffAllocation();
+        JPanel tabPanel = new JPanel();
 
-		JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
+        StaffSummary staffSummary = new StaffSummary();
+        StaffAllocation staffAllocation = new StaffAllocation();
 
-		
-		tabPanel.setLayout(new BorderLayout());
+        JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
 
-		mainTab.addTab("Summary of Staff", staffSummaryScrollPane);
-		mainTab.addTab("Staff Allocation", staffAllocation);
-		mainTab.setPreferredSize(new Dimension(600, 400));
+        
+        tabPanel.setLayout(new BorderLayout());
 
-		tabPanel.add(mainTab, BorderLayout.CENTER);
+        mainTab.addTab("Summary of Staff", staffSummaryScrollPane);
+        mainTab.addTab("Staff Allocation", staffAllocation);
+        mainTab.setPreferredSize(new Dimension(600, 400));
 
-		return tabPanel;
+        tabPanel.add(mainTab, BorderLayout.CENTER);
 
-	}
+        return tabPanel;
+
+    }
 
 
-	public String deleteStaff() {
-		return staffList.deleteStaff();
-	}
+    public String deleteStaff() {
+        return staffList.deleteStaff();
+    }
 
-	public StaffList getStaffList() {
-		return staffList;
-	}
+    public StaffList getStaffList() {
+        return staffList;
+    }
 
-	public void addController(ActionListener controller) {
+    /**
+     * @return the mainTab
+     */
+    public JTabbedPane getMainTab() {
+        return mainTab;
+    }
 
-		staffList.addController(controller);
-		staffSummary.addController(controller);
-		staffAllocation.addController(controller);
+    public void addController(ActionListener controller) {
 
-	}
+        staffList.addController(controller);
+        //staffSummary.addController(controller);
+        //staffAllocation.addController(controller);
+
+    }
 
 }

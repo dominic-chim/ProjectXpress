@@ -90,4 +90,27 @@ public class MainFrame extends JFrame {
     public JTabbedPane getTabbedPane() {
         return mainTabbedPane;
     }
+
+    public void refresh() {
+        // refresh statistic panel
+        mainTabbedPane.remove(statisticPanel);
+        statisticPanel = new StatisticPanel();
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+
+        // refresh project panel
+        JTabbedPane projectTabs = projectPanel.getRightTabs();
+        projectTabs.removeAll();
+        projectTabs.addTab("Summary of Projects", new ProjectSummary());
+        projectTabs.addTab("Project Allocation", new ProjectAllocation());
+        
+        // refresh staff panel
+        JTabbedPane staffTabs = staffPanel.getMainTab();
+        staffTabs.removeAll();
+        StaffSummary staffSummary = new StaffSummary();
+        StaffAllocation staffAllocation = new StaffAllocation();
+        JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
+        staffTabs.addTab("Summary of Staff", staffSummaryScrollPane);
+        staffTabs.addTab("Staff Allocation", staffAllocation);
+    }
+
 }

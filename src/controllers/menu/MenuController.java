@@ -124,11 +124,7 @@ public class MenuController implements ActionListener {
                 }
 
                 //refresh gui
-                JTabbedPane mainTabbedPane = view.getTabbedPane();
-                mainTabbedPane.removeAll();
-                mainTabbedPane.addTab("Project", new ProjectPanel());
-                mainTabbedPane.addTab("Staff", new StaffView(view));
-                mainTabbedPane.addTab("Statistical Reports", new StatisticPanel());
+                view.refresh();
                 sdialog.dispose();
 
                 break;
