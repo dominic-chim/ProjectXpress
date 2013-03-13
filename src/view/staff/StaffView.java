@@ -65,6 +65,7 @@ public class StaffView extends JPanel {
         return staffList;
     }
 
+
     /**
      * @return the mainTab
      */
