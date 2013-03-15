@@ -178,7 +178,7 @@ public class ProjectSummary extends JPanel {
 
 			gbc.gridx = xPos;
 
-			DateTime currentTime = projectStartDate;
+			DateTime currentTime = new DateTime(projectStartDate.getYear(), projectStartDate.getMonth(), projectStartDate.getDay(), 9, 0, 0);
 
 			ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
 			HashMap<DateTime, Integer> minDate;
