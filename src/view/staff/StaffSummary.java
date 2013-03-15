@@ -35,8 +35,8 @@ public class StaffSummary extends JPanel {
 	public StaffSummary() {
 
 		// TODO get projectStartDate
-		DateTime projectStartDate = new DateTime("2013-02-01 10:00:00");
-		this.currentDateTime = projectStartDate;
+		// DateTime projectStartDate = new DateTime("2013-02-01 10:00:00");
+		// this.currentDateTime = projectStartDate;
 
 		setLayout(new GridBagLayout());
 
@@ -136,14 +136,9 @@ public class StaffSummary extends JPanel {
 
 			gbc.gridx = xPos;
 
-			// Change to Real Project Starting Date
-			// DateTime projectStartDate = new DateTime(2013, 04, 05, 10, 30,
-			// 0);
-
 			DateTime currentTime = new DateTime(projectStartDate.getYear(),
 					projectStartDate.getMonth(), projectStartDate.getDay(), 9,
 					0, 0);
-			// DateTime currentTime = listOfTasks.get(0).getStartDateTime();
 
 			HashMap<DateTime, TaskDO> taskDate = new HashMap<DateTime, TaskDO>();
 
@@ -175,27 +170,13 @@ public class StaffSummary extends JPanel {
 
 			staffTasks.put(staff, taskDate);
 
-			System.out.println("TESTING \n\n\n");
-			for (DateTime dt : taskDate.keySet()) {
+			ArrayList<TaskDate> orderedTaskDate = new ArrayList<TaskDate>();
 
-				System.out.println(dt.getDateTime() + " "
-						+ taskDate.get(dt).getTaskName());
-
-			}
-
-			System.out.println("\n\nTESTING\n\n");
-
-			// HashMap<StaffDO, HashMap<DateTime, TaskDO>> staffTasks = new
-			// HashMap<StaffDO, HashMap<DateTime, TaskDO>>();
-			//HashMap<DateTime, TaskDO> taskDate
-			
-			ArrayList<HashMap<DateTime, TaskDO>> orderedTaskDate = new ArrayList<HashMap<DateTime, TaskDO>>();
-			
-			HashMap<DateTime, TaskDO> minDate;
+			TaskDate minDate;
 
 			for (int i = taskDate.size(); i > 0; i--) {
 				DateTime min = null;
-				
+
 				for (DateTime t : taskDate.keySet()) {
 					min = t;
 					break;
@@ -218,33 +199,27 @@ public class StaffSummary extends JPanel {
 					}
 				}
 
-				minDate = new HashMap<DateTime, TaskDO>();
-				minDate.put(min, noResources);
+				minDate = new TaskDate(min, noResources);
+
 				orderedTaskDate.add(minDate);
 
 			}
-			
-			
-			for(int i = 0; i < orderedTaskDate.size(); i++) {
-				
-				HashMap<DateTime, TaskDO> dateOfTask = orderedTaskDate.get(i);
-				DateTime time = null;
-				
-				for(DateTime dt : dateOfTask.keySet()) {
-					time = dt;
-				}
-			
-				
-				
-				while (currentDateTime.before(DateTime.hourLater(time, 1))) {
+
+			for (int i = 0; i < orderedTaskDate.size(); i++) {
+
+				TaskDate dateOfTask = orderedTaskDate.get(i);
+
+				while (currentDateTime.before(DateTime.hourLater(
+						dateOfTask.getDate(), 1))) {
 					addDay();
 				}
-				
+
 				gbc.gridy = yPos;
 				gbc.gridx = xPos;
 
-				if (currentTime.before(time)) {
-					int blankLength = DateTime.duration(currentTime, time);
+				if (currentTime.before(dateOfTask.getDate())) {
+					int blankLength = DateTime.duration(currentTime,
+							dateOfTask.getDate());
 
 					gbc.gridwidth = blankLength;
 					add(lblBlank = new JLabel(""), gbc);
@@ -252,36 +227,38 @@ public class StaffSummary extends JPanel {
 							.createLineBorder(Color.BLACK));
 					xPos += blankLength;
 					gbc.gridx = xPos;
+					currentTime = DateTime.hourLater(currentTime, blankLength);
 				}
 
-				gbc.gridwidth = 1;
+				int gridWidth = 1;
 
-				int currentId = 0;
-				int gridWidth = 0;
-		 		
-				for(DateTime date : orderedTaskDate.get(i).keySet()) {	
-					
-					
-					 int taskId = orderedTaskDate.get(i).get(date).getTaskId();
-					 
-					 if(taskId == currentId) {
-						 gridWidth++;
-					 } else {
-						 gridWidth = 0;
-					 }
-					 
+				for (int j = i + 1; j < orderedTaskDate.size(); j++) {
+
+					TaskDate nextDateTask = orderedTaskDate.get(j);
+					System.out.println(dateOfTask.getTask().getTaskId() + " : "
+							+ nextDateTask.getTask().getTaskId());
+
+					if (dateOfTask.getTask().getTaskId() == nextDateTask
+							.getTask().getTaskId()) {
+						gridWidth++;
+						i++;
+					} else {
+						break;
+					}
 				}
-				
-				add(lblTaskName = new JLabel(taskDate
-						.get(time).getTaskName(), JLabel.HORIZONTAL), gbc);
+
+				gbc.gridwidth = gridWidth;
+				add(lblTaskName = new JLabel(
+						dateOfTask.getTask().getTaskName(), JLabel.HORIZONTAL),
+						gbc);
 				lblTaskName.setBorder(BorderFactory
 						.createLineBorder(Color.BLACK));
 
-				xPos += 1;
+				xPos += gridWidth;
+				currentTime = DateTime.hourLater(currentTime, gridWidth);
 
 				gbc.gridx = xPos;
 
-				currentTime = DateTime.hourLater(time, 1);
 			}
 
 			if (currentTime.before(currentDateTime)) {
@@ -293,106 +270,8 @@ public class StaffSummary extends JPanel {
 				lblBlank.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 			}
-						
-				
-			}
-		
-		
 
-			
-//			for (DateTime time : taskDate.keySet()) {
-//
-//				while (currentDateTime.before(DateTime.hourLater(time, 1))) {
-//					addDay();
-//				}
-//				
-//				gbc.gridy = yPos;
-//				gbc.gridx = xPos;
-//
-//				if (currentTime.before(time)) {
-//					int blankLength = DateTime.duration(currentTime, time);
-//
-//					gbc.gridwidth = blankLength;
-//					add(lblBlank = new JLabel(""), gbc);
-//					lblBlank.setBorder(BorderFactory
-//							.createLineBorder(Color.BLACK));
-//					xPos += blankLength;
-//					gbc.gridx = xPos;
-//				}
-//
-//				gbc.gridwidth = 1;
-//
-//				add(lblTaskName = new JLabel(taskDate
-//						.get(time).getTaskName(), JLabel.HORIZONTAL), gbc);
-//				lblTaskName.setBorder(BorderFactory
-//						.createLineBorder(Color.BLACK));
-//
-//				xPos += 1;
-//
-//				gbc.gridx = xPos;
-//
-//				currentTime = DateTime.hourLater(time, 1);
-//			}
-//
-//			if (currentTime.before(currentDateTime)) {
-//
-//				int blankLength = DateTime.duration(currentTime,
-//						currentDateTime);
-//				gbc.gridwidth = blankLength;
-//				add(lblBlank = new JLabel(""), gbc);
-//				lblBlank.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//
-//			}
-
-			// for (ResultDO task : listOfTasks) {
-			//
-			// TaskDO taskDo = task.getTaskDO();
-			//
-			// while (currentDateTime.before(task.getEndDateTime())) {
-			//
-			// addDay();
-			// }
-			//
-			// gbc.gridy = yPos;
-			// gbc.gridx = xPos;
-			//
-			// if (currentTime.before(task.getStartDateTime())) {
-			// int blankLength = DateTime.duration(currentTime,
-			// task.getStartDateTime());
-			//
-			// gbc.gridwidth = blankLength;
-			// add(lblBlank = new JLabel(""), gbc);
-			// lblBlank.setBorder(BorderFactory
-			// .createLineBorder(Color.BLACK));
-			// xPos += blankLength;
-			// gbc.gridx = xPos;
-			// }
-			//
-			// int duration = DateTime.duration(task.getStartDateTime(),
-			// task.getEndDateTime());
-			//
-			// gbc.gridwidth = duration;
-			//
-			// add(lblTaskName = new JLabel(taskDo.getTaskName(),
-			// JLabel.HORIZONTAL), gbc);
-			// lblTaskName.setBorder(BorderFactory
-			// .createLineBorder(Color.BLACK));
-			//
-			// xPos += duration;
-			//
-			// gbc.gridx = xPos;
-			//
-			// currentTime = task.getEndDateTime();
-			// }
-			//
-			// if (currentTime.before(currentDateTime)) {
-			//
-			// int blankLength = DateTime.duration(currentTime,
-			// currentDateTime);
-			// gbc.gridwidth = blankLength;
-			// add(lblBlank = new JLabel(""), gbc);
-			// lblBlank.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			// }
-			// xPos = 0;
+		
 		}
 	}
+}
