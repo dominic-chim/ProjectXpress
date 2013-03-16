@@ -1,7 +1,10 @@
 package view.menu;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionListener;
+
+import view.project.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,6 +18,7 @@ public class UserManualDialog extends JDialog {
 	private JPanel jpnlTopContainer = new JPanel();
 	private JPanel jpnlCenterContainer = new JPanel();
 	private JPanel jpnlBottomContainer = new JPanel();
+	private ProjectPanel projectpnl = new ProjectPanel();
 	
     private JButton jbtnCancel = new JButton("Cancel");
     
@@ -26,7 +30,7 @@ public class UserManualDialog extends JDialog {
 		
 		setLayout(new BorderLayout());
 
-		jtbpTabPane.addTab("How to get started", projectPanel);
+		jtbpTabPane.addTab("How to get started", projectpnl);
 
 		jpnlTopContainer.add(jtbpTabPane);
 		

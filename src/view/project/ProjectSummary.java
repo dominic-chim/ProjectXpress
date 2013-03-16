@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import util.CellColour;
 import util.DateTime;
 import data.dataObject.ProjectDO;
 import data.dataObject.ResultDO;
@@ -30,7 +31,6 @@ public class ProjectSummary extends JPanel {
 	private JLabel lblDay;
 
 	public ProjectSummary() {
-
 
 		setLayout(new GridBagLayout());
 
@@ -59,9 +59,8 @@ public class ProjectSummary extends JPanel {
 					resultDB.getResultByProject(projectId));
 		}
 
-
 		DateTime projectStartDate = resultDB.getStartingDateTime();
-		//DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
+		// DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
 
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);
@@ -106,7 +105,7 @@ public class ProjectSummary extends JPanel {
 
 	public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults,
 			DateTime projectStartDate) {
-		
+
 		HashMap<DateTime, Integer> resources;
 		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
 
@@ -117,7 +116,6 @@ public class ProjectSummary extends JPanel {
 			for (ResultDO result : projectResults.get(project)) {
 
 				DateTime time = result.getStartDateTime();
-				
 
 				for (int i = DateTime.duration(result.getStartDateTime(),
 						result.getEndDateTime()); i > 0; i--) {
@@ -127,7 +125,7 @@ public class ProjectSummary extends JPanel {
 
 						if (time.getDateTime().equals(dt.getDateTime())) {
 							exists = true;
-							
+
 							resources.put(dt, resources.get(dt) + 1);
 
 							break;
@@ -147,23 +145,36 @@ public class ProjectSummary extends JPanel {
 			projectResources.put(project, resources);
 		}
 
-
 		int xPos = 0;
 		JLabel lblBlank;
 		JLabel lblStaffNo;
-		
+		ArrayList<Integer> projectIds = new ArrayList<Integer>();
+
+		for (ProjectDO projects : projectResources.keySet()) {
+			projectIds.add(projects.getProjectId());
+		}
+		CellColour colourit = new CellColour();
+		colourit.colourCell(projectIds);
+
+		// test
+		for (int i = 0; i < colourit.getColor().size(); i++) {
+			System.out.println(colourit.getColor().get(i));
+		}
 
 		for (ProjectDO projects : projectResources.keySet()) {
 
 			JLabel projectName = new JLabel(projects.getProjectName(),
 					JLabel.HORIZONTAL);
+			if(colourit.getColor().containsKey(projects.getProjectId())){
+				projectName.setBackground(colourit.getColor().get(projects.getProjectId()));
+			}
 
 			projectName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 			// In Order
 			HashMap<DateTime, Integer> listOfResources = projectResources
 					.get(projects);
-			
+
 			gbc.gridy = ++yPos;
 			gbc.gridx = xPos;
 			gbc.gridwidth = 8;
@@ -174,7 +185,9 @@ public class ProjectSummary extends JPanel {
 
 			gbc.gridx = xPos;
 
-			DateTime currentTime = new DateTime(projectStartDate.getYear(), projectStartDate.getMonth(), projectStartDate.getDay(), 9, 0, 0);
+			DateTime currentTime = new DateTime(projectStartDate.getYear(),
+					projectStartDate.getMonth(), projectStartDate.getDay(), 9,
+					0, 0);
 
 			ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
 			HashMap<DateTime, Integer> minDate;
@@ -213,7 +226,7 @@ public class ProjectSummary extends JPanel {
 
 				for (DateTime time : dateAndResource.keySet()) {
 
-					while (currentDateTime.before(DateTime.hourLater(time, 1))) {	
+					while (currentDateTime.before(DateTime.hourLater(time, 1))) {
 						addDay();
 					}
 					gbc.gridy = yPos;
@@ -256,7 +269,7 @@ public class ProjectSummary extends JPanel {
 
 				}
 			}
-			
+
 			xPos = 0;
 
 		}
