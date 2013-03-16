@@ -8,9 +8,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-//import org.joda.time.DateMidnight;
-//import org.joda.time.Days;
-
 import util.DateTime;
 import data.dataObject.ProjectComparator;
 import data.dataObject.ProjectDO;
@@ -47,18 +44,6 @@ public class ScheduleAlgorithm {
         this.projectStartingDate = projectStartingDate;
         this.staffList = staffList;
         this.projects = projects;
-
-        // get the greatest project due date
-        DateTime greatestProjectDueDate = null;
-        for (ProjectDO project : projects) {
-            if (greatestProjectDueDate == null) {
-                greatestProjectDueDate = project.getProjectDueDate();
-            } else {
-                if (greatestProjectDueDate.before(project.getProjectDueDate())) {
-                    greatestProjectDueDate = project.getProjectDueDate();
-                }
-            }
-        }
 
         // convert DateTime to 123..
         for (StaffDO staff : staffList) {

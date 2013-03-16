@@ -153,6 +153,7 @@ public class StaffSummary extends JPanel {
 
 						if(dateTime.getDateTime().equals(i.getDateTime())) {
 							taskDate.remove(dateTime);
+							break;
 						}
 					}
 					

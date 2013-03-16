@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
 import data.Context;
 import data.dataObject.*;
 import database.dataAccessObject.*;
@@ -196,25 +198,32 @@ public class ProjectController {
                     jdlogAddProject.dispose();
                     break;
                 case "finish":
-                    HashMap<String, String> valuesMap = jdlogAddProject.getAllInputValue();
-                    String projectName = valuesMap.get("project_name");
-                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
-                    int priority = Integer.parseInt(valuesMap.get("priority"));
-                    String status = valuesMap.get("status");
+                    try {
+                        HashMap<String, String> valuesMap = jdlogAddProject.getAllInputValue();
+                        String projectName = valuesMap.get("project_name");
+                        DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
+                        int priority = Integer.parseInt(valuesMap.get("priority"));
+                        String status = valuesMap.get("status");
 
-                    projectModel.setProjectName(projectName);
-                    projectModel.setProjectDueDate(projectDueDate);
-                    projectModel.setProjectPriority(priority);
-                    projectModel.setProjectStatus(status);
+                        projectModel.setProjectName(projectName);
+                        projectModel.setProjectDueDate(projectDueDate);
+                        projectModel.setProjectPriority(priority);
+                        projectModel.setProjectStatus(status);
 
-                    // adding projectModel to db;
-                    ProjectDao projectDao = new ProjectDao();
-                    projectDao.addProject(projectModel);
+                        // adding projectModel to db;
+                        ProjectDao projectDao = new ProjectDao();
+                        projectDao.addProject(projectModel);
 
-                    updateProjectList();
+                        updateProjectList();
 
-                    // close window
-                    jdlogAddProject.dispose();
+                        // close window
+                        jdlogAddProject.dispose();
+                    } catch (Exception excp) {
+                        String ErrMsg = "Invalid input: " + excp.getMessage();
+                        JOptionPane.showMessageDialog(jdlogAddProject, 
+                                ErrMsg, "Invalid Input", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
                 default:
                     break;
@@ -259,20 +268,24 @@ public class ProjectController {
                     jdlogAddTask.dispose();
                     break;
                 case "finish":
-                    HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
-                    setTaskInfo(valuesMap, taskModel);
+                    try {
+                        HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
+                        setTaskInfo(valuesMap, taskModel);
 
-                    // add this task to projectDO
-                    projectModel.addTask(taskModel);
+                        // add this task to projectDO
+                        projectModel.addTask(taskModel);
 
-                    //TODO remove test code
-                    //System.out.println(taskModel);
+                        // close window
+                        jdlogAddTask.dispose();
 
-                    // close window
-                    jdlogAddTask.dispose();
-
-                    // refresh add_project panel
-                    jdlogAddProject.reloadList(getTaskNames());
+                        // refresh add_project panel
+                        jdlogAddProject.reloadList(getTaskNames());
+                    } catch (Exception excp) {
+                        String ErrMsg = "Invalid input: " + excp.getMessage();
+                        JOptionPane.showMessageDialog(jdlogAddProject, 
+                                ErrMsg, "Invalid Input", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
 
                 default:
