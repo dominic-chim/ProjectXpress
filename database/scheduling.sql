@@ -56,6 +56,7 @@ CREATE TABLE staff (
 staff_id int unsigned  auto_increment,
 staff_name char(80),
 staff_weekly_available_time int unsigned ,
+status char(15) DEFAULT 'Active',
 primary key (staff_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
