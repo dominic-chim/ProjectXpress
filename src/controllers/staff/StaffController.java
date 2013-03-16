@@ -19,7 +19,6 @@ public class StaffController implements ActionListener {
 	StaffDialog staffDialog;
 	StaffDao staffDao = new StaffDao();
 	StaffDO staff;
-	
 
 	public StaffController(MainFrame view) {
 
@@ -27,16 +26,15 @@ public class StaffController implements ActionListener {
 		staffView = view.getStaffView();
 		staffView.addController(this);
 		staffList = staffView.getStaffList();
-			
-		//Initialise staff tree with staff currently in the database
+
+		// Initialise staff tree with staff currently in the database
 		staffList.createDefaultStaff(staffDao.getAllStaff());
-		
+
 	}
 
 	public void actionPerformed(ActionEvent ae) {
 
 		String cmd = ae.getActionCommand();
-
 
 		switch (cmd) {
 
@@ -48,16 +46,19 @@ public class StaffController implements ActionListener {
 			break;
 
 		case "Modify Staff":
-			
-			StaffDO staff = staffDao.getStaffById(staffList.getCurrentlySelectedStaffId());
-			staffList.addStaffDialog(this, staff);	
-			
+
+			int staffId = staffList.getCurrentlySelectedStaffId();
+			if (staffId != 0) {
+
+				StaffDO staff = staffDao.getStaffById(staffId);
+				staffList.addStaffDialog(this, staff);
+			}
 			break;
 
 		case "Add Staff":
-			
+
 			staffList.addStaffDialog(this, null);
-			
+
 			break;
 
 		case "Add Skill":
@@ -76,49 +77,54 @@ public class StaffController implements ActionListener {
 			break;
 
 		case "Add Holiday":
-			
+
 			staffDialog = staffList.getStaffDialog();
 			staffDialog.addHoliday();
-			
+
 			break;
 
 		case "Remove Holiday":
-			
+
 			staffDialog = staffList.getStaffDialog();
 			staffDialog.removeHoliday();
-			
+
 			break;
 
-		//Add Button In Staff Dialog
+		// Add Button In Staff Dialog
 		case "Add":
-			
-			staffDialog = staffList.getStaffDialog();
-			staff = staffList.addNewStaffToList(staffDialog.getStaffInput());
-			
-			staffDialog.dispose();
-			
-			staffDao.createStaff(staff);
 
+			staffDialog = staffList.getStaffDialog();
+
+			if (staffDialog.checkStaffInput()) {
+				staff = staffList
+						.addNewStaffToList(staffDialog.getStaffInput());
+
+				staffDialog.dispose();
+
+				staffDao.createStaff(staff);
+			}
 			break;
-			
+
 		case "Update":
 
 			staffDialog = staffList.getStaffDialog();
 			staff = staffDialog.getStaffInput();
 			ArrayList<String> queries = staffDialog.getQueries();
 			staffDialog.dispose();
-			
-			System.out.println("In Update : Skill Size : " + staff.getSkillLevels().size());
-			
-			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(), staff, queries);
+
+			System.out.println("In Update : Skill Size : "
+					+ staff.getSkillLevels().size());
+
+			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(),
+					staff, queries);
 			staff = staffList.addModifiedStaffToList(staff);
-			
+
 		case "Cancel":
-			
+
 			staffDialog = staffList.getStaffDialog();
 			staffDialog.dispose();
 			break;
-			
+
 		default:
 
 		}

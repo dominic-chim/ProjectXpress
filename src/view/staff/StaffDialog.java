@@ -20,17 +20,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import data.Context;
-import data.dataObject.StaffDO;
-
 import util.DateTime;
 import view.MainFrame;
+import data.Context;
+import data.dataObject.StaffDO;
 
 public class StaffDialog extends JDialog {
 
 	Context context = new Context();
 	HashMap<Integer, String> mapSkills = context.getSkillMap();
 	HashMap<String, Integer> revMapSkills = context.getSkillRevMap();
+
+	final int textFieldSize = 25;
 
 	// Text Fields for Adding Staff
 	JTextField tfId;
@@ -88,13 +89,14 @@ public class StaffDialog extends JDialog {
 
 		// Labels and TextFields for input
 		JLabel lblId = new JLabel("Id");
-		tfId = new JTextField(20);
+		tfId = new JTextField(textFieldSize);
 
 		JLabel lblName = new JLabel("Name");
-		tfName = new JTextField(20);
+		tfName = new JTextField(textFieldSize);
 
 		JLabel lblWeeklyAvail = new JLabel("Weekly Available Time:");
-		tfWeeklyAvail = new JTextField(20);
+		tfWeeklyAvail = new JTextField("40");
+		tfWeeklyAvail.setEditable(false);
 
 		JLabel lblSkillName = new JLabel("Skill");
 
@@ -114,7 +116,7 @@ public class StaffDialog extends JDialog {
 		JLabel lblHolidayEnd = new JLabel("Holiday End");
 
 		JLabel lblPrefenceLevel = new JLabel("Prefence Level:");
-		tfPrefenceLevel = new JTextField(20);
+		tfPrefenceLevel = new JTextField(textFieldSize);
 
 		// String months[] = { "January", "February", "March", "April", "May",
 		// "June", "July", "August", "September", "October", "November",
@@ -290,10 +292,13 @@ public class StaffDialog extends JDialog {
 		add(buttonPanel, BorderLayout.SOUTH);
 
 		setTitle("Add Staff");
-		setSize(400, 425);
+		setSize(500, 400);
 
 		addController(controller);
-		add(addStaffPanel);
+
+		JScrollPane addStaffScroll = new JScrollPane(addStaffPanel);
+
+		add(addStaffScroll);
 		setVisible(true);
 		setLocationRelativeTo(null);
 
@@ -335,13 +340,33 @@ public class StaffDialog extends JDialog {
 		String[] skills = new String[skillListModel.size()];
 		skillListModel.copyInto(skills);
 
-		System.out.println("Size of skills : " + skillLevels.size());
-
 		StaffDO staffObj = new StaffDO(Integer.parseInt(tfId.getText()),
 				tfName.getText(), Integer.parseInt(tfWeeklyAvail.getText()),
 				skillLevels, holidayDates);
 
 		return staffObj;
+
+	}
+
+	public boolean checkStaffInput() {
+
+		try {
+			Integer.parseInt(tfId.getText());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Invalid Id " + tfId.getText(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (tfName.getText().length() < 1) {
+
+			JOptionPane.showMessageDialog(this, "Please enter a name", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+
+		}
+
+		return true;
 
 	}
 
@@ -408,7 +433,7 @@ public class StaffDialog extends JDialog {
 			for (String i : queries) {
 				System.out.println(i);
 			}
-			
+
 			skillLevels.remove(revMapSkills.get(skillName));
 
 		}
@@ -421,17 +446,50 @@ public class StaffDialog extends JDialog {
 		String holiday = (String) (tfStartDate.getText() + " to " + tfEndDate
 				.getText());
 
-		holidayListModel.addElement(holiday);
+		boolean holidayExists = false;
+		System.out.println("Inside????");
 
-		holidayDates.put(new DateTime(tfStartDate.getText()), new DateTime(
-				tfEndDate.getText()));
-		
-		if (!checkIfAddStaff) {
+		for (DateTime startDate : holidayDates.keySet()) {
 
-			String addHolidayQuery = "INSERT INTO staff_holidays VALUES ( "
-					+ tfId.getText() + ", '" + tfStartDate.getText() +  "', '" + tfEndDate.getText() + "' )";
+			for (DateTime i = startDate; i.before(holidayDates.get(startDate)); i = DateTime
+					.hourLater(i, 1)) {
 
-			queries.add(addHolidayQuery);
+				for (DateTime j = new DateTime(tfStartDate.getText()); j
+						.before(new DateTime(tfEndDate.getText())); j = DateTime
+						.hourLater(j, 1)) {
+
+					System.out.println("J : " + j.getDateTime() + " I : "
+							+ i.getDateTime());
+;
+					if (j.getDateTime().equals(i.getDateTime())) {
+
+						JOptionPane.showMessageDialog(this,
+								"Holiday Already Exists In this Time Range"
+										+ tfId.getText(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+			}
+
+		}
+
+		if (!holidayExists) {
+
+			holidayListModel.addElement(holiday);
+
+			holidayDates.put(new DateTime(tfStartDate.getText()), new DateTime(
+					tfEndDate.getText()));
+
+			if (!checkIfAddStaff) {
+
+				String addHolidayQuery = "INSERT INTO staff_holidays VALUES ( "
+						+ tfId.getText() + ", '" + tfStartDate.getText()
+						+ "', '" + tfEndDate.getText() + "' )";
+
+				queries.add(addHolidayQuery);
+
+			}
 
 		}
 
@@ -461,19 +519,19 @@ public class StaffDialog extends JDialog {
 			for (String i : queries) {
 				System.out.println(i);
 			}
-			
+
 			DateTime foundDate = null;
-			
-			for(DateTime date : holidayDates.keySet()) {
-				if(date.getDateTime().equals(startDate)) {
+
+			for (DateTime date : holidayDates.keySet()) {
+				if (date.getDateTime().equals(startDate)) {
 					foundDate = date;
 					break;
 				}
 			}
-			
+
 			holidayDates.remove(foundDate);
-			
-			//holidayDates.remove(new DateTime(startDate));
+
+			// holidayDates.remove(new DateTime(startDate));
 
 		}
 
@@ -484,7 +542,7 @@ public class StaffDialog extends JDialog {
 	public ArrayList<String> getQueries() {
 		return this.queries;
 	}
-	
+
 	public void addController(ActionListener controller) {
 
 		btnAddHoliday.addActionListener(controller);

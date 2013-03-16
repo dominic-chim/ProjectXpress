@@ -92,17 +92,19 @@ public class StaffList extends JPanel {
 
 		String id = null;
 		if (selectedNode.toString() != "Staff") {
-			treeModel.removeNodeFromParent(selectedNode);
+			if (selectedNode.getPreviousLeaf() == null) {
+				treeModel.removeNodeFromParent(selectedNode);
 
-			id = treeModel.getChild(selectedNode, 0).toString();
+				id = treeModel.getChild(selectedNode, 0).toString();
 
-			Pattern p = Pattern.compile("Id: (.*)");
-			Matcher m = p.matcher(id);
-			while (m.find()) {
-				id = m.group(1);
+				Pattern p = Pattern.compile("Id: (.*)");
+				Matcher m = p.matcher(id);
+				while (m.find()) {
+					id = m.group(1);
+				}
+
+				return id;
 			}
-
-			return id;
 		}
 
 		return id;
@@ -116,19 +118,22 @@ public class StaffList extends JPanel {
 		String id = null;
 		String match = null;
 		if (selectedNode.toString() != "Staff") {
+			if (selectedNode.getPreviousLeaf() == null) {
 
-			match = treeModel.getChild(selectedNode, 0).toString();
+				match = treeModel.getChild(selectedNode, 0).toString();
 
-			Pattern p = Pattern.compile("Id: (.*)");
-			Matcher m = p.matcher(match);
-			while (m.find()) {
-				id = m.group(1);
+				Pattern p = Pattern.compile("Id: (.*)");
+				Matcher m = p.matcher(match);
+				while (m.find()) {
+					id = m.group(1);
+				}
+				
+				return Integer.parseInt(id);
+
 			}
 		}
 
-		System.out.println(id.toString());
-
-		return Integer.parseInt(id);
+		return 0;
 
 	}
 
@@ -190,10 +195,9 @@ public class StaffList extends JPanel {
 				.getChildAt(2);
 		DefaultMutableTreeNode holidays = (DefaultMutableTreeNode) selectedNode
 				.getChildAt(3);
-					
+
 		skills.removeAllChildren();
-		
-				
+
 		for (int i : staffInfo.getSkillLevels().keySet()) {
 
 			skills.add(new DefaultMutableTreeNode(skillMap.get(i)
@@ -202,16 +206,16 @@ public class StaffList extends JPanel {
 		}
 
 		holidays.removeAllChildren();
-		
+
 		for (DateTime date : staffInfo.getHolidays().keySet()) {
 			System.out.println(date);
 			holidays.add(new DefaultMutableTreeNode(date.getDateTime() + " to "
 					+ staffInfo.getHolidays().get(date).getDateTime()));
 		}
 
-//		treeM
+		// treeM
 		tree.updateUI();
-		
+
 		return staffInfo;
 
 	}

@@ -20,13 +20,7 @@ public class StaffDao extends DatabaseRoot {
 
 	public StaffDO getStaffById(int staffId) {
 
-		// String sql =
-		// "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
-		// +
-		// "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence WHERE staff_id = "
-		// + staffId;
-
-		String sql = "SELECT staff_id, staff_name, staff_weekly_available_time, skill_id, skill_level FROM staff NATURAL JOIN staff_skill_level WHERE staff_id = "
+		String sql = "SELECT staff.staff_id, staff_name, staff_weekly_available_time, skill_id, skill_level, holiday_start_time, holiday_end_time FROM staff LEFT OUTER JOIN staff_skill_level ON staff.staff_id = staff_skill_level.staff_id LEFT OUTER JOIN staff_holidays ON staff.staff_id = staff_holidays.staff_id WHERE staff.staff_id = "
 				+ staffId;
 
 		try {
@@ -44,23 +38,6 @@ public class StaffDao extends DatabaseRoot {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		// Testing
-		/*
-		 * HashMap<Integer, Double> skillLevels = new HashMap<Integer,
-		 * Double>(); skillLevels.put(1, 1.0); HashMap<DateTime, DateTime>
-		 * holidayDates = new HashMap<DateTime, DateTime>();
-		 * holidayDates.put(null, null);
-		 * 
-		 * 
-		 * try { while (result.next()) {
-		 * 
-		 * staffDo = new StaffDO(result.getInt("staff_id"),
-		 * result.getString("staff_name"),
-		 * result.getInt("staff_weekly_available_time"), skillLevels,
-		 * holidayDates); } } catch (SQLException e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); }
-		 */
 
 		return null;
 
@@ -130,7 +107,8 @@ public class StaffDao extends DatabaseRoot {
 		}
 	}
 
-	public void modifyStaff(int staffId, StaffDO staff, ArrayList<String> queries) {
+	public void modifyStaff(int staffId, StaffDO staff,
+			ArrayList<String> queries) {
 
 		String staffValues = "";
 		String sql = "";
@@ -147,8 +125,8 @@ public class StaffDao extends DatabaseRoot {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		for(String i : queries) {
+
+		for (String i : queries) {
 			try {
 				int result = db.executeUpdate(i);
 			} catch (SQLException e) {
@@ -164,7 +142,11 @@ public class StaffDao extends DatabaseRoot {
 		// "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence WHERE staff_id = "
 		// + staffId;
 
-		String sql = "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff_holidays WHERE staff_id = "
+		// String sql =
+		// "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff_holidays WHERE staff_id = "
+		// + staffId;
+
+		String sql = "DELETE staff,staff_skill_level, staff_holidays FROM staff LEFT OUTER JOIN staff_skill_level ON staff.staff_id = staff_skill_level.staff_id LEFT OUTER JOIN staff_holidays ON staff.staff_id = staff_holidays.staff_id WHERE staff.staff_id = "
 				+ staffId;
 
 		int result;
@@ -180,8 +162,7 @@ public class StaffDao extends DatabaseRoot {
 	public ArrayList<StaffDO> getAllStaff() {
 
 		ArrayList<StaffDO> staffs = new ArrayList<StaffDO>();
-		
-		
+
 		String sql = "SELECT DISTINCT staff_id FROM staff";
 
 		try {
