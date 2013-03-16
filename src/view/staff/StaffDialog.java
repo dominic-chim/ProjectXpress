@@ -78,8 +78,9 @@ public class StaffDialog extends JDialog {
 
 	public StaffDialog(MainFrame view, ActionListener controller, StaffDO staff) {
 
+		super(view, true);
+		
 		setLayout(new BorderLayout());
-
 		addStaffPanel = new JPanel();
 
 		// Panel and Layout - Panel will be put in OptionPane
@@ -299,8 +300,9 @@ public class StaffDialog extends JDialog {
 		JScrollPane addStaffScroll = new JScrollPane(addStaffPanel);
 
 		add(addStaffScroll);
+		setLocationRelativeTo(view);
 		setVisible(true);
-		setLocationRelativeTo(null);
+        
 
 	}
 
@@ -388,10 +390,19 @@ public class StaffDialog extends JDialog {
 					"Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
+	
 
 		String skill = "";
 		skill += skillName;
 		skill += " - Level: " + skillLevel;
+		
+		if(skillLevels.containsKey(revMapSkills.get(skillName))) {
+			JOptionPane.showMessageDialog(this, "Skill Already Exists",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		skillListModel.addElement(skill);
 
 		skillLevels.put(revMapSkills.get(skillName),
@@ -410,6 +421,15 @@ public class StaffDialog extends JDialog {
 	}
 
 	public void removeSkill() {
+
+		if (skillList.getSelectedValue() == null) {
+
+			JOptionPane.showMessageDialog(this,
+					"Please select a skill" + tfId.getText(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}
 
 		if (!checkIfAddStaff) {
 
@@ -445,9 +465,14 @@ public class StaffDialog extends JDialog {
 
 		String holiday = (String) (tfStartDate.getText() + " to " + tfEndDate
 				.getText());
+		
+		if (tfStartDate.getText().equals(tfEndDate.getText()) || new DateTime(tfEndDate.getText()).before(new DateTime(tfStartDate.getText()))) {
+			JOptionPane.showMessageDialog(this, "Invalid Holiday Inputted"
+					+ tfId.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 
 		boolean holidayExists = false;
-		System.out.println("Inside????");
 
 		for (DateTime startDate : holidayDates.keySet()) {
 
@@ -458,9 +483,6 @@ public class StaffDialog extends JDialog {
 						.before(new DateTime(tfEndDate.getText())); j = DateTime
 						.hourLater(j, 1)) {
 
-					System.out.println("J : " + j.getDateTime() + " I : "
-							+ i.getDateTime());
-;
 					if (j.getDateTime().equals(i.getDateTime())) {
 
 						JOptionPane.showMessageDialog(this,
@@ -497,17 +519,27 @@ public class StaffDialog extends JDialog {
 
 	public void removeHoliday() {
 
+		if (holidayList.getSelectedValue() == null) {
+
+			JOptionPane.showMessageDialog(this, "Please select a holiday"
+					+ tfId.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}
+
+		String holiday = holidayList.getSelectedValue().toString();
+		String startDate = "";
+		String endDate = "";
+
+		Pattern p = Pattern.compile("(.*) to (.*)");
+		Matcher m = p.matcher(holiday);
+
+		while (m.find()) {
+			startDate = m.group(1);
+			endDate = m.group(2);
+		}
+		
 		if (!checkIfAddStaff) {
-
-			String holiday = holidayList.getSelectedValue().toString();
-			String startDate = "";
-
-			Pattern p = Pattern.compile("(.*) to (.*)");
-			Matcher m = p.matcher(holiday);
-
-			while (m.find()) {
-				startDate = m.group(1);
-			}
 
 			String removeHolidayQuery = "DELETE FROM staff_holidays WHERE staff_id = "
 					+ tfId.getText()
@@ -516,25 +548,18 @@ public class StaffDialog extends JDialog {
 
 			queries.add(removeHolidayQuery);
 
-			for (String i : queries) {
-				System.out.println(i);
-			}
-
-			DateTime foundDate = null;
-
-			for (DateTime date : holidayDates.keySet()) {
-				if (date.getDateTime().equals(startDate)) {
-					foundDate = date;
-					break;
-				}
-			}
-
-			holidayDates.remove(foundDate);
-
-			// holidayDates.remove(new DateTime(startDate));
-
 		}
 
+		DateTime foundDate = null;
+
+		for (DateTime date : holidayDates.keySet()) {
+			if (date.getDateTime().equals(startDate)) {
+				foundDate = date;
+				break;
+			}
+		}
+
+		holidayDates.remove(foundDate);
 		holidayListModel.removeElement(holidayList.getSelectedValue());
 
 	}

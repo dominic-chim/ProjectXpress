@@ -149,6 +149,8 @@ public class StaffSummary extends JPanel {
 				for (DateTime i = task.getStartDateTime(); i.before(task
 						.getEndDateTime()); i = DateTime.hourLater(i, 1)) {
 
+					
+					
 					for (DateTime dateTime : taskDate.keySet()) {
 
 						if(dateTime.getDateTime().equals(i.getDateTime())) {

@@ -59,7 +59,10 @@ public class ProjectSummary extends JPanel {
 					resultDB.getResultByProject(projectId));
 		}
 
+
 		DateTime projectStartDate = resultDB.getStartingDateTime();
+		//DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
+
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);
 
@@ -132,7 +135,6 @@ public class ProjectSummary extends JPanel {
 					}
 
 					if (!exists) {
-						System.out.println("Time " + time.getDateTime());
 
 						resources.put(time, 1);
 					}
@@ -161,12 +163,6 @@ public class ProjectSummary extends JPanel {
 			// In Order
 			HashMap<DateTime, Integer> listOfResources = projectResources
 					.get(projects);
-
-			
-			for(DateTime dt :listOfResources.keySet()) {
-				
-				System.out.println("Test2: " + dt.getDateTime() + " " + listOfResources.get(dt));
-			}
 			
 			gbc.gridy = ++yPos;
 			gbc.gridx = xPos;
@@ -207,9 +203,6 @@ public class ProjectSummary extends JPanel {
 					}
 				}
 
-				System.out.println("Min " + min.getDateTime() + " "
-						+ noResources);
-
 				minDate = new HashMap<DateTime, Integer>();
 				minDate.put(min, noResources);
 				orderedDateTime.add(minDate);
@@ -220,9 +213,7 @@ public class ProjectSummary extends JPanel {
 
 				for (DateTime time : dateAndResource.keySet()) {
 
-					System.out.println("CurrentDate " + currentDateTime.getDateTime() + " Time : " + time.getDateTime());
 					while (currentDateTime.before(DateTime.hourLater(time, 1))) {	
-						System.out.println("Inside");
 						addDay();
 					}
 					gbc.gridy = yPos;

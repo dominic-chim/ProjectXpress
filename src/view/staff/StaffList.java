@@ -91,20 +91,21 @@ public class StaffList extends JPanel {
 				.getLastSelectedPathComponent();
 
 		String id = null;
-		if (selectedNode.toString() != "Staff") {
-			if (selectedNode.getPreviousLeaf() == null) {
-				treeModel.removeNodeFromParent(selectedNode);
+		if (selectedNode != null && selectedNode.toString() != "Staff"
+				&& selectedNode.getParent().toString() == "Staff") {
 
-				id = treeModel.getChild(selectedNode, 0).toString();
+			treeModel.removeNodeFromParent(selectedNode);
 
-				Pattern p = Pattern.compile("Id: (.*)");
-				Matcher m = p.matcher(id);
-				while (m.find()) {
-					id = m.group(1);
-				}
+			id = treeModel.getChild(selectedNode, 0).toString();
 
-				return id;
+			Pattern p = Pattern.compile("Id: (.*)");
+			Matcher m = p.matcher(id);
+			while (m.find()) {
+				id = m.group(1);
 			}
+
+			return id;
+
 		}
 
 		return id;
@@ -117,7 +118,7 @@ public class StaffList extends JPanel {
 
 		String id = null;
 		String match = null;
-		if (selectedNode.toString() != "Staff") {
+		if (selectedNode != null && selectedNode.toString() != "Staff") {
 			if (selectedNode.getPreviousLeaf() == null) {
 
 				match = treeModel.getChild(selectedNode, 0).toString();
@@ -127,7 +128,7 @@ public class StaffList extends JPanel {
 				while (m.find()) {
 					id = m.group(1);
 				}
-				
+
 				return Integer.parseInt(id);
 
 			}

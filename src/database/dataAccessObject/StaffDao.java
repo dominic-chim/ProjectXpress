@@ -146,9 +146,11 @@ public class StaffDao extends DatabaseRoot {
 		// "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff_holidays WHERE staff_id = "
 		// + staffId;
 
-		String sql = "DELETE staff,staff_skill_level, staff_holidays FROM staff LEFT OUTER JOIN staff_skill_level ON staff.staff_id = staff_skill_level.staff_id LEFT OUTER JOIN staff_holidays ON staff.staff_id = staff_holidays.staff_id WHERE staff.staff_id = "
-				+ staffId;
+//		String sql = "DELETE staff, staff_skill_level, staff_holidays FROM staff LEFT OUTER JOIN staff_skill_level ON staff.staff_id = staff_skill_level.staff_id LEFT OUTER JOIN staff_holidays ON staff.staff_id = staff_holidays.staff_id WHERE staff.staff_id = "
+//				+ staffId;
 
+		String sql = "UPDATE staff SET status = 'deleted' WHERE staff_id = " + staffId;
+		
 		int result;
 
 		try {
@@ -163,7 +165,7 @@ public class StaffDao extends DatabaseRoot {
 
 		ArrayList<StaffDO> staffs = new ArrayList<StaffDO>();
 
-		String sql = "SELECT DISTINCT staff_id FROM staff";
+		String sql = "SELECT DISTINCT staff_id FROM staff WHERE status = 'Active'";
 
 		try {
 			ResultSet result = connection.createStatement().executeQuery(sql);

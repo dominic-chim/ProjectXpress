@@ -70,6 +70,10 @@ public class MainFrame extends JFrame {
 		return  new SchedulingDialog(this); 
 	}
 	
+	public UserManualDialog addUserManualDialog() {
+		return  new UserManualDialog(this); 
+	}
+	
 	public SkillDialog getSkillDialog() {
 		
 		return this.skillDialog;
@@ -94,9 +98,9 @@ public class MainFrame extends JFrame {
 
     public void refresh() {
         // refresh statistic panel
-        mainTabbedPane.remove(statisticPanel);
-        statisticPanel = new StatisticPanel();
-		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+//        mainTabbedPane.remove(statisticPanel);
+//        statisticPanel = new StatisticPanel();
+//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 
         // refresh project panel
         JTabbedPane projectTabs = projectPanel.getRightTabs();
