@@ -66,6 +66,7 @@ public class StaffSummary extends JPanel {
 		}
 
 		DateTime projectStartDate = resultDB.getStartingDateTime();
+		// DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
 
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);
@@ -116,8 +117,7 @@ public class StaffSummary extends JPanel {
 		JLabel lblBlank;
 		JLabel lblTaskName;
 
-		HashMap<StaffDO, HashMap<DateTime, TaskDO>> staffTasks = new HashMap<StaffDO, HashMap<DateTime, TaskDO>>();
-
+		// Get Each Staff
 		for (StaffDO staff : staffAllocProjects.keySet()) {
 
 			JLabel staffName = new JLabel(staff.getStaffName(),
@@ -125,7 +125,7 @@ public class StaffSummary extends JPanel {
 
 			staffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-			// In Order
+			// Get List Of Tasks related to each staff
 			ArrayList<ResultDO> listOfTasks = staffAllocProjects.get(staff);
 
 			gbc.gridy = ++yPos;
@@ -149,28 +149,17 @@ public class StaffSummary extends JPanel {
 				for (DateTime i = task.getStartDateTime(); i.before(task
 						.getEndDateTime()); i = DateTime.hourLater(i, 1)) {
 
-					if (staffTasks.get(i) == null) {
+					for (DateTime dateTime : taskDate.keySet()) {
 
-						taskDate.put(i, task.getTaskDO());
-
-					} else {
-
-						for (DateTime date : taskDate.keySet()) {
-
-							if (i.before(date)) {
-								taskDate.put(DateTime.hourLater(date, 1),
-										taskDate.get(date));
-							}
-
+						if(dateTime.getDateTime().equals(i.getDateTime())) {
+							taskDate.remove(dateTime);
 						}
-
-						taskDate.put(i, task.getTaskDO());
-
 					}
+					
+					taskDate.put(i, task.getTaskDO());
+
 				}
 			}
-
-			staffTasks.put(staff, taskDate);
 
 			ArrayList<TaskDate> orderedTaskDate = new ArrayList<TaskDate>();
 
@@ -210,8 +199,9 @@ public class StaffSummary extends JPanel {
 			for (int i = 0; i < orderedTaskDate.size(); i++) {
 
 				TaskDate dateOfTask = orderedTaskDate.get(i);
-				
-				while (currentDateTime.before(DateTime.hourLater(DateTime.hourLater(dateOfTask.getDate(), dateOfTask.getTask().getTaskDuration()), 1))) {
+
+				while (currentDateTime.before(DateTime.hourLater(dateOfTask
+						.getDate(), dateOfTask.getTask().getTaskDuration()))) {
 					addDay();
 				}
 
