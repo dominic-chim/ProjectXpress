@@ -12,7 +12,11 @@ import view.MainFrame;
 public class AddProjectDialog extends JDialog {
 
 
-    // container panels
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1757481797240629572L;
+	// container panels
     private JPanel jpnlTop = new JPanel();
     private JPanel jpnlMiddle = new JPanel();
     private JPanel jpnlBottom = new JPanel();

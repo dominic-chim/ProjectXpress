@@ -19,10 +19,13 @@ public class StaffView extends JPanel {
     private StaffList staffList;
 
     private JTabbedPane mainTab = new JTabbedPane();
+    MainFrame view;
+    private StaffSummary staffSummary = new StaffSummary();
 
     public StaffView(MainFrame view) {
-
+    	this.view = view;
         staffList = new StaffList(view);
+        
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 staffList, staffTabPane());
@@ -38,10 +41,10 @@ public class StaffView extends JPanel {
 
         JPanel tabPanel = new JPanel();
 
-        StaffSummary staffSummary = new StaffSummary();
+       
         StaffAllocation staffAllocation = new StaffAllocation();
 
-        JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
+        JScrollPane staffSummaryScrollPane = new JScrollPane(this.staffSummary);
 
         
         tabPanel.setLayout(new BorderLayout());
@@ -63,6 +66,11 @@ public class StaffView extends JPanel {
 
     public StaffList getStaffList() {
         return staffList;
+    }
+    
+    public StaffSummary getStaffSummary(){
+    	
+		return staffSummary;
     }
 
 

@@ -20,7 +20,11 @@ import database.dataAccessObject.StaffDao;
 
 public class StaffAllocation extends JPanel {
 
-    JTable allocationTable;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JTable allocationTable;
     DefaultTableModel allocationModel;
     
     public StaffAllocation() {
@@ -37,13 +41,19 @@ public class StaffAllocation extends JPanel {
 
             private static final long serialVersionUID = 1L;
 
-            public Class getColumnClass(int column) {
+            @SuppressWarnings("unchecked")
+			public Class getColumnClass(int column) {
                 return getValueAt(0, column).getClass();
             }
         };
 
         allocationTable = new JTable(allocationModel) {
-            public boolean isCellEditable(int rowIndex, int colIndex) {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false; // Disallow the editing of any cell
             }
         };

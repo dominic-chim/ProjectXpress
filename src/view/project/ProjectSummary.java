@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import util.CellColour;
 import util.DateTime;
+import view.staff.StaffSummary;
 import data.dataObject.ProjectDO;
 import data.dataObject.ResultDO;
 import database.dataAccessObject.ProjectDao;
@@ -29,6 +30,8 @@ public class ProjectSummary extends JPanel {
 	private int dayXPos = 8;
 	private DateTime currentDateTime;
 	private JLabel lblDay;
+	private ArrayList<Integer> projectIds = new ArrayList<Integer>();
+	private CellColour colourit = new CellColour();
 
 	public ProjectSummary() {
 
@@ -148,13 +151,13 @@ public class ProjectSummary extends JPanel {
 		int xPos = 0;
 		JLabel lblBlank;
 		JLabel lblStaffNo;
-		ArrayList<Integer> projectIds = new ArrayList<Integer>();
 
 		for (ProjectDO projects : projectResources.keySet()) {
 			projectIds.add(projects.getProjectId());
 		}
-		CellColour colourit = new CellColour();
+		
 		colourit.colourCell(projectIds);
+		
 
 		// test
 		for (int i = 0; i < colourit.getColor().size(); i++) {
@@ -165,11 +168,15 @@ public class ProjectSummary extends JPanel {
 
 			JLabel projectName = new JLabel(projects.getProjectName(),
 					JLabel.HORIZONTAL);
-			if(colourit.getColor().containsKey(projects.getProjectId())){
-				projectName.setBackground(colourit.getColor().get(projects.getProjectId()));
+
+			for (int i = 0; i < projectIds.size(); i++) {
+				if (projectIds.get(i).equals(projects.getProjectId()) == true) {
+					projectName.setBackground(colourit.getColor().get(i));
+				}
 			}
 
 			projectName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			projectName.setOpaque(true);
 
 			// In Order
 			HashMap<DateTime, Integer> listOfResources = projectResources
@@ -250,6 +257,13 @@ public class ProjectSummary extends JPanel {
 							JLabel.HORIZONTAL), gbc);
 					lblStaffNo.setBorder(BorderFactory
 							.createLineBorder(Color.BLACK));
+					lblStaffNo.setOpaque(true);
+					for (int i = 0; i < projectIds.size(); i++) {
+						if (projectIds.get(i).equals(projects.getProjectId()) == true) {
+							lblStaffNo
+									.setBackground(colourit.getColor().get(i));
+						}
+					}
 
 					xPos += 1;
 
@@ -274,6 +288,14 @@ public class ProjectSummary extends JPanel {
 
 		}
 
+	}
+	
+	public  CellColour getColours(){
+		return colourit;
+	}
+
+	public ArrayList<Integer> getProjectIds() {
+		return projectIds;
 	}
 
 	public void addController(ActionListener controller) {

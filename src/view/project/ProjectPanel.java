@@ -15,37 +15,44 @@ import data.dataObject.*;
  */
 public class ProjectPanel extends JPanel {
 
-    private static final long serialVersionUID = -2335250764236170843L;
+	private static final long serialVersionUID = -2335250764236170843L;
 
-    // left panel
-    ProjectList projectList = new ProjectList();
+	// left panel
+	ProjectList projectList = new ProjectList();
 
-    // right tabbed pane
-    private JTabbedPane rightTabs = new JTabbedPane();
+	// right tabbed pane
+	private JTabbedPane rightTabs = new JTabbedPane();
 
-    // main split pane
-    private JSplitPane mainContainer = new JSplitPane(
-            JSplitPane.HORIZONTAL_SPLIT, projectList, rightTabs);
+	// main split pane
+	private JSplitPane mainContainer = new JSplitPane(
+			JSplitPane.HORIZONTAL_SPLIT, projectList, rightTabs);
 
-    public ProjectPanel() {
+	//
+	ProjectSummary projectSummary = new ProjectSummary();
 
-        // TODO change these tabs to customized ones
-        JScrollPane projectSummary = new JScrollPane( new ProjectSummary());
-        rightTabs.addTab("Summary of Projects", projectSummary);
+	public ProjectPanel() {
 
-        rightTabs.addTab("Project Allocation", new ProjectAllocation());
-        rightTabs.setPreferredSize(new Dimension(600, 600));
+		// TODO change these tabs to customized ones
+		JScrollPane projectSummary = new JScrollPane(this.projectSummary);
+		rightTabs.addTab("Summary of Projects", projectSummary);
 
-        setLayout(new BorderLayout());
-        add(mainContainer, BorderLayout.CENTER);
-    }
+		rightTabs.addTab("Project Allocation", new ProjectAllocation());
+		rightTabs.setPreferredSize(new Dimension(600, 600));
 
-    public ProjectList getProjectList() {
-        return projectList;
-    }
+		setLayout(new BorderLayout());
+		add(mainContainer, BorderLayout.CENTER);
+	}
 
-    public JTabbedPane getRightTabs() {
-        return rightTabs;
-    }
+	public ProjectList getProjectList() {
+		return projectList;
+	}
+
+	public JTabbedPane getRightTabs() {
+		return rightTabs;
+	}
+
+	public ProjectSummary getProjectSummary() {
+		return this.projectSummary;
+	}
 
 }

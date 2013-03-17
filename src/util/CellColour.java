@@ -6,17 +6,19 @@ import java.awt.*;
 public class CellColour {
 	Random rand = new Random();
 	HashMap<Integer, Color> projectIdColor = new HashMap<Integer, Color>();
+	ArrayList<Integer> projectIds = new ArrayList<Integer>();
 
 	public CellColour() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public void colourCell(ArrayList<Integer> projectIds) {
+		this.projectIds = projectIds;
 		boolean colorFound = true;
 		boolean colorNotFound = false;
 		Color randomColor = null;
 
-		for (int i=0;i<projectIds.size();i++) {
+		for (int i = 0; i < projectIds.size(); i++) {
 
 			while (colorFound) {
 				int R = (int) (Math.random() * 256);
@@ -40,14 +42,18 @@ public class CellColour {
 
 			}
 			// System.out.println(randomColor.getRGB());
-			projectIdColor.put(projectIds.get(i), randomColor);
-			//projectIdColor.
+			projectIdColor.put(i, randomColor);
+			// projectIdColor.
 			colorFound = true;
 		}
-		
+
 	}
 
 	public HashMap<Integer, Color> getColor() {
 		return projectIdColor;
+	}
+	
+	public ArrayList<Integer> getprojectIds(){
+		return this.projectIds;
 	}
 }

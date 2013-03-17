@@ -21,6 +21,10 @@ import database.dataAccessObject.ResultDao;
 
 public class ProjectAllocation extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JTable allocationTable;
 	DefaultTableModel allocationModel;
 
@@ -44,6 +48,11 @@ public class ProjectAllocation extends JPanel {
 		};
 
 		allocationTable = new JTable(allocationModel) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; // Disallow the editing of any cell
 			}

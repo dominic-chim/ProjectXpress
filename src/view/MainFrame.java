@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import controllers.menu.SkillController;
-
+import util.CellColour;
 import view.project.*;
 import view.staff.*;
 import view.statistic.*;
@@ -35,6 +35,7 @@ public class MainFrame extends JFrame {
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel = new StaffView(this);
 	private StatisticPanel statisticPanel = new StatisticPanel();
+	public CellColour initialColour = new CellColour();
 	
 	SkillDialog skillDialog;
 	

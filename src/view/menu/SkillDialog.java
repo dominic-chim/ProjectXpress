@@ -16,9 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controllers.menu.SkillController;
-
 import view.MainFrame;
-
 import data.Context;
 
 public class SkillDialog extends JDialog {
@@ -53,6 +51,7 @@ public class SkillDialog extends JDialog {
 
 	GridBagConstraints gbc = new GridBagConstraints();
 
+	@SuppressWarnings("unchecked")
 	public SkillDialog(MainFrame view, SkillController controller) {
 
 		super(view, true);

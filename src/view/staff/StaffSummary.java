@@ -13,7 +13,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import util.CellColour;
 import util.DateTime;
+import view.project.ProjectSummary;
 import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
@@ -32,6 +34,7 @@ public class StaffSummary extends JPanel {
 	DateTime currentDateTime;
 	DateTime projectStartDate;
 	JLabel lblDay;
+	ProjectSummary project = new ProjectSummary();
 
 	public StaffSummary() {
 
@@ -149,16 +152,14 @@ public class StaffSummary extends JPanel {
 				for (DateTime i = task.getStartDateTime(); i.before(task
 						.getEndDateTime()); i = DateTime.hourLater(i, 1)) {
 
-					
-					
 					for (DateTime dateTime : taskDate.keySet()) {
 
-						if(dateTime.getDateTime().equals(i.getDateTime())) {
+						if (dateTime.getDateTime().equals(i.getDateTime())) {
 							taskDate.remove(dateTime);
 							break;
 						}
 					}
-					
+
 					taskDate.put(i, task.getTaskDO());
 
 				}
@@ -243,8 +244,20 @@ public class StaffSummary extends JPanel {
 				add(lblTaskName = new JLabel(
 						dateOfTask.getTask().getTaskName(), JLabel.HORIZONTAL),
 						gbc);
+
+				/*
+				 * for (int j = 0; j < project.getProjectIds().size(); j++) {
+				 * 
+				 * // System.out.println(project.getProjectIds().get(j)); if
+				 * (project.getProjectIds().get(j)
+				 * .equals(dateOfTask.getTask().getProjectId())) {
+				 * lblTaskName.setBackground(colourit.getColor().get(j)); } }
+				 */
+
+				// lblTaskName.setBackground(newColour.getColor().get(0));
 				lblTaskName.setBorder(BorderFactory
 						.createLineBorder(Color.BLACK));
+				lblTaskName.setOpaque(true);
 
 				xPos += gridWidth;
 				currentTime = DateTime.hourLater(currentTime, gridWidth);
