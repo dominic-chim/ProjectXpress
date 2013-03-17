@@ -6,18 +6,13 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -52,9 +47,9 @@ public class StatisticsProductivity extends ApplicationFrame {
 	public JPanel panel2 = new JPanel(new GridLayout(2, 1));
 	public JPanel panel3 = new JPanel(new GridLayout(2, 1));
 	public JPanel panel4 = new JPanel();
-	
+
 	JTable table, table2, table3, table4;
-	
+
 	final CategoryDataset dataset = createDataset();
 	final JFreeChart chart = projectChart(dataset);
 	final ChartPanel chartPanel = new ChartPanel(chart);
@@ -67,20 +62,16 @@ public class StatisticsProductivity extends ApplicationFrame {
 	final JFreeChart projectchart = projectChart(projectdata);
 	final ChartPanel projectPanel = new ChartPanel(projectchart);
 
-	final PieDataset taskdata = taskDataset();
-	final JFreeChart taskchart = taskChart(taskdata);
-	final ChartPanel taskPanel = new ChartPanel(taskchart);
-
 	final JTabbedPane status = new JTabbedPane();
 	final JTabbedPane tables = new JTabbedPane();
 	TitledBorder topBorder;
 
 	public StatisticsProductivity(final String title) {
 		super(title);
-		
+
 		Object rows[][] = stats.scheduledProjects();
-		Object columns[] = { "Project ID", "Project Name", "Priority", "No. of Tasks",
-				"Start Date", "End Date" };
+		Object columns[] = { "Project ID", "Project Name", "Priority",
+				"No. of Tasks", "Start Date", "End Date" };
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
 
@@ -90,9 +81,10 @@ public class StatisticsProductivity extends ApplicationFrame {
 				return false; // Disallow the editing of any cell
 			}
 		};
-		
+
 		Object rows2[][] = stats.projectsList();
-		Object columns2[] = { "Project ID", "Project Name", "Priority", "Project Status" };
+		Object columns2[] = { "Project ID", "Project Name", "Priority",
+				"Project Status" };
 		DefaultTableModel model2 = new DefaultTableModel(rows2, columns2);
 		table2 = new JTable(model2) {
 
@@ -102,10 +94,10 @@ public class StatisticsProductivity extends ApplicationFrame {
 				return false; // Disallow the editing of any cell
 			}
 		};
-		
-		
+
 		Object rows3[][] = stats.scheduledTasks();
-		Object columns3[] = { "Task ID", "Task Name", "Staff Allocation", "Start Date", "End Date", "Risk Level"};
+		Object columns3[] = { "Task ID", "Task Name", "Staff Allocation",
+				"Start Date", "End Date", "Risk Level" };
 		DefaultTableModel model3 = new DefaultTableModel(rows3, columns3);
 		table3 = new JTable(model3) {
 
@@ -115,9 +107,10 @@ public class StatisticsProductivity extends ApplicationFrame {
 				return false; // Disallow the editing of any cell
 			}
 		};
-		
+
 		Object rows4[][] = stats.tasksList();
-		Object columns4[] = { "Task ID", "Task Name", "Project", "Required Skill", "Duration (hrs)", "Task Status"};
+		Object columns4[] = { "Task ID", "Task Name", "Project",
+				"Required Skill", "Duration (hrs)", "Task Status" };
 		DefaultTableModel model4 = new DefaultTableModel(rows4, columns4);
 		table4 = new JTable(model4) {
 
@@ -127,15 +120,14 @@ public class StatisticsProductivity extends ApplicationFrame {
 				return false; // Disallow the editing of any cell
 			}
 		};
-		
-		
+
 		JScrollPane spTable = new JScrollPane(table);
 		JScrollPane spTable2 = new JScrollPane(table2);
 		JScrollPane spTable3 = new JScrollPane(table3);
 		JScrollPane spTable4 = new JScrollPane(table4);
-	
+
 		topBorder = BorderFactory
-				.createTitledBorder("Project Productivity In Hours");
+				.createTitledBorder("Project Productivity by Task Status");
 		topBorder.setTitlePosition(TitledBorder.TOP);
 		chartPanel.setBorder(topBorder);
 		topBorder = BorderFactory.createTitledBorder("Risk Distribution");
@@ -144,37 +136,25 @@ public class StatisticsProductivity extends ApplicationFrame {
 				.createTitledBorder("Project Status Distribution");
 		projectPanel.setBorder(topBorder);
 		topBorder = BorderFactory
-				.createTitledBorder("Task Status Distribution");
-		taskPanel.setBorder(topBorder);
-		topBorder = BorderFactory
 				.createTitledBorder("List of Scheduled Projects");
 		spTable.setBorder(topBorder);
-		topBorder = BorderFactory
-				.createTitledBorder("List of Projects");
+		topBorder = BorderFactory.createTitledBorder("List of Projects");
 		spTable2.setBorder(topBorder);
-		taskPanel.setBorder(topBorder);
-		topBorder = BorderFactory
-				.createTitledBorder("List of Scheduled Tasks");
+		topBorder = BorderFactory.createTitledBorder("List of Scheduled Tasks");
 		spTable3.setBorder(topBorder);
-		taskPanel.setBorder(topBorder);
-		topBorder = BorderFactory
-				.createTitledBorder("List of Scheduled Tasks");
+		topBorder = BorderFactory.createTitledBorder("List of Tasks");
 		spTable4.setBorder(topBorder);
 
-		status.addTab("Project Status", projectPanel);
-		status.addTab("Task Status", taskPanel);	
+		tables.addTab("Scheduled Projects", spTable);
+		tables.addTab("All Projects", spTable2);
+		tables.addTab("Scheduled Tasks", spTable3);
+		tables.addTab("All Tasks", spTable4);
 
-		tables.addTab("Scheduled Projects", spTable);	
-		tables.addTab("All Projects", spTable2);	
-		tables.addTab("Scheduled Tasks", spTable3);	
-		tables.addTab("All Tasks", spTable4);	
-		
 		panel3.setPreferredSize(new Dimension(500, 560));
 		spTable.setPreferredSize(new Dimension(500, 260));
-		piePanel.setPreferredSize(new Dimension(300, 250));
-		projectPanel.setPreferredSize(new Dimension(350, 250));
-		taskPanel.setPreferredSize(new Dimension(350, 250));
-		
+		piePanel.setPreferredSize(new Dimension(350, 290));
+		projectPanel.setPreferredSize(new Dimension(350, 290));
+
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(70);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -182,7 +162,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 		table.getColumnModel().getColumn(3).setPreferredWidth(80);
 		table.getColumnModel().getColumn(4).setPreferredWidth(75);
 		table.getColumnModel().getColumn(5).setPreferredWidth(75);
-		
+
 		table4.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table4.getColumnModel().getColumn(0).setPreferredWidth(55);
 		table4.getColumnModel().getColumn(1).setPreferredWidth(80);
@@ -194,7 +174,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 		panel3.add(chartPanel);
 		panel3.add(tables);
 		panel2.add(piePanel);
-		panel2.add(status);
+		panel2.add(projectPanel);
 
 		panel.setLayout(grid);
 		panel.add(panel3);
@@ -204,18 +184,19 @@ public class StatisticsProductivity extends ApplicationFrame {
 	}
 
 	private CategoryDataset createDataset() {
-		DefaultCategoryDataset result = new DefaultCategoryDataset();
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		// DefaultCategoryDataset result = new DefaultCategoryDataset();
 
-//		 result.addValue(13, "Hours Completed", "Database Creation");
-//		 result.addValue(25, "Hours Remaining", "Database Creation");
-//		 result.addValue(17, "Hours Completed", "Testing");
-//		 result.addValue(13, "Hours Remaining", "Testing");
-//		 result.addValue(27, "Hours Completed", "Express");
-//		 result.addValue(30, "Hours Remaining", "Express");
-//		 result.addValue(44, "Hours Completed", "Management");
-//		 result.addValue(40, "Hours Remaining", "Management");
+		// String staffName = "Staff Name";
+		ArrayList<Object> statsData = stats.projectProductivity();
+		for (int i = 0; i < statsData.size(); i++) {
+			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
+			dataset.addValue((Number) row.get(0), row.get(1).toString(), row
+					.get(2).toString());
+		}
 
-		return result;
+
+		return dataset;
 	}
 
 	private PieDataset pieDataset() {
@@ -259,7 +240,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 
 	private JFreeChart projectChart(final CategoryDataset dataset) {
 		final JFreeChart chart = ChartFactory.createStackedBarChart(null,
-				"Projects", "Number Of Hours", dataset,
+				"Projects", "Tasks", dataset,
 				PlotOrientation.VERTICAL, true, true, false);
 
 		CategoryPlot plot = chart.getCategoryPlot();
@@ -324,27 +305,5 @@ public class StatisticsProductivity extends ApplicationFrame {
 
 	}
 
-	private static JFreeChart taskChart(PieDataset datasets) {
-
-		JFreeChart chart = ChartFactory.createPieChart(null, datasets, true,
-				true, false);
-
-		PiePlot plot = (PiePlot) chart.getPlot();
-		StandardPieSectionLabelGenerator labels = new StandardPieSectionLabelGenerator(
-				"{2}");
-		plot.setLabelGenerator(labels);
-		plot.setLabelFont(new Font("SansSerif", Font.PLAIN, 12));
-		plot.setNoDataMessage("No Data Available");
-		plot.setCircular(true);
-		plot.setLabelGap(0.2);
-		plot.setShadowXOffset(0);
-		plot.setShadowYOffset(0);
-		plot.setSimpleLabels(true);
-		plot.setSectionPaint("Not Started", new Color(189, 81, 78));
-		plot.setSectionPaint("In Progress", new Color(252, 192, 6));
-		plot.setSectionPaint("Completed", new Color(78, 130, 190));
-		return chart;
-
-	}
 
 }
