@@ -101,7 +101,6 @@ public class ScheduleAlgorithm {
                             }
                         }
 
-                        //tasks.remove(task);
                         toDeleteTasks.add(task);
                     }
 
