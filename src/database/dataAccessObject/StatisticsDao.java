@@ -135,6 +135,26 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
+	
+	
+	public ArrayList<Object> projectProductivity() {
+		ArrayList<Object> output = new ArrayList<Object>();
+		String sql = "SELECT project_name, task_status, COUNT(task_status)AS total FROM task NATURAL JOIN project GROUP BY project_id, task_status;";
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<Object>();
+				row.add(result.getInt("total"));
+				row.add(result.getString("task_status"));
+				row.add(result.getString("project_name"));
+				output.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return output;
+
+	}
 
 	public ArrayList<Object> usedData() {
 		ArrayList<Object> output = new ArrayList<Object>();
