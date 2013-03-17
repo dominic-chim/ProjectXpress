@@ -135,8 +135,7 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
-	
-	
+
 	public ArrayList<Object> usedData() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
@@ -191,6 +190,41 @@ public class StatisticsDao extends DatabaseRoot {
 		return rows;
 	}
 
+	public Object[][] projectsList() {
+
+		String sql = "SELECT project_id, project_name, project_priority, project_status FROM project;";
+
+		ArrayList<Object> data = new ArrayList<>();
+
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<>();
+				row.add(result.getString("project_id"));
+				row.add(result.getString("project_name"));
+				row.add(result.getString("project_priority"));
+				row.add(result.getString("project_status"));
+				data.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
+			@SuppressWarnings("unchecked")
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
+			}
+		}
+		return rows;
+	}
+
 	public Object[][] allStats() {
 
 		String sql = "SELECT staff_id, b.staff_name, COUNT(DISTINCT(a.project_id)) AS projectTotal, COUNT(DISTINCT(c.skill_id)) AS skillTotal FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN staff_skill_level as c GROUP BY b.staff_name;";
@@ -205,6 +239,120 @@ public class StatisticsDao extends DatabaseRoot {
 				row.add(result.getString("b.staff_name"));
 				row.add(result.getString("projectTotal"));
 				row.add(result.getString("skillTotal"));
+				data.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
+			@SuppressWarnings("unchecked")
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
+			}
+		}
+		return rows;
+	}
+
+	public Object[][] scheduledProjects() {
+
+		String sql = "SELECT project_id, project_name, project_priority, COUNT(task_id) AS total , CAST(min(start_datetime) AS DATE)  AS start_datetime, CAST(end_datetime AS DATE) AS end_datetime FROM project NATURAL JOIN task NATURAL JOIN scheduling_result WHERE version IN (SELECT MAX(version) FROM scheduling_result)GROUP BY project_id, version;";
+
+		ArrayList<Object> data = new ArrayList<>();
+
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<>();
+				row.add(result.getString("project_id"));
+				row.add(result.getString("project_name"));
+				row.add(result.getString("project_priority"));
+				row.add(result.getString("total"));
+				row.add(result.getString("start_datetime"));
+				row.add(result.getString("end_datetime"));
+
+				data.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
+			@SuppressWarnings("unchecked")
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
+			}
+		}
+		return rows;
+	}
+
+	public Object[][] scheduledTasks() {
+
+		String sql = "SELECT task_id, task_name, staff_name, CAST(min(start_datetime) AS DATE)  AS start_datetime, CAST(end_datetime AS DATE) AS end_datetime, task_risk_level FROM scheduling_result NATURAL JOIN task NATURAL JOIN project NATURAL JOIN staff WHERE version IN (SELECT MAX(version) FROM scheduling_result) GROUP BY project_id, task_id ORDER BY version;";
+
+		ArrayList<Object> data = new ArrayList<>();
+
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<>();
+				row.add(result.getString("task_id"));
+				row.add(result.getString("task_name"));
+				row.add(result.getString("staff_name"));
+				row.add(result.getString("start_datetime"));
+				row.add(result.getString("end_datetime"));
+				row.add(result.getString("task_risk_level"));
+
+				data.add(row);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
+			@SuppressWarnings("unchecked")
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
+			}
+		}
+		return rows;
+	}
+
+	public Object[][] tasksList() {
+
+		String sql = "SELECT task_id, task_name, project_name, skill_name, task_duration, task_status FROM task NATURAL JOIN project FULL JOIN skill WHERE skill_id = task_required_skill;";
+
+		ArrayList<Object> data = new ArrayList<>();
+
+		try {
+			ResultSet result = db.executeQuery(sql);
+			while (result.next()) {
+				ArrayList<Object> row = new ArrayList<>();
+				row.add(result.getString("task_id"));
+				row.add(result.getString("task_name"));
+				row.add(result.getString("project_name"));
+				row.add(result.getString("skill_name"));
+				row.add(result.getString("task_duration"));
+				row.add(result.getString("task_status"));
+
 				data.add(row);
 			}
 		} catch (Exception e) {
