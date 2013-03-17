@@ -8,9 +8,16 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -43,6 +50,10 @@ public class StatisticsProductivity extends ApplicationFrame {
 	GridBagLayout grid = new GridBagLayout();
 	public JPanel panel = new JPanel();
 	public JPanel panel2 = new JPanel(new GridLayout(2, 1));
+	public JPanel panel3 = new JPanel(new GridLayout(2, 1));
+	public JPanel panel4 = new JPanel();
+	
+	JTable table, table2, table3, table4;
 	
 	final CategoryDataset dataset = createDataset();
 	final JFreeChart chart = projectChart(dataset);
@@ -61,10 +72,68 @@ public class StatisticsProductivity extends ApplicationFrame {
 	final ChartPanel taskPanel = new ChartPanel(taskchart);
 
 	final JTabbedPane status = new JTabbedPane();
+	final JTabbedPane tables = new JTabbedPane();
 	TitledBorder topBorder;
 
 	public StatisticsProductivity(final String title) {
 		super(title);
+		
+		Object rows[][] = stats.scheduledProjects();
+		Object columns[] = { "Project ID", "Project Name", "Priority", "No. of Tasks",
+				"Start Date", "End Date" };
+		DefaultTableModel model = new DefaultTableModel(rows, columns);
+		table = new JTable(model) {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; // Disallow the editing of any cell
+			}
+		};
+		
+		Object rows2[][] = stats.projectsList();
+		Object columns2[] = { "Project ID", "Project Name", "Priority", "Project Status" };
+		DefaultTableModel model2 = new DefaultTableModel(rows2, columns2);
+		table2 = new JTable(model2) {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; // Disallow the editing of any cell
+			}
+		};
+		
+		
+		Object rows3[][] = stats.scheduledTasks();
+		Object columns3[] = { "Task ID", "Task Name", "Staff Allocation", "Start Date", "End Date", "Risk Level"};
+		DefaultTableModel model3 = new DefaultTableModel(rows3, columns3);
+		table3 = new JTable(model3) {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; // Disallow the editing of any cell
+			}
+		};
+		
+		Object rows4[][] = stats.tasksList();
+		Object columns4[] = { "Task ID", "Task Name", "Project", "Required Skill", "Duration (hrs)", "Task Status"};
+		DefaultTableModel model4 = new DefaultTableModel(rows4, columns4);
+		table4 = new JTable(model4) {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false; // Disallow the editing of any cell
+			}
+		};
+		
+		
+		JScrollPane spTable = new JScrollPane(table);
+		JScrollPane spTable2 = new JScrollPane(table2);
+		JScrollPane spTable3 = new JScrollPane(table3);
+		JScrollPane spTable4 = new JScrollPane(table4);
+	
 		topBorder = BorderFactory
 				.createTitledBorder("Project Productivity In Hours");
 		topBorder.setTitlePosition(TitledBorder.TOP);
@@ -77,20 +146,58 @@ public class StatisticsProductivity extends ApplicationFrame {
 		topBorder = BorderFactory
 				.createTitledBorder("Task Status Distribution");
 		taskPanel.setBorder(topBorder);
+		topBorder = BorderFactory
+				.createTitledBorder("List of Scheduled Projects");
+		spTable.setBorder(topBorder);
+		topBorder = BorderFactory
+				.createTitledBorder("List of Projects");
+		spTable2.setBorder(topBorder);
+		taskPanel.setBorder(topBorder);
+		topBorder = BorderFactory
+				.createTitledBorder("List of Scheduled Tasks");
+		spTable3.setBorder(topBorder);
+		taskPanel.setBorder(topBorder);
+		topBorder = BorderFactory
+				.createTitledBorder("List of Scheduled Tasks");
+		spTable4.setBorder(topBorder);
 
 		status.addTab("Project Status", projectPanel);
-		status.addTab("Task Status", taskPanel);
+		status.addTab("Task Status", taskPanel);	
 
-		chartPanel.setPreferredSize(new Dimension(500, 560));
+		tables.addTab("Scheduled Projects", spTable);	
+		tables.addTab("All Projects", spTable2);	
+		tables.addTab("Scheduled Tasks", spTable3);	
+		tables.addTab("All Tasks", spTable4);	
+		
+		panel3.setPreferredSize(new Dimension(500, 560));
+		spTable.setPreferredSize(new Dimension(500, 260));
 		piePanel.setPreferredSize(new Dimension(300, 250));
 		projectPanel.setPreferredSize(new Dimension(350, 250));
 		taskPanel.setPreferredSize(new Dimension(350, 250));
+		
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getColumnModel().getColumn(0).setPreferredWidth(70);
+		table.getColumnModel().getColumn(1).setPreferredWidth(100);
+		table.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table.getColumnModel().getColumn(3).setPreferredWidth(80);
+		table.getColumnModel().getColumn(4).setPreferredWidth(75);
+		table.getColumnModel().getColumn(5).setPreferredWidth(75);
+		
+		table4.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table4.getColumnModel().getColumn(0).setPreferredWidth(55);
+		table4.getColumnModel().getColumn(1).setPreferredWidth(80);
+		table4.getColumnModel().getColumn(2).setPreferredWidth(70);
+		table4.getColumnModel().getColumn(3).setPreferredWidth(90);
+		table4.getColumnModel().getColumn(4).setPreferredWidth(87);
+		table4.getColumnModel().getColumn(5).setPreferredWidth(75);
 
+		panel3.add(chartPanel);
+		panel3.add(tables);
 		panel2.add(piePanel);
 		panel2.add(status);
 
 		panel.setLayout(grid);
-		panel.add(chartPanel);
+		panel.add(panel3);
 		panel.add(panel2);
 		add(panel);
 
@@ -107,26 +214,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 //		 result.addValue(30, "Hours Remaining", "Express");
 //		 result.addValue(44, "Hours Completed", "Management");
 //		 result.addValue(40, "Hours Remaining", "Management");
-//		 result.addValue(44, "Hours Completed", "Management1");
-//		 result.addValue(40, "Hours Remaining", "Management1");
-//		 result.addValue(44, "Hours Completed", "Management2");
-//		 result.addValue(40, "Hours Remaining", "Management2");
-//		 result.addValue(44, "Hours Completed", "Management3");
-//		 result.addValue(40, "Hours Remaining", "Management3");
-//		 result.addValue(44, "Hours Completed", "Management4");
-//		 result.addValue(40, "Hours Remaining", "Management4");
-//		 result.addValue(44, "Hours Completed", "Management5");
-//		 result.addValue(40, "Hours Remaining", "Management5");
-//		 result.addValue(44, "Hours Completed", "Management6");
-//		 result.addValue(40, "Hours Remaining", "Management6");
-//		 result.addValue(44, "Hours Completed", "Management7");
-//		 result.addValue(40, "Hours Remaining", "Management7");
-//		 result.addValue(44, "Hours Completed", "Management8");
-//		 result.addValue(40, "Hours Remaining", "Management8");
-//		 result.addValue(44, "Hours Completed", "Management9");
-//		 result.addValue(40, "Hours Remaining", "Management9");
-//		 result.addValue(44, "Hours Completed", "Management11");
-//		 result.addValue(40, "Hours Remaining", "Management11");
+
 		return result;
 	}
 

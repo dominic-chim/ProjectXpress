@@ -98,6 +98,8 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		spTable.setBorder(topBorder);
 		topBorder = BorderFactory.createTitledBorder("Task Count By Staff");
 		taskPanel.setBorder(topBorder);
+		topBorder = BorderFactory.createTitledBorder("Time Usage by Staff");
+		usedPanel.setBorder(topBorder);
 		topBorder = BorderFactory
 				.createTitledBorder("Staff Distribution By Project");
 		piePanel.setBorder(topBorder);
