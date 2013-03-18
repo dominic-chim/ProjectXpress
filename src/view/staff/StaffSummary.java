@@ -226,13 +226,15 @@ public class StaffSummary extends JPanel {
 				}
 
 				int gridWidth = 1;
+				
+				TaskDO currentTask = dateOfTask.getTask();
 
 				for (int j = i + 1; j < orderedTaskDate.size(); j++) {
 
 					TaskDate nextDateTask = orderedTaskDate.get(j);
 
-					if (dateOfTask.getTask().getTaskId() == nextDateTask
-							.getTask().getTaskId()) {
+					if (currentTask.getTaskId() == nextDateTask
+							.getTask().getTaskId() && currentTask.getProjectId() == nextDateTask.getTask().getProjectId()) {
 						gridWidth++;
 						i++;
 					} else {
