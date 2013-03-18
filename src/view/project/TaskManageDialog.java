@@ -59,7 +59,7 @@ public class TaskManageDialog extends JDialog {
         jtxtTaskName.setText(task.getTaskName());
         jtxtDuration.setText(task.getTaskOriginalDuration() + "");
         jtxtReleaseTime.setText(task.getTaskReleaseTime().getDateTime());
-        jtxtRemainingTime.setText(task.getTaskDuration() + "");
+        jtxtRemainingTime.setText(task.getTaskRemainingTime() + "");
         jcbStatus.setSelectedItem(task.getTaskStatus());
 
         //jcbRiskLevel.setSelectedItem(task.getTaskRistLevel());

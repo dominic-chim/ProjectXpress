@@ -88,6 +88,10 @@ public class DateTime {
 
         int daysBetween = hour / 8;
         int hoursRemain = hour % 8;
+        if(hoursRemain == 0 && hour != 0) {
+            daysBetween--;
+            hoursRemain = 8;
+        }
         dt = dt.plusDays(daysBetween);
 
         if (dt.getHourOfDay() + hoursRemain > 17) {

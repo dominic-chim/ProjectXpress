@@ -110,6 +110,10 @@ public class TaskDO {
         return (int)Math.ceil(taskRemainingTime * risk * 0.01);
     }
 
+    public int getTaskRemainingTime() {
+    	return taskRemainingTime;
+    }
+    
     /**
      * @param taskDuration the taskDuration to set
      */
