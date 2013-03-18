@@ -6,6 +6,7 @@ import static java.lang.Math.max;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.PriorityQueue;
 
 import util.DateTime;
@@ -44,6 +45,8 @@ public class ScheduleAlgorithm {
         this.projectStartingDate = projectStartingDate;
         this.staffList = staffList;
         this.projects = projects;
+
+
 
         // convert DateTime to 123..
         for (StaffDO staff : staffList) {
@@ -163,11 +166,11 @@ public class ScheduleAlgorithm {
                     // reconstruct decisionSet to get the right priority queue
                     ArrayList<DecisionSetObject> dcos = new ArrayList<DecisionSetObject>();
                     for (DecisionSetObject toUpdate : decisionSet) {
-                    	dcos.add(toUpdate);
+                        dcos.add(toUpdate);
                     }
                     decisionSet.clear();
                     for (DecisionSetObject dco : dcos) {
-                    	decisionSet.add(dco);
+                        decisionSet.add(dco);
                     }
 
                 }
