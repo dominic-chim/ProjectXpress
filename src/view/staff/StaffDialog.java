@@ -301,7 +301,7 @@ public class StaffDialog extends JDialog {
 
 		add(addStaffScroll);
 		setLocationRelativeTo(view);
-		setVisible(true);
+		//setVisible(true);
         
 
 	}

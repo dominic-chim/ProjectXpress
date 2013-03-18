@@ -58,6 +58,7 @@ public class StaffController implements ActionListener {
 		case "Add Staff":
 
 			staffList.addStaffDialog(this, null);
+			
 
 			break;
 

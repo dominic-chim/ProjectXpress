@@ -82,6 +82,7 @@ public class StaffList extends JPanel {
 	public void addStaffDialog(ActionListener controller, StaffDO staff) {
 
 		staffDialog = new StaffDialog(view, controller, staff);
+		staffDialog.setVisible(true);
 
 	}
 
