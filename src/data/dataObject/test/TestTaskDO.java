@@ -44,8 +44,8 @@ public class TestTaskDO extends GroupTestCase{
 	}
 	
 	public void testSetTaskRistLevel(){
-		tdo.setTaskRistLevel("high");
-		assertEquals("high", tdo.getTaskRistLevel());
+		tdo.setTaskRiskLevel("high");
+		assertEquals("high", tdo.getTaskRiskLevel());
 	}
 	
 	public void testSetTaskReleaseTime(){

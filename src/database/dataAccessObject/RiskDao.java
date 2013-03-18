@@ -3,6 +3,7 @@ package database.dataAccessObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import database.DatabaseRoot;
 
@@ -11,7 +12,7 @@ public class RiskDao extends DatabaseRoot{
     int risk;
     double time,totalTime;  
         
-    public int getRiskLeve(){
+    public int getRiskLevel(){
     return this.risk;
     }
     
@@ -46,6 +47,24 @@ public class RiskDao extends DatabaseRoot{
             e.printStackTrace();
         }
         return riskNames.toArray(new String[riskNames.size()]);
+    }
+
+    public HashMap<String, Integer> getRiskMap() {
+        HashMap<String, Integer> riskLevel = new HashMap<String, Integer>();
+
+        String sql = "SELECT task_risk_level, risk_percentage FROM risk_level";
+
+        try {
+            ResultSet result = connection.createStatement().executeQuery(sql);
+            while(result.next()) {
+                riskLevel.put(result.getString("task_risk_level"), result.getInt("risk_percentage"));
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return riskLevel;
     }
 
 }

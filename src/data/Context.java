@@ -2,32 +2,41 @@ package data;
 
 import java.util.HashMap;
 
+import database.dataAccessObject.RiskDao;
 import database.dataAccessObject.SkillDao;
 
 public class Context {
 
     private static HashMap<String, Integer> skillsRev = new HashMap<String, Integer>();
     private static HashMap<Integer, String> skills;
+
+    private static HashMap<String, Integer> riskLevel = new HashMap<String, Integer>();
     
     static {
         // TODO read from database
         SkillDao skillDao = new SkillDao();
+        RiskDao riskDao = new RiskDao();
         HashMap<Integer, String> skillMap = skillDao.getSkillMap();
         skills = skillMap;
         for(int skillId : skillMap.keySet()) {
             skillsRev.put(skillMap.get(skillId), skillId);
         }
+        riskLevel = riskDao.getRiskMap();
     }
 
     
     public static HashMap<String, Integer> getSkillRevMap() {
-    	
+        
         return skillsRev;
     }
     
     public static HashMap<Integer, String> getSkillMap() {
-    	
+        
         return skills;
+    }
+    
+    public static HashMap<String, Integer> getRiskLevel() {
+        return riskLevel;
     }
     
     /**
@@ -35,8 +44,8 @@ public class Context {
      * TODO finish it
      */
     public void updateSkills() {
-    	
-    	// TODO read from database
+        
+        // TODO read from database
         SkillDao skillDao = new SkillDao();
         HashMap<Integer, String> skillMap = skillDao.getSkillMap();
         

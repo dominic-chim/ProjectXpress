@@ -10,7 +10,6 @@ import view.MainFrame;
 
 /**
  * program entrance
- * TODO create controller and model 
  * 
  * @author Bob
  *

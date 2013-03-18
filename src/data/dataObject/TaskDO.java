@@ -2,6 +2,8 @@ package data.dataObject;
 
 import java.util.ArrayList;
 
+import data.Context;
+
 import util.DateTime;
 
 public class TaskDO {
@@ -12,7 +14,7 @@ public class TaskDO {
     private int taskRequiredSkill;
     private int taskDuration;
     private int taskRemainingTime;
-    private String taskRistLevel;
+    private String taskRiskLevel;
     private DateTime taskReleaseTime;
     private String taskStatus;
     private ArrayList<Integer> requiredTaskIds = new ArrayList<Integer>();
@@ -22,7 +24,7 @@ public class TaskDO {
 
     public TaskDO(int projectId, int taskId, String taskName, 
             int taskRequiredSkill, int taskDuration, int taskRemainingTime,
-            String taskRistLevel, DateTime taskReleaseTime,
+            String taskRiskLevel, DateTime taskReleaseTime,
             String taskStatus, ArrayList<Integer> requiredTaskIds) {
         
         setProjectId(projectId);
@@ -31,7 +33,7 @@ public class TaskDO {
         setTaskRequiredSkill(taskRequiredSkill);
         setTaskDuration(taskDuration);
         setTaskRemainingTime(taskRemainingTime);
-        setTaskRistLevel(taskRistLevel);
+        setTaskRiskLevel(taskRiskLevel);
         setTaskReleaseTime(taskReleaseTime);
         setTaskStatus(taskStatus);
         setRequiredTaskIds(requiredTaskIds);
@@ -104,8 +106,8 @@ public class TaskDO {
      * this method return the real time needed for the task
      */
     public int getTaskDuration() {
-        // TODO add risk here
-        return taskRemainingTime;
+        int risk = Context.getRiskLevel().get(getTaskRiskLevel());
+        return (int)Math.ceil(taskRemainingTime * risk * 0.01);
     }
 
     /**
@@ -118,15 +120,15 @@ public class TaskDO {
     /**
      * @return the taskRistLevel
      */
-    public String getTaskRistLevel() {
-        return taskRistLevel;
+    public String getTaskRiskLevel() {
+        return taskRiskLevel;
     }
 
     /**
      * @param taskRistLevel the taskRistLevel to set
      */
-    public void setTaskRistLevel(String taskRistLevel) {
-        this.taskRistLevel = taskRistLevel;
+    public void setTaskRiskLevel(String taskRiskLevel) {
+        this.taskRiskLevel = taskRiskLevel;
     }
 
     /**
@@ -184,7 +186,7 @@ public class TaskDO {
         String output = "Task name: " + taskName + "\n";
         output += "Task Required Skill: " + taskRequiredSkill + "\n";
         output += "Task Duration: " + taskDuration + "\n";
-        output += "Task risk level: " + taskRistLevel + "\n";
+        output += "Task risk level: " + taskRiskLevel + "\n";
         output += "Task Release time: " + taskReleaseTime.getDateTime() + "\n";
         output += "Task Status: " + taskStatus + "\n";
         output += "Task Remaining time: " + taskRemainingTime + "\n";

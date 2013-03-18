@@ -45,7 +45,7 @@ public class TaskDao extends DatabaseRoot {
                 int taskRequiredSkill = result.getInt("task_required_skill");
                 int taskDuration = result.getInt("task_duration");
                 int taskRemainingTime = result.getInt("task_remaining_time");
-                String taskRistLevel = result.getString("task_risk_level");
+                String taskRiskLevel = result.getString("task_risk_level");
                 DateTime taskReleaseTime = new DateTime(result.getString("task_release_time"));
                 String taskStatus = result.getString("task_status");
 
@@ -60,7 +60,7 @@ public class TaskDao extends DatabaseRoot {
                 }
                 return new TaskDO(projectId, taskId, taskName, 
                             taskRequiredSkill, taskDuration, taskRemainingTime,
-                            taskRistLevel, taskReleaseTime, 
+                            taskRiskLevel, taskReleaseTime, 
                             taskStatus, requiredTaskIds);
             }
         } catch (SQLException e) {
@@ -78,7 +78,7 @@ public class TaskDao extends DatabaseRoot {
                                     projectId, taskId, task.getTaskName(),
                                     task.getTaskRequiredSkill(),
                                     task.getTaskOriginalDuration(),
-                                    task.getTaskRistLevel(),
+                                    task.getTaskRiskLevel(),
                                     task.getTaskReleaseTime().getDateTime(),
                                     task.getTaskStatus(),
                                     task.getTaskDuration()
@@ -117,7 +117,7 @@ public class TaskDao extends DatabaseRoot {
                 task.getTaskName(),
                 task.getTaskRequiredSkill(),
                 task.getTaskOriginalDuration(),
-                task.getTaskRistLevel(),
+                task.getTaskRiskLevel(),
                 task.getTaskReleaseTime().getDateTime(),
                 task.getTaskStatus(),
                 task.getTaskDuration(),

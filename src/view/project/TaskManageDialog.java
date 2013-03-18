@@ -116,7 +116,7 @@ public class TaskManageDialog extends JDialog {
         for(String riskLevel : riskLevels) {
             jcbRiskLevel.addItem(riskLevel);
         }
-        jcbRiskLevel.setSelectedItem(task.getTaskRistLevel());
+        jcbRiskLevel.setSelectedItem(task.getTaskRiskLevel());
 
     }
 

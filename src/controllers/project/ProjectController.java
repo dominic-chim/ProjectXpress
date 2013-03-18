@@ -330,7 +330,7 @@ public class ProjectController {
         String taskName = valuesMap.get("task_name");
         int requiredSkillId = Context.getSkillRevMap().get(valuesMap.get("required_skill"));
         int taskDuration = Integer.parseInt(valuesMap.get("duration"));
-        String taskRistLevel = valuesMap.get("risk_level");
+        String taskRiskLevel = valuesMap.get("risk_level");
         DateTime taskReleaseTime = new DateTime(valuesMap.get("release_time"));
         String status = valuesMap.get("status");
 
@@ -339,7 +339,7 @@ public class ProjectController {
         task.setTaskRequiredSkill(requiredSkillId);
         task.setTaskDuration(taskDuration);
         task.setTaskRemainingTime(taskDuration);
-        task.setTaskRistLevel(taskRistLevel);
+        task.setTaskRiskLevel(taskRiskLevel);
         task.setTaskReleaseTime(taskReleaseTime);
         task.setTaskStatus(status);
     }
