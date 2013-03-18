@@ -108,22 +108,29 @@ public class ProjectController {
 
             switch (e.getActionCommand()) {
                 case "update":
+                    try {
 
-                    HashMap<String, String> valuesMap = dialog.getAllInputValue();
-                    String projectName = valuesMap.get("project_name");
-                    DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
-                    int priority = Integer.parseInt(valuesMap.get("priority"));
-                    String status = valuesMap.get("status");
+                        HashMap<String, String> valuesMap = dialog.getAllInputValue();
+                        String projectName = valuesMap.get("project_name");
+                        DateTime projectDueDate = new DateTime(valuesMap.get("due_date"));
+                        int priority = Integer.parseInt(valuesMap.get("priority"));
+                        String status = valuesMap.get("status");
 
-                    project.setProjectName(projectName);
-                    project.setProjectDueDate(projectDueDate);
-                    project.setProjectPriority(priority);
-                    project.setProjectStatus(status);
+                        project.setProjectName(projectName);
+                        project.setProjectDueDate(projectDueDate);
+                        project.setProjectPriority(priority);
+                        project.setProjectStatus(status);
 
-                    (new ProjectDao()).updateProjectInfo(project);
+                        (new ProjectDao()).updateProjectInfo(project);
 
-                    updateProjectList();
-                    dialog.dispose();
+                        updateProjectList();
+                        dialog.dispose();
+                    } catch (Exception excp) {
+                        String ErrMsg = "Invalid input: " + excp.getMessage();
+                        JOptionPane.showMessageDialog(jdlogAddProject, 
+                                ErrMsg, "Invalid Input", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
                 case "cancel":
                     dialog.dispose();
@@ -152,17 +159,24 @@ public class ProjectController {
             switch (e.getActionCommand()) {
                 case "update":
 
-                    HashMap<String, String> valuesMap = dialog.getAllInputValue();
-                    setTaskInfo(valuesMap, task);
+                    try {
+                        HashMap<String, String> valuesMap = dialog.getAllInputValue();
+                        setTaskInfo(valuesMap, task);
 
-                    int remainingTime = Integer.parseInt(valuesMap.get("remaining_time"));
+                        int remainingTime = Integer.parseInt(valuesMap.get("remaining_time"));
 
-                    task.setTaskRemainingTime(remainingTime);
+                        task.setTaskRemainingTime(remainingTime);
 
-                    (new TaskDao()).updateTaskInfo(task);
+                        (new TaskDao()).updateTaskInfo(task);
 
-                    updateProjectList();
-                    dialog.dispose();
+                        updateProjectList();
+                        dialog.dispose();
+                    } catch (Exception excp) {
+                        String ErrMsg = "Invalid input: " + excp.getMessage();
+                        JOptionPane.showMessageDialog(jdlogAddProject, 
+                                ErrMsg, "Invalid Input", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
                 case "cancel":
                     dialog.dispose();

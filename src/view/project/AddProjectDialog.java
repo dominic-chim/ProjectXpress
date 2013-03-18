@@ -53,11 +53,11 @@ public class AddProjectDialog extends JDialog {
         setLayout(new BorderLayout());
 
         // add contents to top panel
-        jpnlTop.setLayout(new GridLayout(4, 2));
+        jpnlTop.setLayout(new GridLayout(3, 2));
         jpnlTop.add(jlbProjectName);
         jpnlTop.add(jtxtProjectName);
-        jpnlTop.add(jlbDueDate);
-        jpnlTop.add(jtxtDueDate);
+        //jpnlTop.add(jlbDueDate);
+        //jpnlTop.add(jtxtDueDate);
         jpnlTop.add(jlbPriority);
         jpnlTop.add(jtxtPriority);
         jpnlTop.add(jlbStatus);

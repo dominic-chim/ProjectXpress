@@ -25,9 +25,8 @@ public class SchedulingDialog extends JDialog {
     private JSplitPane jspCenterContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jpnlCenterLeft, jpnlCenterRight);
 
     private JLabel jlblStaringDate = new JLabel("Starting Date");
-    // TODO change it back
-    //private JTextArea jtxtStartingDate = new JTextArea(DateTime.dataBaseDateFormat.format(new Date()));
-    private JTextArea jtxtStartingDate = new JTextArea("2013-02-01 09:00:00");
+    private JTextArea jtxtStartingDate = new JTextArea(DateTime.dataBaseDateFormat.format(new Date()));
+    //private JTextArea jtxtStartingDate = new JTextArea("2013-02-01 09:00:00");
 
     private JButton jbtnSchedule = new JButton("Schedule");
     private JButton jbtnCancel = new JButton("Cancel");
@@ -57,7 +56,9 @@ public class SchedulingDialog extends JDialog {
         jpnlBottomContainer.add(jbtnCancel);
 
         // container settings
-        //jpnlCenterContainer.setPreferredSize(new Dimension(300, 50));
+        jpnlCenterLeft.setBorder(BorderFactory.createTitledBorder("Select projects"));
+        jpnlCenterRight.setBorder(BorderFactory.createTitledBorder("Select staffs"));
+        jspCenterContainer.setResizeWeight(0.5);
 
         add(jpnlTopContainer, BorderLayout.NORTH);
         add(new JScrollPane(jspCenterContainer), BorderLayout.CENTER);

@@ -66,7 +66,7 @@ public class TaskManageDialog extends JDialog {
         //jcbRequiredSkill.setSelectedItem(Context.getSkillMap().get(task.getTaskRequiredSkill()));
 
         // adding things to top panel
-        jpnlTop.setLayout(new GridLayout(7, 2));
+        jpnlTop.setLayout(new GridLayout(6, 2));
         jpnlTop.add(jlbTaskName);
         jpnlTop.add(jtxtTaskName);
         jpnlTop.add(jlbRequiredSkill);
@@ -75,8 +75,8 @@ public class TaskManageDialog extends JDialog {
         jpnlTop.add(jtxtDuration);
         jpnlTop.add(jlbRiskLevel);
         jpnlTop.add(jcbRiskLevel);
-        jpnlTop.add(jlbReleaseTime);
-        jpnlTop.add(jtxtReleaseTime);
+        //jpnlTop.add(jlbReleaseTime);
+        //jpnlTop.add(jtxtReleaseTime);
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
         jpnlTop.add(jlbRemainingTime);

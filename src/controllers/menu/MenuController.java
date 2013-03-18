@@ -115,9 +115,6 @@ public class MenuController implements ActionListener {
 					for (int projectId : projectIds) {
 						projects.add(projectDB.getProjectById(projectId));
 					}
-					// if want to choose Staff, modify here
-					// ArrayList<StaffDO> staffs = (new
-					// StaffDao()).getAllStaff();
 					ArrayList<StaffDO> staffs = new ArrayList<StaffDO>();
 					for (int staffId : sdialog.getSelectedStaffIds()) {
 						staffs.add((new StaffDao()).getStaffById(staffId));

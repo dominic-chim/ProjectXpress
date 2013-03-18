@@ -51,7 +51,7 @@ public class AddTaskDialog extends JDialog {
         setLayout(new BorderLayout());
 
         // adding things to top panel
-        jpnlTop.setLayout(new GridLayout(6, 2));
+        jpnlTop.setLayout(new GridLayout(5, 2));
         jpnlTop.add(jlbTaskName);
         jpnlTop.add(jtxtTaskName);
         jpnlTop.add(jlbRequiredSkill);
@@ -60,8 +60,8 @@ public class AddTaskDialog extends JDialog {
         jpnlTop.add(jtxtDuration);
         jpnlTop.add(jlbRiskLevel);
         jpnlTop.add(jcbRiskLevel);
-        jpnlTop.add(jlbReleaseTime);
-        jpnlTop.add(jtxtReleaseTime);
+        //jpnlTop.add(jlbReleaseTime);
+        //jpnlTop.add(jtxtReleaseTime);
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
 
