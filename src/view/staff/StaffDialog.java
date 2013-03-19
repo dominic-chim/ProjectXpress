@@ -572,6 +572,13 @@ public class StaffDialog extends JDialog {
 		return this.queries;
 	}
 
+	public void inputError(String errorMessage) {
+		
+		JOptionPane.showMessageDialog(this, errorMessage,
+				"Error", JOptionPane.ERROR_MESSAGE);
+		
+	}
+	
 	public void addController(ActionListener controller) {
 
 		btnAddHoliday.addActionListener(controller);

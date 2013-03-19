@@ -118,17 +118,18 @@ public class StaffSummary extends JPanel {
 
 		dayXPos += 8;
 		
-		p = Pattern.compile("(.*) (.*):(.*):(.*)");
-		m = p.matcher(currentDateTime.getDateTime());
-
-		while (m.find()) {
-			date = m.group(2);
-		}
-		
-		System.out.println("INT !" + Integer.parseInt(date));
+//		p = Pattern.compile("(.*) (.*):(.*):(.*)");
+//		m = p.matcher(currentDateTime.getDateTime());
+//
+//		while (m.find()) {
+//			date = m.group(2);
+//		}
+//		
+//		System.out.println("INT !" + Integer.parseInt(date));
 		currentDateTime = DateTime.nextDay(currentDateTime);
-		currentDateTime = DateTime.hourLater(currentDateTime, Integer.parseInt(date)-9);
-
+//		currentDateTime = DateTime.hourLater(currentDateTime, Integer.parseInt(date)-9);
+		
+//		System.out.println("After " + currentDateTime.getDateTime());
 
 	}
 
@@ -226,12 +227,9 @@ public class StaffSummary extends JPanel {
 
 				while (currentDateTime.before(DateTime.hourLater(dateOfTask
 						.getDate(), dateOfTask.getTask().getTaskDuration()))) {
-					System.out.println("Current Date Time : " + currentDateTime.getDateTime() + " , dateOfTask: " + dateOfTask.getDate().getDateTime());
 					addDay();
 				}
 				
-				System.out.println("Ended Loop");
-
 				gbc.gridy = yPos;
 				gbc.gridx = xPos;
 
