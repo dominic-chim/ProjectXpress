@@ -68,7 +68,7 @@ public class StaffSummary extends JPanel {
 					resultDB.getResultByStaff(staffId));
 		}
 
-		DateTime projectStartDate = resultDB.getStartingDateTime();
+		projectStartDate = resultDB.getStartingDateTime();
 		// DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
 
 		this.currentDateTime = projectStartDate;
