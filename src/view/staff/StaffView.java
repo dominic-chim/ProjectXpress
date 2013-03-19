@@ -20,7 +20,7 @@ public class StaffView extends JPanel {
 
     private JTabbedPane mainTab = new JTabbedPane();
     MainFrame view;
-    private StaffSummary staffSummary = new StaffSummary();
+    private StaffSummary staffSummary = null;
 
     public StaffView(MainFrame view) {
     	this.view = view;
@@ -44,7 +44,11 @@ public class StaffView extends JPanel {
        
         StaffAllocation staffAllocation = new StaffAllocation();
 
+        staffSummary = new StaffSummary(view);
+       // this.staffSummary.setCellColour(view.initialColour);
+       // this.staffSummary.setIds(view.getids);
         JScrollPane staffSummaryScrollPane = new JScrollPane(this.staffSummary);
+       
 
         
         tabPanel.setLayout(new BorderLayout());

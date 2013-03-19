@@ -34,6 +34,10 @@ public class ProjectSummary extends JPanel {
 	private JLabel lblDay;
 	private ArrayList<Integer> projectIds = new ArrayList<Integer>();
 	private CellColour colourit = new CellColour();
+	final Color Headers = new Color(220,20,60);
+	final Color border = new Color(220,220,220);
+	final Color cell = new Color(72,118,255);
+
 
 	public ProjectSummary() {
 
@@ -75,7 +79,7 @@ public class ProjectSummary extends JPanel {
 	}
 
 	public void addDay() {
-
+	
 		// Add Day
 		gbc.gridy = 0;
 		gbc.gridwidth = 8;
@@ -91,7 +95,10 @@ public class ProjectSummary extends JPanel {
 		}
 
 		lblDay = new JLabel(date, JLabel.HORIZONTAL);
-		lblDay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblDay.setBorder(BorderFactory.createLineBorder(border));
+		lblDay.setBackground(Headers);
+		lblDay.setForeground(Color.white);
+		lblDay.setOpaque(true);
 		add(lblDay, gbc);
 
 		// Add Hours of Day
@@ -105,7 +112,10 @@ public class ProjectSummary extends JPanel {
 		for (int i = 9; i < 17; i++) {
 
 			lblHours = new JLabel(Integer.toString(i), JLabel.HORIZONTAL);
-			lblHours.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			lblHours.setBorder(BorderFactory.createLineBorder(border));
+			lblHours.setBackground(Headers);
+			lblHours.setForeground(Color.white);
+			lblHours.setOpaque(true);
 			gbc.gridx = hourPos++;
 
 			add(lblHours, gbc);
@@ -178,14 +188,18 @@ public class ProjectSummary extends JPanel {
 
 			JLabel projectName = new JLabel(projects.getProjectName(),
 					JLabel.HORIZONTAL);
-
-			for (int i = 0; i < projectIds.size(); i++) {
+			
+			projectName.setBackground(Headers);
+			projectName.setForeground(Color.white);
+			
+			//set headers to random generated colour
+			/*for (int i = 0; i < projectIds.size(); i++) {
 				if (projectIds.get(i).equals(projects.getProjectId()) == true) {
 					projectName.setBackground(colourit.getColor().get(i));
 				}
-			}
+			}*/
 
-			projectName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			projectName.setBorder(BorderFactory.createLineBorder(border));
 			projectName.setOpaque(true);
 
 			// In Order
@@ -253,9 +267,13 @@ public class ProjectSummary extends JPanel {
 						int blankLength = DateTime.duration(currentTime, time);
 
 						gbc.gridwidth = blankLength;
-						add(lblBlank = new JLabel(""), gbc);
+						lblBlank = new JLabel("");
 						lblBlank.setBorder(BorderFactory
-								.createLineBorder(Color.BLACK));
+								.createLineBorder(border));
+						lblBlank.setBackground(Color.GRAY);
+						lblBlank.setOpaque(true);
+						add(lblBlank,gbc);
+						
 						xPos += blankLength;
 						gbc.gridx = xPos;
 					}
@@ -266,14 +284,20 @@ public class ProjectSummary extends JPanel {
 							Integer.toString(dateAndResource.get(time)),
 							JLabel.HORIZONTAL), gbc);
 					lblStaffNo.setBorder(BorderFactory
-							.createLineBorder(Color.BLACK));
+							.createLineBorder(border));
 					lblStaffNo.setOpaque(true);
-					for (int i = 0; i < projectIds.size(); i++) {
+					
+					//assign matching random colour as seen in row header
+					/*for (int i = 0; i < projectIds.size(); i++) {
 						if (projectIds.get(i).equals(projects.getProjectId()) == true) {
 							lblStaffNo
 									.setBackground(colourit.getColor().get(i));
 						}
-					}
+					}*/
+					
+					lblStaffNo.setBackground(cell);
+					lblStaffNo.setForeground(Color.white);
+					
 
 					xPos += 1;
 
@@ -289,7 +313,7 @@ public class ProjectSummary extends JPanel {
 					gbc.gridwidth = blankLength;
 					add(lblBlank = new JLabel(""), gbc);
 					lblBlank.setBorder(BorderFactory
-							.createLineBorder(Color.BLACK));
+							.createLineBorder(border));
 
 				}
 			}
@@ -299,8 +323,10 @@ public class ProjectSummary extends JPanel {
 		}
 
 	}
-
-	public CellColour getColours() {
+	
+	
+	public  CellColour getColours(){
+		return colourit;
 		return colourit;
 	}
 

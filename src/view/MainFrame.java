@@ -1,6 +1,7 @@
  package view;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -33,9 +34,10 @@ public class MainFrame extends JFrame {
 	
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
-	private StaffView staffPanel = new StaffView(this);
+	private StaffView staffPanel =null;
 	private StatisticPanel statisticPanel = new StatisticPanel();
 	public CellColour initialColour = new CellColour();
+	public ArrayList<Integer>getids = new ArrayList<Integer>();
 	
 	SkillDialog skillDialog;
 	
@@ -47,7 +49,9 @@ public class MainFrame extends JFrame {
 		
 		// add tabs to tabbed pane
 		mainTabbedPane.addTab("Project", projectPanel);
-		mainTabbedPane.addTab("Staff", staffPanel);
+		initialColour=projectPanel.getProjectSummary().getColours();
+		getids = projectPanel.getProjectSummary().getProjectIds();
+		mainTabbedPane.addTab("Staff", staffPanel = new StaffView(this));
 		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
@@ -59,6 +63,8 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 		
 	}
+	
+	
 	
 	public void addSkillDialog(SkillController skillController) {
 		
@@ -112,7 +118,7 @@ public class MainFrame extends JFrame {
         // refresh staff panel
         JTabbedPane staffTabs = staffPanel.getMainTab();
         staffTabs.removeAll();
-        StaffSummary staffSummary = new StaffSummary();
+        StaffSummary staffSummary = new StaffSummary(this);
         StaffAllocation staffAllocation = new StaffAllocation();
         JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
         staffTabs.addTab("Summary of Staff", staffSummaryScrollPane);

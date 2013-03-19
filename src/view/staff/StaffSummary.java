@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import util.CellColour;
 import util.DateTime;
+import view.MainFrame;
 import view.project.ProjectSummary;
 import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
@@ -34,9 +35,14 @@ public class StaffSummary extends JPanel {
 	DateTime currentDateTime;
 	DateTime projectStartDate;
 	JLabel lblDay;
-	ProjectSummary project = new ProjectSummary();
+	private CellColour curColour;
+	private Color Headers = new Color(220, 20, 60);
+	private Color border = new Color(220,220,220);
+	private ArrayList<Integer> projectids = new ArrayList<Integer>();
+	MainFrame view;
 
-	public StaffSummary() {
+	public StaffSummary(MainFrame view) {
+		this.view = view;
 
 		// TODO get projectStartDate
 		// DateTime projectStartDate = new DateTime("2013-02-01 10:00:00");
@@ -79,7 +85,7 @@ public class StaffSummary extends JPanel {
 	}
 
 	public void addDay() {
-
+		
 		// Add Day
 		gbc.gridy = 0;
 		gbc.gridwidth = 8;
@@ -95,7 +101,10 @@ public class StaffSummary extends JPanel {
 		}
 
 		lblDay = new JLabel(date, JLabel.HORIZONTAL);
-		lblDay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		lblDay.setBorder(BorderFactory.createLineBorder(border));
+		lblDay.setBackground(Headers);
+		lblDay.setForeground(Color.white);
+		lblDay.setOpaque(true);
 		add(lblDay, gbc);
 
 		// Add Hours of Day
@@ -109,9 +118,11 @@ public class StaffSummary extends JPanel {
 		for (int i = 9; i < 17; i++) {
 
 			lblHours = new JLabel(Integer.toString(i), JLabel.HORIZONTAL);
-			lblHours.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			lblHours.setBorder(BorderFactory.createLineBorder(border));
 			gbc.gridx = hourPos++;
-
+			lblHours.setBackground(Headers);
+			lblHours.setForeground(Color.white);
+			lblHours.setOpaque(true);
 			add(lblHours, gbc);
 
 		}
@@ -147,7 +158,10 @@ public class StaffSummary extends JPanel {
 			JLabel staffName = new JLabel(staff.getStaffName(),
 					JLabel.HORIZONTAL);
 
-			staffName.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			staffName.setBorder(BorderFactory.createLineBorder(border));
+			staffName.setBackground(Headers);
+			staffName.setForeground(Color.white);
+			staffName.setOpaque(true);
 
 			// Get List Of Tasks related to each staff
 			ArrayList<ResultDO> listOfTasks = staffAllocProjects.get(staff);
@@ -238,24 +252,30 @@ public class StaffSummary extends JPanel {
 							dateOfTask.getDate());
 
 					gbc.gridwidth = blankLength;
-					add(lblBlank = new JLabel(""), gbc);
+
+					lblBlank = new JLabel("");
+					lblBlank.setBackground(new Color(234,234,234));
+					lblBlank.setOpaque(true);
 					lblBlank.setBorder(BorderFactory
-							.createLineBorder(Color.BLACK));
+							.createLineBorder(border));
+					add(lblBlank, gbc);
 					xPos += blankLength;
 					gbc.gridx = xPos;
 					currentTime = DateTime.hourLater(currentTime, blankLength);
 				}
 
 				int gridWidth = 1;
-				
+
 				TaskDO currentTask = dateOfTask.getTask();
 
 				for (int j = i + 1; j < orderedTaskDate.size(); j++) {
 
 					TaskDate nextDateTask = orderedTaskDate.get(j);
 
-					if (currentTask.getTaskId() == nextDateTask
-							.getTask().getTaskId() && currentTask.getProjectId() == nextDateTask.getTask().getProjectId()) {
+					if (currentTask.getTaskId() == nextDateTask.getTask()
+							.getTaskId()
+							&& currentTask.getProjectId() == nextDateTask
+									.getTask().getProjectId()) {
 						gridWidth++;
 						i++;
 					} else {
@@ -264,24 +284,26 @@ public class StaffSummary extends JPanel {
 				}
 
 				gbc.gridwidth = gridWidth;
-				add(lblTaskName = new JLabel(
-						dateOfTask.getTask().getTaskName(), JLabel.HORIZONTAL),
-						gbc);
+				lblTaskName = new JLabel(dateOfTask.getTask().getTaskName(),
+						JLabel.HORIZONTAL);
 
-				/*
-				 * for (int j = 0; j < project.getProjectIds().size(); j++) {
-				 * 
-				 * // System.out.println(project.getProjectIds().get(j)); if
-				 * (project.getProjectIds().get(j)
-				 * .equals(dateOfTask.getTask().getProjectId())) {
-				 * lblTaskName.setBackground(colourit.getColor().get(j)); } }
-				 */
+				System.out.println(dateOfTask.getTask().getProjectId());
 
-				// lblTaskName.setBackground(newColour.getColor().get(0));
+				for (int j = 0; j < view.getids.size(); j++) {
+
+					if (view.getids.get(j).equals(
+							dateOfTask.getTask().getProjectId()) == true) {
+						lblTaskName.setBackground(view.initialColour.getColor()
+								.get(j));
+					}
+
+				}
+
 				lblTaskName.setBorder(BorderFactory
-						.createLineBorder(Color.BLACK));
+						.createLineBorder(border));
 				lblTaskName.setOpaque(true);
 
+				add(lblTaskName, gbc);
 				xPos += gridWidth;
 				currentTime = DateTime.hourLater(currentTime, gridWidth);
 
@@ -295,7 +317,7 @@ public class StaffSummary extends JPanel {
 						currentDateTime);
 				gbc.gridwidth = blankLength;
 				add(lblBlank = new JLabel(""), gbc);
-				lblBlank.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				lblBlank.setBorder(BorderFactory.createLineBorder(border));
 
 			}
 
@@ -303,4 +325,13 @@ public class StaffSummary extends JPanel {
 		}
 	}
 
+	public void setCellColour(CellColour init) {
+		this.curColour = init;
+	}
+
+	public void setIds(ArrayList<Integer> getids) {
+		for (int i = 0; i < getids.size(); i++) {
+			projectids.add(getids.get(i));
+		}
+	}
 }

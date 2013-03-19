@@ -1,5 +1,7 @@
 package core;
 
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -21,6 +23,7 @@ public class ProjectExpress {
          // set look and feel
         try {
             // using Nimbus look and feel
+        	UIManager.put("control", new Color(245,245,245));        	
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
