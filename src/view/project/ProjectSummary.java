@@ -327,7 +327,6 @@ public class ProjectSummary extends JPanel {
 	
 	public  CellColour getColours(){
 		return colourit;
-		return colourit;
 	}
 
 	public ArrayList<Integer> getProjectIds() {
