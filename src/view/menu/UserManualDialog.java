@@ -22,7 +22,7 @@ public class UserManualDialog extends JDialog {
 	
 	//Main Tab Panels
 	private JPanel jpnlProject = new ProjectPanel();
-	private JPanel jpnlStaff = new ProjectPanel();
+	private JPanel jpnlStaff;
 	private JPanel jpnlStatReports= new ProjectPanel();
 	private JPanel jpnlScheduling = new ProjectPanel();
 	private JPanel jpnlSkills = new ProjectPanel();
@@ -73,7 +73,20 @@ public class UserManualDialog extends JDialog {
 	}
 
 	private void createSkillsPanel() {
-		// TODO Auto-generated method stub
+
+		jpnlStaff = new JPanel(new BorderLayout());
+		JPanel jpnlCreateStaff = new JPanel();
+		JPanel jpnlModifyStaff = new JPanel();
+		JPanel jpnlDeleteStaff = new JPanel();
+		
+		JTabbedPane jtbpStaff = new JTabbedPane();
+				
+		jtbpStaff.add("Create Staff", jpnlCreateStaff);
+		jtbpStaff.add("Modify Staff", jpnlModifyStaff);
+		jtbpStaff.add("Delete Staff", jpnlDeleteStaff);
+
+		jpnlStaff.add(jtbpStaff, BorderLayout.NORTH);
+
 		
 	}
 

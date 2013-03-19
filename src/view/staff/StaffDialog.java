@@ -466,6 +466,10 @@ public class StaffDialog extends JDialog {
 		String holiday = (String) (tfStartDate.getText() + " to " + tfEndDate
 				.getText());
 		
+		String dateAtStart = "";
+		String endDate = "";
+	
+		
 		if (tfStartDate.getText().equals(tfEndDate.getText()) || new DateTime(tfEndDate.getText()).before(new DateTime(tfStartDate.getText()))) {
 			JOptionPane.showMessageDialog(this, "Invalid Holiday Inputted"
 					+ tfId.getText(), "Error", JOptionPane.ERROR_MESSAGE);

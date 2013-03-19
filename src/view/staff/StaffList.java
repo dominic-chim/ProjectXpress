@@ -119,8 +119,7 @@ public class StaffList extends JPanel {
 
 		String id = null;
 		String match = null;
-		if (selectedNode != null && selectedNode.toString() != "Staff") {
-			if (selectedNode.getPreviousLeaf() == null) {
+		if (selectedNode != null && selectedNode.toString() != "Staff" && selectedNode.getParent().toString() == "Staff") {
 
 				match = treeModel.getChild(selectedNode, 0).toString();
 
@@ -132,7 +131,7 @@ public class StaffList extends JPanel {
 
 				return Integer.parseInt(id);
 
-			}
+			
 		}
 
 		return 0;

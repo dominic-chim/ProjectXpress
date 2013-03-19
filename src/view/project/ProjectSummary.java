@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -79,7 +81,16 @@ public class ProjectSummary extends JPanel {
 		gbc.gridwidth = 8;
 		gbc.gridx = dayXPos;
 
-		lblDay = new JLabel(currentDateTime.getDateTime(), JLabel.HORIZONTAL);
+		String date = currentDateTime.getDateTime();
+
+		Pattern p = Pattern.compile("(.*) (.*)");
+		Matcher m = p.matcher(date);
+
+		while (m.find()) {
+			date = m.group(1);
+		}
+
+		lblDay = new JLabel(date, JLabel.HORIZONTAL);
 		lblDay.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		add(lblDay, gbc);
 
@@ -155,9 +166,8 @@ public class ProjectSummary extends JPanel {
 		for (ProjectDO projects : projectResources.keySet()) {
 			projectIds.add(projects.getProjectId());
 		}
-		
+
 		colourit.colourCell(projectIds);
-		
 
 		// test
 		for (int i = 0; i < colourit.getColor().size(); i++) {
@@ -289,8 +299,8 @@ public class ProjectSummary extends JPanel {
 		}
 
 	}
-	
-	public  CellColour getColours(){
+
+	public CellColour getColours() {
 		return colourit;
 	}
 
