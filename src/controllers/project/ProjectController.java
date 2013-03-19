@@ -107,6 +107,67 @@ public class ProjectController {
         public void actionPerformed(ActionEvent e) {
 
             switch (e.getActionCommand()) {
+                case "add":
+                    jdlogAddTask = new AddTaskDialog(jdlogAddProject);
+                    jdlogAddTask.addController(new ActionListener() {
+
+                        private TaskDO taskModel = new TaskDO();
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            switch (e.getActionCommand()) {
+                                case "add": // add a Required task
+                                {
+                                    String taskName = jdlogAddTask.showAddReqiredTaskDialog(getTaskNames(project));
+                                    ArrayList<TaskDO> tasks = project.getTasks();
+                                    int taskId = 0;
+                                    for(int i = 0; i < tasks.size(); i++) {
+                                        if(tasks.get(i).getTaskName().equals(taskName)) 
+                                            taskId = i + 1;
+                                    }
+
+                                    if(taskId != 0)
+                                        taskModel.addReqiredTask(taskId);
+
+                                    ArrayList<Integer> requiredTaskIds = taskModel.getRequiredTaskIds();
+                                    String[] requiredTasks = new String[requiredTaskIds.size()];
+                                    for(int i = 0; i < requiredTaskIds.size(); i++ ) {
+                                        requiredTasks[i] = project.getTasks().get(requiredTaskIds.get(i) - 1).getTaskName();
+                                    }
+                                    jdlogAddTask.reloadList(requiredTasks);
+                                }
+                                    break;
+                                case "cancel":
+                                    jdlogAddTask.dispose();
+                                    break;
+                                case "finish":
+                                    try {
+                                        HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
+                                        setTaskInfo(valuesMap, taskModel);
+                                        int projectId = project.getProjectId();
+                                        ArrayList<TaskDO> tasks = project.getTasks();
+                                        int taskId = tasks.get(tasks.size() - 1).getTaskId() + 1;
+                                        (new TaskDao()).addTask(projectId, taskId, taskModel);
+                                        jdlogAddTask.dispose();
+                                        updateProjectList();
+                                    } catch (Exception excp) {
+                                        String ErrMsg = "Invalid input: " + excp.getMessage();
+                                        JOptionPane.showMessageDialog(jdlogAddProject, 
+                                                ErrMsg, "Invalid Input", 
+                                                JOptionPane.ERROR_MESSAGE);
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+
+                    jdlogAddTask.setSkillNames((new SkillDao()).getSkillNames());
+                    jdlogAddTask.setRiskLevels((new RiskDao()).getRiskNames());
+                    jdlogAddTask.setVisible(true);
+                    break;
                 case "update":
                     try {
 
@@ -259,7 +320,7 @@ public class ProjectController {
             switch (e.getActionCommand()) {
                 case "add": // add a Required task
                 {
-                    String taskName = jdlogAddTask.showAddReqiredTaskDialog(getTaskNames());
+                    String taskName = jdlogAddTask.showAddReqiredTaskDialog(getTaskNames(projectModel));
                     ArrayList<TaskDO> tasks = projectModel.getTasks();
                     int taskId = 0;
                     for(int i = 0; i < tasks.size(); i++) {
@@ -293,7 +354,7 @@ public class ProjectController {
                         jdlogAddTask.dispose();
 
                         // refresh add_project panel
-                        jdlogAddProject.reloadList(getTaskNames());
+                        jdlogAddProject.reloadList(getTaskNames(projectModel));
                     } catch (Exception excp) {
                         String ErrMsg = "Invalid input: " + excp.getMessage();
                         JOptionPane.showMessageDialog(jdlogAddProject, 
@@ -315,9 +376,9 @@ public class ProjectController {
      *
      * @return list of string contains all tasknames
      */
-    private String[] getTaskNames() {
+    public String[] getTaskNames(ProjectDO project) {
 
-        ArrayList<TaskDO> tasks = projectModel.getTasks();
+        ArrayList<TaskDO> tasks = project.getTasks();
         String[] names = new String[tasks.size()];
         for(int i = 0; i < tasks.size(); i++) {
             names[i] = tasks.get(i).getTaskName();

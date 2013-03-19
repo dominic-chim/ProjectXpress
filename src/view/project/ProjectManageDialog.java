@@ -19,6 +19,7 @@ public class ProjectManageDialog extends JDialog{
 
     // labels 
     private JLabel jlbProjectName = new JLabel("Project name");
+    @Deprecated
     private JLabel jlbDueDate = new JLabel("Due date");
     private JLabel jlbPriority = new JLabel("Priority");
     private JLabel jlbStatus = new JLabel("Status");
@@ -34,6 +35,7 @@ public class ProjectManageDialog extends JDialog{
 
     
     // buttons
+    private JButton jbtnAddTask = new JButton("Add Task");
     private JButton jbtnUpdate = new JButton("Update");
     private JButton jbtnCancel = new JButton("Cancel");
 
@@ -53,17 +55,17 @@ public class ProjectManageDialog extends JDialog{
         jpnlTop.setLayout(new GridLayout(3, 2));
         jpnlTop.add(jlbProjectName);
         jpnlTop.add(jtxtProjectName);
-        //jpnlTop.add(jlbDueDate);
-        //jpnlTop.add(jtxtDueDate);
         jpnlTop.add(jlbPriority);
         jpnlTop.add(jtxtPriority);
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
 
         // add contents to bottom panel
+        jbtnAddTask.setActionCommand("add");
         jbtnUpdate.setActionCommand("update");
         jbtnCancel.setActionCommand("cancel");
 
+        jpnlBottom.add(jbtnAddTask);
         jpnlBottom.add(jbtnUpdate);
         jpnlBottom.add(jbtnCancel);
         
@@ -80,6 +82,7 @@ public class ProjectManageDialog extends JDialog{
 
     public void addController(ActionListener listener) {
 
+        jbtnAddTask.addActionListener(listener);
         jbtnUpdate.addActionListener(listener);
         jbtnCancel.addActionListener(listener);
     }

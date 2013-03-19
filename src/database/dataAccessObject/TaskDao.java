@@ -16,7 +16,7 @@ public class TaskDao extends DatabaseRoot {
 
     public ArrayList<TaskDO> getTasksByProjectId(int projectId) {
         ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
-        String sql = "SELECT task_id FROM task WHERE project_id=" + projectId;
+        String sql = "SELECT task_id FROM task WHERE project_id=" + projectId + " ORDER BY task_id";
         try {
             ResultSet result = connection.createStatement().executeQuery(sql);
             while(result.next()) {
