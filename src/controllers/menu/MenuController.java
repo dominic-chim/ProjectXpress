@@ -3,6 +3,7 @@ package controllers.menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -10,15 +11,18 @@ import javax.swing.JOptionPane;
 
 import util.DateTime;
 import view.MainFrame;
+import view.menu.RiskDialog;
 import view.menu.SchedulingDialog;
 import view.menu.UserManualDialog;
 import algorithm.ScheduleAlgorithm;
+import data.Context;
 import data.dataObject.ProjectComparator;
 import data.dataObject.ProjectDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
 import database.dataAccessObject.ProjectDao;
 import database.dataAccessObject.ResultDao;
+import database.dataAccessObject.RiskDao;
 import database.dataAccessObject.StaffDao;
 
 public class MenuController implements ActionListener {
@@ -46,6 +50,13 @@ public class MenuController implements ActionListener {
             view.addSkillDialog(skillController);
 
             break;
+
+        case "Risk":
+            RiskDialog riskDialog = new RiskDialog(view);
+            riskDialog.addController(new RiskDialogBtnListener(riskDialog));
+            riskDialog.setVisible(true);
+
+            break;
         case "Scheduling":
             SchedulingDialog sdialog = view.addSchedulingDialog();
             sdialog.addControllers(new SchedulingController(sdialog));
@@ -69,6 +80,47 @@ public class MenuController implements ActionListener {
 
     }
 
+    /**
+     * controller for Buttons in RiskDialog
+     */
+    class RiskDialogBtnListener implements ActionListener {
+
+        private RiskDialog rDialog;
+
+        public RiskDialogBtnListener(RiskDialog rDialog) {
+            this.rDialog = rDialog;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String cmd = e.getActionCommand();
+            switch (cmd) {
+                case "Update":
+                    RiskDao riskDB = new RiskDao();
+                    try {
+                        HashMap<String, Integer> userInput = rDialog.getInputMap();
+                        for(String riskName : userInput.keySet()) {
+                            riskDB.updateRiskLevel(riskName, userInput.get(riskName));
+                        }
+                        Context.updateRisk();
+                        rDialog.dispose();
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(rDialog, 
+                                ex.getMessage(), 
+                                "Invalid Input", 
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "Cancel":
+                    rDialog.dispose();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+    }
+
     class UserManualController implements ActionListener {
 
         private UserManualDialog userManualDialog;
@@ -90,6 +142,9 @@ public class MenuController implements ActionListener {
 
     }
 
+    /**
+     * Scheduling Dialog listener
+     */
     class SchedulingController implements ActionListener {
 
         private SchedulingDialog sdialog;
@@ -113,8 +168,8 @@ public class MenuController implements ActionListener {
                     ProjectDao projectDB = new ProjectDao();
                     PriorityQueue<ProjectDO> projects = new PriorityQueue<ProjectDO>(
                             5, new ProjectComparator());
-                    ArrayList<Integer> projectIds = sdialog
-                            .getSelectedProjectIds();
+
+                    ArrayList<Integer> projectIds = sdialog.getSelectedProjectIds();
                     for (int projectId : projectIds) {
                         projects.add(projectDB.getProjectById(projectId));
                     }
@@ -122,8 +177,17 @@ public class MenuController implements ActionListener {
                     for (int staffId : sdialog.getSelectedStaffIds()) {
                         staffs.add((new StaffDao()).getStaffById(staffId));
                     }
-                    DateTime startingDateTime = new DateTime(
-                            sdialog.getStartingDateTime());
+
+                    DateTime startingDateTime = null;
+                    try {
+                        startingDateTime = new DateTime(sdialog.getStartingDateTime());
+                    } catch (Exception exception) {
+                        JOptionPane.showMessageDialog(sdialog, 
+                                "DateTime format error, please insert (yyyy-mm-dd hh:mm:ss)", 
+                                "Invalid Input", 
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
 
                     // check if the input projects and staffs can have a valid result 
                     if(staffs.size() == 0) {

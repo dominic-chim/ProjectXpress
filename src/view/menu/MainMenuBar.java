@@ -12,11 +12,12 @@ public class MainMenuBar extends JMenuBar {
 	// menus
 	//JMenuBar Menu;
 	private JMenu menuProject = new JMenu("Project");
-	private JMenu menuView = new JMenu("View");
+	//private JMenu menuView = new JMenu("View");
 	private JMenu menuSettings = new JMenu("Settings");
 	private JMenu menuHelp = new JMenu("Help");
 	
-	private JMenuItem miViewSkill = new JMenuItem("Skills");
+	private JMenuItem miSettingsSkill = new JMenuItem("Skills");
+	private JMenuItem miSettingsRisk = new JMenuItem("Risk");
     private JMenuItem miProjectSchedule = new JMenuItem("Scheduling");
     private JMenuItem miUserManual = new JMenuItem("User Manual");
     
@@ -24,17 +25,19 @@ public class MainMenuBar extends JMenuBar {
 	public MainMenuBar() {
 
 		menuProject.add(miProjectSchedule);
-		menuView.add(miViewSkill);
+		menuSettings.add(miSettingsSkill);
+		menuSettings.add(miSettingsRisk);
 		menuHelp.add(miUserManual);
 
 		this.add(menuProject);
-		this.add(menuView);
-		//this.add(menuSettings);
+		//this.add(menuView);
+		this.add(menuSettings);
 		this.add(menuHelp);
 	}
 	
 	public void addControllers(ActionListener controller) {
-		miViewSkill.addActionListener(controller);
+		miSettingsSkill.addActionListener(controller);
+		miSettingsRisk.addActionListener(controller);
 		miProjectSchedule.addActionListener(controller);
 		miUserManual.addActionListener(controller);
 	}

@@ -9,15 +9,9 @@ import database.DatabaseRoot;
 
 public class RiskDao extends DatabaseRoot{
     
-    int risk;
-    double time,totalTime;  
-        
-    public int getRiskLevel(){
-    return this.risk;
-    }
-    
-    public void updateRiskLevel(String riskName, int risk){
-        String sql = "Update risk_percentage from risk_level where task_risk_level = '"+riskName+"'";
+    public void updateRiskLevel(String riskName, int riskPercentage){
+        String sql = String.format("UPDATE risk_level SET risk_percentage=%d WHERE task_risk_level='%s'",
+                                    riskPercentage, riskName);
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
@@ -26,19 +20,11 @@ public class RiskDao extends DatabaseRoot{
         }
     }
     
-    public double totalTimeCalc(){
-        
-        //some calculation
-        totalTime = time * risk;
-        
-        return totalTime;
-    }
-
     public String[] getRiskNames() {
         String sql = "SELECT task_risk_level FROM risk_level ORDER BY risk_percentage";
         ArrayList<String> riskNames = new ArrayList<String>();
         try {
-            ResultSet result = db.executeQuery(sql);
+            ResultSet result = connection.createStatement().executeQuery(sql);
             while(result.next()) {
                 riskNames.add(result.getString("task_risk_level"));
             }
@@ -52,7 +38,7 @@ public class RiskDao extends DatabaseRoot{
     public HashMap<String, Integer> getRiskMap() {
         HashMap<String, Integer> riskLevel = new HashMap<String, Integer>();
 
-        String sql = "SELECT task_risk_level, risk_percentage FROM risk_level";
+        String sql = "SELECT task_risk_level, risk_percentage FROM risk_level ORDER BY risk_percentage";
 
         try {
             ResultSet result = connection.createStatement().executeQuery(sql);

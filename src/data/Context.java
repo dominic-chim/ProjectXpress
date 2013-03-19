@@ -41,11 +41,9 @@ public class Context {
     
     /**
      * update skills from db
-     * TODO finish it
      */
-    public void updateSkills() {
+    public static void updateSkills() {
         
-        // TODO read from database
         SkillDao skillDao = new SkillDao();
         HashMap<Integer, String> skillMap = skillDao.getSkillMap();
         
@@ -54,5 +52,14 @@ public class Context {
         for(int skillId : skillMap.keySet()) {
             skillsRev.put(skillMap.get(skillId), skillId);
         }
+    }
+
+    /**
+     * update risk from db
+     */
+    public static void updateRisk() {
+        RiskDao riskDao = new RiskDao();
+        riskLevel.clear();
+        riskLevel = riskDao.getRiskMap();
     }
 }
