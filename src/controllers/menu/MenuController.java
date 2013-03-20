@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 import util.DateTime;
 import view.MainFrame;
-import view.menu.AboutDialog;
+//import view.menu.AboutDialog;
 import view.menu.RiskDialog;
 import view.menu.SchedulingDialog;
 import view.menu.UserManualDialog;
@@ -76,7 +76,7 @@ public class MenuController implements ActionListener {
             break;
             
         case "About": 
-        	AboutDialog aDialog = view.getaboutDialog();
+        	//AboutDialog aDialog = view.getaboutDialog();
         	break;
 
         default:
@@ -186,6 +186,13 @@ public class MenuController implements ActionListener {
                     DateTime startingDateTime = null;
                     try {
                         startingDateTime = new DateTime(sdialog.getStartingDateTime());
+                        if(startingDateTime.getHour() > 16 || startingDateTime.getHour() < 9) {
+                        	JOptionPane.showMessageDialog(sdialog, 
+                                    "hour should between 9 and 16 inclusive", 
+                                    "Invalid Input", 
+                                    JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     } catch (Exception exception) {
                         JOptionPane.showMessageDialog(sdialog, 
                                 "DateTime format error, please insert (yyyy-mm-dd hh:mm:ss)", 
