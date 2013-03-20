@@ -39,18 +39,18 @@ public class CellColour {
 						int pG = projectIdColor.get(j).getGreen();
 						int pB = projectIdColor.get(j).getBlue();
 
-						if (R - pR > 20) {
-							R = R-5;
+						if (Math.abs(R - pR) > 20) {
+							R = R+10;
 						} else {
 							R = R + 10;
 						}
-						if (G - pG > 20) {
-							G = G -5;
+						if (Math.abs(G - pG) > 20) {
+							G = G +10;
 						} else {
 							G = G + 10;
 						}
-						if (B - pB > 20) {
-							B = B-5;
+						if (Math.abs(B - pB) > 20) {
+							B = B+10;
 						} else {
 							B = B + 10;
 						}

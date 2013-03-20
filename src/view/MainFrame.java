@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
 		initialColour=projectPanel.getProjectSummary().getColours();
 		getids = projectPanel.getProjectSummary().getProjectIds();
 		mainTabbedPane.addTab("Staff", staffPanel = new StaffView(this));
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		
@@ -97,6 +97,11 @@ public class MainFrame extends JFrame {
     public MainMenuBar getMainMenuBar() {
     	return menuBar;
     }
+    
+    public AboutDialog getaboutDialog() {
+		// TODO Auto-generated method stub
+		return new AboutDialog(this);
+	}
 
 
     public JTabbedPane getTabbedPane() {
@@ -126,5 +131,9 @@ public class MainFrame extends JFrame {
         staffTabs.addTab("Summary of Staff", staffSummaryScrollPane);
         staffTabs.addTab("Staff Allocation", staffAllocation);
     }
+
+
+
+	
 
 }

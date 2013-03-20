@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import util.DateTime;
 import view.MainFrame;
+import view.menu.AboutDialog;
 import view.menu.RiskDialog;
 import view.menu.SchedulingDialog;
 import view.menu.UserManualDialog;
@@ -73,6 +74,10 @@ public class MenuController implements ActionListener {
             userManualDialog.addControllers(new UserManualController(userManualDialog));
 
             break;
+            
+        case "About": 
+        	AboutDialog aDialog = view.getaboutDialog();
+        	break;
 
         default:
             break;
