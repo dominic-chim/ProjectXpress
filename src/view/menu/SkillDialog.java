@@ -32,7 +32,7 @@ public class SkillDialog extends JDialog {
 	// SkillDialog
 	JButton btnAddSkill = new JButton("Add Skill");
 	JButton btnModifySkill = new JButton("Modify Skill");
-	JButton btnRemoveSkill = new JButton("Remove Skill");
+	JButton btnFinishSkill = new JButton("Finish");
 	DefaultListModel skillListModel;
 	JList skillList;
 
@@ -90,11 +90,11 @@ public class SkillDialog extends JDialog {
 		gbc.gridwidth = 1;
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;
-		skillPanel.add(btnRemoveSkill, gbc);
+		skillPanel.add(btnAddSkill, gbc);
 		gbc.gridx = 1;
 		skillPanel.add(btnModifySkill, gbc);
 		gbc.gridx = 2;
-		skillPanel.add(btnAddSkill, gbc);
+		skillPanel.add(btnFinishSkill, gbc);
 		skillList.setSelectedIndex(0);
 
 		addController(controller);
@@ -188,21 +188,22 @@ public class SkillDialog extends JDialog {
 
 	}
 
-	public void removeSkillDialog() {
-
-		String selected = (String) skillList.getSelectedValue();
-
-		if (selected != null) {
-			skillListModel.removeElement(selected);
-			JOptionPane.showMessageDialog(view, "Skill '" + selected
-					+ "' Was Succesfully Removed");
-
-		} else {
-			JOptionPane.showMessageDialog(view, "No Skill Selected");
-		}
-
+	public void cancelSkillDialog() {
+		
+		String message = "Warning, Scheduling results may be out of date. \nWould you like to reschedule?";
+		
+		int result = JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+		
+		this.dispose();
+		
+        if(result == JOptionPane.YES_OPTION) {
+        	
+        	view.getMainMenuBar().getSchedulingButton().doClick();
+        }
+      
+        
 	}
-
+	
 	public SkillDO addModifiedSkillToList() {
 		
 		String modifiedSkill = tfModifySkillInput.getText();		
@@ -236,7 +237,7 @@ public class SkillDialog extends JDialog {
 
 		btnAddSkill.addActionListener(listener);
 		btnModifySkill.addActionListener(listener);
-		btnRemoveSkill.addActionListener(listener);
+		btnFinishSkill.addActionListener(listener);
 		btnAdd.addActionListener(listener);
 		btnCancel.addActionListener(listener);
 		btnModify.addActionListener(listener);

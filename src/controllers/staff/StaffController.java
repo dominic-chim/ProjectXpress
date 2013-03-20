@@ -58,7 +58,6 @@ public class StaffController implements ActionListener {
 		case "Add Staff":
 
 			staffList.addStaffDialog(this, null);
-			
 
 			break;
 
@@ -97,14 +96,14 @@ public class StaffController implements ActionListener {
 			staffDialog = staffList.getStaffDialog();
 
 			if (staffDialog.checkStaffInput()) {
-				
+
 				StaffDO input = staffDialog.getStaffInput();
-				
-				if(staffDao.getStaffById(input.getStaffId()) != null) {
+
+				if (staffDao.getStaffById(input.getStaffId()) != null) {
 					staffDialog.inputError("Id Already Exists");
 					break;
 				}
-				
+
 				staff = staffList.addNewStaffToList(input);
 
 				staffDialog.dispose();
@@ -118,9 +117,8 @@ public class StaffController implements ActionListener {
 			staffDialog = staffList.getStaffDialog();
 			staff = staffDialog.getStaffInput();
 			ArrayList<String> queries = staffDialog.getQueries();
-			
-			staffDialog.dispose();
 
+			staffDialog.dispose();
 
 			staffDao.modifyStaff(staffList.getCurrentlySelectedStaffId(),
 					staff, queries);
@@ -137,5 +135,4 @@ public class StaffController implements ActionListener {
 		}
 
 	}
-
 }

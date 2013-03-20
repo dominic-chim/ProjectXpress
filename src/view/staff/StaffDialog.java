@@ -25,6 +25,11 @@ import view.MainFrame;
 import data.Context;
 import data.dataObject.StaffDO;
 
+/**
+ * 
+ * @author rxj01u
+ * 
+ */
 public class StaffDialog extends JDialog {
 
 	Context context = new Context();
@@ -41,11 +46,6 @@ public class StaffDialog extends JDialog {
 	JTextField tfSkillLevel;
 	JTextField tfPrefenceLevel;
 
-	// Holiday Input, start of holiday date until the end of holiday date
-	// JComboBox cbMonthStart;
-	// JComboBox dayStart;
-	// JComboBox monthEnd;
-	// JComboBox dayEnd;
 	JTextField tfStartDate;
 	JTextField tfEndDate;
 	JComboBox cbSkillNames;
@@ -79,7 +79,7 @@ public class StaffDialog extends JDialog {
 	public StaffDialog(MainFrame view, ActionListener controller, StaffDO staff) {
 
 		super(view, true);
-		
+
 		setLayout(new BorderLayout());
 		addStaffPanel = new JPanel();
 
@@ -301,8 +301,7 @@ public class StaffDialog extends JDialog {
 
 		add(addStaffScroll);
 		setLocationRelativeTo(view);
-		//setVisible(true);
-        
+		// setVisible(true);
 
 	}
 
@@ -355,21 +354,17 @@ public class StaffDialog extends JDialog {
 		try {
 			Integer.parseInt(tfId.getText());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, "Invalid Id " + tfId.getText(),
-					"Error", JOptionPane.ERROR_MESSAGE);
+			inputError("Invalid Id " + tfId.getText());
 			return false;
 		}
 
 		if (tfName.getText().length() < 1) {
 
-			JOptionPane.showMessageDialog(this, "Please enter a name", "Error",
-					JOptionPane.ERROR_MESSAGE);
+			inputError("Please enter a name");
 			return false;
-
 		}
-
+		
 		return true;
-
 	}
 
 	public void addSkill() {
@@ -377,8 +372,7 @@ public class StaffDialog extends JDialog {
 		String skillName = (String) cbSkillNames.getSelectedItem();
 		if (skillName == "Skill Name") {
 
-			JOptionPane.showMessageDialog(this, "Please select a Skill Name",
-					"Error", JOptionPane.ERROR_MESSAGE);
+			inputError("Please select a Skill Name");
 			return;
 		}
 
@@ -386,23 +380,21 @@ public class StaffDialog extends JDialog {
 
 		if (skillLevel == "Skill Level") {
 
-			JOptionPane.showMessageDialog(this, "Please select a Skill Level",
-					"Error", JOptionPane.ERROR_MESSAGE);
+			inputError("Please select a Skill Level");
 			return;
+
 		}
-		
-	
 
 		String skill = "";
 		skill += skillName;
 		skill += " - Level: " + skillLevel;
-		
-		if(skillLevels.containsKey(revMapSkills.get(skillName))) {
-			JOptionPane.showMessageDialog(this, "Skill Already Exists",
-					"Error", JOptionPane.ERROR_MESSAGE);
+
+		if (skillLevels.containsKey(revMapSkills.get(skillName))) {
+			inputError("Skill Already Exists");
 			return;
+
 		}
-		
+
 		skillListModel.addElement(skill);
 
 		skillLevels.put(revMapSkills.get(skillName),
@@ -424,11 +416,9 @@ public class StaffDialog extends JDialog {
 
 		if (skillList.getSelectedValue() == null) {
 
-			JOptionPane.showMessageDialog(this,
-					"Please select a skill" + tfId.getText(), "Error",
-					JOptionPane.ERROR_MESSAGE);
-
+			inputError("Please select a skill" + tfId.getText());
 			return;
+
 		}
 
 		if (!checkIfAddStaff) {
@@ -463,17 +453,68 @@ public class StaffDialog extends JDialog {
 
 	public void addHoliday() {
 
-		String holiday = (String) (tfStartDate.getText() + " to " + tfEndDate
-				.getText());
-		
 		String dateAtStart = "";
 		String endDate = "";
-	
-		
-		if (tfStartDate.getText().equals(tfEndDate.getText()) || new DateTime(tfEndDate.getText()).before(new DateTime(tfStartDate.getText()))) {
-			JOptionPane.showMessageDialog(this, "Invalid Holiday Inputted"
-					+ tfId.getText(), "Error", JOptionPane.ERROR_MESSAGE);
+		DateTime startDateTime = null;
+		DateTime endDateTime = null;
+
+		try {
+			startDateTime = new DateTime(tfStartDate.getText());
+			endDateTime = new DateTime(tfEndDate.getText());
+		} catch (Exception e) {
+			inputError("Invalid Date Format");
 			return;
+
+		}
+
+		// 2013-02-02 00:00:00
+		Pattern p = Pattern.compile("(.*)-(.*)-(.*) (.*):(.*):(.*)");
+		Matcher m = p.matcher(tfStartDate.getText());
+
+		String year = "", month = "", day = "", hour = "", min = "", sec = "";
+		while (m.find()) {
+			year = m.group(1);
+			month = m.group(2);
+			day = m.group(3);
+			hour = m.group(4);
+			min = m.group(5);
+			sec = m.group(6);
+		}
+
+		if (year.length() != 4 || month.length() != 2 || day.length() != 2
+				|| hour.length() != 2 || min.length() != 2 || sec.length() != 2) {
+
+			inputError("Invalid Date Format");
+			return;
+
+		}
+		
+		m = p.matcher(tfEndDate.getText());
+
+		while (m.find()) {
+			year = m.group(1);
+			month = m.group(2);
+			day = m.group(3);
+			hour = m.group(4);
+			min = m.group(5);
+			sec = m.group(6);
+		}
+		
+		if (year.length() != 4 || month.length() != 2 || day.length() != 2
+				|| hour.length() != 2 || min.length() != 2 || sec.length() != 2) {
+
+			inputError("Invalid Date Format");
+			return;
+
+		}
+		
+
+		if (tfStartDate.getText().equals(tfEndDate.getText())
+				|| endDateTime.before(startDateTime)) {
+
+			inputError("Invalid Holiday Inputted" + tfId.getText());
+			return;
+
 		}
 
 		boolean holidayExists = false;
@@ -483,17 +524,15 @@ public class StaffDialog extends JDialog {
 			for (DateTime i = startDate; i.before(holidayDates.get(startDate)); i = DateTime
 					.hourLater(i, 1)) {
 
-				for (DateTime j = new DateTime(tfStartDate.getText()); j
-						.before(new DateTime(tfEndDate.getText())); j = DateTime
+				for (DateTime j = startDateTime; j.before(endDateTime); j = DateTime
 						.hourLater(j, 1)) {
 
 					if (j.getDateTime().equals(i.getDateTime())) {
 
-						JOptionPane.showMessageDialog(this,
-								"Holiday Already Exists In this Time Range"
-										+ tfId.getText(), "Error",
-								JOptionPane.ERROR_MESSAGE);
+						inputError("Holiday Already Exists In this Time Range"
+								+ tfId.getText());
 						return;
+
 					}
 				}
 			}
@@ -502,10 +541,12 @@ public class StaffDialog extends JDialog {
 
 		if (!holidayExists) {
 
+			String holiday = startDateTime.getDateTime() + " to "
+					+ endDateTime.getDateTime();
+
 			holidayListModel.addElement(holiday);
 
-			holidayDates.put(new DateTime(tfStartDate.getText()), new DateTime(
-					tfEndDate.getText()));
+			holidayDates.put(startDateTime, endDateTime);
 
 			if (!checkIfAddStaff) {
 
@@ -525,10 +566,9 @@ public class StaffDialog extends JDialog {
 
 		if (holidayList.getSelectedValue() == null) {
 
-			JOptionPane.showMessageDialog(this, "Please select a holiday"
-					+ tfId.getText(), "Error", JOptionPane.ERROR_MESSAGE);
-
+			inputError("Please select a holiday" + tfId.getText());
 			return;
+
 		}
 
 		String holiday = holidayList.getSelectedValue().toString();
@@ -542,7 +582,7 @@ public class StaffDialog extends JDialog {
 			startDate = m.group(1);
 			endDate = m.group(2);
 		}
-		
+
 		if (!checkIfAddStaff) {
 
 			String removeHolidayQuery = "DELETE FROM staff_holidays WHERE staff_id = "
@@ -573,12 +613,11 @@ public class StaffDialog extends JDialog {
 	}
 
 	public void inputError(String errorMessage) {
-		
-		JOptionPane.showMessageDialog(this, errorMessage,
-				"Error", JOptionPane.ERROR_MESSAGE);
-		
+
+		JOptionPane.showMessageDialog(this, errorMessage, "Error",
+				JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	public void addController(ActionListener controller) {
 
 		btnAddHoliday.addActionListener(controller);

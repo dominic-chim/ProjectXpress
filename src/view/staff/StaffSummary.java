@@ -3,7 +3,6 @@ package view.staff;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -16,10 +15,10 @@ import javax.swing.JPanel;
 import util.CellColour;
 import util.DateTime;
 import view.MainFrame;
-import view.project.ProjectSummary;
 import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
+import database.dataAccessObject.HolidaysDao;
 import database.dataAccessObject.ResultDao;
 import database.dataAccessObject.StaffDao;
 
@@ -118,7 +117,6 @@ public class StaffSummary extends JPanel {
 		JLabel lblHours;
 
 		for (int i = 9; i < 17; i++) {
-
 			lblHours = new JLabel(Integer.toString(i), JLabel.HORIZONTAL);
 			lblHours.setBorder(BorderFactory.createLineBorder(border));
 			gbc.gridx = hourPos++;
@@ -126,12 +124,7 @@ public class StaffSummary extends JPanel {
 			lblHours.setForeground(Color.white);
 			lblHours.setOpaque(true);
 			add(lblHours, gbc);
-
 		}
-
-		dayXPos += 8;
-		
-		currentDateTime = DateTime.nextDay(currentDateTime);
 
 	}
 
@@ -173,6 +166,10 @@ public class StaffSummary extends JPanel {
 
 			HashMap<DateTime, TaskDO> taskDate = new HashMap<DateTime, TaskDO>();
 
+			HolidaysDao holidayDao = new HolidaysDao();
+			
+			HashMap<DateTime, DateTime> holidays = holidayDao.getHolidaysOfStaff(staff.getStaffId());
+			
 			for (ResultDO task : listOfTasks) {
 
 				for (DateTime i = task.getStartDateTime(); i.before(task
@@ -190,7 +187,26 @@ public class StaffSummary extends JPanel {
 
 				}
 			}
+			
+			int holidayId =0;
+			for(DateTime startDate : holidays.keySet()) {
+				if(startDate.before(projectStartDate))
+					continue;
+				for(DateTime i = startDate; i.before(holidays.get(startDate)); i = DateTime.hourLater(i, 1)) {
+					
+					for (DateTime dateTime : taskDate.keySet()) {
 
+						if (dateTime.getDateTime().equals(i.getDateTime())) {
+							taskDate.remove(dateTime);
+							break;
+						}
+					}
+
+					int duration = DateTime.duration(startDate, holidays.get(startDate));		
+					taskDate.put(i, new TaskDO(0, holidayId++, "H", 0, duration, duration, "Low", null, "Holiday", null));		
+				}	
+			}
+			
 			ArrayList<TaskDate> orderedTaskDate = new ArrayList<TaskDate>();
 
 			TaskDate minDate;
@@ -232,7 +248,11 @@ public class StaffSummary extends JPanel {
 
 				while (currentDateTime.before(DateTime.hourLater(dateOfTask
 						.getDate(), dateOfTask.getTask().getTaskDuration()))) {
+			
+					
 					addDay();
+					dayXPos += 8;
+					currentDateTime = DateTime.nextDay(currentDateTime);
 				}
 				
 				gbc.gridy = yPos;
@@ -245,7 +265,6 @@ public class StaffSummary extends JPanel {
 					gbc.gridwidth = blankLength;
 
 					lblBlank = new JLabel("");
-//					lblBlank.setBackground(new Color(234,234,234));
 					lblBlank.setBackground(Color.GRAY);
 					lblBlank.setOpaque(true);
 					lblBlank.setBorder(BorderFactory

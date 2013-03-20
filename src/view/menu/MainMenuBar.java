@@ -35,6 +35,11 @@ public class MainMenuBar extends JMenuBar {
 		this.add(menuHelp);
 	}
 	
+	public JMenuItem getSchedulingButton() {
+		return this.miProjectSchedule;
+		
+	}
+	
 	public void addControllers(ActionListener controller) {
 		miSettingsSkill.addActionListener(controller);
 		miSettingsRisk.addActionListener(controller);

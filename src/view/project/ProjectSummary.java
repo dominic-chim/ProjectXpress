@@ -46,9 +46,8 @@ public class ProjectSummary extends JPanel {
 	private HashMap<DateTime, Integer> totalResources = new HashMap<DateTime, Integer>();
 
 	DateTime projectStartDate;
-	
-	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
 
+	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
 
 	public ProjectSummary() {
 
@@ -144,38 +143,69 @@ public class ProjectSummary extends JPanel {
 		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
 
 		for (ProjectDO project : projectResults.keySet()) {
-
+				
 			resources = new HashMap<DateTime, Integer>();
 
 			for (ResultDO result : projectResults.get(project)) {
+								
+					time = result.getStartDateTime();
 
-				time = result.getStartDateTime();
+					int range = DateTime.duration(result.getStartDateTime(),
+							result.getEndDateTime());
+					for (int i = range; i > 0; i--) {
 
-				for (int i = DateTime.duration(result.getStartDateTime(),
-						result.getEndDateTime()); i > 0; i--) {
+						boolean exists = false;
+						for (DateTime dt : resources.keySet()) {
 
-					boolean exists = false;
-					for (DateTime dt : resources.keySet()) {
 
-						if (time.getDateTime().equals(dt.getDateTime())) {
-							exists = true;
+							
+							if (time.getDateTime().equals(dt.getDateTime())) {
+								exists = true;
 
-							resources.put(dt, resources.get(dt) + 1);
+								resources.put(dt, resources.get(dt) + 1);
 
-							break;
+								break;
+							}
 						}
+
+						if (!exists) {
+
+							resources.put(time, 1);
+						}
+
+						time = DateTime.hourLater(time, 1);
+
 					}
+					 
+					HashMap<DateTime, DateTime> holidays = result.getStaffDO().getHolidays();	
 
-					if (!exists) {
+					 for(DateTime startDate : holidays.keySet()) {
+						 if(!(holidays.get(startDate).before(result.getStartDateTime()) || result.getEndDateTime().before(startDate))) {
+							 DateTime s = startDate;
+							 while(s.before(holidays.get(startDate))) {
+									for (DateTime dt : resources.keySet()) {
+								
+										if (s.getDateTime().equals(dt.getDateTime())) {
+								
+											if(resources.get(dt) == 1) {
+												resources.remove(dt);
+											} else {
+												resources.put(dt, resources.get(dt) - 1);
+											}
+											break;
+											
+										}
+										
+									}
+									s = DateTime.hourLater(s, 1);
+							 }
+						 }
 
-						resources.put(time, 1);
-					}
-
-					time = DateTime.hourLater(time, 1);
-
-				}
-
+					 }	
+			
 			}
+			
+			
 			projectResources.put(project, resources);
 		}
 		for (ProjectDO projects : projectResources.keySet()) {
@@ -279,7 +309,7 @@ public class ProjectSummary extends JPanel {
 				}
 
 			}
-			
+
 			endXPos.add(xPos);
 			xPos = 0;
 
@@ -346,37 +376,36 @@ public class ProjectSummary extends JPanel {
 
 				currentTime = DateTime.hourLater(date, 1);
 			}
-		
+
 		}
-		
-//		if (currentTime.before(currentDateTime)) {
-//
-//			int blankLength = DateTime.duration(currentTime,
-//					currentDateTime);
-//			gbc.gridwidth = blankLength;
-//			lblBlank = new JLabel("");
-//			lblBlank.setBorder(BorderFactory.createLineBorder(border));
-//			lblBlank.setBackground(Color.GRAY);
-//			lblBlank.setOpaque(true);
-//			add(lblBlank, gbc);
-//
-//		}
-		
+
+		// if (currentTime.before(currentDateTime)) {
+		//
+		// int blankLength = DateTime.duration(currentTime,
+		// currentDateTime);
+		// gbc.gridwidth = blankLength;
+		// lblBlank = new JLabel("");
+		// lblBlank.setBorder(BorderFactory.createLineBorder(border));
+		// lblBlank.setBackground(Color.GRAY);
+		// lblBlank.setOpaque(true);
+		// add(lblBlank, gbc);
+		//
+		// }
+
 		endXPos.add(xPos);
 
-
 	}
-	
+
 	public void addEndBlanks() {
-		
+
 		yPos = 2;
-		for(Integer xPos : endXPos) {
-			
+		for (Integer xPos : endXPos) {
+
 			gbc.gridy = yPos;
-			if(xPos < dayXPos) {
-				
+			if (xPos < dayXPos) {
+
 				gbc.gridx = xPos;
-				
+
 				int blankLength = dayXPos - xPos;
 				gbc.gridwidth = blankLength;
 				JLabel lblEndBlank = new JLabel("");
@@ -385,7 +414,7 @@ public class ProjectSummary extends JPanel {
 				lblEndBlank.setOpaque(true);
 				add(lblEndBlank, gbc);
 			}
-			
+
 			yPos++;
 		}
 	}

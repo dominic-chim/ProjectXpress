@@ -24,6 +24,8 @@ public class DateTime {
         // we don't care them
         minute = 0;
         second = 0;
+        
+        
         try {
 	        org.joda.time.DateTime dt = new org.joda.time.DateTime(
 	                this.getYear(),

@@ -43,10 +43,10 @@ public class SkillController implements ActionListener {
 			break;
 
 		// Remove Skill Dialog
-		case "Remove Skill":
+		case "Finish":
 
-			skillDialog.removeSkillDialog();
-
+			skillDialog.cancelSkillDialog();
+			
 			break;
 
 		// Save skill from add skill dialog
