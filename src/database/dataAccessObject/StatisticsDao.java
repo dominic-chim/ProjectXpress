@@ -162,7 +162,7 @@ public class StatisticsDao extends DatabaseRoot {
 	public ArrayList<Object> usedData() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		//String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
-		String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test where version=(select max(version) from scheduling_result)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
+		String sql = "SELECT staff_name, SUM(task_remaining_time) AS SUM FROM (SELECT * FROM scheduling_result as test where version=(select max(version) from scheduling_result)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
 		
 		
 		try {
