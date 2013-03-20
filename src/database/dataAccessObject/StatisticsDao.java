@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import database.DatabaseRoot;
 
 public class StatisticsDao extends DatabaseRoot {
+	private String sqlNew = "NEW";
 	public StatisticsDao() {
 		super();
 	}
@@ -105,7 +106,8 @@ public class StatisticsDao extends DatabaseRoot {
 
 	public ArrayList<Object> timeAvailablitlyStaff() {
 		ArrayList<Object> output = new ArrayList<Object>();
-		String sql = "SELECT staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, SUM(z.staff_weekly_available_time - m.SUM) AS staff_weekly_available_time FROM (SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task AS d GROUP BY b.staff_name) AS m NATURAL JOIN staff AS z GROUP BY staff_name) AS one UNION SELECT staff_id, staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time, count(staff_name) AS total FROM ((SELECT * FROM staff UNION (SELECT staff_id, staff_name, SUM(z.staff_weekly_available_time - m.SUM) AS staff_weekly_available_time FROM (SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task AS d GROUP BY b.staff_name) AS m NATURAL JOIN staff AS z GROUP BY staff_name)) AS b) GROUP BY staff_id HAVING total = 1) AS b) AS one;";
+		String sql = "SELECT staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, ABS(MIN(staff_weekly_available_time)) AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time FROM staff UNION (SELECT staff_id, staff_name, SUM(staff_weekly_available_time - A.task_remaining_time) AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, SUM(task_remaining_time) AS task_remaining_time FROM(SELECT staff_name, staff_id, task_id, task_name, task_remaining_time FROM (SELECT * FROM scheduling_result as test WHERE version=(select max(version) from scheduling_result)) AS test NATURAL JOIN task NATURAL JOIN staff) AS a GROUP BY staff_id) AS A NATURAL JOIN staff GROUP BY staff_id)) AS B GROUP BY staff_id) AS D;";
+		//String sql = "SELECT staff_name, NEW AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time, CASE WHEN staff_weekly_available_time <= 0 THEN 0 ELSE staff_weekly_available_time END AS "+sqlNew+" FROM (SELECT staff_id, staff_name, MIN(staff_weekly_available_time) AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time FROM staff UNION (SELECT staff_id, staff_name, SUM(staff_weekly_available_time - A.task_remaining_time) AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, SUM(task_remaining_time) AS task_remaining_time FROM(SELECT staff_name, staff_id, task_id, task_name, task_remaining_time FROM (SELECT * FROM scheduling_result as test WHERE version=(select max(version) from scheduling_result)) AS test NATURAL JOIN task NATURAL JOIN staff) AS a GROUP BY staff_id) AS A NATURAL JOIN staff GROUP BY staff_id)) AS B GROUP BY staff_id) AS D) AS E;";
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
