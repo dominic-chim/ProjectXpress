@@ -36,7 +36,6 @@ public class DateTime {
         } catch (Exception ex) {
         	throw new IllegalArgumentException("invalid date");
         }
-        System.out.println();
         
     }
 
