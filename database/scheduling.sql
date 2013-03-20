@@ -19,7 +19,7 @@ primary key (task_risk_level)
 -- table skill stores skill id and 
 -- must create before task since foreign key restraint
 CREATE TABLE skill (
-skill_id int unsigned,
+skill_id int unsigned auto_increment,
 skill_name char(50),
 primary key (skill_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
