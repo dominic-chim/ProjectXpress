@@ -39,6 +39,7 @@ public class StaffSummary extends JPanel {
 	private Color border = new Color(220,220,220);
 	private ArrayList<Integer> projectids = new ArrayList<Integer>();
 	private MainFrame view;
+	private int holidayId =0;
 	
 	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
 	
@@ -188,7 +189,6 @@ public class StaffSummary extends JPanel {
 				}
 			}
 			
-			int holidayId =0;
 			for(DateTime startDate : holidays.keySet()) {
 				if(startDate.before(projectStartDate))
 					continue;
@@ -203,9 +203,11 @@ public class StaffSummary extends JPanel {
 					}
 
 					int duration = DateTime.duration(startDate, holidays.get(startDate));		
-					taskDate.put(i, new TaskDO(0, holidayId++, "H", 0, duration, duration, "Low", null, "Holiday", null));		
+					taskDate.put(i, new TaskDO(0, holidayId, "H", 0, duration, duration, "Low", null, "Holiday", null));		
 				}	
 			}
+			
+			holidayId++;
 			
 			ArrayList<TaskDate> orderedTaskDate = new ArrayList<TaskDate>();
 
@@ -278,11 +280,14 @@ public class StaffSummary extends JPanel {
 				int gridWidth = 1;
 
 				TaskDO currentTask = dateOfTask.getTask();
+				
+		
+		
 
 				for (int j = i + 1; j < orderedTaskDate.size(); j++) {
 
 					TaskDate nextDateTask = orderedTaskDate.get(j);
-
+					
 					if (currentTask.getTaskId() == nextDateTask.getTask()
 							.getTaskId()
 							&& currentTask.getProjectId() == nextDateTask
@@ -292,13 +297,14 @@ public class StaffSummary extends JPanel {
 					} else {
 						break;
 					}
+					
+					
 				}
+				
 
 				gbc.gridwidth = gridWidth;
 				lblTaskName = new JLabel(dateOfTask.getTask().getTaskName(),
 						JLabel.HORIZONTAL);
-
-				System.out.println(dateOfTask.getTask().getProjectId());
 
 				for (int j = 0; j < view.getids.size(); j++) {
 
