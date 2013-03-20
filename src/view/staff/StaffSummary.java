@@ -31,16 +31,18 @@ public class StaffSummary extends JPanel {
 	// TODO add error checks if task start date is greater than time scale set
 	// on table
 
-	int dayXPos = 8;
-	DateTime currentDateTime;
-	DateTime projectStartDate;
-	JLabel lblDay;
+	private int dayXPos = 8;
+	private DateTime currentDateTime;
+	private DateTime projectStartDate;
+	private JLabel lblDay;
 	private CellColour curColour;
 	private Color Headers = new Color(220, 20, 60);
 	private Color border = new Color(220,220,220);
 	private ArrayList<Integer> projectids = new ArrayList<Integer>();
-	MainFrame view;
-
+	private MainFrame view;
+	
+	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
+	
 	public StaffSummary(MainFrame view) {
 		this.view = view;
 
@@ -254,7 +256,8 @@ public class StaffSummary extends JPanel {
 					gbc.gridwidth = blankLength;
 
 					lblBlank = new JLabel("");
-					lblBlank.setBackground(new Color(234,234,234));
+//					lblBlank.setBackground(new Color(234,234,234));
+					lblBlank.setBackground(Color.GRAY);
 					lblBlank.setOpaque(true);
 					lblBlank.setBorder(BorderFactory
 							.createLineBorder(border));
@@ -311,17 +314,44 @@ public class StaffSummary extends JPanel {
 
 			}
 
-			if (currentTime.before(currentDateTime)) {
+//			if (currentTime.before(currentDateTime)) {
+//
+//				int blankLength = DateTime.duration(currentTime,
+//						currentDateTime);
+//				gbc.gridwidth = blankLength;
+//				add(lblBlank = new JLabel(""), gbc);
+//				lblBlank.setBorder(BorderFactory.createLineBorder(border));
+//
+//			}
 
-				int blankLength = DateTime.duration(currentTime,
-						currentDateTime);
-				gbc.gridwidth = blankLength;
-				add(lblBlank = new JLabel(""), gbc);
-				lblBlank.setBorder(BorderFactory.createLineBorder(border));
-
-			}
-
+			endXPos.add(xPos);
+			
 			xPos = 0;
+		}
+		
+		addEndBlanks();
+	}
+	
+	public void addEndBlanks() {
+		
+		yPos = 2;
+		for(Integer xPos : endXPos) {
+			
+			gbc.gridy = yPos;
+			if(xPos < dayXPos) {
+				
+				gbc.gridx = xPos;
+				
+				int blankLength = dayXPos - xPos;
+				gbc.gridwidth = blankLength;
+				JLabel lblEndBlank = new JLabel("");
+				lblEndBlank.setBorder(BorderFactory.createLineBorder(border));
+				lblEndBlank.setBackground(Color.GRAY);
+				lblEndBlank.setOpaque(true);				
+				add(lblEndBlank, gbc);
+			}
+			
+			yPos++;
 		}
 	}
 

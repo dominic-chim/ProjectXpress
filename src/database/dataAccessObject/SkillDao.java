@@ -30,6 +30,7 @@ public class SkillDao extends DatabaseRoot {
 		HashMap<Integer, String> skillMap = new HashMap<Integer, String>();
 		try {
 			ResultSet result = db.executeQuery(sql);
+			
 			while (result.next()) {
 				skillMap.put(result.getInt("skill_id"),
 						result.getString("skill_name"));
@@ -42,14 +43,34 @@ public class SkillDao extends DatabaseRoot {
 
 	}
 
-	public void addSkill() {
+	public void addSkill(int id, String name) {
 
+		System.out.println("Adding Skill");
+		String sql = "INSERT INTO skill VALUES (" + id + ", '" + name + "')";
+		
+		try {
+			db.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 	}
 
-	public void modifySkill() {
+	public void modifySkill(int id, String name) {
 
+		
+		String sql = "UPDATE staff SET skill_name = '" + name + "' WHERE skill_id = " + id;
+		
+		try {
+			int result = db.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
+	
+	//TODO 
+	// If we have time to add
 	public void removeSkill() {
 
 	}

@@ -34,9 +34,20 @@ public class ProjectSummary extends JPanel {
 	private JLabel lblDay;
 	private ArrayList<Integer> projectIds = new ArrayList<Integer>();
 	private CellColour colourit = new CellColour();
-	final Color Headers = new Color(220,20,60);
-	final Color border = new Color(220,220,220);
-	final Color cell = new Color(72,118,255);
+	final Color Headers = new Color(220, 20, 60);
+	final Color border = new Color(220, 220, 220);
+	final Color cell = new Color(72, 118, 255);
+
+	private int xPos = 0;
+	private JLabel lblBlank;
+	private JLabel lblStaffNo;
+	private DateTime currentTime;
+	private DateTime time;
+	private HashMap<DateTime, Integer> totalResources = new HashMap<DateTime, Integer>();
+
+	DateTime projectStartDate;
+	
+	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
 
 
 	public ProjectSummary() {
@@ -69,17 +80,17 @@ public class ProjectSummary extends JPanel {
 		}
 
 		DateTime projectStartDate = resultDB.getStartingDateTime();
-		// DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
 
 		this.currentDateTime = projectStartDate;
-		addData(dataToShow, projectStartDate);
+		this.projectStartDate = projectStartDate;
+		addData(dataToShow);
 
 		setVisible(true);
 
 	}
 
 	public void addDay() {
-	
+
 		// Add Day
 		gbc.gridy = 0;
 		gbc.gridwidth = 8;
@@ -127,8 +138,7 @@ public class ProjectSummary extends JPanel {
 
 	}
 
-	public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults,
-			DateTime projectStartDate) {
+	public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults) {
 
 		HashMap<DateTime, Integer> resources;
 		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
@@ -139,7 +149,7 @@ public class ProjectSummary extends JPanel {
 
 			for (ResultDO result : projectResults.get(project)) {
 
-				DateTime time = result.getStartDateTime();
+				time = result.getStartDateTime();
 
 				for (int i = DateTime.duration(result.getStartDateTime(),
 						result.getEndDateTime()); i > 0; i--) {
@@ -168,36 +178,26 @@ public class ProjectSummary extends JPanel {
 			}
 			projectResources.put(project, resources);
 		}
-
-		int xPos = 0;
-		JLabel lblBlank;
-		JLabel lblStaffNo;
-
 		for (ProjectDO projects : projectResources.keySet()) {
 			projectIds.add(projects.getProjectId());
 		}
 
 		colourit.colourCell(projectIds);
 
-		// test
-		for (int i = 0; i < colourit.getColor().size(); i++) {
-			System.out.println(colourit.getColor().get(i));
-		}
-
 		for (ProjectDO projects : projectResources.keySet()) {
 
 			JLabel projectName = new JLabel(projects.getProjectName(),
 					JLabel.HORIZONTAL);
-			
+
 			projectName.setBackground(Headers);
 			projectName.setForeground(Color.white);
-			
-			//set headers to random generated colour
-			/*for (int i = 0; i < projectIds.size(); i++) {
-				if (projectIds.get(i).equals(projects.getProjectId()) == true) {
-					projectName.setBackground(colourit.getColor().get(i));
-				}
-			}*/
+
+			// set headers to random generated colour
+			/*
+			 * for (int i = 0; i < projectIds.size(); i++) { if
+			 * (projectIds.get(i).equals(projects.getProjectId()) == true) {
+			 * projectName.setBackground(colourit.getColor().get(i)); } }
+			 */
 
 			projectName.setBorder(BorderFactory.createLineBorder(border));
 			projectName.setOpaque(true);
@@ -216,46 +216,26 @@ public class ProjectSummary extends JPanel {
 
 			gbc.gridx = xPos;
 
-			DateTime currentTime = new DateTime(projectStartDate.getYear(),
+			currentTime = new DateTime(projectStartDate.getYear(),
 					projectStartDate.getMonth(), projectStartDate.getDay(), 9,
 					0, 0);
 
-			ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
-			HashMap<DateTime, Integer> minDate;
-
-			for (int i = listOfResources.size(); i > 0; i--) {
-				DateTime min = null;
-				for (DateTime t : listOfResources.keySet()) {
-					min = t;
-					break;
-				}
-
-				int noResources = 0;
-				for (DateTime time : listOfResources.keySet()) {
-					if (time.before(min)) {
-						min = time;
-					}
-				}
-
-				for (DateTime time : listOfResources.keySet()) {
-
-					if (min.getDateTime().equals(time.getDateTime())) {
-
-						noResources = listOfResources.get(time);
-						listOfResources.remove(time);
-						break;
-					}
-				}
-
-				minDate = new HashMap<DateTime, Integer>();
-				minDate.put(min, noResources);
-				orderedDateTime.add(minDate);
-
-			}
+			ArrayList<HashMap<DateTime, Integer>> orderedDateTime = orderHashMap(listOfResources);
 
 			for (HashMap<DateTime, Integer> dateAndResource : orderedDateTime) {
 
 				for (DateTime time : dateAndResource.keySet()) {
+
+					int value = 0;
+					for (DateTime checkDate : totalResources.keySet()) {
+						if (time.getDateTime().equals(checkDate.getDateTime())) {
+							value = totalResources.get(checkDate);
+							totalResources.remove(checkDate);
+							break;
+						}
+					}
+
+					totalResources.put(time, dateAndResource.get(time) + value);
 
 					while (currentDateTime.before(DateTime.hourLater(time, 1))) {
 						addDay();
@@ -272,32 +252,24 @@ public class ProjectSummary extends JPanel {
 								.createLineBorder(border));
 						lblBlank.setBackground(Color.GRAY);
 						lblBlank.setOpaque(true);
-						add(lblBlank,gbc);
-						
+						add(lblBlank, gbc);
+
 						xPos += blankLength;
 						gbc.gridx = xPos;
 					}
 
 					gbc.gridwidth = 1;
 
-					add(lblStaffNo = new JLabel(
-							Integer.toString(dateAndResource.get(time)),
-							JLabel.HORIZONTAL), gbc);
-					lblStaffNo.setBorder(BorderFactory
-							.createLineBorder(border));
+					lblStaffNo = new JLabel(Integer.toString(dateAndResource
+							.get(time)), JLabel.HORIZONTAL);
+					lblStaffNo
+							.setBorder(BorderFactory.createLineBorder(border));
 					lblStaffNo.setOpaque(true);
-					
-					//assign matching random colour as seen in row header
-					/*for (int i = 0; i < projectIds.size(); i++) {
-						if (projectIds.get(i).equals(projects.getProjectId()) == true) {
-							lblStaffNo
-									.setBackground(colourit.getColor().get(i));
-						}
-					}*/
-					
+
 					lblStaffNo.setBackground(cell);
 					lblStaffNo.setForeground(Color.white);
-					
+
+					add(lblStaffNo, gbc);
 
 					xPos += 1;
 
@@ -306,26 +278,159 @@ public class ProjectSummary extends JPanel {
 					currentTime = DateTime.hourLater(time, 1);
 				}
 
-				if (currentTime.before(currentDateTime)) {
-
-					int blankLength = DateTime.duration(currentTime,
-							currentDateTime);
-					gbc.gridwidth = blankLength;
-					add(lblBlank = new JLabel(""), gbc);
-					lblBlank.setBorder(BorderFactory
-							.createLineBorder(border));
-
-				}
 			}
-
+			
+			endXPos.add(xPos);
 			xPos = 0;
 
 		}
 
+		addTotalResources(orderHashMap(totalResources));
+		addEndBlanks();
+	}
+
+	public void addTotalResources(
+			ArrayList<HashMap<DateTime, Integer>> totalResources) {
+
+		currentTime = new DateTime(projectStartDate.getYear(),
+				projectStartDate.getMonth(), projectStartDate.getDay(), 9, 0, 0);
+
+		xPos = 0;
+		gbc.gridy = ++yPos;
+		gbc.gridx = xPos;
+		gbc.gridwidth = 8;
+
+		JLabel lblTotalResources = new JLabel("Total Resources",
+				JLabel.HORIZONTAL);
+		lblTotalResources.setBorder(BorderFactory.createLineBorder(border));
+		lblTotalResources.setBackground(Headers);
+		lblTotalResources.setForeground(Color.white);
+		lblTotalResources.setOpaque(true);
+		add(lblTotalResources, gbc);
+
+		xPos += 8;
+
+		gbc.gridx = xPos;
+
+		for (HashMap<DateTime, Integer> dateAndResource : totalResources) {
+			for (DateTime date : dateAndResource.keySet()) {
+
+				if (currentTime.before(date)) {
+					int blankLength = DateTime.duration(currentTime, date);
+
+					gbc.gridwidth = blankLength;
+					lblBlank = new JLabel("");
+					lblBlank.setBorder(BorderFactory.createLineBorder(border));
+					lblBlank.setBackground(Color.GRAY);
+					lblBlank.setOpaque(true);
+					add(lblBlank, gbc);
+
+					xPos += blankLength;
+					gbc.gridx = xPos;
+
+				}
+
+				gbc.gridwidth = 1;
+
+				add(lblStaffNo = new JLabel(Integer.toString(dateAndResource
+						.get(date)), JLabel.HORIZONTAL), gbc);
+				lblStaffNo.setBorder(BorderFactory.createLineBorder(border));
+				lblStaffNo.setOpaque(true);
+
+				lblStaffNo.setBackground(cell);
+				lblStaffNo.setForeground(Color.white);
+
+				xPos += 1;
+
+				gbc.gridx = xPos;
+
+				currentTime = DateTime.hourLater(date, 1);
+			}
+		
+		}
+		
+//		if (currentTime.before(currentDateTime)) {
+//
+//			int blankLength = DateTime.duration(currentTime,
+//					currentDateTime);
+//			gbc.gridwidth = blankLength;
+//			lblBlank = new JLabel("");
+//			lblBlank.setBorder(BorderFactory.createLineBorder(border));
+//			lblBlank.setBackground(Color.GRAY);
+//			lblBlank.setOpaque(true);
+//			add(lblBlank, gbc);
+//
+//		}
+		
+		endXPos.add(xPos);
+
+
 	}
 	
-	
-	public  CellColour getColours(){
+	public void addEndBlanks() {
+		
+		yPos = 2;
+		for(Integer xPos : endXPos) {
+			
+			gbc.gridy = yPos;
+			if(xPos < dayXPos) {
+				
+				gbc.gridx = xPos;
+				
+				int blankLength = dayXPos - xPos;
+				gbc.gridwidth = blankLength;
+				JLabel lblEndBlank = new JLabel("");
+				lblEndBlank.setBorder(BorderFactory.createLineBorder(border));
+				lblEndBlank.setBackground(Color.GRAY);
+				lblEndBlank.setOpaque(true);
+				add(lblEndBlank, gbc);
+			}
+			
+			yPos++;
+		}
+	}
+
+	public ArrayList<HashMap<DateTime, Integer>> orderHashMap(
+			HashMap<DateTime, Integer> listOfResources) {
+
+		ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
+		HashMap<DateTime, Integer> minDate;
+
+		for (int i = listOfResources.size(); i > 0; i--) {
+			DateTime min = null;
+			for (DateTime t : listOfResources.keySet()) {
+				min = t;
+				break;
+			}
+
+			int noResources = 0;
+			for (DateTime time : listOfResources.keySet()) {
+				if (time.before(min)) {
+					min = time;
+				}
+			}
+
+			for (DateTime time : listOfResources.keySet()) {
+
+				if (min.getDateTime().equals(time.getDateTime())) {
+
+					noResources = listOfResources.get(time);
+					listOfResources.remove(time);
+					break;
+				}
+			}
+
+			minDate = new HashMap<DateTime, Integer>();
+			minDate.put(min, noResources);
+			orderedDateTime.add(minDate);
+
+		}
+
+		return orderedDateTime;
+
+	}
+
+	public CellColour getColours() {
 		return colourit;
 	}
 

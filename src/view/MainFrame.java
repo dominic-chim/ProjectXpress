@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel =null;
-	private StatisticPanel statisticPanel = new StatisticPanel();
+//	private StatisticPanel statisticPanel = new StatisticPanel();
 	public CellColour initialColour = new CellColour();
 	public ArrayList<Integer>getids = new ArrayList<Integer>();
 	
@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
 		initialColour=projectPanel.getProjectSummary().getColours();
 		getids = projectPanel.getProjectSummary().getProjectIds();
 		mainTabbedPane.addTab("Staff", staffPanel = new StaffView(this));
-		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		
@@ -112,7 +112,9 @@ public class MainFrame extends JFrame {
         // refresh project panel
         JTabbedPane projectTabs = projectPanel.getRightTabs();
         projectTabs.removeAll();
-        projectTabs.addTab("Summary of Projects", new ProjectSummary());
+        ProjectSummary projectSummary = new ProjectSummary();
+        JScrollPane projectSummaryScrollPane = new JScrollPane(projectSummary);
+        projectTabs.addTab("Summary of Projects", projectSummaryScrollPane);
         projectTabs.addTab("Project Allocation", new ProjectAllocation());
         
         // refresh staff panel

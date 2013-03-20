@@ -77,8 +77,6 @@ public class StaffDao extends DatabaseRoot {
 		}
 
 		for (DateTime date : staff.getHolidays().keySet()) {
-
-			System.out.println("Date " + date + " End " + staff.getHolidays().get(date));
 			
 			staffValues = staff.getStaffId() + ", '" + date.getDateTime()
 					+ "', '" + staff.getHolidays().get(date).getDateTime()
