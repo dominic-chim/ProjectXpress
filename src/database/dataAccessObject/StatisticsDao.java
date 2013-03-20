@@ -84,7 +84,10 @@ public class StatisticsDao extends DatabaseRoot {
 
 	public ArrayList<Object> taskCountStaff() {
 		ArrayList<Object> output = new ArrayList<Object>();
-		String sql = "SELECT b.staff_name, COUNT(*) AS Total FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b GROUP BY b.staff_name;";
+		//String sql = "SELECT b.staff_name, COUNT(*) AS Total FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b GROUP BY b.staff_name;";
+		String sql = "SELECT b.staff_name, COUNT(*) AS Total FROM (SELECT * FROM scheduling_result as test WHERE version=(select max(version) from scheduling_result)) as a NATURAL JOIN staff as b GROUP BY b.staff_name;";
+		
+		
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
@@ -158,7 +161,10 @@ public class StatisticsDao extends DatabaseRoot {
 
 	public ArrayList<Object> usedData() {
 		ArrayList<Object> output = new ArrayList<Object>();
-		String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
+		//String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
+		String sql = "SELECT staff_name, SUM(task_duration) AS SUM FROM (SELECT * FROM scheduling_result as test where version=(select max(version) from scheduling_result)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
+		
+		
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
@@ -247,8 +253,7 @@ public class StatisticsDao extends DatabaseRoot {
 
 	public Object[][] allStats() {
 
-		String sql = "SELECT staff_id, b.staff_name, COUNT(DISTINCT(a.project_id)) AS projectTotal, COUNT(DISTINCT(c.skill_id)) AS skillTotal FROM (SELECT * FROM scheduling_result as test GROUP BY project_id, task_id HAVING max(version)) as a NATURAL JOIN staff as b NATURAL JOIN staff_skill_level as c GROUP BY b.staff_name;";
-
+		String sql = "SELECT staff_id, b.staff_name, COUNT( DISTINCT ( a.project_id) ) AS projectTotal, COUNT( DISTINCT ( c.skill_id) ) AS skillTotal FROM ( SELECT * FROM scheduling_result AS test where version=(select max(version) from scheduling_result)) AS a NATURAL JOIN staff AS b NATURAL JOIN staff_skill_level AS c GROUP BY b.staff_name";
 		ArrayList<Object> data = new ArrayList<>();
 
 		try {
