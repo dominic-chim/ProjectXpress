@@ -16,6 +16,11 @@ public class TestDataTime {
     }
     
     @Test
+    public void aa() {
+    	new DateTime("2013-02-03 00:99:004");
+    }
+    
+    @Test
     public void testOutPrintDateTime(){
         assertEquals("2013-10-25 10:00:00",dt1.getDateTime());
         assertEquals(2013, dt1.getYear());

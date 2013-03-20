@@ -131,18 +131,7 @@ public class StaffSummary extends JPanel {
 
 		dayXPos += 8;
 		
-//		p = Pattern.compile("(.*) (.*):(.*):(.*)");
-//		m = p.matcher(currentDateTime.getDateTime());
-//
-//		while (m.find()) {
-//			date = m.group(2);
-//		}
-//		
-//		System.out.println("INT !" + Integer.parseInt(date));
 		currentDateTime = DateTime.nextDay(currentDateTime);
-//		currentDateTime = DateTime.hourLater(currentDateTime, Integer.parseInt(date)-9);
-		
-//		System.out.println("After " + currentDateTime.getDateTime());
 
 	}
 

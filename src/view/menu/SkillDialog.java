@@ -218,6 +218,8 @@ public class SkillDialog extends JDialog {
 
 		String skillInput = tfSkillInput.getText();
 		skillListModel.addElement(skillInput);
+
+		tfSkillInput.setText("");
 		
 		return skillInput;
 	}

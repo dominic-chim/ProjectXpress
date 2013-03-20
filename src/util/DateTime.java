@@ -16,6 +16,7 @@ public class DateTime {
             "yyyy-MM-dd HH:mm:ss");
 
     public DateTime(String dateTime) {
+    	
         year = Integer.parseInt(dateTime.substring(0, 4));
         month = Integer.parseInt(dateTime.substring(5, 7));
         day = Integer.parseInt(dateTime.substring(8, 10));
@@ -23,6 +24,20 @@ public class DateTime {
         // we don't care them
         minute = 0;
         second = 0;
+        try {
+	        org.joda.time.DateTime dt = new org.joda.time.DateTime(
+	                this.getYear(),
+	                this.getMonth(),
+	                this.getDay(),
+	                this.getHour(),
+	                this.getMinute(),
+	                this.getSecond(),
+	                0);
+        } catch (Exception ex) {
+        	throw new IllegalArgumentException("invalid date");
+        }
+        System.out.println();
+        
     }
 
     public DateTime(int year, int month, int day, 
