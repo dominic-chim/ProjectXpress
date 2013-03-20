@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel =null;
-//	private StatisticPanel statisticPanel = new StatisticPanel();
+	private StatisticPanel statisticPanel = new StatisticPanel();
 	public CellColour initialColour = new CellColour();
 	public ArrayList<Integer>getids = new ArrayList<Integer>();
 	
