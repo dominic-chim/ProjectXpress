@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import view.MainFrame;
 import view.menu.SkillDialog;
+import data.Context;
+import data.dataObject.SkillDO;
 import database.dataAccessObject.SkillDao;
 
 public class SkillController implements ActionListener {
@@ -50,10 +52,11 @@ public class SkillController implements ActionListener {
 		// Save skill from add skill dialog
 		case "Save Skill":
 			
-			skillDao.addSkill();
-
-			skillDialog.addNewSkillToList();
+			String skillName = skillDialog.addNewSkillToList();
+			System.out.println(skillName);
+			skillDao.addSkill(skillName);
 			skillDialog.getAddSkillDialog().dispose();
+			Context.updateSkills();
 
 			break;
 
@@ -67,8 +70,10 @@ public class SkillController implements ActionListener {
 		// Save Modifed Skill from modify skill dialog
 		case "Save changes":
 
-			skillDialog.addModifiedSkillToList();
+			SkillDO skill = skillDialog.addModifiedSkillToList();
+			skillDao.modifySkill(skill);
 			skillDialog.getModifySkillDialog().dispose();
+			Context.updateSkills();
 
 			break;
 

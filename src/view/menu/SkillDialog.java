@@ -13,17 +13,21 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import controllers.menu.SkillController;
 import view.MainFrame;
+import controllers.menu.SkillController;
 import data.Context;
+import data.dataObject.SkillDO;
 
 public class SkillDialog extends JDialog {
 
 	// Context context;
-	// HashMap<Integer, String> skills = context.getSkillMap();
-	HashMap<Integer, String> skills = new HashMap<Integer, String>();
+	 HashMap<Integer, String> skills = Context.getSkillMap();
+	 HashMap<String, Integer> revSkills = Context.getSkillRevMap();
+
+//	HashMap<Integer, String> skills = new HashMap<Integer, String>();
 
 	// SkillDialog
 	JButton btnAddSkill = new JButton("Add Skill");
@@ -59,10 +63,6 @@ public class SkillDialog extends JDialog {
 		this.view = view;
 		setLayout(new BorderLayout());
 
-		// Test
-		skills.put(0, "Test");
-		skills.put(1, "Test 2");
-
 		// Define Skill List
 		skillListModel = new DefaultListModel();
 		skillList = new JList(skillListModel);
@@ -83,7 +83,9 @@ public class SkillDialog extends JDialog {
 		gbc.gridy = 0;
 		gbc.gridwidth = 3;
 
-		skillPanel.add(skillList, gbc);
+        JScrollPane skillListScrollPane = new JScrollPane(skillList);
+
+		skillPanel.add(skillListScrollPane, gbc);
 		gbc.gridy = 1;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0.1;
@@ -98,6 +100,7 @@ public class SkillDialog extends JDialog {
 		addController(controller);
 
 		// Add Panels to Dialog
+
 		add(skillPanel, BorderLayout.CENTER);
 		// Set Dialog Settings
 
@@ -105,7 +108,7 @@ public class SkillDialog extends JDialog {
 
 	public void createSkillDialog() {
 		setTitle("Add Skill");
-		setSize(300, 200);
+		setSize(300, 300);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -200,15 +203,23 @@ public class SkillDialog extends JDialog {
 
 	}
 
-	public void addModifiedSkillToList() {
+	public SkillDO addModifiedSkillToList() {
 		
-		skillListModel.setElementAt(tfModifySkillInput.getText(), skillList.getSelectedIndex());
+		String modifiedSkill = tfModifySkillInput.getText();		
+		int id = revSkills.get(skillList.getSelectedValue());
+
+		skillListModel.setElementAt(modifiedSkill, skillList.getSelectedIndex());
+		
+		return new SkillDO(id, modifiedSkill);
 		
 	}
 	
-	public void addNewSkillToList() {
+	public String addNewSkillToList() {
 
-		skillListModel.addElement(tfSkillInput.getText());
+		String skillInput = tfSkillInput.getText();
+		skillListModel.addElement(skillInput);
+		
+		return skillInput;
 	}
 
 	public JDialog getAddSkillDialog() {

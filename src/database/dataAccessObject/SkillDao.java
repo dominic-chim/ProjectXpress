@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import data.dataObject.SkillDO;
 import database.DatabaseRoot;
 
 public class SkillDao extends DatabaseRoot {
@@ -43,10 +44,9 @@ public class SkillDao extends DatabaseRoot {
 
 	}
 
-	public void addSkill(int id, String name) {
+	public void addSkill(String name) {
 
-		System.out.println("Adding Skill");
-		String sql = "INSERT INTO skill VALUES (" + id + ", '" + name + "')";
+		String sql = "INSERT INTO skill (skill_name) VALUES (' " + name  + " ') ";
 		
 		try {
 			db.executeUpdate(sql);
@@ -55,19 +55,16 @@ public class SkillDao extends DatabaseRoot {
 		}	
 	}
 
-	public void modifySkill(int id, String name) {
-
+	public void modifySkill(SkillDO skill) {
 		
-		String sql = "UPDATE staff SET skill_name = '" + name + "' WHERE skill_id = " + id;
+		String sql = "UPDATE skill SET skill_name = '" + skill.getSkillName() + "' WHERE skill_id = " + skill.getId();
 		
 		try {
 			int result = db.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
-
 	
 	//TODO 
 	// If we have time to add
