@@ -200,7 +200,7 @@ public class StaffSummary extends JPanel {
 					projectStartDate.getDay(), 9, 0, 0);
 
 			for (DateTime startDate : holidays.keySet()) {
-				if (startDate.before(projectStartDateNine)) {
+				if (holidays.get(startDate).before(projectStartDateNine)) {
 					continue;
 				} else {
 					projectStartDate = projectStartDateNine;
