@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 
 import util.DateTime;
 import view.MainFrame;
+import view.menu.AboutDialog;
 //import view.menu.AboutDialog;
 import view.menu.RiskDialog;
 import view.menu.SchedulingDialog;
@@ -83,8 +84,8 @@ public class MenuController implements ActionListener {
 
             break;
             
-        case "About": 
-        	//AboutDialog aDialog = view.getaboutDialog();
+        case "Project Info": 
+        	AboutDialog aDialog = view.getaboutDialog();
         	break;
 
         default:

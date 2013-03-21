@@ -19,11 +19,12 @@ public class MainMenuBar extends JMenuBar {
 	private JMenu menuProject = new JMenu("Project");
 	private JMenu menuSettings = new JMenu("Settings");
 	private JMenu menuHelp = new JMenu("Help");
-	
+	private JMenu menuAbout= new JMenu("About");
 	private JMenuItem miSettingsSkill = new JMenuItem("Skills");
 	private JMenuItem miSettingsRisk = new JMenuItem("Risk");
     private JMenuItem miProjectSchedule = new JMenuItem("Scheduling");
     private JMenuItem miUserManual = new JMenuItem("User Manual");
+	private JMenuItem miAbout = new JMenuItem("Project Info");
     
 	
 	public MainMenuBar() {
@@ -32,10 +33,12 @@ public class MainMenuBar extends JMenuBar {
 		menuSettings.add(miSettingsSkill);
 		menuSettings.add(miSettingsRisk);
 		menuHelp.add(miUserManual);
+		menuAbout.add(miAbout);
 
 		this.add(menuProject);
 		this.add(menuSettings);
 		this.add(menuHelp);
+		this.add(menuAbout);
 	}
 	
 	public JMenuItem getSchedulingButton() {
@@ -48,5 +51,6 @@ public class MainMenuBar extends JMenuBar {
 		miSettingsRisk.addActionListener(controller);
 		miProjectSchedule.addActionListener(controller);
 		miUserManual.addActionListener(controller);
+		miAbout.addActionListener(controller);
 	}
 }

@@ -11,23 +11,21 @@ import controllers.staff.StaffController;
  * main controller used to start other controllers
  * 
  * @author all group members
- *
+ * 
  */
 public class MainController {
 
-    private MainFrame view;
+	private MainFrame view;
 
-    public MainController(MainFrame view) {
+	public MainController(MainFrame view) {
 
-        this.view = view;
+		this.view = view;
 
-        // start other controllers
-        ProjectController projectController = new ProjectController(view);
-        StaffController staffController = new StaffController(view);
-        SkillController skillController = new SkillController(view);
-        MenuController menuController = new MenuController(view, skillController);
-        
-    }
+		// start other controllers
+		new ProjectController(view);
+		new StaffController(view);
+		new MenuController(view, new SkillController(view));
 
+	}
 
 }
