@@ -207,19 +207,22 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		@SuppressWarnings("unchecked")
-		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-				.get(0)).size()];
-
-		for (int i = 0; i < data.size(); i++) {
-
+		if(data.size() != 0) {
 			@SuppressWarnings("unchecked")
-			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-			for (int j = 0; j < s.size(); j++) {
-				rows[i][j] = s.get(j);
+			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+					.get(0)).size()];
+	
+			for (int i = 0; i < data.size(); i++) {
+	
+				@SuppressWarnings("unchecked")
+				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+				for (int j = 0; j < s.size(); j++) {
+					rows[i][j] = s.get(j);
+				}
 			}
+			return rows;
 		}
-		return rows;
+		return new Object[0][0];
 	}
 
 	public Object[][] projectsList() {
@@ -242,19 +245,23 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		@SuppressWarnings("unchecked")
-		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-				.get(0)).size()];
-
-		for (int i = 0; i < data.size(); i++) {
-
+		if(data.size() != 0) {
 			@SuppressWarnings("unchecked")
-			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-			for (int j = 0; j < s.size(); j++) {
-				rows[i][j] = s.get(j);
+			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+					.get(0)).size()];
+	
+			for (int i = 0; i < data.size(); i++) {
+	
+				@SuppressWarnings("unchecked")
+				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+				for (int j = 0; j < s.size(); j++) {
+					rows[i][j] = s.get(j);
+				}
 			}
+			return rows;
+		} else {
+			return new Object[0][0];
 		}
-		return rows;
 	}
 
 	public Object[][] allStats() {
@@ -276,19 +283,23 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		@SuppressWarnings("unchecked")
-		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-				.get(0)).size()];
-
-		for (int i = 0; i < data.size(); i++) {
-
+		if(data.size() != 0) {
 			@SuppressWarnings("unchecked")
-			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-			for (int j = 0; j < s.size(); j++) {
-				rows[i][j] = s.get(j);
+			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+					.get(0)).size()];
+	
+			for (int i = 0; i < data.size(); i++) {
+	
+				@SuppressWarnings("unchecked")
+				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+				for (int j = 0; j < s.size(); j++) {
+					rows[i][j] = s.get(j);
+				}
 			}
+			return rows;
+		} else {
+			return new Object[0][0];
 		}
-		return rows;
 	}
 
 	public Object[][] scheduledProjects() {
@@ -314,19 +325,24 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		@SuppressWarnings("unchecked")
-		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-				.get(0)).size()];
-
-		for (int i = 0; i < data.size(); i++) {
-
+		if(data.size() != 0) {
 			@SuppressWarnings("unchecked")
-			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-			for (int j = 0; j < s.size(); j++) {
-				rows[i][j] = s.get(j);
+			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+					.get(0)).size()];
+	
+			for (int i = 0; i < data.size(); i++) {
+	
+				@SuppressWarnings("unchecked")
+				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+				for (int j = 0; j < s.size(); j++) {
+					rows[i][j] = s.get(j);
+				}
 			}
+			return rows;
+		} else {
+			return new Object[0][0];
 		}
-		return rows;
+		
 	}
 
 	public Object[][] scheduledTasks() {
@@ -351,20 +367,24 @@ public class StatisticsDao extends DatabaseRoot {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		@SuppressWarnings("unchecked")
-		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-				.get(0)).size()];
-
-		for (int i = 0; i < data.size(); i++) {
-
+		
+		if(data.size() != 0) {
 			@SuppressWarnings("unchecked")
-			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-			for (int j = 0; j < s.size(); j++) {
-				rows[i][j] = s.get(j);
+			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+					.get(0)).size()];
+	
+			for (int i = 0; i < data.size(); i++) {
+	
+				@SuppressWarnings("unchecked")
+				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+				for (int j = 0; j < s.size(); j++) {
+					rows[i][j] = s.get(j);
+				}
 			}
+			return rows;
+		} else {
+			return new Object[0][0];
 		}
-		return rows;
 	}
 
 	public Object[][] tasksList() {
@@ -390,19 +410,24 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		@SuppressWarnings("unchecked")
-		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-				.get(0)).size()];
-
-		for (int i = 0; i < data.size(); i++) {
-
+		
+		if(data.size() != 0) {
 			@SuppressWarnings("unchecked")
-			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-			for (int j = 0; j < s.size(); j++) {
-				rows[i][j] = s.get(j);
+			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+					.get(0)).size()];
+	
+			for (int i = 0; i < data.size(); i++) {
+	
+				@SuppressWarnings("unchecked")
+				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+				for (int j = 0; j < s.size(); j++) {
+					rows[i][j] = s.get(j);
+				}
 			}
+			return rows;
+		} else {
+			return new Object[0][0];
 		}
-		return rows;
 	}
 
 }

@@ -36,7 +36,7 @@ public class StaffSummary extends JPanel {
 
 	private int dayXPos = 8;
 	private DateTime currentDateTime;
-	private DateTime projectStartDate;
+	private DateTime projectStartDate = new DateTime(2013, 10, 23, 9, 0, 0);
 	private JLabel lblDay;
 	private CellColour curColour;
 	private Color Headers = new Color(220, 20, 60);
@@ -77,7 +77,11 @@ public class StaffSummary extends JPanel {
 					resultDB.getResultByStaff(staffId));
 		}
 
-		projectStartDate = resultDB.getStartingDateTime();
+		try {
+			projectStartDate = resultDB.getStartingDateTime();
+		} catch (NullPointerException ex) {
+		}
+		
 
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);

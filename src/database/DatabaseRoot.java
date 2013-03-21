@@ -2,6 +2,8 @@ package database;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
 import util.DatabaseConfig;
 
 /**
@@ -28,13 +30,15 @@ public abstract class DatabaseRoot {
             Class.forName("com.mysql.jdbc.Driver");
             String userName = config.getUserName();
             String password = config.getPassword();
-            if (connection == null) 
+            if (connection == null) {
             	connection = DriverManager.getConnection(url, userName, password);
+            }
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {
             System.out.println("errorCNF");
         } catch (SQLException e) {
-            System.out.println("errorSQL");
+            JOptionPane.showMessageDialog(null, "Database error.\nPlease check database settings.");
+    		System.exit(0);
         }
         
     }

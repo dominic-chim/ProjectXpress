@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import util.CellColour;
@@ -49,7 +50,7 @@ public class ProjectSummary extends JPanel {
 	private DateTime time;
 	private HashMap<DateTime, Integer> totalResources = new HashMap<DateTime, Integer>();
 
-	DateTime projectStartDate;
+	DateTime projectStartDate = new DateTime(2013, 3, 21, 9, 0, 0);
 
 	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
 
@@ -82,10 +83,13 @@ public class ProjectSummary extends JPanel {
 					resultDB.getResultByProject(projectId));
 		}
 
-		DateTime projectStartDate = resultDB.getStartingDateTime();
+		try {
+			projectStartDate = resultDB.getStartingDateTime();
+		} catch (NullPointerException ex) {
+		}
 
 		this.currentDateTime = projectStartDate;
-		this.projectStartDate = projectStartDate;
+		
 		addData(dataToShow);
 
 		setVisible(true);
