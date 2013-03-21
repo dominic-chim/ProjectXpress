@@ -117,6 +117,7 @@ public class StaffController implements ActionListener {
 
 				staffDao.createStaff(staff);
 			}
+			view.refresh();
 			break;
 
 		case "Update":
