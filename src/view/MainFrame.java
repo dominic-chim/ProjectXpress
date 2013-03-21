@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel = null;
-//	private StatisticPanel statisticPanel = new StatisticPanel();
+	private StatisticPanel statisticPanel = new StatisticPanel();
 	public CellColour initialColour = new CellColour();
 	public ArrayList<Integer> getids = new ArrayList<Integer>();
 
@@ -98,7 +98,7 @@ public class MainFrame extends JFrame {
 		return menuBar;
 	}
 
-<<<<<<< .mine	public AboutDialog getaboutDialog() {
+	public AboutDialog getaboutDialog() {
 		// TODO Auto-generated method stub
 		return new AboutDialog(this);
 	}
@@ -112,12 +112,7 @@ public class MainFrame extends JFrame {
 		mainTabbedPane.remove(statisticPanel);
 		statisticPanel = new StatisticPanel();
 		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
-=======    public void refresh() {
-        // refresh statistic panel
-//        mainTabbedPane.remove(statisticPanel);
-//        statisticPanel = new StatisticPanel();
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
->>>>>>> .theirs
+
 		// refresh project panel
 		JTabbedPane projectTabs = projectPanel.getRightTabs();
 		projectTabs.removeAll();
