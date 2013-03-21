@@ -60,7 +60,6 @@ public class SkillController implements ActionListener {
 		case "Save Skill":
 			
 			String skillName = skillDialog.addNewSkillToList();
-			System.out.println(skillName);
 			skillDao.addSkill(skillName);
 			skillDialog.getAddSkillDialog().dispose();
 			Context.updateSkills();

@@ -216,7 +216,6 @@ public class StaffList extends JPanel {
 		holidays.removeAllChildren();
 
 		for (DateTime date : staffInfo.getHolidays().keySet()) {
-			System.out.println(date);
 			holidays.add(new DefaultMutableTreeNode(date.getDateTime() + " to "
 					+ staffInfo.getHolidays().get(date).getDateTime()));
 		}

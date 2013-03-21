@@ -65,7 +65,6 @@ public class ScheduleAlgorithm {
             }
 
             boolean[] availability = new boolean[DateTime.duration(projectStartingDate, projectsDueDate)];
-            System.out.printf("%s--%s--%d\n", projectStartingDate.getDateTime(), projectsDueDate.getDateTime(), DateTime.duration(projectStartingDate, projectsDueDate));
             Arrays.fill(availability, Boolean.TRUE);
             for (DateTime holidayStartTime : holidays.keySet()) {
                 

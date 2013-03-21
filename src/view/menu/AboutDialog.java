@@ -13,7 +13,7 @@ public class AboutDialog extends JDialog {
 
 	final String[] aboutinfo = {
 			"Project Name : ProjectExpress",
-			"Version: 0.1",
+			"Version: 1.0",
 			"Dominic Chim",
 			"Ross Jarvis",
 			"Ke Chen (Bob)",
@@ -35,6 +35,8 @@ public class AboutDialog extends JDialog {
 		JTextArea jtAbout = new JTextArea();
 		GridBagConstraints gbc = new GridBagConstraints();
 
+		jtAbout.setEditable(false);
+		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 1;

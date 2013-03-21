@@ -35,7 +35,8 @@ public abstract class DatabaseRoot {
             }
             this.db = connection.createStatement();
         } catch (ClassNotFoundException e) {
-            System.out.println("errorCNF");
+        	JOptionPane.showMessageDialog(null, "File Not Found");
+    		System.exit(0);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Database error.\nPlease check database settings.");
     		System.exit(0);

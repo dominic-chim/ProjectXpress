@@ -412,9 +412,7 @@ public class StaffDialog extends JDialog {
 
 			queries.add(removeSkillQuery);
 
-			for (String i : queries) {
-				System.out.println(i);
-			}
+
 
 			skillLevels.remove(revMapSkills.get(skillName));
 

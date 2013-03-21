@@ -220,7 +220,7 @@ public class StaffSummary extends JPanel {
 					int duration = DateTime.duration(startDate,
 							holidays.get(startDate));
 					taskDate.put(i, new TaskDO(0, holidayId, "H", 0, duration,
-							duration, "HIGH", null, "Holiday", null));
+							duration, "Low", null, "Holiday", null));
 				}
 			}
 
