@@ -45,7 +45,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 
 		setLayout(new BorderLayout());
-		final ImageIcon image = new ImageIcon("src/projectexpress.jpeg");
+		final ImageIcon image = new ImageIcon("src/projectexpressIcon.jpg");
 		add(menuBar, BorderLayout.NORTH);
 
 		// add tabs to tabbed pane
@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 		initialColour = projectPanel.getProjectSummary().getColours();
 		getids = projectPanel.getProjectSummary().getProjectIds();
 		mainTabbedPane.addTab("Staff", staffPanel = new StaffView(this));
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 
 		add(mainTabbedPane, BorderLayout.CENTER);
 
