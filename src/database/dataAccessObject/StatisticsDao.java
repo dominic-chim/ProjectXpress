@@ -18,6 +18,10 @@ public class StatisticsDao extends DatabaseRoot {
 		super();
 	}
 
+//  each method in this class is used to retrieve information from the database
+//	this is done by storing the sql query in a string. a connection is established with the
+//	database which allows for results of the qeury to be stored in a result set. two array lists
+//	are then created to retrieve the data and store them as objects.
 	public ArrayList<Object> riskStats() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		String sql = "SELECT task_risk_level, COUNT(*)/(SELECT COUNT(*) FROM task)*100 AS percentage FROM task GROUP BY task_risk_level;";
