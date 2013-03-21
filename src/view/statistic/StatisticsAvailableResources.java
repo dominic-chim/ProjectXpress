@@ -36,10 +36,9 @@ import org.jfree.data.general.PieDataset;
  * gui for statistic availability resources tab
  * 
  * @author Samy
- *
+ * 
  */
 public class StatisticsAvailableResources extends ApplicationFrame {
-
 
 	private static final long serialVersionUID = 1L;
 	public JPanel panel = new JPanel(new GridLayout(1, 2));
@@ -62,7 +61,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 		super(title);
 		Object rows[][] = stats.availableStats();
 		Object columns[] = { "Staff ID", "Staff Name", "Skill Lvl",
-				"Skill Name"};
+				"Skill Name" };
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
 
@@ -76,8 +75,9 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 		final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(
 				table.getModel());
 		JScrollPane spTable = new JScrollPane(table);
-		topBorder = BorderFactory
-				.createTitledBorder("Staff Skills");
+		
+		//set title borders around panels
+		topBorder = BorderFactory.createTitledBorder("Staff Skills");
 		topBorder.setTitlePosition(TitledBorder.TOP);
 		spTable.setBorder(topBorder);
 		topBorder = BorderFactory
@@ -87,6 +87,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 				.createTitledBorder("Staff Distribution By Skill");
 		piePanel.setBorder(topBorder);
 
+		//set panel sizes
 		spTable.setPreferredSize(new Dimension(10, 10));
 		piePanel.setPreferredSize(new Dimension(250, 250));
 		chartPanel.setPreferredSize(new Dimension(400, 560));
@@ -97,12 +98,14 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 		panel.add(panel2);
 		panel.add(panel3);
 
+		//set table widths
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
 		table.getColumnModel().getColumn(2).setMaxWidth(60);
 		table.setRowSorter(sorter);
 
 	};
 
+	// retrieves required data from StatisticsDao
 	private CategoryDataset createDataset() {
 
 		String staffName = "Staff Name";
@@ -114,10 +117,10 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 					.toString());
 		}
 
-
 		return dataset;
 	}
 
+	// retrieves required data from StatisticsDao
 	private PieDataset pieDataset() {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		ArrayList<Object> statsData = stats.skillStaffCount();
@@ -126,10 +129,10 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
 
-
 		return dataset;
 	}
 
+	// creates chart
 	private static JFreeChart createChart(CategoryDataset dataset) {
 
 		JFreeChart chart = ChartFactory.createBarChart(null,
@@ -150,7 +153,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 		StackedBarRenderer renderer = new StackedBarRenderer(false);
 		renderer.setDrawBarOutline(false);
 		renderer.setBarPainter(new StandardBarPainter());
-		renderer.setSeriesPaint(0, new Color(78, 130, 190));
+		renderer.setSeriesPaint(0, new Color(77, 120, 248));
 		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 		renderer.setBaseItemLabelsVisible(true);
 		renderer.setShadowVisible(false);
@@ -160,6 +163,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 
 	}
 
+	// creates chart
 	private static JFreeChart createChart(PieDataset piedataset) {
 		JFreeChart jfreechart = ChartFactory.createPieChart(null, piedataset,
 				true, true, false);

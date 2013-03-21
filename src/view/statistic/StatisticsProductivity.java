@@ -33,13 +33,12 @@ import org.jfree.ui.ApplicationFrame;
 
 import database.dataAccessObject.StatisticsDao;
 
-
 /**
  * 
  * gui for statistic productivity tab
  * 
  * @author Samy
- *
+ * 
  */
 public class StatisticsProductivity extends ApplicationFrame {
 
@@ -131,6 +130,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 		JScrollPane spTable3 = new JScrollPane(table3);
 		JScrollPane spTable4 = new JScrollPane(table4);
 
+		// create borders for panels
 		topBorder = BorderFactory
 				.createTitledBorder("Project Productivity by Task Status");
 		topBorder.setTitlePosition(TitledBorder.TOP);
@@ -155,11 +155,13 @@ public class StatisticsProductivity extends ApplicationFrame {
 		tables.addTab("Scheduled Tasks", spTable3);
 		tables.addTab("All Tasks", spTable4);
 
+		// set Panel sizes
 		panel3.setPreferredSize(new Dimension(500, 560));
 		spTable.setPreferredSize(new Dimension(500, 260));
 		piePanel.setPreferredSize(new Dimension(350, 290));
 		projectPanel.setPreferredSize(new Dimension(350, 290));
 
+		// set JTable column sizes
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(70);
 		table.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -188,6 +190,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 
 	}
 
+	// retrieves data from StatisticsDao
 	private CategoryDataset createDataset() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -198,10 +201,10 @@ public class StatisticsProductivity extends ApplicationFrame {
 					.get(2).toString());
 		}
 
-
 		return dataset;
 	}
 
+	// retrieves data from StatisticsDao
 	private PieDataset pieDataset() {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		ArrayList<Object> statsData = stats.riskStats();
@@ -210,10 +213,10 @@ public class StatisticsProductivity extends ApplicationFrame {
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
 
-
 		return dataset;
 	}
 
+	// retrieves data from StatisticsDao
 	private PieDataset projectDataset() {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 
@@ -226,21 +229,11 @@ public class StatisticsProductivity extends ApplicationFrame {
 		return dataset;
 	}
 
-	private PieDataset taskDataset() {
-		DefaultPieDataset dataset = new DefaultPieDataset();
-		ArrayList<Object> statsData = stats.taskStatusStats();
-		for (int i = 0; i < statsData.size(); i++) {
-			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
-			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
-		}
-
-		return dataset;
-	}
-
+	// creates chart
 	private JFreeChart projectChart(final CategoryDataset dataset) {
 		final JFreeChart chart = ChartFactory.createStackedBarChart(null,
-				"Projects", "Tasks", dataset,
-				PlotOrientation.VERTICAL, true, true, false);
+				"Projects", "Tasks", dataset, PlotOrientation.VERTICAL, true,
+				true, false);
 
 		CategoryPlot plot = chart.getCategoryPlot();
 		StackedBarRenderer renderer = (StackedBarRenderer) plot.getRenderer();
@@ -252,11 +245,13 @@ public class StatisticsProductivity extends ApplicationFrame {
 		domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
 		plot.setNoDataMessage("No Data Available");
 		renderer.setBarPainter(new StandardBarPainter());
-		renderer.setSeriesPaint(0, new Color(78, 130, 190));
-		renderer.setSeriesPaint(1, new Color(189, 81, 78));
+		renderer.setSeriesPaint(0, new Color(135, 247, 79));
+		renderer.setSeriesPaint(1, new Color(220, 20, 59));
+		renderer.setSeriesPaint(2, new Color(77, 120, 248));
 		return chart;
 	}
 
+	// creates chart
 	private static JFreeChart createPieChart(PieDataset dataset) {
 
 		JFreeChart chart = ChartFactory.createRingChart(null, dataset, true,
@@ -274,13 +269,14 @@ public class StatisticsProductivity extends ApplicationFrame {
 		plot.setShadowXOffset(0);
 		plot.setShadowYOffset(0);
 		plot.setSimpleLabels(true);
-		plot.setSectionPaint("High", new Color(189, 81, 78));
-		plot.setSectionPaint("Medium", new Color(252, 192, 6));
-		plot.setSectionPaint("Low", new Color(78, 130, 190));
+		plot.setSectionPaint("High", new Color(220, 20, 59));
+		plot.setSectionPaint("Middle", new Color(247, 241, 79));
+		plot.setSectionPaint("Low", new Color(77, 120, 248));
 		return chart;
 
 	}
 
+	// creates chart
 	private static JFreeChart projectChart(PieDataset datasets) {
 
 		JFreeChart chart = ChartFactory.createPieChart(null, datasets, true,
@@ -297,12 +293,12 @@ public class StatisticsProductivity extends ApplicationFrame {
 		plot.setShadowXOffset(0);
 		plot.setShadowYOffset(0);
 		plot.setSimpleLabels(true);
-		plot.setSectionPaint("Not Started", new Color(189, 81, 78));
-		plot.setSectionPaint("In Progress", new Color(252, 192, 6));
-		plot.setSectionPaint("Completed", new Color(78, 130, 190));
+		plot.setSectionPaint("Not Started", new Color(220, 20, 59));
+		plot.setSectionPaint("Started", new Color(77, 120, 248));
+		plot.setSectionPaint("Completed", new Color(135, 247, 79));
+		plot.setSectionPaint("deleted", new Color(247, 241, 79));
 		return chart;
 
 	}
-
 
 }

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,13 +14,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
@@ -37,13 +34,12 @@ import org.jfree.ui.ApplicationFrame;
 
 import database.dataAccessObject.StatisticsDao;
 
-
 /**
  * 
  * gui for statistic resource usage
  * 
  * @author Samy
- *
+ * 
  */
 public class StatisticsResourceUsage extends ApplicationFrame {
 
@@ -54,7 +50,6 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 
 	JTable table;
 	final StatisticsDao stats = new StatisticsDao();
-
 
 	final CategoryDataset useddata = usedDataset();
 	final JFreeChart usedchart = usedBarChart(useddata);
@@ -75,8 +70,8 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		super(title);
 
 		Object rows[][] = stats.allStats();
-		Object columns[] = { "Staff ID", "Staff Name", "No. of Project Allocations",
-				"No. of Skills" };
+		Object columns[] = { "Staff ID", "Staff Name",
+				"No. of Project Allocations", "No. of Skills" };
 		DefaultTableModel model = new DefaultTableModel(rows, columns);
 		table = new JTable(model) {
 
@@ -90,16 +85,18 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		JScrollPane spTable = new JScrollPane(table);
 		final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(
 				table.getModel());
+		
+		//sets column width
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
 		table.getColumnModel().getColumn(0).setMaxWidth(80);
 		table.getColumnModel().getColumn(1).setMaxWidth(160);
 		table.getColumnModel().getColumn(3).setMaxWidth(120);
 		table.setRowSorter(sorter);
 
-		topBorder = BorderFactory
-				.createTitledBorder("Staff Usage");
+		topBorder = BorderFactory.createTitledBorder("Staff Usage");
 		topBorder.setTitlePosition(TitledBorder.TOP);
 
+		//adds border titles around panels
 		spTable.setBorder(topBorder);
 		topBorder = BorderFactory.createTitledBorder("Task Count By Staff");
 		taskPanel.setBorder(topBorder);
@@ -109,11 +106,8 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 				.createTitledBorder("Staff Distribution By Project");
 		piePanel.setBorder(topBorder);
 
-
-		usage.addTab("Tasks Allocated By" +
-				" Staff", taskPanel);
+		usage.addTab("Tasks Allocated By" + " Staff", taskPanel);
 		usage.addTab("Time Usage For Tasks By Staff", usedPanel);
-
 
 		spTable.setPreferredSize(new Dimension(10, 10));
 		piePanel.setPreferredSize(new Dimension(250, 250));
@@ -123,15 +117,12 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		panel2.add(piePanel);
 		panel2.add(spTable);
 
-
 		panel.setPreferredSize(new Dimension(100, 100));
 		panel.add(panel2);
 		panel.add(panel3);
 	}
 
-
-
-
+	//retrieves required data from StatisticsDao
 	private CategoryDataset createDataset() {
 
 		String staffName = "Staff Name";
@@ -145,7 +136,8 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 
 		return dataset;
 	}
-	
+
+	//retrieves required data from StatisticsDao
 	private CategoryDataset usedDataset() {
 
 		String staffName = "Staff Name";
@@ -157,10 +149,10 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 					.toString());
 		}
 
-
 		return dataset;
 	}
 
+	//retrieves required data from StatisticsDao
 	private PieDataset pieDataset() {
 		DefaultPieDataset dataset = new DefaultPieDataset();
 		ArrayList<Object> statsData = stats.staffCountProject();
@@ -169,12 +161,10 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
 
-
 		return dataset;
 	}
 
-
-
+	//creates chart
 	private static JFreeChart createPieChart(PieDataset dataset) {
 
 		JFreeChart chart = ChartFactory.createRingChart(null, dataset, true,
@@ -196,6 +186,7 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 
 	}
 
+	//creates chart
 	private static JFreeChart taskBarChart(CategoryDataset dataset) {
 
 		JFreeChart chart = ChartFactory.createBarChart(null,
@@ -216,7 +207,7 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		StackedBarRenderer renderer = new StackedBarRenderer(false);
 		renderer.setDrawBarOutline(false);
 		renderer.setBarPainter(new StandardBarPainter());
-		renderer.setSeriesPaint(0, new Color(78, 130, 190));
+		renderer.setSeriesPaint(0, new Color(77, 120, 248));
 		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 		renderer.setBaseItemLabelsVisible(true);
 		renderer.setShadowVisible(false);
@@ -225,14 +216,14 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		return chart;
 
 	}
-	
-	
+
+	//creates chart
 	private static JFreeChart usedBarChart(CategoryDataset dataset) {
 
 		JFreeChart chart = ChartFactory.createBarChart(null,
 
-		"Staff Name", "Number of Hours Used", dataset, PlotOrientation.VERTICAL,
-				true, true, false);
+		"Staff Name", "Number of Hours Used", dataset,
+				PlotOrientation.VERTICAL, true, true, false);
 
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.setBackgroundPaint(Color.lightGray);
@@ -247,7 +238,7 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 		StackedBarRenderer renderer = new StackedBarRenderer(false);
 		renderer.setDrawBarOutline(false);
 		renderer.setBarPainter(new StandardBarPainter());
-		renderer.setSeriesPaint(0, new Color(252, 192, 6));
+		renderer.setSeriesPaint(0, new Color(247, 241, 79));
 		renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
 		renderer.setBaseItemLabelsVisible(true);
 		renderer.setShadowVisible(false);
