@@ -86,7 +86,7 @@ public class TaskDao extends DatabaseRoot {
                                     task.getTaskRiskLevel(),
                                     task.getTaskReleaseTime().getDateTime(),
                                     task.getTaskStatus(),
-                                    task.getTaskDuration()
+                                    task.getTaskRemainingTime()
                                     );
 
         try {
@@ -125,7 +125,7 @@ public class TaskDao extends DatabaseRoot {
                 task.getTaskRiskLevel(),
                 task.getTaskReleaseTime().getDateTime(),
                 task.getTaskStatus(),
-                task.getTaskDuration(),
+                task.getTaskRemainingTime(),
                 task.getTaskId(),
                 task.getProjectId());
         try {

@@ -148,7 +148,12 @@ public class ProjectController {
                                         setTaskInfo(valuesMap, taskModel);
                                         int projectId = project.getProjectId();
                                         ArrayList<TaskDO> tasks = project.getTasks();
-                                        int taskId = tasks.get(tasks.size() - 1).getTaskId() + 1;
+                                        int taskId = 0;
+                                        if(tasks.size() != 0) {
+                                        	taskId = tasks.get(tasks.size() - 1).getTaskId() + 1;
+                                        } else {
+                                        	taskId = 1;
+                                        }
                                         (new TaskDao()).addTask(projectId, taskId, taskModel);
                                         jdlogAddTask.dispose();
                                         updateProjectList();
@@ -157,6 +162,7 @@ public class ProjectController {
                                         JOptionPane.showMessageDialog(jdlogAddProject, 
                                                 ErrMsg, "Invalid Input", 
                                                 JOptionPane.ERROR_MESSAGE);
+                                        
                                     }
                                     break;
 
