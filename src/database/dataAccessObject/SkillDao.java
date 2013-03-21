@@ -53,7 +53,7 @@ public class SkillDao extends DatabaseRoot {
 
 	public void addSkill(String name) {
 
-		String sql = "INSERT INTO skill (skill_name) VALUES (' " + name  + " ') ";
+		String sql = "INSERT INTO skill (skill_name) VALUES ('" + name  + "') ";
 		
 		try {
 			db.executeUpdate(sql);
