@@ -228,8 +228,19 @@ public class ProjectSummary extends JPanel {
 			JLabel projectName = new JLabel(projects.getProjectName(),
 					JLabel.HORIZONTAL);
 
-			projectName.setBackground(Headers);
-			projectName.setForeground(Color.white);
+			for (int j = 0; j < projectIds.size(); j++) {
+
+				if (projectIds.get(j).equals(
+						projects.getProjectId()) == true) {
+					projectName.setBackground(colourit.getColor()
+							.get(j));
+				}
+			}
+			
+			
+			
+			//projectName.setBackground(Headers);
+			//projectName.setForeground(Color.white);
 
 			projectName.setBorder(BorderFactory.createLineBorder(border));
 			projectName.setOpaque(true);
