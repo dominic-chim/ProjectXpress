@@ -82,13 +82,13 @@ public class DateTime {
         String strStart = start.getDateTime();
         String strEnd = end.getDateTime();
 
-        DateMidnight sd = new DateMidnight(strStart.substring(0, 10));
-        DateMidnight ed = new DateMidnight(strEnd.substring(0, 10));
+        DateMidnight sd = new DateMidnight(String.format("%04d-%02d-%02d", start.getYear(), start.getMonth(), start.getDay()));
+        DateMidnight ed = new DateMidnight(String.format("%04d-%02d-%02d", end.getYear(), end.getMonth(), end.getDay()));
 
         int days = Days.daysBetween(sd, ed).getDays();
         
-        int startHour = Integer.parseInt(strStart.substring(11,13));
-        int endHour = Integer.parseInt(strEnd.substring(11,13));
+        int startHour = start.getHour();//Integer.parseInt(strStart.substring(11,13));
+        int endHour = end.getHour();//Integer.parseInt(strEnd.substring(11,13));
 
         return (endHour - startHour) + 8 * days;
     }

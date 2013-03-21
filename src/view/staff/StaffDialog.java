@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -121,8 +122,8 @@ public class StaffDialog extends JDialog {
 		tfPrefenceLevel = new JTextField(textFieldSize);
 
 
-		tfStartDate = new JTextField("2013-02-02 00:00:00");
-		tfEndDate = new JTextField("2013-02-02 00:00:00");
+		tfStartDate = new JTextField(DateTime.dataBaseDateFormat.format(new Date()));
+		tfEndDate = new JTextField(DateTime.dataBaseDateFormat.format(new Date()));
 
 		// Holiday list and Buttons
 		holidayListModel = new DefaultListModel();

@@ -23,11 +23,11 @@ import database.dataAccessObject.ResultDao;
 import database.dataAccessObject.StaffDao;
 
 /**
- *
+ * 
  * gui for staff summary
- *
+ * 
  * @author Ross, Dominic
- *
+ * 
  */
 public class StaffSummary extends JPanel {
 
@@ -40,16 +40,15 @@ public class StaffSummary extends JPanel {
 	private JLabel lblDay;
 	private CellColour curColour;
 	private Color Headers = new Color(220, 20, 60);
-	private Color border = new Color(220,220,220);
+	private Color border = new Color(220, 220, 220);
 	private ArrayList<Integer> projectids = new ArrayList<Integer>();
 	private MainFrame view;
-	private int holidayId =0;
-	
+	private int holidayId = 0;
+
 	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
-	
+
 	public StaffSummary(MainFrame view) {
 		this.view = view;
-
 
 		setLayout(new GridBagLayout());
 
@@ -81,7 +80,6 @@ public class StaffSummary extends JPanel {
 			projectStartDate = resultDB.getStartingDateTime();
 		} catch (NullPointerException ex) {
 		}
-		
 
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);
@@ -89,16 +87,20 @@ public class StaffSummary extends JPanel {
 		setVisible(true);
 
 	}
+	
 
+	/**
+	 * 
+	 */
 	public void addDay() {
-		
+
 		// Add Day
 		gbc.gridy = 0;
 		gbc.gridwidth = 8;
 		gbc.gridx = dayXPos;
-		
+
 		String date = currentDateTime.getDateTime();
-		
+
 		Pattern p = Pattern.compile("(.*) (.*)");
 		Matcher m = p.matcher(date);
 
@@ -172,9 +174,10 @@ public class StaffSummary extends JPanel {
 			HashMap<DateTime, TaskDO> taskDate = new HashMap<DateTime, TaskDO>();
 
 			HolidaysDao holidayDao = new HolidaysDao();
-			
-			HashMap<DateTime, DateTime> holidays = holidayDao.getHolidaysOfStaff(staff.getStaffId());
-			
+
+			HashMap<DateTime, DateTime> holidays = holidayDao
+					.getHolidaysOfStaff(staff.getStaffId());
+
 			for (ResultDO task : listOfTasks) {
 
 				for (DateTime i = task.getStartDateTime(); i.before(task
@@ -192,12 +195,21 @@ public class StaffSummary extends JPanel {
 
 				}
 			}
-			
-			for(DateTime startDate : holidays.keySet()) {
-				if(startDate.before(projectStartDate))
-					continue;
-				for(DateTime i = startDate; i.before(holidays.get(startDate)); i = DateTime.hourLater(i, 1)) {
-					
+
+			for (DateTime startDate : holidays.keySet()) {
+				if (startDate.before(projectStartDate)) {
+					if (projectStartDate.getHour() > 9) {
+						projectStartDate = new DateTime(
+								projectStartDate.getYear(),
+								projectStartDate.getMonth(),
+								projectStartDate.getDay(), 9, 0, 0);
+					} else {
+						continue;
+					}
+				}
+				for (DateTime i = startDate; i.before(holidays.get(startDate)); i = DateTime
+						.hourLater(i, 1)) {
+
 					for (DateTime dateTime : taskDate.keySet()) {
 
 						if (dateTime.getDateTime().equals(i.getDateTime())) {
@@ -206,13 +218,15 @@ public class StaffSummary extends JPanel {
 						}
 					}
 
-					int duration = DateTime.duration(startDate, holidays.get(startDate));		
-					taskDate.put(i, new TaskDO(0, holidayId, "H", 0, duration, duration, "Low", null, "Holiday", null));		
-				}	
+					int duration = DateTime.duration(startDate,
+							holidays.get(startDate));
+					taskDate.put(i, new TaskDO(0, holidayId, "H", 0, duration,
+							duration, "HIGH", null, "Holiday", null));
+				}
 			}
-			
+
 			holidayId++;
-			
+
 			ArrayList<TaskDate> orderedTaskDate = new ArrayList<TaskDate>();
 
 			TaskDate minDate;
@@ -254,13 +268,12 @@ public class StaffSummary extends JPanel {
 
 				while (currentDateTime.before(DateTime.hourLater(dateOfTask
 						.getDate(), dateOfTask.getTask().getTaskDuration()))) {
-			
-					
+
 					addDay();
 					dayXPos += 8;
 					currentDateTime = DateTime.nextDay(currentDateTime);
 				}
-				
+
 				gbc.gridy = yPos;
 				gbc.gridx = xPos;
 
@@ -273,8 +286,7 @@ public class StaffSummary extends JPanel {
 					lblBlank = new JLabel("");
 					lblBlank.setBackground(Color.GRAY);
 					lblBlank.setOpaque(true);
-					lblBlank.setBorder(BorderFactory
-							.createLineBorder(border));
+					lblBlank.setBorder(BorderFactory.createLineBorder(border));
 					add(lblBlank, gbc);
 					xPos += blankLength;
 					gbc.gridx = xPos;
@@ -284,14 +296,11 @@ public class StaffSummary extends JPanel {
 				int gridWidth = 1;
 
 				TaskDO currentTask = dateOfTask.getTask();
-				
-		
-		
 
 				for (int j = i + 1; j < orderedTaskDate.size(); j++) {
 
 					TaskDate nextDateTask = orderedTaskDate.get(j);
-					
+
 					if (currentTask.getTaskId() == nextDateTask.getTask()
 							.getTaskId()
 							&& currentTask.getProjectId() == nextDateTask
@@ -301,10 +310,8 @@ public class StaffSummary extends JPanel {
 					} else {
 						break;
 					}
-					
-					
+
 				}
-				
 
 				gbc.gridwidth = gridWidth;
 				lblTaskName = new JLabel(dateOfTask.getTask().getTaskName(),
@@ -320,8 +327,7 @@ public class StaffSummary extends JPanel {
 
 				}
 
-				lblTaskName.setBorder(BorderFactory
-						.createLineBorder(border));
+				lblTaskName.setBorder(BorderFactory.createLineBorder(border));
 				lblTaskName.setOpaque(true);
 
 				add(lblTaskName, gbc);
@@ -332,38 +338,44 @@ public class StaffSummary extends JPanel {
 
 			}
 
-
 			endXPos.add(xPos);
-			
+
 			xPos = 0;
 		}
-		
+
 		addEndBlanks();
 	}
-	
+
 	public void addEndBlanks() {
-		
+
 		yPos = 2;
-		for(Integer xPos : endXPos) {
-			
+		for (Integer xPos : endXPos) {
+
 			gbc.gridy = yPos;
-			if(xPos < dayXPos) {
-				
+			if (xPos < dayXPos) {
+
 				gbc.gridx = xPos;
-				
+
 				int blankLength = dayXPos - xPos;
 				gbc.gridwidth = blankLength;
 				JLabel lblEndBlank = new JLabel("");
 				lblEndBlank.setBorder(BorderFactory.createLineBorder(border));
 				lblEndBlank.setBackground(Color.GRAY);
-				lblEndBlank.setOpaque(true);				
+				lblEndBlank.setOpaque(true);
 				add(lblEndBlank, gbc);
 			}
-			
+
 			yPos++;
 		}
 	}
-
+	/**
+	 * 
+	 * @param init
+	 * 
+	 * @return 
+	 * 
+	 * @
+	 */
 	public void setCellColour(CellColour init) {
 		this.curColour = init;
 	}

@@ -146,6 +146,8 @@ public class StaffList extends JPanel {
 	// Add a staff to Staff List
 	public StaffDO addNewStaffToList(StaffDO staffInfo) {
 
+		
+		skillMap = context.getSkillMap();
 		DefaultMutableTreeNode name = null;
 		DefaultMutableTreeNode info = null;
 		DefaultMutableTreeNode skills = new DefaultMutableTreeNode("Skills");
@@ -183,7 +185,7 @@ public class StaffList extends JPanel {
 	}
 
 	public StaffDO addModifiedStaffToList(StaffDO staffInfo) {
-
+		skillMap = context.getSkillMap();
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
 				.getLastSelectedPathComponent();
 

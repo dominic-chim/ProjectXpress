@@ -265,6 +265,7 @@ public class MenuController implements ActionListener {
                         resultDB.addResults(algorithm.runAlgoritm());
                         success = true;
                     } catch (ArrayIndexOutOfBoundsException exception) {
+                    	
                         success = false;
                         totalHour *= 2;
                     } 

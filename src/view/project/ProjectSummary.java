@@ -27,7 +27,7 @@ import database.dataAccessObject.ResultDao;
  * gui for project summary
  * 
  * @author Dominic, Ross
- *
+ * 
  */
 public class ProjectSummary extends JPanel {
 
@@ -89,7 +89,7 @@ public class ProjectSummary extends JPanel {
 		}
 
 		this.currentDateTime = projectStartDate;
-		
+
 		addData(dataToShow);
 
 		setVisible(true);
@@ -151,69 +151,70 @@ public class ProjectSummary extends JPanel {
 		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
 
 		for (ProjectDO project : projectResults.keySet()) {
-				
+
 			resources = new HashMap<DateTime, Integer>();
 
 			for (ResultDO result : projectResults.get(project)) {
-								
-					time = result.getStartDateTime();
 
-					int range = DateTime.duration(result.getStartDateTime(),
-							result.getEndDateTime());
-					for (int i = range; i > 0; i--) {
+				time = result.getStartDateTime();
 
-						boolean exists = false;
-						for (DateTime dt : resources.keySet()) {
+				int range = DateTime.duration(result.getStartDateTime(),
+						result.getEndDateTime());
+				for (int i = range; i > 0; i--) {
 
+					boolean exists = false;
+					for (DateTime dt : resources.keySet()) {
 
-							
-							if (time.getDateTime().equals(dt.getDateTime())) {
-								exists = true;
+						if (time.getDateTime().equals(dt.getDateTime())) {
+							exists = true;
 
-								resources.put(dt, resources.get(dt) + 1);
+							resources.put(dt, resources.get(dt) + 1);
 
-								break;
-							}
+							break;
 						}
-
-						if (!exists) {
-
-							resources.put(time, 1);
-						}
-
-						time = DateTime.hourLater(time, 1);
-
 					}
-					 
-					HashMap<DateTime, DateTime> holidays = result.getStaffDO().getHolidays();	
 
-					 for(DateTime startDate : holidays.keySet()) {
-						 if(!(holidays.get(startDate).before(result.getStartDateTime()) || result.getEndDateTime().before(startDate))) {
-							 DateTime s = startDate;
-							 while(s.before(holidays.get(startDate))) {
-									for (DateTime dt : resources.keySet()) {
-								
-										if (s.getDateTime().equals(dt.getDateTime())) {
-								
-											if(resources.get(dt) == 1) {
-												resources.remove(dt);
-											} else {
-												resources.put(dt, resources.get(dt) - 1);
-											}
-											break;
-											
-										}
-										
+					if (!exists) {
+
+						resources.put(time, 1);
+					}
+
+					time = DateTime.hourLater(time, 1);
+
+				}
+
+				HashMap<DateTime, DateTime> holidays = result.getStaffDO()
+						.getHolidays();
+
+				for (DateTime startDate : holidays.keySet()) {
+					if (!(holidays.get(startDate).before(
+							result.getStartDateTime()) || result
+							.getEndDateTime().before(startDate))) {
+						DateTime s = startDate;
+						while (s.before(holidays.get(startDate))) {
+							for (DateTime dt : resources.keySet()) {
+
+								if (s.getDateTime().equals(dt.getDateTime())) {
+
+									if (resources.get(dt) == 1) {
+										resources.remove(dt);
+									} else {
+										resources
+												.put(dt, resources.get(dt) - 1);
 									}
-									s = DateTime.hourLater(s, 1);
-							 }
-						 }
+									break;
 
-					 }	
-			
+								}
+
+							}
+							s = DateTime.hourLater(s, 1);
+						}
+					}
+
+				}
+
 			}
-			
-			
+
 			projectResources.put(project, resources);
 		}
 		for (ProjectDO projects : projectResources.keySet()) {
@@ -229,7 +230,6 @@ public class ProjectSummary extends JPanel {
 
 			projectName.setBackground(Headers);
 			projectName.setForeground(Color.white);
-
 
 			projectName.setBorder(BorderFactory.createLineBorder(border));
 			projectName.setOpaque(true);
@@ -317,8 +317,10 @@ public class ProjectSummary extends JPanel {
 
 		}
 
-		addTotalResources(orderHashMap(totalResources));
-		addEndBlanks();
+		if (totalResources.size() > 0) {
+			addTotalResources(orderHashMap(totalResources));
+			addEndBlanks();
+		}
 	}
 
 	public void addTotalResources(
