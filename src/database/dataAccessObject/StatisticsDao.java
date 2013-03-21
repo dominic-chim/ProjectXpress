@@ -10,10 +10,10 @@ import database.DatabaseRoot;
  * database class for statistics
  * 
  * @author Samy
- *
+ * 
  */
 public class StatisticsDao extends DatabaseRoot {
-	private String sqlNew = "NEW";
+	// private String sqlNew = "NEW";
 	public StatisticsDao() {
 		super();
 	}
@@ -93,8 +93,7 @@ public class StatisticsDao extends DatabaseRoot {
 	public ArrayList<Object> taskCountStaff() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		String sql = "SELECT b.staff_name, COUNT(*) AS Total FROM (SELECT * FROM scheduling_result as test WHERE version=(select max(version) from scheduling_result)) as a NATURAL JOIN staff as b GROUP BY b.staff_name;";
-		
-		
+
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
@@ -113,7 +112,7 @@ public class StatisticsDao extends DatabaseRoot {
 	public ArrayList<Object> timeAvailablitlyStaff() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		String sql = "SELECT staff_name, staff_weekly_available_time FROM (SELECT staff_id, staff_name, ABS(MIN(staff_weekly_available_time)) AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, staff_weekly_available_time FROM staff UNION (SELECT staff_id, staff_name, SUM(staff_weekly_available_time - A.task_remaining_time) AS staff_weekly_available_time FROM (SELECT staff_id, staff_name, SUM(task_remaining_time) AS task_remaining_time FROM(SELECT staff_name, staff_id, task_id, task_name, task_remaining_time FROM (SELECT * FROM scheduling_result as test WHERE version=(select max(version) from scheduling_result)) AS test NATURAL JOIN task NATURAL JOIN staff) AS a GROUP BY staff_id) AS A NATURAL JOIN staff GROUP BY staff_id)) AS B GROUP BY staff_id) AS D;";
-		
+
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
@@ -146,11 +145,10 @@ public class StatisticsDao extends DatabaseRoot {
 		return output;
 
 	}
-	
-	
+
 	public ArrayList<Object> projectProductivity() {
 		ArrayList<Object> output = new ArrayList<Object>();
-		String sql = "SELECT project_name, task_status, COUNT(task_status)AS total FROM task NATURAL JOIN project GROUP BY project_id, task_status;";
+		String sql = "SELECT project_name, task_status, COUNT(task_status)AS total FROM task NATURAL JOIN project GROUP BY project_id, task_status ORDER BY task_status;";
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
@@ -170,7 +168,7 @@ public class StatisticsDao extends DatabaseRoot {
 	public ArrayList<Object> usedData() {
 		ArrayList<Object> output = new ArrayList<Object>();
 		String sql = "SELECT staff_name, SUM(task_remaining_time) AS SUM FROM (SELECT * FROM scheduling_result as test where version=(select max(version) from scheduling_result)) as a NATURAL JOIN staff as b NATURAL JOIN task GROUP BY b.staff_name;";
-		
+
 		try {
 			ResultSet result = db.executeQuery(sql);
 			while (result.next()) {
@@ -207,22 +205,19 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		if(data.size() != 0) {
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
-			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-					.get(0)).size()];
-	
-			for (int i = 0; i < data.size(); i++) {
-	
-				@SuppressWarnings("unchecked")
-				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-				for (int j = 0; j < s.size(); j++) {
-					rows[i][j] = s.get(j);
-				}
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
 			}
-			return rows;
 		}
-		return new Object[0][0];
+		return rows;
 	}
 
 	public Object[][] projectsList() {
@@ -245,23 +240,19 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		if(data.size() != 0) {
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
-			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-					.get(0)).size()];
-	
-			for (int i = 0; i < data.size(); i++) {
-	
-				@SuppressWarnings("unchecked")
-				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-				for (int j = 0; j < s.size(); j++) {
-					rows[i][j] = s.get(j);
-				}
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
 			}
-			return rows;
-		} else {
-			return new Object[0][0];
 		}
+		return rows;
 	}
 
 	public Object[][] allStats() {
@@ -283,23 +274,19 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		if(data.size() != 0) {
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
-			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-					.get(0)).size()];
-	
-			for (int i = 0; i < data.size(); i++) {
-	
-				@SuppressWarnings("unchecked")
-				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-				for (int j = 0; j < s.size(); j++) {
-					rows[i][j] = s.get(j);
-				}
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
 			}
-			return rows;
-		} else {
-			return new Object[0][0];
 		}
+		return rows;
 	}
 
 	public Object[][] scheduledProjects() {
@@ -325,24 +312,19 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		if(data.size() != 0) {
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
-			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-					.get(0)).size()];
-	
-			for (int i = 0; i < data.size(); i++) {
-	
-				@SuppressWarnings("unchecked")
-				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-				for (int j = 0; j < s.size(); j++) {
-					rows[i][j] = s.get(j);
-				}
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
 			}
-			return rows;
-		} else {
-			return new Object[0][0];
 		}
-		
+		return rows;
 	}
 
 	public Object[][] scheduledTasks() {
@@ -367,24 +349,20 @@ public class StatisticsDao extends DatabaseRoot {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		if(data.size() != 0) {
+
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
-			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-					.get(0)).size()];
-	
-			for (int i = 0; i < data.size(); i++) {
-	
-				@SuppressWarnings("unchecked")
-				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-				for (int j = 0; j < s.size(); j++) {
-					rows[i][j] = s.get(j);
-				}
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
 			}
-			return rows;
-		} else {
-			return new Object[0][0];
 		}
+		return rows;
 	}
 
 	public Object[][] tasksList() {
@@ -410,24 +388,19 @@ public class StatisticsDao extends DatabaseRoot {
 			e.printStackTrace();
 		}
 
-		
-		if(data.size() != 0) {
+		@SuppressWarnings("unchecked")
+		Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
+				.get(0)).size()];
+
+		for (int i = 0; i < data.size(); i++) {
+
 			@SuppressWarnings("unchecked")
-			Object rows[][] = new Object[data.size()][(int) ((ArrayList<Object>) data
-					.get(0)).size()];
-	
-			for (int i = 0; i < data.size(); i++) {
-	
-				@SuppressWarnings("unchecked")
-				ArrayList<Object> s = (ArrayList<Object>) data.get(i);
-				for (int j = 0; j < s.size(); j++) {
-					rows[i][j] = s.get(j);
-				}
+			ArrayList<Object> s = (ArrayList<Object>) data.get(i);
+			for (int j = 0; j < s.size(); j++) {
+				rows[i][j] = s.get(j);
 			}
-			return rows;
-		} else {
-			return new Object[0][0];
 		}
+		return rows;
 	}
 
 }
