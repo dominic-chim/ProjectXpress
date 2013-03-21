@@ -47,8 +47,6 @@ public class ProjectDao extends DatabaseRoot {
                     projectDueDate, projectPriority, projectStatus, tasks);
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         return null;
     }
@@ -65,8 +63,6 @@ public class ProjectDao extends DatabaseRoot {
                 projects.add(getProjectById(projectId));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         return projects;
@@ -84,8 +80,6 @@ public class ProjectDao extends DatabaseRoot {
                 projects.add(getProjectById(projectId));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         return projects;
@@ -103,8 +97,6 @@ public class ProjectDao extends DatabaseRoot {
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         ArrayList<TaskDO> tasks = project.getTasks();
@@ -127,8 +119,6 @@ public class ProjectDao extends DatabaseRoot {
             else
                 return 0;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         return 0;
     }
@@ -144,8 +134,6 @@ public class ProjectDao extends DatabaseRoot {
             }
             return null;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         return null;
@@ -163,8 +151,7 @@ public class ProjectDao extends DatabaseRoot {
         try {
             connection.createStatement().executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
     }
 
@@ -173,8 +160,6 @@ public class ProjectDao extends DatabaseRoot {
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 }

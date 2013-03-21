@@ -40,8 +40,7 @@ public class ResultDao extends DatabaseRoot {
                 results.add(new ResultDO(projectId, task, staff, startDateTime, endDateTime));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return results;
@@ -66,8 +65,6 @@ public class ResultDao extends DatabaseRoot {
                 results.add(new ResultDO(projectId, task, staff, startDateTime, endDateTime));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         return results;
     }
@@ -87,8 +84,7 @@ public class ResultDao extends DatabaseRoot {
             try {
                 db.executeUpdate(sql);
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+
             }
         }
     }
@@ -103,8 +99,7 @@ public class ResultDao extends DatabaseRoot {
                 staffIds.add(rset.getInt("staff_id"));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return staffIds;
@@ -121,8 +116,7 @@ public class ResultDao extends DatabaseRoot {
                 projectIds.add(rset.getInt("project_id"));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return projectIds;
@@ -137,8 +131,7 @@ public class ResultDao extends DatabaseRoot {
                 startDateTime = new DateTime(rset.getString("start_time"));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
         return startDateTime;
     }
@@ -156,8 +149,7 @@ public class ResultDao extends DatabaseRoot {
             }
 
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
         return 0;
     }

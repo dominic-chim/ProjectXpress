@@ -26,8 +26,7 @@ public class SkillDao extends DatabaseRoot {
 				skillNames.add(result.getString("skill_name"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 
 		return skillNames.toArray(new String[skillNames.size()]);
@@ -44,8 +43,7 @@ public class SkillDao extends DatabaseRoot {
 						result.getString("skill_name"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		return skillMap;
 

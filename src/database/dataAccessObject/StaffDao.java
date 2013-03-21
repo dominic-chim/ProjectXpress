@@ -63,8 +63,7 @@ public class StaffDao extends DatabaseRoot {
 						result.getDouble("skill_level"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 
 		return skillLevel;

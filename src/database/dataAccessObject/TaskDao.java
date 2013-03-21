@@ -28,8 +28,7 @@ public class TaskDao extends DatabaseRoot {
                 tasks.add(getTaskById(projectId, result.getInt("task_id")));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return tasks;
@@ -69,8 +68,7 @@ public class TaskDao extends DatabaseRoot {
                             taskStatus, requiredTaskIds);
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return task;
@@ -92,8 +90,7 @@ public class TaskDao extends DatabaseRoot {
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         ArrayList<Integer> requiredTaskIds = task.getRequiredTaskIds();
@@ -110,8 +107,7 @@ public class TaskDao extends DatabaseRoot {
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
     }
 
@@ -131,8 +127,7 @@ public class TaskDao extends DatabaseRoot {
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
         
     }

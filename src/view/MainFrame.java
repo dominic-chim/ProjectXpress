@@ -99,7 +99,6 @@ public class MainFrame extends JFrame {
 	}
 
 	public AboutDialog getaboutDialog() {
-		// TODO Auto-generated method stub
 		return new AboutDialog(this);
 	}
 

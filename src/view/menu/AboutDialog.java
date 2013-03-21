@@ -35,8 +35,6 @@ public class AboutDialog extends JDialog {
 		JTextArea jtAbout = new JTextArea();
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		jtAbout.setEditable(false);
-		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weightx = 1;
@@ -57,7 +55,7 @@ public class AboutDialog extends JDialog {
 		jtAbout.setBackground(backclr);
 		jtAbout.setForeground(Color.white);
 		jtAbout.setOpaque(true);
-		//jtAbout.setEnabled(false);
+		jtAbout.setEnabled(false);
 
 		JPabout.add(jtAbout, gbc);
 		JPabout.setBackground(backclr);

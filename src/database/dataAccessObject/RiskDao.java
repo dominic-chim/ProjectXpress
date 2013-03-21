@@ -22,8 +22,7 @@ public class RiskDao extends DatabaseRoot{
         try {
             db.executeUpdate(sql);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
     }
     
@@ -36,8 +35,7 @@ public class RiskDao extends DatabaseRoot{
                 riskNames.add(result.getString("task_risk_level"));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
         return riskNames.toArray(new String[riskNames.size()]);
     }
@@ -53,8 +51,7 @@ public class RiskDao extends DatabaseRoot{
                 riskLevel.put(result.getString("task_risk_level"), result.getInt("risk_percentage"));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
         }
 
         return riskLevel;
