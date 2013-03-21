@@ -87,7 +87,6 @@ public class StaffSummary extends JPanel {
 		setVisible(true);
 
 	}
-	
 
 	/**
 	 * 
@@ -196,17 +195,17 @@ public class StaffSummary extends JPanel {
 				}
 			}
 
+			DateTime projectStartDateNine = new DateTime(
+					projectStartDate.getYear(), projectStartDate.getMonth(),
+					projectStartDate.getDay(), 9, 0, 0);
+
 			for (DateTime startDate : holidays.keySet()) {
-				if (startDate.before(projectStartDate)) {
-					if (projectStartDate.getHour() > 9) {
-						projectStartDate = new DateTime(
-								projectStartDate.getYear(),
-								projectStartDate.getMonth(),
-								projectStartDate.getDay(), 9, 0, 0);
-					} else {
-						continue;
-					}
+				if (startDate.before(projectStartDateNine)) {
+					continue;
+				} else {
+					projectStartDate = projectStartDateNine;
 				}
+
 				for (DateTime i = startDate; i.before(holidays.get(startDate)); i = DateTime
 						.hourLater(i, 1)) {
 
@@ -368,13 +367,14 @@ public class StaffSummary extends JPanel {
 			yPos++;
 		}
 	}
+
 	/**
 	 * 
 	 * @param init
 	 * 
-	 * @return 
+	 * @return
 	 * 
-	 * @
+	 *         @
 	 */
 	public void setCellColour(CellColour init) {
 		this.curColour = init;

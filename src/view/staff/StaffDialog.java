@@ -438,6 +438,9 @@ public class StaffDialog extends JDialog {
 			return;
 
 		}
+		
+		startDateTime = new DateTime(startDateTime.getYear(), startDateTime.getMonth(), startDateTime.getDay(), startDateTime.getHour(), 0, 0);
+		endDateTime = new DateTime(endDateTime.getYear(), endDateTime.getMonth(), endDateTime.getDay(), endDateTime.getHour(), 0, 0);
 
 		// 2013-02-02 00:00:00
 		Pattern p = Pattern.compile("(.*)-(.*)-(.*) (.*):(.*):(.*)");
@@ -480,8 +483,12 @@ public class StaffDialog extends JDialog {
 
 		}
 		
+		if(startDateTime.getHour() < 9 || startDateTime.getHour() > 16 || endDateTime.getHour() < 9 || endDateTime.getHour() > 16) {
+			inputError("Holiday Outside Working Hours");
+			return;
+		}
 
-		if (tfStartDate.getText().equals(tfEndDate.getText())
+		if (startDateTime.getDateTime().equals(endDateTime.getDateTime())
 				|| endDateTime.before(startDateTime)) {
 
 			inputError("Invalid Holiday Inputted" + tfId.getText());
