@@ -8,6 +8,13 @@ import util.DateTime;
 
 import database.DatabaseRoot;
 
+/**
+ * 
+ * class to get holiday info form database
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class HolidaysDao extends DatabaseRoot {
     
     
@@ -24,32 +31,12 @@ public class HolidaysDao extends DatabaseRoot {
                         new DateTime(result.getString("holiday_end_time")));
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	e.printStackTrace();
         }
 
 
         return holidays;
     }
     
-
-    /*
-    public int getDaybyMonth(int month){
-        int holidaycount = 0;
-        String sql = "select holiday_count from historical_holiday_record where month = "+month;
-        try {
-            ResultSet result =  db.executeQuery(sql);
-            while(result.next()){
-                holidaycount = result.getInt("holiday_count");
-            }
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
-        return holidaycount;
-        
-    }
-    */
 
 }

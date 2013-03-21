@@ -2,9 +2,7 @@ package database.dataAccessObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import util.DateTime;
 
@@ -12,6 +10,13 @@ import util.DateTime;
 import data.dataObject.TaskDO;
 import database.DatabaseRoot;
 
+/**
+ * 
+ * database class for task table
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class TaskDao extends DatabaseRoot {
 
     public ArrayList<TaskDO> getTasksByProjectId(int projectId) {

@@ -13,6 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+/**
+ * 
+ * gui for user manual dialog 
+ * 
+ * @author Ross
+ *
+ */
 public class UserManualDialog extends JDialog {
 
 	//Containers

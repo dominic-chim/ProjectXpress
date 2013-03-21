@@ -6,6 +6,13 @@ import controllers.menu.SkillController;
 import controllers.project.ProjectController;
 import controllers.staff.StaffController;
 
+/**
+ * 
+ * main controller used to start other controllers
+ * 
+ * @author all group members
+ *
+ */
 public class MainController {
 
     private MainFrame view;

@@ -2,6 +2,12 @@ package algorithm;
 
 import java.util.Comparator;
 
+/**
+ * comparator to compare 2 DecisionSetComparator
+ * 
+ * @author Ke CHEN & Ross
+ *
+ */
 public class DecisionSetComparator implements Comparator<DecisionSetObject> {
 
     @Override

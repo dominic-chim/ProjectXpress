@@ -3,6 +3,14 @@ package algorithm;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
 
+
+/**
+ * 
+ * object place in the decision set in the scheduling algorithm
+ * 
+ * @author Ke CHEN & Ross
+ *
+ */
 public class DecisionSetObject {
     private StaffDO staff;
     private TaskDO task;
@@ -14,27 +22,22 @@ public class DecisionSetObject {
         this.score = score;
     }
 
-    /**
-     * @return the staffId
-     */
+
+    // getters
     public StaffDO getStaff() {
         return staff;
     }
 
-    /**
-     * @return the taskId
-     */
     public TaskDO getTask() {
         return task;
     }
 
-    /**
-     * @return the score
-     */
+ 
     public double getScore() {
         return score;
     }
 
+    // setters
     public void setScore(double score) {
         this.score = score;
     }

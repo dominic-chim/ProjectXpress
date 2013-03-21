@@ -3,6 +3,12 @@ package algorithm;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
 
+/**
+ *
+ * object in active set and complete set in the algorithm
+ *
+ * @author Ke CHEN & Ross
+ */
 public class TaskAllocObject {
 
     private TaskDO task; 

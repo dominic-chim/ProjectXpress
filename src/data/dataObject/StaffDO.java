@@ -4,6 +4,13 @@ import java.util.HashMap;
 
 import util.DateTime;
 
+/**
+ * 
+ * data object for a staff
+ * 
+ * @author Ross
+ *
+ */
 public class StaffDO {
 
     private int staffId;
@@ -46,10 +53,7 @@ public class StaffDO {
         return this.holidayHour;
     }
 
-    // public HashMap<Integer, HashMap<Integer, Integer>> getPrefenceLevel(int
-    // taskId) {
-    // return prefenceLevel;
-    // }
+    
 
     // Setters
     public void setStaffId(int staffId) {

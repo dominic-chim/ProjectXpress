@@ -1,7 +1,7 @@
 package view.project;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,20 +11,21 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import util.DateTime;
+
 import data.dataObject.ProjectDO;
 import data.dataObject.ResultDO;
-import data.dataObject.StaffDO;
-import data.dataObject.TaskDO;
 import database.dataAccessObject.ProjectDao;
 import database.dataAccessObject.ResultDao;
 
+/**
+ * 
+ * gui for project allocation panel
+ * 
+ * @author Ross Dominic
+ *
+ */
 public class ProjectAllocation extends JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	JTable allocationTable;
 	DefaultTableModel allocationModel;
 
@@ -48,10 +49,7 @@ public class ProjectAllocation extends JPanel {
 		};
 
 		allocationTable = new JTable(allocationModel) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+
 
 			public boolean isCellEditable(int rowIndex, int colIndex) {
 				return false; // Disallow the editing of any cell

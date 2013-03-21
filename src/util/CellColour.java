@@ -3,13 +3,20 @@ package util;
 import java.util.*;
 import java.awt.*;
 
+/**
+ * 
+ * class for coloring the staff & project summary
+ * 
+ * @author Dominic
+ *
+ */
 public class CellColour {
 	Random rand = new Random();
 	HashMap<Integer, Color> projectIdColor = new HashMap<Integer, Color>();
 	ArrayList<Integer> projectIds = new ArrayList<Integer>();
 
 	public CellColour() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void colourCell(ArrayList<Integer> projectIds) {
@@ -63,10 +70,7 @@ public class CellColour {
 							colorFound = false;
 						}
 
-						/*
-						 * } else if (j == projectIds.size() - 1) { colorFound =
-						 * false; }
-						 */
+
 					}
 				} else {
 					projectIdColor.put(projectIds.get(i), randomColor);
@@ -74,9 +78,8 @@ public class CellColour {
 				}
 
 			}
-			// System.out.println(randomColor.getRGB());
+			
 			projectIdColor.put(i, randomColor);
-			// projectIdColor.
 			colorFound = true;
 		}
 

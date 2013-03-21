@@ -33,11 +33,16 @@ import org.jfree.ui.ApplicationFrame;
 
 import database.dataAccessObject.StatisticsDao;
 
+
+/**
+ * 
+ * gui for statistic productivity tab
+ * 
+ * @author Samy
+ *
+ */
 public class StatisticsProductivity extends ApplicationFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3596282676177435508L;
 
 	StatisticsDao stats = new StatisticsDao();
@@ -185,9 +190,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 
 	private CategoryDataset createDataset() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		// DefaultCategoryDataset result = new DefaultCategoryDataset();
 
-		// String staffName = "Staff Name";
 		ArrayList<Object> statsData = stats.projectProductivity();
 		for (int i = 0; i < statsData.size(); i++) {
 			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
@@ -207,8 +210,6 @@ public class StatisticsProductivity extends ApplicationFrame {
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
 
-		// SELECT task_risk_level, COUNT(*)/(SELECT COUNT(*) FROM task)*100 AS
-		// percentage FROM task GROUP BY task_risk_level;
 
 		return dataset;
 	}
@@ -221,8 +222,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
-		// SELECT project_status, COUNT(*)/(SELECT COUNT(*) FROM project)*100 AS
-		// percentage FROM project GROUP BY project_status;
+
 		return dataset;
 	}
 
@@ -233,8 +233,7 @@ public class StatisticsProductivity extends ApplicationFrame {
 			ArrayList<Object> row = (ArrayList<Object>) statsData.get(i);
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
-		// SELECT task_status, COUNT(*)/(SELECT COUNT(*) FROM task)*100 AS
-		// percentage FROM task GROUP BY task_status;
+
 		return dataset;
 	}
 

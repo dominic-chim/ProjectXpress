@@ -21,13 +21,17 @@ import controllers.menu.SkillController;
 import data.Context;
 import data.dataObject.SkillDO;
 
+/**
+ * 
+ * gui for modify skill
+ * @author Ross
+ *
+ */
 public class SkillDialog extends JDialog {
 
-	// Context context;
 	 HashMap<Integer, String> skills = Context.getSkillMap();
 	 HashMap<String, Integer> revSkills = Context.getSkillRevMap();
 
-//	HashMap<Integer, String> skills = new HashMap<Integer, String>();
 
 	// SkillDialog
 	JButton btnAddSkill = new JButton("Add Skill");
@@ -100,9 +104,7 @@ public class SkillDialog extends JDialog {
 		addController(controller);
 
 		// Add Panels to Dialog
-
 		add(skillPanel, BorderLayout.CENTER);
-		// Set Dialog Settings
 
 	}
 

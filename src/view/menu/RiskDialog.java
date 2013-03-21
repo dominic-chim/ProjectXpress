@@ -10,6 +10,13 @@ import data.Context;
 
 import view.MainFrame;
 
+/**
+ * 
+ * risk dialog for modify risk level
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class RiskDialog extends JDialog {
 
     private JButton jbtnUpdate = new JButton("Update");

@@ -4,8 +4,16 @@ import java.util.ArrayList;
 
 import data.Context;
 
-import util.DateTime;
 
+
+import util.DateTime;
+/**
+ * 
+ * data object for task
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class TaskDO {
 
     private int projectId;
@@ -39,62 +47,25 @@ public class TaskDO {
         setRequiredTaskIds(requiredTaskIds);
     }
 
-    /**
-     * @return the projectId
-     */
+
+    // getters
     public int getProjectId() {
         return projectId;
     }
 
-    /**
-     * @param projectId the projectId to set
-     */
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
-     * @return the taskId
-     */
     public int getTaskId() {
         return taskId;
     }
-
-    /**
-     * @param taskId the taskId to set
-     */
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
-    }
-
-    /**
-     * @return the taskName
-     */
+    
     public String getTaskName() {
         return taskName;
     }
 
-    /**
-     * @param taskName the taskName to set
-     */
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    /**
-     * @return the taskRequiredSkill
-     */
     public int getTaskRequiredSkill() {
         return taskRequiredSkill;
     }
-
-    /**
-     * @param taskRequiredSkill the taskRequiredSkill to set
-     */
-    public void setTaskRequiredSkill(int taskRequiredSkill) {
-        this.taskRequiredSkill = taskRequiredSkill;
-    }
-
+    
+    
     /**
      * this method return the original task duration
      */
@@ -113,52 +84,61 @@ public class TaskDO {
     public int getTaskRemainingTime() {
     	return taskRemainingTime;
     }
-    
-    /**
-     * @param taskDuration the taskDuration to set
-     */
-    public void setTaskDuration(int taskDuration) {
-        this.taskDuration = taskDuration;
-    }
 
-    /**
-     * @return the taskRistLevel
-     */
+
     public String getTaskRiskLevel() {
         return taskRiskLevel;
     }
 
-    /**
-     * @param taskRistLevel the taskRistLevel to set
-     */
-    public void setTaskRiskLevel(String taskRiskLevel) {
-        this.taskRiskLevel = taskRiskLevel;
+    public String getTaskStatus() {
+        return taskStatus;
     }
-
-    /**
-     * @return the taskReleaseTime
-     */
+    
     public DateTime getTaskReleaseTime() {
         return taskReleaseTime;
     }
 
-    /**
-     * @param taskReleaseTime the taskReleaseTime to set
-     */
+    
+    public ArrayList<Integer> getRequiredTaskIds() {
+        return requiredTaskIds;
+    }
+    
+    
+    
+    // setters
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+ 
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+
+    public void setTaskRequiredSkill(int taskRequiredSkill) {
+        this.taskRequiredSkill = taskRequiredSkill;
+    }
+
+    
+    public void setTaskDuration(int taskDuration) {
+        this.taskDuration = taskDuration;
+    }
+
+
+    public void setTaskRiskLevel(String taskRiskLevel) {
+        this.taskRiskLevel = taskRiskLevel;
+    }
+
+
     public void setTaskReleaseTime(DateTime taskReleaseTime) {
         this.taskReleaseTime = taskReleaseTime;
     }
 
-    /**
-     * @return the taskStatus
-     */
-    public String getTaskStatus() {
-        return taskStatus;
-    }
-
-    /**
-     * @param taskStatus the taskStatus to set
-     */
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
@@ -167,16 +147,7 @@ public class TaskDO {
         this.taskRemainingTime = taskRemainingTime;
     }
 
-    /**
-     * @return the requiredTaskId
-     */
-    public ArrayList<Integer> getRequiredTaskIds() {
-        return requiredTaskIds;
-    }
 
-    /**
-     * @param requiredTaskId the requiredTaskId to set
-     */
     public void setRequiredTaskIds(ArrayList<Integer> requiredTaskIds) {
         this.requiredTaskIds = requiredTaskIds;
     }
@@ -184,7 +155,6 @@ public class TaskDO {
     public void addReqiredTask(int taskId) {
         requiredTaskIds.add(taskId);
     }
-
 
     public String toString() {
         String output = "Task name: " + taskName + "\n";

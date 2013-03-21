@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import util.DateTime;
 
-//import util.DateTime;
 
+/**
+ * data object represents a project
+ *
+ * @author Ke CHEN
+ */
 public class ProjectDO {
 
     private int projectId;

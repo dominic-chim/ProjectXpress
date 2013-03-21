@@ -12,6 +12,13 @@ import data.dataObject.TaskDO;
 
 import database.DatabaseRoot;
 
+/**
+ * 
+ * database class for result table
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class ResultDao extends DatabaseRoot {
 
     public ArrayList<ResultDO> getResultByProject(int projectId) {

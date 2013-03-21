@@ -5,6 +5,13 @@ import util.*;
 import data.dataObject.*;
 import test.GroupTestCase;
 
+/**
+ * 
+ * test for StaffDO
+ * 
+ * @author Hongyang LIN
+ *
+ */
 public class TestStaffDO extends GroupTestCase{
     
     private StaffDO sdo;
@@ -44,11 +51,7 @@ public class TestStaffDO extends GroupTestCase{
     	DateTime end = new DateTime(2010,3,3,9,00,00);
     	tempHoliday.put(start, end);
     	sdo.setHolidayHour(tempHoliday);
-    	/*
-    	for(DateTime startDate : tempHoliday.keySet()) {
-    		DateTime endDate = tempHoliday.get(startDate);
-    		
-    	}*/
+  
     	assertEquals(new DateTime("2010-03-03 09:00:00").getYear(),sdo.getHolidays().get(start).getYear());
     	assertEquals(new DateTime("2010-03-03 09:00:00").getMonth(),sdo.getHolidays().get(start).getMonth());
     	assertEquals(new DateTime("2010-03-03 09:00:00").getDay(),sdo.getHolidays().get(start).getDay());

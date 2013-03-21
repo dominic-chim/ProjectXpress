@@ -12,6 +12,13 @@ import data.dataObject.TaskDO;
 
 import view.MainFrame;
 
+/**
+ * 
+ * gui for manage task
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class TaskManageDialog extends JDialog {
 
     // container panels
@@ -62,8 +69,6 @@ public class TaskManageDialog extends JDialog {
         jtxtRemainingTime.setText(task.getTaskRemainingTime() + "");
         jcbStatus.setSelectedItem(task.getTaskStatus());
 
-        //jcbRiskLevel.setSelectedItem(task.getTaskRistLevel());
-        //jcbRequiredSkill.setSelectedItem(Context.getSkillMap().get(task.getTaskRequiredSkill()));
 
         // adding things to top panel
         jpnlTop.setLayout(new GridLayout(6, 2));
@@ -75,8 +80,6 @@ public class TaskManageDialog extends JDialog {
         jpnlTop.add(jtxtDuration);
         jpnlTop.add(jlbRiskLevel);
         jpnlTop.add(jcbRiskLevel);
-        //jpnlTop.add(jlbReleaseTime);
-        //jpnlTop.add(jtxtReleaseTime);
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
         jpnlTop.add(jlbRemainingTime);

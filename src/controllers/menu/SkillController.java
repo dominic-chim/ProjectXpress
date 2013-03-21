@@ -9,6 +9,13 @@ import data.Context;
 import data.dataObject.SkillDO;
 import database.dataAccessObject.SkillDao;
 
+/**
+ * 
+ * controller for skill dialog
+ * 
+ * @author Ross
+ *
+ */
 public class SkillController implements ActionListener {
 
 	MainFrame view;

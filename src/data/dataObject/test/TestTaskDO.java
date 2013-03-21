@@ -6,6 +6,13 @@ import data.dataObject.TaskDO;
 import test.GroupTestCase;
 import util.DateTime;
 
+/**
+ * 
+ * test for TaskDO
+ * 
+ * @author Hongyang LIN
+ *
+ */
 public class TestTaskDO extends GroupTestCase{
 	
 	private TaskDO tdo;

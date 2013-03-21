@@ -6,8 +6,13 @@ import java.util.Date;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.Days;
-import org.joda.time.Period;
 
+/**
+ *
+ * class to hold data time
+ *
+ * @author Ke CHEN
+ */
 public class DateTime {
 
     private int year, month, day, hour, minute, second;
@@ -43,7 +48,6 @@ public class DateTime {
 
     public DateTime(int year, int month, int day, 
             int hour, int minute, int second) {
-        // TODO throw some exception when these values are invalid
         this.year = year;
         this.month = month;
         this.day = day;
@@ -69,8 +73,6 @@ public class DateTime {
             Date dateToCompare = dataBaseDateFormat.parse(toCompare.getDateTime());
             return thisDate.before(dateToCompare);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         return false;
     }

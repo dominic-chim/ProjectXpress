@@ -6,6 +6,13 @@ import org.junit.Test;
 import util.DateTime;
 import static org.junit.Assert.*;
 
+/**
+ * 
+ * test class to test DateTime
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class TestDataTime {
 
     private DateTime dt1;
@@ -15,10 +22,6 @@ public class TestDataTime {
         dt1 = new DateTime(2013, 10, 25, 10, 00, 00);
     }
     
-    @Test
-    public void aa() {
-    	new DateTime("2013-02-03 00:99:004");
-    }
     
     @Test
     public void testOutPrintDateTime(){
@@ -33,12 +36,11 @@ public class TestDataTime {
 
     @Test
     public void testHourLater() {
-    	/*
+    	
         assertEquals("2013-10-25 17:00:00",DateTime.hourLater(dt1, 7).getDateTime());
         assertEquals("2013-10-26 10:00:00",DateTime.hourLater(dt1, 8).getDateTime());
         assertEquals("2013-11-05 10:00:00",DateTime.hourLater(dt1, 88).getDateTime());
-        */
-        System.out.println(DateTime.hourLater(new DateTime("2013-03-18 14:00:00"), 4).getDateTime());
+        
     }
 
     @Test

@@ -20,8 +20,8 @@ import view.menu.*;
  * 
  * the tabbed pane is used to hold tab: project, staff, statistical report
  * 
- * this class also holds references to tabs project, staff and statistical report(maybe not useful)
  * 
+ * @author Ke CHEN, Dominic, Ross
  * 
  */
 public class MainFrame extends JFrame {
@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
 	// component in mainTabbedPane
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel =null;
-//	private StatisticPanel statisticPanel = new StatisticPanel();
+	private StatisticPanel statisticPanel = new StatisticPanel();
 	public CellColour initialColour = new CellColour();
 	public ArrayList<Integer>getids = new ArrayList<Integer>();
 	
@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
 		initialColour=projectPanel.getProjectSummary().getColours();
 		getids = projectPanel.getProjectSummary().getProjectIds();
 		mainTabbedPane.addTab("Staff", staffPanel = new StaffView(this));
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 		
 		add(mainTabbedPane, BorderLayout.CENTER);
 		
@@ -110,9 +110,9 @@ public class MainFrame extends JFrame {
 
     public void refresh() {
         // refresh statistic panel
-//        mainTabbedPane.remove(statisticPanel);
-//        statisticPanel = new StatisticPanel();
-//		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+        mainTabbedPane.remove(statisticPanel);
+        statisticPanel = new StatisticPanel();
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
 
         // refresh project panel
         JTabbedPane projectTabs = projectPanel.getRightTabs();
@@ -132,8 +132,5 @@ public class MainFrame extends JFrame {
         staffTabs.addTab("Staff Allocation", staffAllocation);
     }
 
-
-
-	
 
 }

@@ -7,6 +7,13 @@ import java.util.HashMap;
 
 import database.DatabaseRoot;
 
+/**
+ * 
+ * database class for risk_level table
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class RiskDao extends DatabaseRoot{
     
     public void updateRiskLevel(String riskName, int riskPercentage){

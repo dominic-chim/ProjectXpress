@@ -27,14 +27,15 @@ import data.dataObject.StaffDO;
 
 /**
  * 
- * @author rxj01u
+ * gui for add staff
+ * 
+ * @author Ross
  * 
  */
 public class StaffDialog extends JDialog {
 
-	Context context = new Context();
-	HashMap<Integer, String> mapSkills = context.getSkillMap();
-	HashMap<String, Integer> revMapSkills = context.getSkillRevMap();
+	HashMap<Integer, String> mapSkills = Context.getSkillMap();
+	HashMap<String, Integer> revMapSkills = Context.getSkillRevMap();
 
 	final int textFieldSize = 25;
 
@@ -119,20 +120,6 @@ public class StaffDialog extends JDialog {
 		JLabel lblPrefenceLevel = new JLabel("Prefence Level:");
 		tfPrefenceLevel = new JTextField(textFieldSize);
 
-		// String months[] = { "January", "February", "March", "April", "May",
-		// "June", "July", "August", "September", "October", "November",
-		// "Decemeber" };
-		//
-		// cbMonthStart = new JComboBox(months);
-		// monthEnd = new JComboBox(months);
-		//
-		// String days[] = new String[31];
-		// for (int i = 1; i <= 31; i++) {
-		// days[i - 1] = Integer.toString(i);
-		// }
-		//
-		// dayStart = new JComboBox(days);
-		// dayEnd = new JComboBox(days);
 
 		tfStartDate = new JTextField("2013-02-02 00:00:00");
 		tfEndDate = new JTextField("2013-02-02 00:00:00");
@@ -187,10 +174,6 @@ public class StaffDialog extends JDialog {
 		gbc.gridx = 1;
 		addStaffPanel.add(cbSkillNames, gbc);
 
-		// gbc.gridx = 0;
-		// gbc.gridy = 3;
-		// gbc.gridwidth = 1;
-		// addStaffPanel.add(lblSkillLevel, gbc);
 
 		gbc.gridwidth = 1;
 		gbc.gridx = 2;
@@ -214,14 +197,6 @@ public class StaffDialog extends JDialog {
 		gbc.gridy = 7;
 		addStaffPanel.add(btnRemoveSkill, gbc);
 
-		// gbc.gridwidth = 1;
-		// gbc.gridx = 0;
-		// gbc.gridy = 5;
-		// addStaffPanel.add(lblPrefenceLevel, gbc);
-		//
-		// gbc.gridx = 1;
-		// gbc.gridwidth = 2;
-		// addStaffPanel.add(tfPrefenceLevel, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 8;
@@ -231,8 +206,7 @@ public class StaffDialog extends JDialog {
 
 		gbc.gridx = 1;
 		addStaffPanel.add(tfStartDate, gbc);
-		// gbc.gridx = 2;
-		// addStaffPanel.add(dayStart, gbc);
+
 
 		gbc.gridwidth = 1;
 		gbc.gridx = 0;
@@ -242,8 +216,6 @@ public class StaffDialog extends JDialog {
 
 		gbc.gridx = 1;
 		addStaffPanel.add(tfEndDate, gbc);
-		// gbc.gridx = 2;
-		// addStaffPanel.add(dayEnd, gbc);
 		gbc.gridwidth = 1;
 
 		gbc.gridx = 1;
@@ -301,7 +273,6 @@ public class StaffDialog extends JDialog {
 
 		add(addStaffScroll);
 		setLocationRelativeTo(view);
-		// setVisible(true);
 
 	}
 

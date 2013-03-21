@@ -10,6 +10,13 @@ import data.Context;
 import data.dataObject.StaffDO;
 import database.DatabaseRoot;
 
+/**
+ * 
+ * database class for staff table
+ * 
+ * @author Ross, Ke CHEN
+ *
+ */
 public class StaffDao extends DatabaseRoot {
 
 	public StaffDao() {
@@ -138,16 +145,6 @@ public class StaffDao extends DatabaseRoot {
 
 	public void deleteStaff(String staffId) {
 
-		// String sql =
-		// "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff-prefence WHERE staff_id = "
-		// + staffId;
-
-		// String sql =
-		// "DELETE FROM staff NATURAL JOIN staff_skill_level NATURAL JOIN staff_holidays WHERE staff_id = "
-		// + staffId;
-
-//		String sql = "DELETE staff, staff_skill_level, staff_holidays FROM staff LEFT OUTER JOIN staff_skill_level ON staff.staff_id = staff_skill_level.staff_id LEFT OUTER JOIN staff_holidays ON staff.staff_id = staff_holidays.staff_id WHERE staff.staff_id = "
-//				+ staffId;
 
 		String sql = "UPDATE staff SET status = 'deleted' WHERE staff_id = " + staffId;
 		
@@ -177,35 +174,6 @@ public class StaffDao extends DatabaseRoot {
 		}
 
 		return staffs;
-
-		// String sql =
-		// "SELECT staff_id, staff_name, staff_weekly_available_time, skill_name, skill_level, "
-		// +
-		// "project_id task_id, prefence_level FROM staff NATUARAL JOIN staff_skill_level NATURAL JOIN staff_prefence";
-
-		/*
-		 * String sql =
-		 * "SELECT staff_id, staff_name, staff_weekly_available_time FROM staff"
-		 * ;
-		 * 
-		 * ResultSet result = null; try { result =
-		 * connection.createStatement().executeQuery(sql); } catch (SQLException
-		 * e) { e.printStackTrace(); }
-		 * 
-		 * StaffDO staffDo = null; ArrayList<StaffDO> listOfStaff = new
-		 * ArrayList<StaffDO>();
-		 * 
-		 * try { while (result.next()) { try { staffDo = new
-		 * StaffDO(result.getInt("staff_id"), result.getString("staff_name"),
-		 * result.getInt("staff_weekly_available_time"), null, null);
-		 * 
-		 * listOfStaff.add(staffDo);
-		 * 
-		 * } catch (SQLException e) { e.printStackTrace(); } } } catch
-		 * (SQLException e) { e.printStackTrace(); }
-		 * 
-		 * return listOfStaff;
-		 */
 
 	}
 

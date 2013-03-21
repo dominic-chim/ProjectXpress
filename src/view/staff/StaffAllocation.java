@@ -18,11 +18,15 @@ import data.dataObject.TaskDO;
 import database.dataAccessObject.ResultDao;
 import database.dataAccessObject.StaffDao;
 
+/**
+ * gui for staff allocation 
+ * 
+ * @author Ross, Dominic
+ *
+ */
 public class StaffAllocation extends JPanel {
 
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	JTable allocationTable;
     DefaultTableModel allocationModel;
@@ -48,9 +52,7 @@ public class StaffAllocation extends JPanel {
         };
 
         allocationTable = new JTable(allocationModel) {
-            /**
-			 * 
-			 */
+  
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -64,59 +66,6 @@ public class StaffAllocation extends JPanel {
         JScrollPane scrollPane = new JScrollPane(allocationTable);
         add(scrollPane, BorderLayout.CENTER);
         
-        testData();
-        
-        setVisible(true);
-        
-
-    }
-    
-    public void testData() {
-        //// Testing \\\\
-        //Create StaffDO obj to Test
-        /*
-        HashMap<Integer, Double> skillLevels = new HashMap<Integer, Double>();
-        skillLevels.put(1, 5.0);
-        HashMap<DateTime, DateTime> holidayDates= new HashMap<DateTime, DateTime>();
-
-        StaffDO staffOne = new StaffDO(1, "Ross", 40, skillLevels, holidayDates);
-        StaffDO staffTwo = new StaffDO(2, "Bob", 40, skillLevels, holidayDates);
-
-        //Create ArrayList of ResultDO to test
-        
-    
-        DateTime dateTime = new DateTime(2013, 04, 05, 10, 30, 0);
-        
-        ArrayList<Integer> requiredTskIds = new ArrayList<Integer>();
-        requiredTskIds.add(5);
-        
-        DateTime dateStart1= new DateTime(2013, 04, 05, 10, 30, 0);
-        DateTime dateEnd1 = new DateTime(2013, 04, 05, 13, 30, 0);
-        
-        DateTime dateStart2= new DateTime(2013, 04, 06, 14, 30, 0);
-        DateTime dateEnd2 = new DateTime(2013, 04, 06, 17, 30, 0);
-        
-        TaskDO taskOne = new TaskDO(1, 1, "Task One",  1, 3, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
-        ResultDO resultOne = new ResultDO(5, taskOne, staffOne, dateStart1, dateEnd1);
-
-        TaskDO taskTwo = new TaskDO(1, 2, "Task Two",  1, 3, 3, "RiskLevel", dateTime, "Task Status", requiredTskIds);
-        ResultDO resultTwo = new ResultDO(5, taskTwo, staffOne, dateStart2, dateEnd2);
-
-        
-        ArrayList<ResultDO> listOfResultsTest1 = new ArrayList<ResultDO>();
-        listOfResultsTest1.add(resultOne);
-        listOfResultsTest1.add(resultTwo);
-        
-        ArrayList<ResultDO> listOfResultsTest2 = new ArrayList<ResultDO>();
-        listOfResultsTest2.add(resultOne);
-        listOfResultsTest2.add(resultTwo);
-        
-        HashMap<StaffDO , ArrayList<ResultDO>> test = new HashMap<StaffDO, ArrayList<ResultDO>>();
-        test.put(staffOne, listOfResultsTest1);
-        test.put(staffTwo, listOfResultsTest2);
-        */
-        
-        
         HashMap<StaffDO , ArrayList<ResultDO>> dataToShow = new HashMap<StaffDO, ArrayList<ResultDO>>();
 		ResultDao resultDB = new ResultDao();
 		StaffDao staffDB = new StaffDao();
@@ -126,8 +75,12 @@ public class StaffAllocation extends JPanel {
             dataToShow.put(staffDB.getStaffById(staffId), resultDB.getResultByStaff(staffId));
         }
         addStaffAllocatedProjects(dataToShow);    
+        
+        setVisible(true);
+        
 
     }
+    
     
     public void addStaffAllocatedProjects(HashMap<StaffDO , ArrayList<ResultDO>> staffAllocProjects)    {
         
@@ -151,8 +104,6 @@ public class StaffAllocation extends JPanel {
     }
     
     
-    public void addController(ActionListener controller) {
 
-    }
 
 }

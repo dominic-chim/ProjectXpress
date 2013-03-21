@@ -11,11 +11,15 @@ import javax.swing.JTabbedPane;
 
 import view.MainFrame;
 
+/**
+ * gui for staff panel
+ * 
+ * @author Ross
+ *
+ */
 public class StaffView extends JPanel {
 
-    // Left panel - Staff Summary
-    //private StaffSummary staffSummary;
-    //private StaffAllocation staffAllocation;
+
     private StaffList staffList;
 
     private JTabbedPane mainTab = new JTabbedPane();
@@ -45,8 +49,6 @@ public class StaffView extends JPanel {
         StaffAllocation staffAllocation = new StaffAllocation();
 
         staffSummary = new StaffSummary(view);
-       // this.staffSummary.setCellColour(view.initialColour);
-       // this.staffSummary.setIds(view.getids);
         JScrollPane staffSummaryScrollPane = new JScrollPane(this.staffSummary);
        
 
@@ -88,8 +90,7 @@ public class StaffView extends JPanel {
     public void addController(ActionListener controller) {
 
         staffList.addController(controller);
-        //staffSummary.addController(controller);
-        //staffAllocation.addController(controller);
+
 
     }
 

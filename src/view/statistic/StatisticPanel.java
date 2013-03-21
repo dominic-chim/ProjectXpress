@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+/**
+ * gui for statistic tab
+ * 
+ * @author Samy
+ *
+ */
 public class StatisticPanel extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JTabbedPane tabbedPane = new JTabbedPane();

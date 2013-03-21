@@ -2,6 +2,13 @@ package data.dataObject;
 
 import util.DateTime;
 
+/**
+ * 
+ * data object to represent one result
+ * 
+ * @author Ke CHEN & Ross
+ *
+ */
 public class ResultDO {
 
     private int projectId;

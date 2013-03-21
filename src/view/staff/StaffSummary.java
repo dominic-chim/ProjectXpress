@@ -22,13 +22,17 @@ import database.dataAccessObject.HolidaysDao;
 import database.dataAccessObject.ResultDao;
 import database.dataAccessObject.StaffDao;
 
+/**
+ *
+ * gui for staff summary
+ *
+ * @author Ross, Dominic
+ *
+ */
 public class StaffSummary extends JPanel {
 
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private int yPos = 1;
-
-	// TODO add error checks if task start date is greater than time scale set
-	// on table
 
 	private int dayXPos = 8;
 	private DateTime currentDateTime;
@@ -46,9 +50,6 @@ public class StaffSummary extends JPanel {
 	public StaffSummary(MainFrame view) {
 		this.view = view;
 
-		// TODO get projectStartDate
-		// DateTime projectStartDate = new DateTime("2013-02-01 10:00:00");
-		// this.currentDateTime = projectStartDate;
 
 		setLayout(new GridBagLayout());
 
@@ -77,7 +78,6 @@ public class StaffSummary extends JPanel {
 		}
 
 		projectStartDate = resultDB.getStartingDateTime();
-		// DateTime projectStartDate = new DateTime(2013,2,1,9,0,0);
 
 		this.currentDateTime = projectStartDate;
 		addData(dataToShow, projectStartDate);
@@ -328,15 +328,6 @@ public class StaffSummary extends JPanel {
 
 			}
 
-//			if (currentTime.before(currentDateTime)) {
-//
-//				int blankLength = DateTime.duration(currentTime,
-//						currentDateTime);
-//				gbc.gridwidth = blankLength;
-//				add(lblBlank = new JLabel(""), gbc);
-//				lblBlank.setBorder(BorderFactory.createLineBorder(border));
-//
-//			}
 
 			endXPos.add(xPos);
 			

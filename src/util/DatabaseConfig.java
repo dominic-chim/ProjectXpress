@@ -4,6 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * 
+ * class for reading data base settings and store them
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class DatabaseConfig {
 
 	private String host;

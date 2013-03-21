@@ -8,6 +8,13 @@ import java.util.HashMap;
 import data.dataObject.SkillDO;
 import database.DatabaseRoot;
 
+/**
+ * 
+ * database class for table skill
+ * 
+ * @author Ke CHEN & Ross
+ *
+ */
 public class SkillDao extends DatabaseRoot {
 
 	public String[] getSkillNames() {
@@ -66,10 +73,5 @@ public class SkillDao extends DatabaseRoot {
 		}
 	}
 	
-	//TODO 
-	// If we have time to add
-	public void removeSkill() {
-
-	}
 
 }

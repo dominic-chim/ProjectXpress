@@ -2,7 +2,13 @@ package data.dataObject;
 
 import java.util.Comparator;
 
-
+/**
+ * 
+ * comparator for project
+ * 
+ * @author Ke CHEN & Ross
+ *
+ */
 public class ProjectComparator implements Comparator<ProjectDO> {
 
     @Override

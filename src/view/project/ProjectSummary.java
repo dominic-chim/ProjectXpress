@@ -21,13 +21,17 @@ import data.dataObject.ResultDO;
 import database.dataAccessObject.ProjectDao;
 import database.dataAccessObject.ResultDao;
 
+/**
+ * 
+ * gui for project summary
+ * 
+ * @author Dominic, Ross
+ *
+ */
 public class ProjectSummary extends JPanel {
 
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private int yPos = 1;
-
-	// TODO add error checks if task start date is greater than time scale set
-	// on table
 
 	private int dayXPos = 8;
 	private DateTime currentDateTime;
@@ -222,12 +226,6 @@ public class ProjectSummary extends JPanel {
 			projectName.setBackground(Headers);
 			projectName.setForeground(Color.white);
 
-			// set headers to random generated colour
-			/*
-			 * for (int i = 0; i < projectIds.size(); i++) { if
-			 * (projectIds.get(i).equals(projects.getProjectId()) == true) {
-			 * projectName.setBackground(colourit.getColor().get(i)); } }
-			 */
 
 			projectName.setBorder(BorderFactory.createLineBorder(border));
 			projectName.setOpaque(true);
@@ -379,19 +377,6 @@ public class ProjectSummary extends JPanel {
 
 		}
 
-		// if (currentTime.before(currentDateTime)) {
-		//
-		// int blankLength = DateTime.duration(currentTime,
-		// currentDateTime);
-		// gbc.gridwidth = blankLength;
-		// lblBlank = new JLabel("");
-		// lblBlank.setBorder(BorderFactory.createLineBorder(border));
-		// lblBlank.setBackground(Color.GRAY);
-		// lblBlank.setOpaque(true);
-		// add(lblBlank, gbc);
-		//
-		// }
-
 		endXPos.add(xPos);
 
 	}
@@ -467,7 +452,4 @@ public class ProjectSummary extends JPanel {
 		return projectIds;
 	}
 
-	public void addController(ActionListener controller) {
-
-	}
 }

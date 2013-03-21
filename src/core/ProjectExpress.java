@@ -13,7 +13,7 @@ import view.MainFrame;
 /**
  * program entrance
  * 
- * @author Bob
+ * @author Ke CHEN
  *
  */
 public class ProjectExpress {

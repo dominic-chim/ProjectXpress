@@ -9,13 +9,16 @@ import javax.swing.*;
 
 import view.MainFrame;
 
+/**
+ * 
+ * gui for adding project
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class AddProjectDialog extends JDialog {
 
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1757481797240629572L;
 	// container panels
     private JPanel jpnlTop = new JPanel();
     private JPanel jpnlMiddle = new JPanel();
@@ -56,8 +59,6 @@ public class AddProjectDialog extends JDialog {
         jpnlTop.setLayout(new GridLayout(3, 2));
         jpnlTop.add(jlbProjectName);
         jpnlTop.add(jtxtProjectName);
-        //jpnlTop.add(jlbDueDate);
-        //jpnlTop.add(jtxtDueDate);
         jpnlTop.add(jlbPriority);
         jpnlTop.add(jtxtPriority);
         jpnlTop.add(jlbStatus);

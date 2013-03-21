@@ -31,11 +31,15 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
+/**
+ * 
+ * gui for statistic availability resources tab
+ * 
+ * @author Samy
+ *
+ */
 public class StatisticsAvailableResources extends ApplicationFrame {
 
-	/** 
-	 * 
-	 */
 
 	private static final long serialVersionUID = 1L;
 	public JPanel panel = new JPanel(new GridLayout(1, 2));
@@ -110,8 +114,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 					.toString());
 		}
 
-		// SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL
-		// JOIN skill GROUP BY skill_name;
+
 		return dataset;
 	}
 
@@ -123,8 +126,7 @@ public class StatisticsAvailableResources extends ApplicationFrame {
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
 
-		// SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL
-		// JOIN skill GROUP BY skill_name;
+
 		return dataset;
 	}
 

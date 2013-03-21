@@ -37,11 +37,16 @@ import org.jfree.ui.ApplicationFrame;
 
 import database.dataAccessObject.StatisticsDao;
 
+
+/**
+ * 
+ * gui for statistic resource usage
+ * 
+ * @author Samy
+ *
+ */
 public class StatisticsResourceUsage extends ApplicationFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5064688526261690032L;
 	public JPanel panel = new JPanel(new GridLayout(1, 2));
 	public JPanel panel2 = new JPanel(new GridLayout(2, 1));
@@ -138,8 +143,6 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 					.toString());
 		}
 
-		// SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL
-		// JOIN skill GROUP BY skill_name;
 		return dataset;
 	}
 	
@@ -154,8 +157,7 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 					.toString());
 		}
 
-		// SELECT skill_name, COUNT(*) AS Total FROM staff_skill_level NATURAL
-		// JOIN skill GROUP BY skill_name;
+
 		return dataset;
 	}
 
@@ -167,8 +169,6 @@ public class StatisticsResourceUsage extends ApplicationFrame {
 			dataset.setValue(row.get(0).toString(), (Number) row.get(1));
 		}
 
-		// SELECT project_name, COUNT(DISTINCT(staff_id)) FROM project NATURAL
-		// JOIN scheduling_result GROUP BY project_name;
 
 		return dataset;
 	}

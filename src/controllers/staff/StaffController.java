@@ -11,6 +11,13 @@ import view.staff.StaffView;
 import data.dataObject.StaffDO;
 import database.dataAccessObject.StaffDao;
 
+/**
+ * 
+ * controller for staff tab
+ * 
+ * @author Ross
+ *
+ */
 public class StaffController implements ActionListener {
 
 	MainFrame view;

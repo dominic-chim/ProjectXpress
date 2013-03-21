@@ -7,6 +7,12 @@ import java.util.HashMap;
 
 import javax.swing.*;
 
+/**
+ * gui for adding task
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class AddTaskDialog extends JDialog {
 
     // container panels
@@ -19,13 +25,14 @@ public class AddTaskDialog extends JDialog {
     private JLabel jlbRequiredSkill = new JLabel("Required skill");
     private JLabel jlbDuration = new JLabel("Duration");
     private JLabel jlbRiskLevel = new JLabel("Risk level");
+    @Deprecated
     private JLabel jlbReleaseTime = new JLabel("Release time");
     private JLabel jlbStatus = new JLabel("Status");
 
     // texts
     private JTextArea jtxtTaskName = new JTextArea();
-    //private JTextArea jtxtRequiredSkill = new JTextArea();
     private JTextArea jtxtDuration = new JTextArea();
+    @Deprecated
     private JTextArea jtxtReleaseTime = new JTextArea("2020-10-10 10:10:10");
 
     private JComboBox<String> jcbRiskLevel = new JComboBox<String>();
@@ -34,7 +41,6 @@ public class AddTaskDialog extends JDialog {
     private JComboBox<String> jcbRequiredSkill = new JComboBox<String>();
 
     // jlist in center
-    // TODO add real data from model
     private DefaultListModel<String> requiredListModel = new DefaultListModel<String>();
     private JList<String> requiredTaskList = new JList<String>(requiredListModel);
 
@@ -60,8 +66,6 @@ public class AddTaskDialog extends JDialog {
         jpnlTop.add(jtxtDuration);
         jpnlTop.add(jlbRiskLevel);
         jpnlTop.add(jcbRiskLevel);
-        //jpnlTop.add(jlbReleaseTime);
-        //jpnlTop.add(jtxtReleaseTime);
         jpnlTop.add(jlbStatus);
         jpnlTop.add(jcbStatus);
 

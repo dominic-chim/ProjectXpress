@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
 import data.dataObject.ProjectDO;
 import data.dataObject.TaskDO;
 
 /**
  * left part of project tab in MainFrame
+ * @author Ke CHEN
  */
 public class ProjectList extends JPanel {
     
@@ -62,7 +62,6 @@ public class ProjectList extends JPanel {
         // set up the tree
         add(projectTree, BorderLayout.CENTER);
         
-        // 
         add(bottomPanel, BorderLayout.SOUTH);
         setPreferredSize(new Dimension(300, 600));
     }

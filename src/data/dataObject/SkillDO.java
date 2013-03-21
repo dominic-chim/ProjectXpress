@@ -1,5 +1,11 @@
 package data.dataObject;
 
+/**
+ *
+ * data object represent a skill
+ *
+ * @author Ross
+ */
 public class SkillDO {
 	int id;
 	String skillName;

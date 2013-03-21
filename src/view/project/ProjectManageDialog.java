@@ -11,6 +11,12 @@ import view.MainFrame;
 
 import data.dataObject.ProjectDO;
 
+/**
+ * gui for Manage a Project
+ *
+ * @author Ke CHEN
+ *
+ */
 public class ProjectManageDialog extends JDialog{
 
     // container panels

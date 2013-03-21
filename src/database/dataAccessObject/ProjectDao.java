@@ -9,6 +9,13 @@ import util.DateTime;
 import database.DatabaseRoot;
 import data.dataObject.*;
 
+/**
+ * 
+ * class to get, insert, update project in database
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class ProjectDao extends DatabaseRoot {
 
     public ProjectDO getProjectById(int projectId) {
@@ -22,11 +29,12 @@ public class ProjectDao extends DatabaseRoot {
             int projectPriority = 0;
             String projectStatus = null;
             if(result.next()) {
+            	
                 projectName = result.getString("project_name");
                 projectDueDate = new DateTime(result.getString("project_due_date"));
                 projectPriority = result.getInt("project_priority");
                 projectStatus = result.getString("project_status");
-                //projDueDate = dateTimeToCalendar(projectDueDate);
+                
             } else {
                 return null;
             }
@@ -42,7 +50,6 @@ public class ProjectDao extends DatabaseRoot {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //TODO change return value
         return null;
     }
 
@@ -103,7 +110,6 @@ public class ProjectDao extends DatabaseRoot {
         ArrayList<TaskDO> tasks = project.getTasks();
         TaskDao taskDao = new TaskDao();
 
-        // TODO check error
         int projectId = getMaxProjectId();
 
         for(int i = 1; i <= tasks.size(); i++) {

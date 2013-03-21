@@ -17,10 +17,15 @@ import data.dataObject.TaskDO;
 import static org.junit.Assert.*;
 import util.DateTime;
 
+/**
+ * 
+ * Class to Test the algorithm
+ * 
+ * @author Ke CHEN
+ *
+ */
 public class TestAlgorithm {
 
-    //public ScheduleAlgorithm(DateTime projectStartingDate, DateTime projectsDuedate, ArrayList<StaffDO> staffList, 
-    //        PriorityQueue<ProjectDO> projects) {
 
     private PriorityQueue<ProjectDO> pqProj;
     private ArrayList<StaffDO> staffs;
@@ -135,7 +140,7 @@ public class TestAlgorithm {
 
 
 
-        /////
+        /////-----
 
         staffs = new ArrayList<StaffDO>();
         staffs.add(r1);

@@ -6,13 +6,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-
+/**
+ * 
+ * menu class
+ * 
+ * @author Dominic, Ross, Ke CHEN
+ *
+ */
 public class MainMenuBar extends JMenuBar {
 
 	// menus
-	//JMenuBar Menu;
 	private JMenu menuProject = new JMenu("Project");
-	//private JMenu menuView = new JMenu("View");
 	private JMenu menuSettings = new JMenu("Settings");
 	private JMenu menuHelp = new JMenu("Help");
 	
@@ -30,7 +34,6 @@ public class MainMenuBar extends JMenuBar {
 		menuHelp.add(miUserManual);
 
 		this.add(menuProject);
-		//this.add(menuView);
 		this.add(menuSettings);
 		this.add(menuHelp);
 	}

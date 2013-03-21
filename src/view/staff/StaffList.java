@@ -21,8 +21,13 @@ import view.MainFrame;
 import data.Context;
 import data.dataObject.StaffDO;
 
-//import data.dataObject.*;
-
+/**
+ * 
+ * gui for staff tree
+ * 
+ * @author Ross
+ *
+ */
 public class StaffList extends JPanel {
 
 	private JPanel buttonPanel = new JPanel();
@@ -214,7 +219,6 @@ public class StaffList extends JPanel {
 					+ staffInfo.getHolidays().get(date).getDateTime()));
 		}
 
-		// treeM
 		tree.updateUI();
 
 		return staffInfo;

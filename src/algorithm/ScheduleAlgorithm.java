@@ -6,7 +6,6 @@ import static java.lang.Math.max;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 import util.DateTime;
@@ -16,6 +15,12 @@ import data.dataObject.ResultDO;
 import data.dataObject.StaffDO;
 import data.dataObject.TaskDO;
 
+/**
+ *
+ * Schedule algorithm
+ * 
+ * @author Ke CHEN & Ross
+ */
 public class ScheduleAlgorithm {
 
     private DateTime projectStartingDate;
@@ -207,11 +212,6 @@ public class ScheduleAlgorithm {
                                         DateTime.hourLater(projectStartingDate, taskAlloc.getEndTime())
                                         ));
                 }
-            }
-
-            //TODO del
-            for(TaskAllocObject to : completeSet) {
-                System.out.println(to);
             }
 
             // empty completeSet for next project

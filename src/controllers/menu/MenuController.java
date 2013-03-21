@@ -26,6 +26,14 @@ import database.dataAccessObject.ResultDao;
 import database.dataAccessObject.RiskDao;
 import database.dataAccessObject.StaffDao;
 
+/**
+ *
+ * menu controller to handle actions in menus
+ * as well as dialogs in menus
+ *
+ * @author Dominic, Ke CHEN, Ross
+ *
+ */
 public class MenuController implements ActionListener {
 
     private MainFrame view;

@@ -18,6 +18,8 @@ import view.project.*;
 /**
  * controllers for project panel
  *
+ * @author Ke CHEN
+ *
  */
 public class ProjectController {
 

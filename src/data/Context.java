@@ -5,6 +5,13 @@ import java.util.HashMap;
 import database.dataAccessObject.RiskDao;
 import database.dataAccessObject.SkillDao;
 
+/**
+ * 
+ * hold maps for other classes to look up
+ * 
+ * @author Ke CHEN & Ross
+ *
+ */
 public class Context {
 
     private static HashMap<String, Integer> skillsRev = new HashMap<String, Integer>();
@@ -13,7 +20,6 @@ public class Context {
     private static HashMap<String, Integer> riskLevel = new HashMap<String, Integer>();
     
     static {
-        // TODO read from database
         SkillDao skillDao = new SkillDao();
         RiskDao riskDao = new RiskDao();
         HashMap<Integer, String> skillMap = skillDao.getSkillMap();

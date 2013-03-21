@@ -11,6 +11,13 @@ import data.dataObject.TaskDO;
 import test.GroupTestCase;
 import util.DateTime;
 
+/**
+ * 
+ * test for projectDO
+ * 
+ * @author Hongyang LIN
+ *
+ */
 public class TestProjectDO extends GroupTestCase{
 	
 	private ProjectDO pdo;
@@ -52,11 +59,5 @@ public class TestProjectDO extends GroupTestCase{
 	
 	}
 	
-	public void testTasks(){
-		ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
-		//TaskDO task = new TaskDO(1, 0, null, "fly", 0, null, null, "finish", null);
-		pdo.setTasks(tasks);
-		assertEquals(tasks, pdo.getTasks());
-	
-	}
+
 }
