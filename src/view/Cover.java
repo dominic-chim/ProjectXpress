@@ -9,12 +9,16 @@ import javax.swing.*;
 
 import core.ProjectExpress;
 
+/**
+ * 
+ * @author Dominic
+ *
+ */
 public class Cover extends Window {
 
 	private JPanel CoverP = new JPanel();
 	private ProjectExpress initial = new ProjectExpress();
 
-	// Timer timer = new Timer(1000, this);
 
 	public Cover() {
 		super(null); // creates a window with no Frame as owner
