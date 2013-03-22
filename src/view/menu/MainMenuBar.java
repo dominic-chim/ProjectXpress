@@ -37,7 +37,6 @@ public class MainMenuBar extends JMenuBar {
 
 		this.add(menuProject);
 		this.add(menuSettings);
-		//TODO this.add(menuHelp);
 		this.add(menuAbout);
 	}
 	

@@ -77,9 +77,6 @@ public class MainFrame extends JFrame {
 		return new SchedulingDialog(this);
 	}
 
-	public UserManualDialog addUserManualDialog() {
-		return new UserManualDialog(this);
-	}
 
 	public SkillDialog getSkillDialog() {
 

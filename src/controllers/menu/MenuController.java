@@ -12,10 +12,8 @@ import javax.swing.JOptionPane;
 import util.DateTime;
 import view.MainFrame;
 import view.menu.AboutDialog;
-//import view.menu.AboutDialog;
 import view.menu.RiskDialog;
 import view.menu.SchedulingDialog;
-import view.menu.UserManualDialog;
 import algorithm.ScheduleAlgorithm;
 import data.Context;
 import data.dataObject.ProjectComparator;
@@ -76,13 +74,6 @@ public class MenuController implements ActionListener {
                     staffDB.getAllStaff());
             sdialog.setVisible(true);
             break;
-
-        case "User Manual":
-
-            UserManualDialog userManualDialog = view.addUserManualDialog();
-            userManualDialog.addControllers(new UserManualController(userManualDialog));
-
-            break;
             
         case "Project Info": 
         	AboutDialog aDialog = view.getaboutDialog();
@@ -135,26 +126,7 @@ public class MenuController implements ActionListener {
         }
     }
 
-    class UserManualController implements ActionListener {
 
-        private UserManualDialog userManualDialog;
-
-        public UserManualController(UserManualDialog userManualDialog) {
-
-            this.userManualDialog = userManualDialog;
-
-        }
-
-        public void actionPerformed(ActionEvent e) {
-
-            String cmd = e.getActionCommand();
-
-            switch (cmd) {
-            }
-
-        }
-
-    }
 
     /**
      * Scheduling Dialog listener
