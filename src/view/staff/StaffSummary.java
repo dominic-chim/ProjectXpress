@@ -368,14 +368,7 @@ public class StaffSummary extends JPanel {
 		}
 	}
 
-	/**
-	 * 
-	 * @param init
-	 * 
-	 * @return
-	 * 
-	 *         @
-	 */
+
 	public void setCellColour(CellColour init) {
 		this.curColour = init;
 	}

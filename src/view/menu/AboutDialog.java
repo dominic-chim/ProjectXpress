@@ -24,7 +24,7 @@ public class AboutDialog extends JDialog {
 			"inlcuded in this project, nor do we claim the said material as our own",
 			"we like to thank our supervisor and",
 			"everyone that contributed to this project.", "Thank You !!" };
-	final ImageIcon image = new ImageIcon("src/projectexpress.jpeg");
+	final ImageIcon image = new ImageIcon("img/projectexpress.jpeg");
 	Color backclr = new Color(18, 41, 83);
 
 	public AboutDialog(MainFrame view) {

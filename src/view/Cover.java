@@ -21,7 +21,7 @@ public class Cover extends Window {
 		setBounds(100, 100, 656, 530);
 		setVisible(true);
 
-		final ImageIcon image = new ImageIcon("src/projectexpress.jpeg");
+		final ImageIcon image = new ImageIcon("img/projectexpress.jpeg");
 		Color backclr = new Color(18, 41, 83);
 		CoverP.add(new JLabel(image));
 		CoverP.setBackground(backclr);

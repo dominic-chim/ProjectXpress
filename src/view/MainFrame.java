@@ -45,7 +45,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 
 		setLayout(new BorderLayout());
-		final ImageIcon image = new ImageIcon("src/projectexpressIcon.png");
+		final ImageIcon image = new ImageIcon("img/projectexpressIcon.png");
 		add(menuBar, BorderLayout.NORTH);
 
 		// add tabs to tabbed pane
