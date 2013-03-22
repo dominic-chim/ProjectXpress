@@ -528,8 +528,8 @@ public class StaffDialog extends JDialog {
 			if (!checkIfAddStaff) {
 
 				String addHolidayQuery = "INSERT INTO staff_holidays VALUES ( "
-						+ tfId.getText() + ", '" + tfStartDate.getText()
-						+ "', '" + tfEndDate.getText() + "' )";
+						+ tfId.getText() + ", '" + startDateTime.getDateTime()
+						+ "', '" + endDateTime.getDateTime() + "' )";
 
 				queries.add(addHolidayQuery);
 
