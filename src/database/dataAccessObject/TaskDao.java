@@ -87,10 +87,12 @@ public class TaskDao extends DatabaseRoot {
                                     task.getTaskRemainingTime()
                                     );
 
+
         try {
             db.executeUpdate(sql);
+            
         } catch (SQLException e) {
-
+        	
         }
 
         ArrayList<Integer> requiredTaskIds = task.getRequiredTaskIds();

@@ -57,12 +57,18 @@ public class ScheduleAlgorithm {
         for (StaffDO staff : staffList) {
 
             HashMap<DateTime, DateTime> holidays = staff.getHolidays();
+            ArrayList<DateTime> toDeleteDate = new ArrayList<DateTime>();
             for (DateTime holidayStartTime : holidays.keySet()) {
                 DateTime holidayEndTime = holidays.get(holidayStartTime);
                 if (holidayEndTime.before(projectStartingDate)) {
-                    holidays.remove(holidayStartTime);
+                	toDeleteDate.add(holidayStartTime);
                 }
             }
+            
+            for(DateTime del : toDeleteDate) {
+            	holidays.remove(del);
+            }
+            
 
             boolean[] availability = new boolean[DateTime.duration(projectStartingDate, projectsDueDate)];
             Arrays.fill(availability, Boolean.TRUE);

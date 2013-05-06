@@ -147,6 +147,7 @@ public class ProjectController {
                                         HashMap<String, String> valuesMap = jdlogAddTask.getAllInputValue();
                                         setTaskInfo(valuesMap, taskModel);
                                         int projectId = project.getProjectId();
+                                        project = (new ProjectDao()).getProjectById(projectId);
                                         ArrayList<TaskDO> tasks = project.getTasks();
                                         int taskId = 0;
                                         if(tasks.size() != 0) {
@@ -154,7 +155,9 @@ public class ProjectController {
                                         } else {
                                         	taskId = 1;
                                         }
+                                        
                                         (new TaskDao()).addTask(projectId, taskId, taskModel);
+                                        
                                         jdlogAddTask.dispose();
                                         updateProjectList();
                                     } catch (Exception excp) {
