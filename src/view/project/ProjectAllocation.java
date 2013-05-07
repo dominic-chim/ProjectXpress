@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -87,18 +88,28 @@ public class ProjectAllocation extends JPanel {
 		String currentProject = "";
 
 		if (projectAllocStaffs.size() > 0) {
-
+			
+			HashMap<ProjectDO, HashSet<String>> projectAllocSet = new HashMap<ProjectDO, HashSet<String>>();
 			for (ProjectDO project : projectAllocStaffs.keySet()) {
+				HashSet<String> set = new HashSet<String>();
 				for (ResultDO staff : projectAllocStaffs.get(project)) {
+					set.add(staff.getStaffDO().getStaffName());
+				}
+				projectAllocSet.put(project, set);
+			}
+			
+			
+			for (ProjectDO project : projectAllocSet.keySet()) {
+				for (String staff : projectAllocSet.get(project)) {
 
 					if (currentProject == project.getProjectName()) {
 						allocationModel.addRow(new Object[] { "",
-								staff.getStaffDO().getStaffName() });
+								staff});
 
 					} else {
 						allocationModel.addRow(new Object[] {
 								project.getProjectName(),
-								staff.getStaffDO().getStaffName() });
+								staff});
 
 					}
 
@@ -106,7 +117,7 @@ public class ProjectAllocation extends JPanel {
 				}
 			}
 		}
-
+		
 	}
 
 }

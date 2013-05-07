@@ -307,7 +307,7 @@ public class StatisticsDao extends DatabaseRoot {
 
 	public Object[][] scheduledProjects() {
 
-		String sql = "SELECT project_id, project_name, project_priority, COUNT(task_id) AS total , CAST(min(start_datetime) AS DATE)  AS start_datetime, CAST(end_datetime AS DATE) AS end_datetime FROM project NATURAL JOIN task NATURAL JOIN scheduling_result WHERE version IN (SELECT MAX(version) FROM scheduling_result)GROUP BY project_id, version;";
+		String sql = "SELECT project_id, project_name, project_priority, COUNT(task_id) AS total , CAST(min(start_datetime) AS DATE)  AS start_datetime, CAST(max(end_datetime) AS DATE) AS end_datetime FROM project NATURAL JOIN task NATURAL JOIN scheduling_result WHERE version IN (SELECT MAX(version) FROM scheduling_result)GROUP BY project_id, version;";
 
 		ArrayList<Object> data = new ArrayList<>();
 
