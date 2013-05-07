@@ -16,9 +16,11 @@ import javax.swing.JPanel;
 
 import util.CellColour;
 import util.DateTime;
+import view.MainFrame;
 import view.staff.StaffSummary;
 import data.dataObject.ProjectDO;
 import data.dataObject.ResultDO;
+import data.dataObject.StaffDO;
 import database.dataAccessObject.ProjectDao;
 import database.dataAccessObject.ResultDao;
 
@@ -31,484 +33,489 @@ import database.dataAccessObject.ResultDao;
  */
 public class ProjectSummary extends JPanel {
 
-	private GridBagConstraints gbc = new GridBagConstraints();
-	private int yPos = 1;
+    private GridBagConstraints gbc = new GridBagConstraints();
+    private int yPos = 1;
 
-	private int dayXPos = 8;
-	private DateTime currentDateTime;
-	private JLabel lblDay;
-	private ArrayList<Integer> projectIds = new ArrayList<Integer>();
-	private CellColour colourit = new CellColour();
-	final Color Headers = new Color(220, 20, 60);
-	final Color border = new Color(220, 220, 220);
-	final Color cell = new Color(72, 118, 255);
+    private int dayXPos = 8;
+    private DateTime currentDateTime;
+    private JLabel lblDay;
+    private ArrayList<Integer> projectIds = new ArrayList<Integer>();
+    private CellColour colourit = MainFrame.initialColour;
+    final Color Headers = new Color(220, 20, 60);
+    final Color border = new Color(220, 220, 220);
+    final Color cell = new Color(72, 118, 255);
 
-	private int xPos = 0;
-	private JLabel lblBlank;
-	private JLabel lblStaffNo;
-	private DateTime currentTime;
-	private DateTime time;
-	private HashMap<DateTime, Integer> totalResources = new HashMap<DateTime, Integer>();
+    private int xPos = 0;
+    private JLabel lblBlank;
+    private JLabel lblStaffNo;
+    private DateTime currentTime;
+    private DateTime time;
+    private HashMap<DateTime, Integer> totalResources = new HashMap<DateTime, Integer>();
 
-	DateTime projectStartDate = new DateTime(2013, 3, 21, 9, 0, 0);
+    DateTime projectStartDate = new DateTime(2013, 3, 21, 9, 0, 0);
 
-	private ArrayList<Integer> endXPos = new ArrayList<Integer>();
+    private ArrayList<Integer> endXPos = new ArrayList<Integer>();
 
-	public ProjectSummary() {
+    public ProjectSummary() {
 
-		setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
 
-		// Labels
-		JLabel blankLabel;
+        // Labels
+        JLabel blankLabel;
 
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.ipadx = 10;
-		gbc.ipady = 10;
-		gbc.gridwidth = 8;
-		gbc.fill = GridBagConstraints.BOTH;
-		add(blankLabel = new JLabel(""), gbc);
-		gbc.gridy = 1;
-		add(blankLabel = new JLabel(""), gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.ipadx = 10;
+        gbc.ipady = 10;
+        gbc.gridwidth = 8;
+        gbc.fill = GridBagConstraints.BOTH;
+        add(blankLabel = new JLabel(""), gbc);
+        gbc.gridy = 1;
+        add(blankLabel = new JLabel(""), gbc);
 
-		HashMap<ProjectDO, ArrayList<ResultDO>> dataToShow = new HashMap<ProjectDO, ArrayList<ResultDO>>();
-		ResultDao resultDB = new ResultDao();
-		ProjectDao projectDB = new ProjectDao();
+        HashMap<ProjectDO, ArrayList<ResultDO>> dataToShow = new HashMap<ProjectDO, ArrayList<ResultDO>>();
+        ResultDao resultDB = new ResultDao();
+        ProjectDao projectDB = new ProjectDao();
 
-		ArrayList<Integer> projectIds = resultDB
-				.getAllProjectInCurrentVersion();
+        ArrayList<Integer> projectIds = resultDB
+                .getAllProjectInCurrentVersion();
 
-		for (int projectId : projectIds) {
-			dataToShow.put(projectDB.getProjectById(projectId),
-					resultDB.getResultByProject(projectId));
-		}
+        for (int projectId : projectIds) {
+            dataToShow.put(projectDB.getProjectById(projectId),
+                    resultDB.getResultByProject(projectId));
+        }
 
-		try {
-			projectStartDate = resultDB.getStartingDateTime();
-		} catch (NullPointerException ex) {
-		}
+        try {
+            projectStartDate = resultDB.getStartingDateTime();
+        } catch (NullPointerException ex) {
+        }
 
-		this.currentDateTime = projectStartDate;
+        this.currentDateTime = projectStartDate;
 
-		addData(dataToShow);
+        addData(dataToShow);
 
-		setVisible(true);
+        setVisible(true);
 
-	}
+    }
 
-	public void addDay() {
+    public void addDay() {
 
-		// Add Day
-		gbc.gridy = 0;
-		gbc.gridwidth = 8;
-		gbc.gridx = dayXPos;
+        // Add Day
+        gbc.gridy = 0;
+        gbc.gridwidth = 8;
+        gbc.gridx = dayXPos;
 
-		String date = currentDateTime.getDateTime();
+        String date = currentDateTime.getDateTime();
 
-		Pattern p = Pattern.compile("(.*) (.*)");
-		Matcher m = p.matcher(date);
+        Pattern p = Pattern.compile("(.*) (.*)");
+        Matcher m = p.matcher(date);
 
-		while (m.find()) {
-			date = m.group(1);
-		}
+        while (m.find()) {
+            date = m.group(1);
+        }
 
-		lblDay = new JLabel(date, JLabel.HORIZONTAL);
-		lblDay.setBorder(BorderFactory.createLineBorder(border));
-		lblDay.setBackground(Headers);
-		lblDay.setForeground(Color.white);
-		lblDay.setOpaque(true);
-		add(lblDay, gbc);
+        lblDay = new JLabel(date, JLabel.HORIZONTAL);
+        lblDay.setBorder(BorderFactory.createLineBorder(border));
+        lblDay.setBackground(Headers);
+        lblDay.setForeground(Color.white);
+        lblDay.setOpaque(true);
+        add(lblDay, gbc);
 
-		// Add Hours of Day
+        // Add Hours of Day
 
-		int hourPos = dayXPos;
-		gbc.gridx = hourPos;
-		gbc.gridy = 1;
-		gbc.gridwidth = 1;
-		JLabel lblHours;
+        int hourPos = dayXPos;
+        gbc.gridx = hourPos;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        JLabel lblHours;
 
-		for (int i = 9; i < 17; i++) {
+        for (int i = 9; i < 17; i++) {
 
-			lblHours = new JLabel(Integer.toString(i), JLabel.HORIZONTAL);
-			lblHours.setBorder(BorderFactory.createLineBorder(border));
-			lblHours.setBackground(Headers);
-			lblHours.setForeground(Color.white);
-			lblHours.setOpaque(true);
-			gbc.gridx = hourPos++;
+            lblHours = new JLabel(Integer.toString(i), JLabel.HORIZONTAL);
+            lblHours.setBorder(BorderFactory.createLineBorder(border));
+            lblHours.setBackground(Headers);
+            lblHours.setForeground(Color.white);
+            lblHours.setOpaque(true);
+            gbc.gridx = hourPos++;
 
-			add(lblHours, gbc);
+            add(lblHours, gbc);
 
-		}
+        }
 
-		dayXPos += 8;
-		currentDateTime = DateTime.nextDay(currentDateTime);
+        dayXPos += 8;
+        currentDateTime = DateTime.nextDay(currentDateTime);
 
-	}
+    }
 
-	public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults) {
+    public void addData(HashMap<ProjectDO, ArrayList<ResultDO>> projectResults) {
 
-		HashMap<DateTime, Integer> resources;
-		HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
+        HashMap<DateTime, Integer> resources;
+        HashMap<ProjectDO, HashMap<DateTime, Integer>> projectResources = new HashMap<ProjectDO, HashMap<DateTime, Integer>>();
 
-		for (ProjectDO project : projectResults.keySet()) {
+        for (ProjectDO project : projectResults.keySet()) {
 
-			resources = new HashMap<DateTime, Integer>();
+            resources = new HashMap<DateTime, Integer>();
 
-			for (ResultDO result : projectResults.get(project)) {
+            for (ResultDO result : projectResults.get(project)) {
                 ///////
-                System.out.println(result.getTaskDO().getTaskName());
+                //System.out.println(result.getTaskDO().getTaskName());
 
-				time = result.getStartDateTime();
+                time = result.getStartDateTime();
 
-				int range = DateTime.duration(result.getStartDateTime(),
-						result.getEndDateTime());
-				
-				for (int i = range; i > 0; i--) {
+                int range = DateTime.duration(result.getStartDateTime(),
+                        result.getEndDateTime());
+                
+                for (int i = range; i > 0; i--) {
 
-					boolean exists = false;
-					boolean add = true;
-					for(ProjectDO p : projectResults.keySet()) {
-						if(p == project) 
-							continue;
-						for(ResultDO r : projectResults.get(p)) {
-							if((r.getStartDateTime().before(time) || r.getStartDateTime().getDateTime().equals(time.getDateTime())) && (time.before(r.getEndDateTime()) || time.getDateTime().equals(r.getEndDateTime().getDateTime())) 
-									&& result.getStartDateTime().before(r.getStartDateTime())
+                    boolean exists = false;
+                    boolean add = true;
+                    for(ProjectDO p : projectResults.keySet()) {
+                        if(p == project) 
+                            continue;
+                        for(ResultDO r : projectResults.get(p)) {
+                            if((r.getStartDateTime().before(time) || r.getStartDateTime().getDateTime().equals(time.getDateTime())) && (time.before(r.getEndDateTime()))// || time.getDateTime().equals(r.getEndDateTime().getDateTime())) 
+                                    && result.getStartDateTime().before(r.getStartDateTime())
                                     && r.getEndDateTime().before(result.getEndDateTime())
                                     && result.getStaffDO().getStaffId() == r.getStaffDO().getStaffId()){
                                 add = false;
-                                System.out.println(time.getDateTime() + r.getTaskDO().getTaskName() + result.getTaskDO().getTaskName());
-							}
-							
-						}
-					}
+                                //System.out.println(time.getDateTime() + r.getTaskDO().getTaskName() + result.getTaskDO().getTaskName());
+                            }
+                            
+                        }
+                    }
 
-					for (DateTime dt : resources.keySet()) {
-						
-						
-						//add = true;
-						
-						
-						if (time.getDateTime().equals(dt.getDateTime())) {
-							
-							/*
-                            boolean add = true;
-							for(ProjectDO p : projectResults.keySet()) {
-								if(p == project) 
-									continue;
-								for(ResultDO r : projectResults.get(p)) {
-									if((r.getStartDateTime().before(dt) || r.getStartDateTime().getDateTime().equals(dt.getDateTime())) && (dt.before(r.getEndDateTime()) || dt.getDateTime().equals(r.getEndDateTime().getDateTime())) 
-											&& result.getStartDateTime().before(r.getStartDateTime())
-                                            && r.getEndDateTime().before(result.getEndDateTime())
-                                            && result.getStaffDO().getStaffId() == r.getStaffDO().getStaffId()){
-                                        add = false;
-                                        System.out.println(dt.getDateTime() + r.getTaskDO().getTaskName() + result.getTaskDO().getTaskName());
-									}
-									
-								}
-							}
-							*/
-                            //add = true;
+                    for (DateTime dt : resources.keySet()) {
+                        
+                        if (time.getDateTime().equals(dt.getDateTime())) {                      
+    
                             if(add) {
                                 resources.put(dt, resources.get(dt) + 1);
                                 exists = true;
                             }
-							break;
-						}
-					}
+                            break;
+                        }
+                    }
+
+                    if ((!exists) && add) {
+
+                        resources.put(time, 1);
+                    }
+
+                    time = DateTime.hourLater(time, 1);
+
+                }
+
+                
+                HashMap<DateTime, DateTime> holidays = result.getStaffDO()
+                        .getHolidays();
+
+                for (DateTime startDate : holidays.keySet()) {
+
+                    if (!(holidays.get(startDate).before(
+                            result.getStartDateTime()) || result
+                            .getEndDateTime().before(startDate))) {
+                        DateTime s = startDate;
+                        
+                        while (s.before(holidays.get(startDate))) {
+                            for (DateTime dt : resources.keySet()) {
+                                
+                                if (s.getDateTime().equals(dt.getDateTime())) {
+                                    
+                                    boolean brk = false;
+                                    StaffDO staff = result.getStaffDO();
+                                    ArrayList<ResultDO> rfs = (new ResultDao()).getResultByStaff(staff.getStaffId());
+                                    for(ResultDO r : rfs) {
+                                        if((r.getStartDateTime().before(s) || r.getStartDateTime().getDateTime().equals(s.getDateTime())) && s.before(r.getEndDateTime()))
+                                        {
+                                            brk = true;
+                                            if (resources.get(dt) == 1) {
+                                                resources.remove(dt);
+                                            } else {
+                                                resources.put(dt, resources.get(dt) - 1);
+                                            }
+                                            
+                                            break;
+                                        }
+                                    }
+                                    if(brk){break;}
+                                    
+                                    
+                                    
+                                    
+                                            ///
+                                        
+                                    
+                                    
+                                }
+                                //////
+//                              }
+//                              }}
+                            }
+                            s = DateTime.hourLater(s, 1);
+                        }
+                    }
+
+                }
+
+            }
+
+            projectResources.put(project, resources);
+        }
+        for (ProjectDO projects : projectResources.keySet()) {
+            projectIds.add(projects.getProjectId());
+        }
+
+        //colourit.colourCell(projectIds);
+
+        for (ProjectDO projects : projectResources.keySet()) {
+
+            JLabel projectName = new JLabel(projects.getProjectName(),
+                    JLabel.HORIZONTAL);
+
+            /*
+            for (int j = 0; j < projectIds.size(); j++) {
+
+                if (projectIds.get(j).equals(
+                        projects.getProjectId()) == true) {
+                    projectName.setBackground(colourit.getColor()
+                            .get(j));
+                    
+                }
+            }
+            */
+            projectName.setBackground(colourit.getColor().get(projects.getProjectId()));
+            
+            
+            
+            
+            //projectName.setBackground(Headers);
+            //projectName.setForeground(Color.white);
+
+            projectName.setBorder(BorderFactory.createLineBorder(border));
+            projectName.setOpaque(true);
 
-					if ((!exists) && add) {
+            // In Order
+            HashMap<DateTime, Integer> listOfResources = projectResources
+                    .get(projects);
 
-						resources.put(time, 1);
-					}
+            gbc.gridy = ++yPos;
+            gbc.gridx = xPos;
+            gbc.gridwidth = 8;
 
-					time = DateTime.hourLater(time, 1);
+            add(projectName, gbc);
 
-				}
+            xPos += 8;
 
-				HashMap<DateTime, DateTime> holidays = result.getStaffDO()
-						.getHolidays();
+            gbc.gridx = xPos;
 
-				for (DateTime startDate : holidays.keySet()) {
-					if (!(holidays.get(startDate).before(
-							result.getStartDateTime()) || result
-							.getEndDateTime().before(startDate))) {
-						DateTime s = startDate;
-						while (s.before(holidays.get(startDate))) {
-							for (DateTime dt : resources.keySet()) {
+            currentTime = new DateTime(projectStartDate.getYear(),
+                    projectStartDate.getMonth(), projectStartDate.getDay(), 9,
+                    0, 0);
 
-								if (s.getDateTime().equals(dt.getDateTime())) {
+            ArrayList<HashMap<DateTime, Integer>> orderedDateTime = orderHashMap(listOfResources);
 
-									if (resources.get(dt) == 1) {
-										resources.remove(dt);
-									} else {
-										resources
-												.put(dt, resources.get(dt) - 1);
-									}
-									break;
+            for (HashMap<DateTime, Integer> dateAndResource : orderedDateTime) {
 
-								}
+                for (DateTime time : dateAndResource.keySet()) {
 
-							}
-							s = DateTime.hourLater(s, 1);
-						}
-					}
+                    int value = 0;
+                    for (DateTime checkDate : totalResources.keySet()) {
+                        if (time.getDateTime().equals(checkDate.getDateTime())) {
+                            value = totalResources.get(checkDate);
+                            totalResources.remove(checkDate);
+                            break;
+                        }
+                    }
 
-				}
+                    totalResources.put(time, dateAndResource.get(time) + value);
 
-			}
+                    while (currentDateTime.before(DateTime.hourLater(time, 1))) {
+                        addDay();
+                    }
+                    gbc.gridy = yPos;
+                    gbc.gridx = xPos;
 
-			projectResources.put(project, resources);
-		}
-		for (ProjectDO projects : projectResources.keySet()) {
-			projectIds.add(projects.getProjectId());
-		}
+                    if (currentTime.before(time)) {
+                        int blankLength = DateTime.duration(currentTime, time);
 
-		colourit.colourCell(projectIds);
+                        gbc.gridwidth = blankLength;
+                        lblBlank = new JLabel("");
+                        lblBlank.setBorder(BorderFactory
+                                .createLineBorder(border));
+                        lblBlank.setBackground(Color.GRAY);
+                        lblBlank.setOpaque(true);
+                        add(lblBlank, gbc);
 
-		for (ProjectDO projects : projectResources.keySet()) {
+                        xPos += blankLength;
+                        gbc.gridx = xPos;
+                    }
 
-			JLabel projectName = new JLabel(projects.getProjectName(),
-					JLabel.HORIZONTAL);
+                    gbc.gridwidth = 1;
 
-			for (int j = 0; j < projectIds.size(); j++) {
+                    lblStaffNo = new JLabel(Integer.toString(dateAndResource
+                            .get(time)), JLabel.HORIZONTAL);
+                    lblStaffNo
+                            .setBorder(BorderFactory.createLineBorder(border));
+                    lblStaffNo.setOpaque(true);
 
-				if (projectIds.get(j).equals(
-						projects.getProjectId()) == true) {
-					projectName.setBackground(colourit.getColor()
-							.get(j));
-				}
-			}
-			
-			
-			
-			//projectName.setBackground(Headers);
-			//projectName.setForeground(Color.white);
+                    lblStaffNo.setBackground(cell);
+                    lblStaffNo.setForeground(Color.white);
 
-			projectName.setBorder(BorderFactory.createLineBorder(border));
-			projectName.setOpaque(true);
+                    add(lblStaffNo, gbc);
 
-			// In Order
-			HashMap<DateTime, Integer> listOfResources = projectResources
-					.get(projects);
+                    xPos += 1;
 
-			gbc.gridy = ++yPos;
-			gbc.gridx = xPos;
-			gbc.gridwidth = 8;
+                    gbc.gridx = xPos;
 
-			add(projectName, gbc);
+                    currentTime = DateTime.hourLater(time, 1);
+                }
 
-			xPos += 8;
+            }
 
-			gbc.gridx = xPos;
+            endXPos.add(xPos);
+            xPos = 0;
 
-			currentTime = new DateTime(projectStartDate.getYear(),
-					projectStartDate.getMonth(), projectStartDate.getDay(), 9,
-					0, 0);
+        }
 
-			ArrayList<HashMap<DateTime, Integer>> orderedDateTime = orderHashMap(listOfResources);
+        if (totalResources.size() > 0) {
+            addTotalResources(orderHashMap(totalResources));
+            addEndBlanks();
+        }
+    }
 
-			for (HashMap<DateTime, Integer> dateAndResource : orderedDateTime) {
+    public void addTotalResources(
+            ArrayList<HashMap<DateTime, Integer>> totalResources) {
 
-				for (DateTime time : dateAndResource.keySet()) {
+        currentTime = new DateTime(projectStartDate.getYear(),
+                projectStartDate.getMonth(), projectStartDate.getDay(), 9, 0, 0);
 
-					int value = 0;
-					for (DateTime checkDate : totalResources.keySet()) {
-						if (time.getDateTime().equals(checkDate.getDateTime())) {
-							value = totalResources.get(checkDate);
-							totalResources.remove(checkDate);
-							break;
-						}
-					}
+        xPos = 0;
+        gbc.gridy = ++yPos;
+        gbc.gridx = xPos;
+        gbc.gridwidth = 8;
 
-					totalResources.put(time, dateAndResource.get(time) + value);
+        JLabel lblTotalResources = new JLabel("Total Resources",
+                JLabel.HORIZONTAL);
+        lblTotalResources.setBorder(BorderFactory.createLineBorder(border));
+        lblTotalResources.setBackground(Headers);
+        lblTotalResources.setForeground(Color.white);
+        lblTotalResources.setOpaque(true);
+        add(lblTotalResources, gbc);
 
-					while (currentDateTime.before(DateTime.hourLater(time, 1))) {
-						addDay();
-					}
-					gbc.gridy = yPos;
-					gbc.gridx = xPos;
+        xPos += 8;
 
-					if (currentTime.before(time)) {
-						int blankLength = DateTime.duration(currentTime, time);
+        gbc.gridx = xPos;
 
-						gbc.gridwidth = blankLength;
-						lblBlank = new JLabel("");
-						lblBlank.setBorder(BorderFactory
-								.createLineBorder(border));
-						lblBlank.setBackground(Color.GRAY);
-						lblBlank.setOpaque(true);
-						add(lblBlank, gbc);
+        for (HashMap<DateTime, Integer> dateAndResource : totalResources) {
+            for (DateTime date : dateAndResource.keySet()) {
 
-						xPos += blankLength;
-						gbc.gridx = xPos;
-					}
+                if (currentTime.before(date)) {
+                    int blankLength = DateTime.duration(currentTime, date);
 
-					gbc.gridwidth = 1;
+                    gbc.gridwidth = blankLength;
+                    lblBlank = new JLabel("");
+                    lblBlank.setBorder(BorderFactory.createLineBorder(border));
+                    lblBlank.setBackground(Color.GRAY);
+                    lblBlank.setOpaque(true);
+                    add(lblBlank, gbc);
 
-					lblStaffNo = new JLabel(Integer.toString(dateAndResource
-							.get(time)), JLabel.HORIZONTAL);
-					lblStaffNo
-							.setBorder(BorderFactory.createLineBorder(border));
-					lblStaffNo.setOpaque(true);
+                    xPos += blankLength;
+                    gbc.gridx = xPos;
 
-					lblStaffNo.setBackground(cell);
-					lblStaffNo.setForeground(Color.white);
+                }
 
-					add(lblStaffNo, gbc);
+                gbc.gridwidth = 1;
 
-					xPos += 1;
+                add(lblStaffNo = new JLabel(Integer.toString(dateAndResource
+                        .get(date)), JLabel.HORIZONTAL), gbc);
+                lblStaffNo.setBorder(BorderFactory.createLineBorder(border));
+                lblStaffNo.setOpaque(true);
 
-					gbc.gridx = xPos;
+                lblStaffNo.setBackground(cell);
+                lblStaffNo.setForeground(Color.white);
 
-					currentTime = DateTime.hourLater(time, 1);
-				}
+                xPos += 1;
 
-			}
+                gbc.gridx = xPos;
 
-			endXPos.add(xPos);
-			xPos = 0;
+                currentTime = DateTime.hourLater(date, 1);
+            }
 
-		}
+        }
 
-		if (totalResources.size() > 0) {
-			addTotalResources(orderHashMap(totalResources));
-			addEndBlanks();
-		}
-	}
+        endXPos.add(xPos);
 
-	public void addTotalResources(
-			ArrayList<HashMap<DateTime, Integer>> totalResources) {
+    }
 
-		currentTime = new DateTime(projectStartDate.getYear(),
-				projectStartDate.getMonth(), projectStartDate.getDay(), 9, 0, 0);
+    public void addEndBlanks() {
 
-		xPos = 0;
-		gbc.gridy = ++yPos;
-		gbc.gridx = xPos;
-		gbc.gridwidth = 8;
+        yPos = 2;
+        for (Integer xPos : endXPos) {
 
-		JLabel lblTotalResources = new JLabel("Total Resources",
-				JLabel.HORIZONTAL);
-		lblTotalResources.setBorder(BorderFactory.createLineBorder(border));
-		lblTotalResources.setBackground(Headers);
-		lblTotalResources.setForeground(Color.white);
-		lblTotalResources.setOpaque(true);
-		add(lblTotalResources, gbc);
+            gbc.gridy = yPos;
+            if (xPos < dayXPos) {
 
-		xPos += 8;
+                gbc.gridx = xPos;
 
-		gbc.gridx = xPos;
+                int blankLength = dayXPos - xPos;
+                gbc.gridwidth = blankLength;
+                JLabel lblEndBlank = new JLabel("");
+                lblEndBlank.setBorder(BorderFactory.createLineBorder(border));
+                lblEndBlank.setBackground(Color.GRAY);
+                lblEndBlank.setOpaque(true);
+                add(lblEndBlank, gbc);
+            }
 
-		for (HashMap<DateTime, Integer> dateAndResource : totalResources) {
-			for (DateTime date : dateAndResource.keySet()) {
+            yPos++;
+        }
+    }
 
-				if (currentTime.before(date)) {
-					int blankLength = DateTime.duration(currentTime, date);
+    public ArrayList<HashMap<DateTime, Integer>> orderHashMap(
+            HashMap<DateTime, Integer> listOfResources) {
 
-					gbc.gridwidth = blankLength;
-					lblBlank = new JLabel("");
-					lblBlank.setBorder(BorderFactory.createLineBorder(border));
-					lblBlank.setBackground(Color.GRAY);
-					lblBlank.setOpaque(true);
-					add(lblBlank, gbc);
+        ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
+        HashMap<DateTime, Integer> minDate;
 
-					xPos += blankLength;
-					gbc.gridx = xPos;
+        for (int i = listOfResources.size(); i > 0; i--) {
+            DateTime min = null;
+            for (DateTime t : listOfResources.keySet()) {
+                min = t;
+                break;
+            }
 
-				}
+            int noResources = 0;
+            for (DateTime time : listOfResources.keySet()) {
+                if (time.before(min)) {
+                    min = time;
+                }
+            }
 
-				gbc.gridwidth = 1;
+            for (DateTime time : listOfResources.keySet()) {
 
-				add(lblStaffNo = new JLabel(Integer.toString(dateAndResource
-						.get(date)), JLabel.HORIZONTAL), gbc);
-				lblStaffNo.setBorder(BorderFactory.createLineBorder(border));
-				lblStaffNo.setOpaque(true);
+                if (min.getDateTime().equals(time.getDateTime())) {
 
-				lblStaffNo.setBackground(cell);
-				lblStaffNo.setForeground(Color.white);
+                    noResources = listOfResources.get(time);
+                    listOfResources.remove(time);
+                    break;
+                }
+            }
 
-				xPos += 1;
+            minDate = new HashMap<DateTime, Integer>();
+            minDate.put(min, noResources);
+            orderedDateTime.add(minDate);
 
-				gbc.gridx = xPos;
+        }
 
-				currentTime = DateTime.hourLater(date, 1);
-			}
+        return orderedDateTime;
 
-		}
+    }
 
-		endXPos.add(xPos);
+    public CellColour getColours() {
+        return colourit;
+    }
 
-	}
-
-	public void addEndBlanks() {
-
-		yPos = 2;
-		for (Integer xPos : endXPos) {
-
-			gbc.gridy = yPos;
-			if (xPos < dayXPos) {
-
-				gbc.gridx = xPos;
-
-				int blankLength = dayXPos - xPos;
-				gbc.gridwidth = blankLength;
-				JLabel lblEndBlank = new JLabel("");
-				lblEndBlank.setBorder(BorderFactory.createLineBorder(border));
-				lblEndBlank.setBackground(Color.GRAY);
-				lblEndBlank.setOpaque(true);
-				add(lblEndBlank, gbc);
-			}
-
-			yPos++;
-		}
-	}
-
-	public ArrayList<HashMap<DateTime, Integer>> orderHashMap(
-			HashMap<DateTime, Integer> listOfResources) {
-
-		ArrayList<HashMap<DateTime, Integer>> orderedDateTime = new ArrayList<HashMap<DateTime, Integer>>();
-		HashMap<DateTime, Integer> minDate;
-
-		for (int i = listOfResources.size(); i > 0; i--) {
-			DateTime min = null;
-			for (DateTime t : listOfResources.keySet()) {
-				min = t;
-				break;
-			}
-
-			int noResources = 0;
-			for (DateTime time : listOfResources.keySet()) {
-				if (time.before(min)) {
-					min = time;
-				}
-			}
-
-			for (DateTime time : listOfResources.keySet()) {
-
-				if (min.getDateTime().equals(time.getDateTime())) {
-
-					noResources = listOfResources.get(time);
-					listOfResources.remove(time);
-					break;
-				}
-			}
-
-			minDate = new HashMap<DateTime, Integer>();
-			minDate.put(min, noResources);
-			orderedDateTime.add(minDate);
-
-		}
-
-		return orderedDateTime;
-
-	}
-
-	public CellColour getColours() {
-		return colourit;
-	}
-
-	public ArrayList<Integer> getProjectIds() {
-		return projectIds;
-	}
+    public ArrayList<Integer> getProjectIds() {
+        return projectIds;
+    }
 
 }

@@ -318,15 +318,21 @@ public class StaffSummary extends JPanel {
 				lblTaskName = new JLabel(dateOfTask.getTask().getTaskName(),
 						JLabel.HORIZONTAL);
 
+                /*
 				for (int j = 0; j < view.getids.size(); j++) {
 
 					if (view.getids.get(j).equals(
-							dateOfTask.getTask().getProjectId()) == true) {
+							dateOfTask.getTask().getProjectId()) ) {
 						lblTaskName.setBackground(view.initialColour.getColor()
 								.get(j));
 					}
 
 				}
+                */
+                lblTaskName.setBackground(view.initialColour.getColor().get(dateOfTask.getTask().getProjectId()));
+
+                //System.out.println();
+
 
 				lblTaskName.setBorder(BorderFactory.createLineBorder(border));
 				lblTaskName.setOpaque(true);
@@ -370,6 +376,7 @@ public class StaffSummary extends JPanel {
 		}
 	}
 
+    /*
 	public void setCellColour(CellColour init) {
 		this.curColour = init;
 	}
@@ -379,4 +386,5 @@ public class StaffSummary extends JPanel {
 			projectids.add(getids.get(i));
 		}
 	}
+    */
 }

@@ -301,7 +301,7 @@ public class ProjectController {
                         projectDao.addProject(projectModel);
 
                         updateProjectList();
-                        view.refresh();
+                        view.refreshStat();
                         // close window
                         jdlogAddProject.dispose();
                     } catch (Exception excp) {

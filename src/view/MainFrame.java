@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import controllers.menu.SkillController;
+import data.dataObject.ProjectDO;
+import database.dataAccessObject.ProjectDao;
 import util.CellColour;
 import view.project.*;
 import view.staff.*;
@@ -37,13 +39,24 @@ public class MainFrame extends JFrame {
 	private ProjectPanel projectPanel = new ProjectPanel();
 	private StaffView staffPanel = null;
 	private StatisticPanel statisticPanel = new StatisticPanel();
-	public CellColour initialColour = new CellColour();
+	public static CellColour initialColour = new CellColour();
 	public ArrayList<Integer> getids = new ArrayList<Integer>();
 
 	SkillDialog skillDialog;
 
 	public MainFrame() {
-
+		
+		// color
+		ArrayList<ProjectDO> pjs = (new ProjectDao()).getAllStartedProject();
+		ArrayList<Integer> pids = new ArrayList<Integer>();
+		for(ProjectDO pj : pjs) {
+			pids.add(pj.getProjectId());
+		}
+		initialColour.colourCell(pids);
+		
+		projectPanel = new ProjectPanel();
+		statisticPanel = new StatisticPanel();
+		
 		setLayout(new BorderLayout());
 		final ImageIcon image = new ImageIcon("img/projectexpressIcon.png");
 		add(menuBar, BorderLayout.NORTH);
@@ -63,7 +76,8 @@ public class MainFrame extends JFrame {
 		pack();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-
+		
+		
 	}
 
 	public void addSkillDialog(SkillController skillController) {
@@ -104,6 +118,15 @@ public class MainFrame extends JFrame {
 	}
 
 	public void refresh() {
+
+		// color
+		ArrayList<ProjectDO> pjs = (new ProjectDao()).getAllStartedProject();
+		ArrayList<Integer> pids = new ArrayList<Integer>();
+		for(ProjectDO pj : pjs) {
+			pids.add(pj.getProjectId());
+		}
+		initialColour.colourCell(pids);
+		
 		// refresh statistic panel
 		mainTabbedPane.remove(statisticPanel);
 		statisticPanel = new StatisticPanel();
@@ -125,8 +148,16 @@ public class MainFrame extends JFrame {
 		JScrollPane staffSummaryScrollPane = new JScrollPane(staffSummary);
 		staffTabs.addTab("Summary of Staff", staffSummaryScrollPane);
 		staffTabs.addTab("Staff Allocation", staffAllocation);
+		
+		
 	}
 
+	public void refreshStat() {
+		// refresh statistic panel
+		mainTabbedPane.remove(statisticPanel);
+		statisticPanel = new StatisticPanel();
+		mainTabbedPane.addTab("Statistical Reports", statisticPanel);
+	}
 	public void setStatus() {
 
 	}

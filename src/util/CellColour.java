@@ -12,9 +12,9 @@ import java.awt.*;
  */
 public class CellColour {
 	Random rand = new Random();
-	HashMap<Integer, Color> projectIdColor = new HashMap<Integer, Color>();
+	public HashMap<Integer, Color> projectIdColor = new HashMap<Integer, Color>();
 	ArrayList<Integer> projectIds = new ArrayList<Integer>();
-
+	
 	public CellColour() {
 		
 	}
@@ -25,6 +25,8 @@ public class CellColour {
 		boolean colorNotFound = false;
 		Color randomColor = null;
 
+		projectIdColor.put(0, Color.white);
+		
 		for (int i = 0; i < projectIds.size(); i++) {
 
 			while (colorFound) {
@@ -73,13 +75,15 @@ public class CellColour {
 
 					}
 				} else {
+					//projectIdColor.put(projectIds.get(i), randomColor);
 					projectIdColor.put(projectIds.get(i), randomColor);
 					colorFound = false;
 				}
 
 			}
 			
-			projectIdColor.put(i, randomColor);
+			//projectIdColor.put(i, randomColor);
+			projectIdColor.put(projectIds.get(i), randomColor);
 			colorFound = true;
 		}
 
