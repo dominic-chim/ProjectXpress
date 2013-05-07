@@ -155,26 +155,68 @@ public class ProjectSummary extends JPanel {
 			resources = new HashMap<DateTime, Integer>();
 
 			for (ResultDO result : projectResults.get(project)) {
+                ///////
+                System.out.println(result.getTaskDO().getTaskName());
 
 				time = result.getStartDateTime();
 
 				int range = DateTime.duration(result.getStartDateTime(),
 						result.getEndDateTime());
+				
 				for (int i = range; i > 0; i--) {
 
 					boolean exists = false;
+					boolean add = true;
+					for(ProjectDO p : projectResults.keySet()) {
+						if(p == project) 
+							continue;
+						for(ResultDO r : projectResults.get(p)) {
+							if((r.getStartDateTime().before(time) || r.getStartDateTime().getDateTime().equals(time.getDateTime())) && (time.before(r.getEndDateTime()) || time.getDateTime().equals(r.getEndDateTime().getDateTime())) 
+									&& result.getStartDateTime().before(r.getStartDateTime())
+                                    && r.getEndDateTime().before(result.getEndDateTime())
+                                    && result.getStaffDO().getStaffId() == r.getStaffDO().getStaffId()){
+                                add = false;
+                                System.out.println(time.getDateTime() + r.getTaskDO().getTaskName() + result.getTaskDO().getTaskName());
+							}
+							
+						}
+					}
+
 					for (DateTime dt : resources.keySet()) {
-
+						
+						
+						//add = true;
+						
+						
 						if (time.getDateTime().equals(dt.getDateTime())) {
-							exists = true;
-
-							resources.put(dt, resources.get(dt) + 1);
-
+							
+							/*
+                            boolean add = true;
+							for(ProjectDO p : projectResults.keySet()) {
+								if(p == project) 
+									continue;
+								for(ResultDO r : projectResults.get(p)) {
+									if((r.getStartDateTime().before(dt) || r.getStartDateTime().getDateTime().equals(dt.getDateTime())) && (dt.before(r.getEndDateTime()) || dt.getDateTime().equals(r.getEndDateTime().getDateTime())) 
+											&& result.getStartDateTime().before(r.getStartDateTime())
+                                            && r.getEndDateTime().before(result.getEndDateTime())
+                                            && result.getStaffDO().getStaffId() == r.getStaffDO().getStaffId()){
+                                        add = false;
+                                        System.out.println(dt.getDateTime() + r.getTaskDO().getTaskName() + result.getTaskDO().getTaskName());
+									}
+									
+								}
+							}
+							*/
+                            //add = true;
+                            if(add) {
+                                resources.put(dt, resources.get(dt) + 1);
+                                exists = true;
+                            }
 							break;
 						}
 					}
 
-					if (!exists) {
+					if ((!exists) && add) {
 
 						resources.put(time, 1);
 					}
